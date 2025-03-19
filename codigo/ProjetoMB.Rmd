@@ -1,0 +1,262 @@
+---
+title: "Modelação Bayesiana"
+author: 
+  - "Diogo Freitas"
+  - "João Francisco Botas"
+  - "Miguel Gonçalves"
+  - "Ricardo Galvão"
+date: "19-03-2025"
+output: 
+  html_document:
+    df_print: paged
+    code_folding: show
+    self_contained: true
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Modelação Bayesiana
+
+Este projeto foi desenvolvido no âmbito da unidade curricular de Modelação Bayesiana do Mestrado em Ciência de Dados no Iscte. O objetivo do trabalho tem como objetivo replicar 
+
+## Índice
+
+## Artigo de referência
+
+O artigo de referência para este trabalho é o [Data on higher education student ethics model](https://www.sciencedirect.com/science/article/pii/S2352340919312594?via%3Dihub). Este artigo analisa dados de um questionário aplicado a estudantes de ensino superior para avaliar a ética dos mesmos. O questionário foi aplicado a 566 estudantes entre o período de Janeiro a Dezembro de 2018, na cidade de Yogyakarta, na Indonesia. Para percebermos melhor o conjunto de dados e a sua estrutura, vamos carregar o ficheiro de dados e fazer uma pequena analise exploratória de dados, complementando a informação com a descrição do artigo.
+
+
+```{r, include=FALSE}
+# packages
+if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
+pacman::p_load(foreign, haven, tidyverse)
+```
+
+
+## EDA
+
+```{r}
+# load data
+df <- read.csv("../data/dados_raw.csv")
+View(df)
+df %>% glimpse()
+```
+
+Skim do dataset para vermos a estrutura detalhada dos dados.
+
+```{r, results='hold'}
+df %>% skimr::skim() -> skim_output
+###########
+# skim_output
+# str(skim_output) # ver a estrutura para filtrar
+###########
+min(skim_output$complete_rate) # todas as colunas têm valores preenchidos
+max(colSums(is.na(df))) 
+```
+
+Ao guardarmos o skim num objeto podemos ver a estrutura e filtrar as informações que queremos. Neste caso, conseguimos ver que todas as colunas:
+- têm todos os valores preenchidos $\rightarrow$ mínimo do `complete_rate` é 1;
+- não existem valores em falta, consequentemente $\rightarrow$ máximo do número de valores em falta é 0.
+
+Ou seja, não teremos de lidar com omissos.
+
+```{r}
+# select character columns
+skim_output$skim_variable[skim_output$skim_type == "character"] -> char_cols
+char_cols
+# select numeric columns
+skim_output$skim_variable[skim_output$skim_type == "numeric"] -> num_cols
+length(num_cols) # = 127 total - 1 (Fak)
+```
+
+### Variáveis categóricas
+
+No dataset só temos uma variável categórica, a `Fak`. Vamos fazer uma tabela de frequências para esta variável e um gráfico de barras. Esta variável, segundo o artigo, é a _faculty_/departamento a que o estudante pertence (**Table 8** artigo).
+
+| Departamento                    | Nº alunos | Percentagem |
+|---------------------------------|-----------|-------------|
+| Economic                        |        114|        20.1%|
+| Engineering                     |         98|        17.3%|
+| Mathematics and Natural Science |         85|        15.0%|
+| Social Science                  |         61|        10.8%|
+| Sports Science                  |         15|         2.7%|
+| Art                             |        120|        21.2%|
+| Educational Science             |         73|        12.9%|
+   
+
+```{r}
+# fazer uma tabela de frequências para as variáveis categóricas
+df %>% select(all_of(char_cols)) %>% map(table)
+# gráfico de barras
+df %>%
+  group_by(Fak) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = Count / sum(Count) * 100) %>%
+  ggplot(aes(x = reorder(Fak, -Percentage), y = Percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = paste0(round(Percentage, 1), "%")), vjust = -0.5) +
+  labs(x = "Field", y = "Percentage", title = "Distribution of Fields") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Conseguimos perceber que há uma relação com os resultados mencionados no artigo.
+
+
+| Departamento                    | Sigla     |
+|---------------------------------|-----------|
+| Economic                        |         FE| 
+| Engineering                     |         FT| 
+| Mathematics and Natural Science |       MIPA| 
+| Social Science                  |        FIS| 
+| Sports Science                  |        FIK|
+| Art                             |        FBS| 
+| Educational Science             |        FIP| 
+
+
+A partir de agora vamos guardar os dados num novo dataset para podermos fazer a modelação.
+
+```{r}
+df_transform <- df
+df_transform <- df_transform %>%
+  mutate(Fak = case_when(
+    Fak == "FE" ~ "Economic",
+    Fak == "FT" ~ "Engineering",
+    Fak == "MIPA" ~ "Mathematics and Natural Science",
+    Fak == "FIS" ~ "Social Science",
+    Fak == "FIK" ~ "Sports Science",
+    Fak == "FBS" ~ "Art",
+    Fak == "FIP" ~ "Educational Science",
+    TRUE ~ Fak
+  ))
+summary(as.factor(df_transform$Fak)) # factor para mostrar a coluna alterada
+```
+
+### Variáveis numéricas citadas no artigo
+
+O artigo menciona que o questionário tem 7 grupos de perguntas que medem dimensões diferentes. Cada grupo está associado a um nome que, por sua vez, tem uma sigla associada.
+
+1. **Ethical behaviour** (ET)
+2. **Motivation** (Mot)
+3. **Self-efficacy** (SE)
+4. **Resilience** (R)
+5. **Knowledge articulation** (KA)
+6. **Team strain** (TS)
+7. **Cooperative classroom environment** (CCE)
+
+Vamos selecionar as variáveis que pertencem a cada grupo e guardá-las em objetos diferentes. No final vamos juntar estas variáveis num novo dataset.
+
+```{r}
+# select das variáveis numéricas mencionadas no artigo -> regex para ser + facil :)
+ethical_behaviour <- df_transform %>%
+  select(matches("^ET[1-9]$|^ET1[0-4]$"))
+#ethical_behaviour
+
+motivation <- df_transform %>%
+  select(matches("^Mot[1-9]$|^Mot1[0-5]$"))
+#motivation
+
+self_efficacy <- df_transform %>%
+  select(matches("^SE[1-6]$"))
+#self_efficacy
+
+resilience <- df_transform %>%
+  select(matches("^R[1-6]$"))
+#resilience
+
+knowledge_articulation <- df_transform %>%
+  select(matches("^KA[1-5]$"))
+#knowledge_articulation
+
+team_strain <- df_transform %>%
+  select(matches("^TS[1-9]$|^TS1[0-7]$"))
+#team_strain
+
+cooperative_classroom_environment <- df_transform %>%
+  select(matches("^CCE[1-9]$|^CCE1[0-9]$|^CCE20$"))
+#cooperative_classroom_environment
+
+## falta 3xPOP; 6xPC; 6xOPT; 5xINO; 3xPDC
+
+# juntar todos os dataframes com as colunas mencionadas no artigo (as acima)
+vars_artigo <- bind_cols(ethical_behaviour, motivation, self_efficacy, 
+                         resilience, knowledge_articulation, team_strain, 
+                         cooperative_classroom_environment)
+vars_artigo
+```
+
+
+**O que não consta no artigo: 3xPOP; 6xPC; 6xOPT; 5xINO; 3xPDC**
+
+### Construtos criados no artigo
+
+Ainda, temos acesso aos construtos criados pelos autores do artigo após a fase de análise fatorial. Vamos selecionar estas variáveis e guardá-las num objeto. Os construtos estão referidos na **Table 9** do artigo.
+
+```{r}
+construtos_autores <- df_transform[, 121:127]
+construtos_autores
+```
+
+### Variáveis descritivas?
+
+Guardamos agora 8 variáveis do início do dataset que parecem ser apenas descritivas e que são referidas (algumas destas) no artigo, na tabela com as correlações. As correlações entre construtos pode ser encontrada na **Table 10** do artigo.
+
+Uma destas variáveis é a `Fak` que já foi tratada anteriormente. Esta será incluída juntamente com as outras 7 e já terá os nomes alterados.
+
+```{r}
+descritivas <- df_transform[, 1:8]
+descritivas
+```
+
+
+```{r}
+skimr::skim(descritivas)$skim_variable
+skimr::skim(descritivas)$numeric.p0
+skimr::skim(descritivas)$numeric.p100
+```
+
+
+Após alguma pesquisa fomos tentar verificar o que representavam estas variáveis. 
+
+
+- **Género**:Género da pessoa (pode ser 1 ou 2). À partida não sabemos qual corresponde ao feminino e ao masculino.
+- **Tlahir**: Em indonésio pode ser uma abreviatura de Tanggal Lahir, que significa data de nascimento.
+- **BLhair**: Em indonésio pode ser uma abreviatura de Bulan Lahir, que significa mês de nascimento.
+- *Pengeluaran**: Em indonésio pode ser uma abreviatura de Pengeluaran, que significa despesas. Tradução direta para inglês $rightarrow$ Expenditure.
+
+
+Verificamos o mínimo e o máximo de cada variável descritiva e percebemos alguns valores estranhos, dado o contexto pesquisado. Um deles é por exemplo o `Tlahir`. Talvez o valor mais alto $\rightarrow 31031999$ corresponde a $31/03/1999$. Para além disso o mês `BLhair` tem valores de 0 a 12, pelo que o 0 não faz muito sentido. 
+
+```{r}
+# TODO: "vou fazer, não mexam pls :)" - Botas
+```
+
+### Variáveis não citadas no artigo
+
+As colunas que não estão nos outros datasets.
+
+```{r}
+# selecionar do dataset df_transform aquelas que não estao em descritivas, vars_artigo e construtos_autores
+vars_nao_citadas <- df_transform %>%
+  select(-all_of(c(colnames(descritivas), colnames(vars_artigo), colnames(construtos_autores))))
+vars_nao_citadas
+```
+
+### Criar ficheiros csv na pasta data com os 4 conjuntos anteriores
+
+```{r}
+# escrever uma função
+write_csvs <- function(data, name){
+  write_csv(data, paste0("../data/4_conjuntos(dev)/", name, ".csv"))
+}
+write_csvs(descritivas, "descritivas")
+write_csvs(vars_artigo, "vars_artigo")
+write_csvs(construtos_autores, "construtos_autores")
+write_csvs(vars_nao_citadas, "vars_nao_citadas")
+```
+
+
+
