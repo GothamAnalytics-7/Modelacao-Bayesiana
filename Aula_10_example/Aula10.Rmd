@@ -1,0 +1,272 @@
+---
+title: "Lecture 10"
+output: html_document
+date: "2025-04-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Data 
+dat <- read.csv("pos_neg.csv")
+dim(dat)
+```
+
+```{r}
+summary(dat)
+```
+
+```{r}
+model.cfa1 <- 'Positive =~ great + cheerful + happy
+               Negative =~ sad   + down     + unhappy'
+```
+
+
+
+```{r}
+#install.packages("rstan")
+#install.packages("quadprog")
+#install.packages("pbivnorm")
+#install.packages("CompQuadForm")
+#install.packages("mvtnorm")
+#install.packages("sandwich")
+#install.packages("future")
+#install.packages("backports")
+#install.packages("brms")
+#install.packages("psych")
+
+library(rstan)
+library(lavaan)
+library(blavaan)
+library(brms)
+library(psych)
+library(bayesplot)
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+```
+
+```{r}
+modelfit.cfa1 <-  bcfa(model.cfa1, data=dat, std.lv=T,
+                      n.chains = 3, burnin=5000, 
+                      sample=1000, target = "stan")
+```
+```{r}
+summary(modelfit.cfa1, standardized=T, 
+        rsquare=T, neff=TRUE, postmedian=T)
+```
+
+```{r}
+# Gammma(1,0.5)
+
+plot(seq(0,10,.1), dgamma(seq(0,10,.1),1,0.5), type="l", lty=1, lwd = 3, xlab="x value",
+     ylab="Density", main="The gamma distribution (1,0.5)")
+```
+
+
+```{r}
+fitMeasures(modelfit.cfa1)
+```
+
+```{r}
+std_all <- standardizedposterior(modelfit.cfa1) 
+head(std_all) 
+```
+
+```{r}
+posterior_summary(std_all[,7:12])
+```
+
+```{r}
+posterior_summary(1-std_all[,7:12]) ## R2
+```
+
+### Cross-loadings
+
+```{r}
+model.cfa2 <- 'Positive =~ great + cheerful + happy + sad 
+                Negative =~ sad + down + unhappy'
+
+modelfit.cfa2 <- bcfa(model.cfa2, data=dat, std.lv=T, n.chains = 3, 
+                      burnin=5000, sample=1000, target = "stan") 
+```
+
+```{r}
+summary(modelfit.cfa2 , standardized=T, rsquare=T, postmedian=TRUE) 
+```
+
+
+```{r}
+fitMeasures(modelfit.cfa2)
+```
+
+```{r}
+blavCompare(modelfit.cfa1, modelfit.cfa2 )
+```
+
+
+```{r}
+mcs <- blavInspect(modelfit.cfa2, "mcmc") 
+mcs <- as.matrix(mcs) 
+head(mcs) 
+```
+
+```{r}
+dim(mcs) 
+```
+
+```{r}
+hist(mcs[,4])
+```
+
+
+```{r}
+View(mcs)
+```
+
+
+```{r}
+# package psych
+describe(mcs) 
+```
+
+
+```{r}
+sum(mcs[,4] > .1)/nrow(mcs)
+```
+
+
+```{r}
+partable(modelfit.cfa2) 
+```
+
+```{r}
+colnames(mcs) <- c("Pg","Pc","Ph","Ps","Ns","Nd","Nu","gg","cc","hh","ss","dd","uu","PN")
+hypothesis(mcs, "Ps > .1")
+```
+
+```{r}
+model.cfa3 <- 'Positive =~ great + cheerful + happy + sad 
+               Negative =~ sad + down + unhappy 
+               down ~~ unhappy'
+
+modelfit.cfa3 <- bcfa(model.cfa3, data=dat, std.lv=T, n.chains = 3, burnin=5000, sample=1000, target = "stan") 
+```
+
+
+```{r}
+summary(modelfit.cfa3, standardized=T,rsquare=T,postmedian=TRUE) 
+```
+
+
+```{r}
+fitMeasures(modelfit.cfa3)
+```
+
+
+
+```{r}
+blavCompare(modelfit.cfa3, modelfit.cfa2) 
+```
+
+```{r}
+blavCompare(modelfit.cfa3, modelfit.cfa1)
+```
+
+## Model fit
+
+```{r}
+ML_bs <- blavFitIndices(modelfit.cfa1) 
+```
+
+```{r}
+ML_bs 
+```
+
+
+```{r}
+summary(ML_bs, prob=.95,central.tendency = c("mean","median"))
+```
+
+```{r}
+distML <- data.frame(ML_bs@indices) 
+sum(distML$BGammaHat > .9)/nrow(distML)
+```
+
+```{r}
+distML <- data.frame(ML_bs@indices) 
+hist(distML$BGammaHat) 
+```
+
+
+
+```{r}
+mcmc_pairs(distML, pars = c("BRMSEA","BGammaHat","adjBGammaHat"), diag_fun = "hist")
+```
+
+
+```{r}
+dpriors()
+```
+
+
+```{r}
+# Gammma(1,0.5)
+
+plot(seq(0,10,.1), dgamma(seq(0,10,.1),2,1.5), type="l", lty=1, lwd = 3, xlab="x value",
+     ylab="Density", main="The gamma distribution (3,1.5)")
+```
+
+
+```{r}
+modelfit.cfa1_dwp <- bcfa(model.cfa1, data=dat, std.lv=T, n.chains = 3, burnin=10000, sample=5000, target="stan", 
+                  dp = dpriors(lambda="normal(0,100)", nu="normal(0,100)", theta = "gamma(3,1.5)", target="stan")) 
+```
+
+
+```{r}
+summary(modelfit.cfa1_dwp, standardized=T,rsquare=T,postmedian=TRUE) 
+```
+
+```{r}
+fitMeasures(modelfit.cfa1_dwp)
+```
+
+```{r}
+fits_st <- cbind(fitMeasures(modelfit.cfa1_dwp), fitMeasures(modelfit.cfa1)) 
+```
+
+
+```{r}
+round(fits_st,4)
+```
+
+## SEMs
+
+
+```{r}
+head(PoliticalDemocracy)
+```
+
+
+```{r}
+model.sem <- '
+  # measurement model
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+'
+```
+
+```{r}
+modelfit.sem <-  bcfa(model.sem, data=PoliticalDemocracy, std.lv=T,
+                      n.chains = 4, burnin=10000, 
+                      sample=20000, target = "stan")
+```
+
+
+

@@ -32,7 +32,8 @@ O artigo de referência para este trabalho é o [Data on higher education studen
 ```{r, include=FALSE}
 # packages
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
-pacman::p_load(foreign, haven, tidyverse)
+pacman::p_load(foreign, haven, tidyverse, rstan, blavaan, lavaan, 
+               brms, psych, bayesplot)
 ```
 
 
@@ -230,9 +231,7 @@ Após alguma pesquisa fomos tentar verificar o que representavam estas variávei
 
 Verificamos o mínimo e o máximo de cada variável descritiva e percebemos alguns valores estranhos, dado o contexto pesquisado. Um deles é por exemplo o `Tlahir`. Talvez o valor mais alto $\rightarrow 31031999$ corresponde a $31/03/1999$. Para além disso o mês `BLhair` tem valores de 0 a 12, pelo que o 0 não faz muito sentido. 
 
-```{r}
-# TODO: "vou fazer, não mexam pls :)" - Botas
-```
+Estes valores não vão ser alterados, por enquanto, porque não serão importantes para a análise e replicação dos resultados.
 
 ### Variáveis não citadas no artigo
 
@@ -257,6 +256,110 @@ write_csvs(vars_artigo, "vars_artigo")
 write_csvs(construtos_autores, "construtos_autores")
 write_csvs(vars_nao_citadas, "vars_nao_citadas")
 ```
+
+
+## Fase 2: Replicação do artigo
+
+### 1 - CFA 
+
+```{r}
+# ler csv 
+df <- read_csv("../data/4_conjuntos(dev)/vars_artigo.csv")
+df
+```
+
+Fazemos cada um dos fatores como modelos separado
+
+```{r}
+# Student Ethics
+model.ethics <- 'StudentEthics =~ ET12 + ET13'
+fit.ethics <- bcfa(model.ethics, data = df, std.lv = TRUE)
+summary(fit.ethics, standardized = TRUE, rsquare = TRUE)
+
+# Motivation
+model.motivation <- 'Motivation =~ Mot5 + Mot8 + Mot11'
+fit.motivation <- bcfa(model.motivation, data = df, std.lv = TRUE)
+summary(fit.motivation, standardized = TRUE, rsquare = TRUE)
+
+# Self-Efficacy
+model.selfefficacy <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
+fit.selfefficacy <- bcfa(model.selfefficacy, data = df, std.lv = TRUE)
+summary(fit.selfefficacy, standardized = TRUE, rsquare = TRUE)
+
+# Resilience
+model.resilience <- 'Resilience =~ R2 + R5 + R6'
+fit.resilience <- bcfa(model.resilience, data = df, std.lv = TRUE)
+summary(fit.resilience, standardized = TRUE, rsquare = TRUE)
+
+# Knowledge Articulation
+model.knowledge <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
+fit.knowledge <- bcfa(model.knowledge, data = df, std.lv = TRUE)
+summary(fit.knowledge, standardized = TRUE, rsquare = TRUE)
+
+# Team Strain
+model.teamstrain <- 'TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17'
+fit.teamstrain <- bcfa(model.teamstrain, data = df, std.lv = TRUE)
+summary(fit.teamstrain, standardized = TRUE, rsquare = TRUE)
+
+# Cooperative Classroom Environment
+model.coopclass <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11'
+fit.coopclass <- bcfa(model.coopclass, data = df, std.lv = TRUE)
+summary(fit.coopclass, standardized = TRUE, rsquare = TRUE)
+```
+
+
+```{r}
+fitmeasures(fit.ethics)
+fitmeasures(fit.motivation)
+fitmeasures(fit.selfefficacy)
+fitmeasures(fit.resilience)
+fitmeasures(fit.knowledge)
+fitmeasures(fit.teamstrain)
+fitmeasures(fit.coopclass)
+```
+
+### 2 - CFA Global
+
+Vai ter as covariâncias entre fatores.
+
+
+```{r}
+
+```
+
+
+### 3- SEM
+
+
+```{r}
+model.sem <- '
+  # measurement model
+  StudentEthics =~ ET12 + ET13
+  Motivation =~ Mot5 + Mot8 + Mot11
+  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+  Resilience =~ R2 + R5 + R6
+  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+  TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+  CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+  # regressions
+  Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+  SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+  StudentEthics ~ Motivation + SelfEfficacy
+  
+'
+
+fit.full <- bcfa(model.full, data=df, std.lv=TRUE, n.chains = 3,
+                 burnin=200, sample=500, target = "stan")
+```
+
+
+```{r}
+summary(fit.full, standardized=TRUE, rsquare=TRUE)
+```
+
+
+
+
 
 
 
