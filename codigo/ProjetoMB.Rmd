@@ -260,7 +260,7 @@ write_csvs(vars_nao_citadas, "vars_nao_citadas")
 
 ## Fase 2: Replicação do artigo
 
-### 1 - CFA 
+### 1 - CFA para cada conjunto de questões
 
 ```{r}
 # ler csv 
@@ -268,55 +268,146 @@ df <- read_csv("../data/4_conjuntos(dev)/vars_artigo.csv")
 df
 ```
 
-Fazemos cada um dos fatores como modelos separado
+Como primeira análise vamos fazer uma análise fatorial confirmatória (CFA) para tentar verificar se as variáveis utilizadas nos construtos são as que têm valores de loadings mais elevados. Vamos usar o pacote `blavaan` para fazer a modelação bayesiana.
+
+```{r}
+# individual params
+n_chains <- 3
+burn_in <- 1000
+sample_estimate <- 5000
+```
+
+
+### CFA com todas as variáveis para tentar justificar/perceber as escolhas para os construtos
+
+#### Student Ethics
 
 ```{r}
 # Student Ethics
-model.ethics <- 'StudentEthics =~ ET12 + ET13'
-fit.ethics <- bcfa(model.ethics, data = df, std.lv = TRUE)
+model.ethics <- 'StudentEthics =~ ET1 + ET2 + ET3 + ET4 + ET5 + ET6 + ET7 + 
+                                  ET8 + ET9 + ET10 + ET11 + ET12 + ET13'
+fit.ethics <- bcfa(model.ethics, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
 summary(fit.ethics, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fit.ethics)
+```
+1000 burn-in + 5000 samples
 
+| Item  | Loadings  |
+|-------|-----------|
+| ET1   | 0.518     |
+| ET2   | 0.445     |
+| ET3   | 0.685     |
+| ET4   | 0.430     |
+| ET5   | 0.714     |
+| ET6   | 0.582     |
+| ET7   | -0.083    |
+| ET8   | -0.036    |
+| ET9   | -0.062    |
+| ET10  | 0.157     |
+| ET11  | 0.133     |
+| ET12  | 0.331     |
+| ET13  | 0.324     |
+
+O artigo opta por selecionar apenas 2 variáveis para o `Student Ethics` (ET12 e ET13), que não têm os loadings mais expressantes. As variáveis ET1, ET3, ET5 e ET6 têm valores de loadings elevado, mas não são escolhidas. As variáveis ET7-9 têm um loading negativo, o que não faz sentido. 
+
+
+```{r}
 # Motivation
-model.motivation <- 'Motivation =~ Mot5 + Mot8 + Mot11'
-fit.motivation <- bcfa(model.motivation, data = df, std.lv = TRUE)
+model.motivation <- 'Motivation =~ Mot1 + Mot2 + Mot3 + Mot4 + Mot5 + 
+                                  Mot6 + Mot7 + Mot8 + Mot9 + Mot10 + 
+                                  Mot11 + Mot12 + Mot13 + Mot14 + 
+                                  Mot15'
+fit.motivation <- bcfa(model.motivation, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
 summary(fit.motivation, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fit.motivation)
+```
 
+1000 burn-in + 5000 samples
+
+| Item  | Loadings  |
+|--------|----------|
+| Mot1   | 0.363    |
+| Mot2   | 0.386    |
+| Mot3   | 0.244    |
+| Mot4   | 0.367    |
+| Mot5   | -0.079   |
+| Mot6   | 0.410    |
+| Mot7   | 0.259    |
+| Mot8   | -0.102   |
+| Mot9   | 0.354    |
+| Mot10  | 0.317    |
+| Mot11  | -0.059   |
+| Mot12  | 0.285    |
+| Mot13  | 0.422    |
+| Mot14  | 0.354    |
+| Mot15  | -0.166   |
+ 
+
+
+```{r}
 # Self-Efficacy
-model.selfefficacy <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
-fit.selfefficacy <- bcfa(model.selfefficacy, data = df, std.lv = TRUE)
-summary(fit.selfefficacy, standardized = TRUE, rsquare = TRUE)
-
-# Resilience
-model.resilience <- 'Resilience =~ R2 + R5 + R6'
-fit.resilience <- bcfa(model.resilience, data = df, std.lv = TRUE)
-summary(fit.resilience, standardized = TRUE, rsquare = TRUE)
-
-# Knowledge Articulation
-model.knowledge <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
-fit.knowledge <- bcfa(model.knowledge, data = df, std.lv = TRUE)
-summary(fit.knowledge, standardized = TRUE, rsquare = TRUE)
-
-# Team Strain
-model.teamstrain <- 'TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17'
-fit.teamstrain <- bcfa(model.teamstrain, data = df, std.lv = TRUE)
-summary(fit.teamstrain, standardized = TRUE, rsquare = TRUE)
-
-# Cooperative Classroom Environment
-model.coopclass <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11'
-fit.coopclass <- bcfa(model.coopclass, data = df, std.lv = TRUE)
-summary(fit.coopclass, standardized = TRUE, rsquare = TRUE)
+model.efficacy <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
+fit.efficacy <- bcfa(model.efficacy, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+summary(fit.efficacy, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fit.efficacy)
 ```
 
 
 ```{r}
-fitmeasures(fit.ethics)
-fitmeasures(fit.motivation)
-fitmeasures(fit.selfefficacy)
-fitmeasures(fit.resilience)
-fitmeasures(fit.knowledge)
-fitmeasures(fit.teamstrain)
-fitmeasures(fit.coopclass)
+# Resilience
+model.resilience <- 'Resilience =~ R1 + R2 + R3 + R4 + R5 + R6'
+fit.resilience <- bcfa(model.resilience, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+summary(fit.resilience, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fit.resilience)
 ```
+
+
+```{r}
+# Knowledge Articulation
+model.knowledge <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
+fit.knowledge <- bcfa(model.knowledge, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+summary(fit.knowledge, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fit.knowledge)
+```
+
+
+```{r}
+# Team Strain
+model.teamstrain <- 'TeamStrain =~ TS1 + TS2 + TS3 + TS4 + TS5 + 
+                                  TS6 + TS7 + TS8 + TS9 + TS10 + 
+                                  TS11 + TS12 + TS13 + TS14 + 
+                                  TS15 + TS16 + TS17'
+fit.teamstrain <- bcfa(model.teamstrain, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+summary(fit.teamstrain, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fit.teamstrain)
+```
+
+
+```{r}
+# Cooperative Classroom Environment
+model.cce <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE2 + CCE3 + 
+                                  CCE4 + CCE5 + CCE6 + CCE7 + CCE8 + 
+                                  CCE9 + CCE10 + CCE11'
+fit.cce <- bcfa(model.cce, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+summary(fit.cce, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fit.cce)
+```
+
+
 
 ### 2 - CFA Global
 
