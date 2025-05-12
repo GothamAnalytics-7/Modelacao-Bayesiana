@@ -30,152 +30,20 @@ O artigo de referência para este trabalho é o [Data on higher education studen
 
 
 
-## EDA
+## Fase 1 - EDA
 
 
-```r
+``` r
 # load data
 df <- read.csv("../data/dados_raw.csv")
-View(df)
-df %>% glimpse()
-```
-
-```
-## Rows: 566
-## Columns: 127
-## $ Gender                <int> 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 2, 1, 1, 2, 2, 2, …
-## $ Tlahir                <int> 2000, 2000, 2000, 2000, 2000, 2000, 2000, 1999, …
-## $ BLhair                <int> 2, 1, 10, 6, 9, 5, 1, 3, 8, 6, 3, 3, 7, 4, 4, 2,…
-## $ Pengeluaran           <int> 1, 2, 2, 2, 1, 1, 2, 2, 1, 4, 1, 1, 1, 1, 1, 1, …
-## $ Status                <int> 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, …
-## $ Fak                   <chr> "FE", "FE", "FE", "FE", "MIPA", "FE", "FE", "FBS…
-## $ IPK                   <int> 4, 4, 4, 3, 3, 4, 4, 4, 4, 2, 3, 4, 4, 3, 3, 4, …
-## $ Semester              <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-## $ ET1                   <int> 1, 1, 1, 1, 3, 2, 1, 4, 1, 2, 1, 2, 2, 2, 2, 1, …
-## $ ET2                   <int> 4, 2, 1, 4, 3, 3, 2, 4, 4, 5, 2, 3, 2, 5, 5, 1, …
-## $ ET3                   <int> 4, 1, 1, 1, 2, 1, 1, 3, 4, 2, 2, 2, 1, 2, 2, 1, …
-## $ ET4                   <int> 3, 2, 5, 1, 3, 2, 2, 4, 4, 3, 1, 3, 2, 2, 2, 2, …
-## $ ET5                   <int> 1, 2, 1, 1, 3, 2, 2, 4, 1, 3, 2, 2, 2, 3, 3, 2, …
-## $ ET6                   <int> 1, 2, 1, 3, 3, 2, 2, 3, 1, 3, 1, 2, 2, 2, 2, 2, …
-## $ ET7                   <int> 3, 5, 5, 4, 4, 4, 5, 4, 4, 5, 1, 4, 4, 5, 5, 4, …
-## $ ET8                   <int> 3, 5, 5, 4, 4, 4, 5, 4, 4, 5, 2, 4, 5, 4, 4, 4, …
-## $ ET9                   <int> 4, 5, 5, 5, 5, 4, 5, 4, 4, 4, 2, 4, 5, 5, 5, 4, …
-## $ ET10                  <int> 4, 5, 1, 5, 4, 2, 5, 5, 4, 5, 1, 4, 4, 5, 5, 3, …
-## $ ET11                  <int> 4, 5, 1, 4, 4, 3, 5, 3, 3, 4, 1, 3, 3, 5, 5, 3, …
-## $ ET12                  <int> 3, 5, 1, 2, 4, 3, 5, 4, 3, 4, 1, 3, 3, 5, 5, 4, …
-## $ ET13                  <int> 4, 5, 1, 2, 4, 4, 5, 3, 3, 4, 1, 4, 3, 5, 5, 4, …
-## $ ET14                  <int> 4, 4, 1, 2, 3, 5, 4, 4, 4, 5, 1, 5, 4, 5, 5, 3, …
-## $ POP1                  <int> 4, 4, 5, 4, 2, 5, 4, 4, 1, 4, 1, 4, 4, 3, 3, 2, …
-## $ POP2                  <int> 4, 4, 5, 4, 3, 4, 4, 3, 1, 4, 1, 1, 2, 3, 3, 3, …
-## $ POP3                  <int> 4, 4, 5, 3, 3, 4, 4, 4, 3, 4, 3, 4, 4, 4, 4, 2, …
-## $ POP4                  <int> 4, 3, 1, 3, 4, 4, 3, 4, 1, 2, 3, 2, 5, 3, 3, 2, …
-## $ POP5                  <int> 4, 3, 1, 3, 3, 4, 3, 3, 4, 2, 3, 2, 4, 3, 3, 1, …
-## $ POP6                  <int> 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 1, 4, 5, 4, 4, 3, …
-## $ POP7                  <int> 4, 4, 1, 5, 4, 4, 4, 4, 2, 4, 1, 4, 4, 4, 4, 1, …
-## $ POP8                  <int> 4, 3, 3, 3, 3, 4, 3, 4, 1, 3, 3, 3, 2, 3, 3, 1, …
-## $ POP9                  <int> 1, 3, 1, 3, 3, 2, 3, 4, 1, 2, 2, 2, 2, 3, 3, 3, …
-## $ Mot1                  <int> 3, 4, 4, 4, 4, 4, 4, 4, 5, 4, 3, 4, 4, 4, 4, 5, …
-## $ Mot2                  <int> 4, 4, 5, 4, 3, 4, 4, 4, 5, 4, 3, 4, 4, 4, 4, 5, …
-## $ Mot3                  <int> 4, 4, 2, 4, 2, 3, 4, 4, 3, 4, 3, 3, 4, 4, 4, 5, …
-## $ Mot4                  <int> 4, 5, 2, 3, 4, 3, 5, 4, 4, 4, 3, 4, 4, 4, 4, 5, …
-## $ Mot5                  <int> 2, 3, 2, 2, 2, 3, 3, 4, 2, 3, 2, 3, 2, 2, 2, 5, …
-## $ Mot6                  <int> 4, 5, 5, 4, 4, 4, 5, 4, 4, 5, 1, 4, 5, 3, 3, 4, …
-## $ Mot7                  <int> 4, 4, 5, 2, 4, 4, 4, 4, 3, 4, 3, 4, 4, 4, 4, 4, …
-## $ Mot8                  <int> 2, 3, 1, 4, 2, 1, 3, 4, 2, 4, 3, 3, 2, 2, 2, 3, …
-## $ Mot9                  <int> 4, 4, 1, 3, 4, 4, 4, 4, 4, 5, 3, 4, 4, 4, 4, 3, …
-## $ Mot10                 <int> 4, 4, 5, 3, 3, 3, 4, 4, 4, 5, 1, 4, 4, 4, 4, 4, …
-## $ Mot11                 <int> 2, 3, 1, 3, 3, 3, 3, 4, 4, 3, 3, 3, 2, 4, 4, 3, …
-## $ Mot12                 <int> 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 3, 4, 5, 4, 4, 4, …
-## $ Mot13                 <int> 4, 5, 5, 5, 4, 5, 5, 4, 5, 5, 1, 5, 5, 5, 5, 5, …
-## $ Mot14                 <int> 4, 5, 5, 3, 4, 4, 5, 4, 4, 5, 3, 4, 4, 3, 3, 4, …
-## $ Mot15                 <int> 2, 1, 1, 1, 3, 1, 1, 5, 1, 3, 2, 1, 1, 1, 1, 4, …
-## $ PC1                   <int> 4, 4, 5, 3, 4, 5, 4, 4, 4, 3, 1, 4, 4, 4, 4, 1, …
-## $ PC2                   <int> 4, 5, 5, 3, 4, 5, 5, 4, 4, 4, 3, 4, 5, 4, 4, 2, …
-## $ PC3                   <int> 4, 5, 5, 3, 4, 5, 5, 4, 4, 4, 1, 4, 5, 4, 4, 3, …
-## $ PC4                   <int> 3, 3, 5, 3, 3, 3, 3, 4, 3, 4, 3, 3, 3, 3, 3, 4, …
-## $ PC5                   <int> 4, 4, 5, 3, 4, 5, 4, 4, 4, 4, 3, 4, 4, 3, 3, 3, …
-## $ PC6                   <int> 4, 3, 5, 3, 4, 3, 3, 4, 3, 4, 3, 3, 4, 4, 4, 5, …
-## $ SE1                   <int> 3, 4, 5, 3, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 1, …
-## $ SE2                   <int> 3, 4, 5, 3, 3, 3, 4, 4, 3, 4, 3, 3, 3, 4, 4, 2, …
-## $ SE3                   <int> 4, 4, 5, 3, 4, 4, 4, 4, 3, 4, 3, 4, 4, 4, 4, 2, …
-## $ SE4                   <int> 4, 4, 5, 3, 3, 4, 4, 4, 3, 4, 3, 4, 4, 4, 4, 2, …
-## $ SE5                   <int> 4, 4, 5, 3, 4, 4, 4, 4, 3, 3, 3, 4, 3, 4, 4, 3, …
-## $ SE6                   <int> 4, 4, 5, 3, 4, 4, 4, 4, 3, 3, 3, 4, 4, 5, 5, 1, …
-## $ R1                    <int> 4, 4, 5, 3, 4, 4, 4, 5, 3, 4, 3, 4, 4, 4, 4, 1, …
-## $ R2                    <int> 4, 5, 5, 3, 4, 3, 5, 5, 4, 5, 1, 4, 3, 4, 4, 3, …
-## $ R3                    <int> 4, 5, 5, 3, 4, 3, 5, 5, 4, 5, 3, 4, 4, 4, 4, 5, …
-## $ R4                    <int> 4, 5, 5, 3, 4, 5, 5, 5, 4, 5, 1, 4, 4, 5, 5, 4, …
-## $ R5                    <int> 4, 4, 5, 3, 4, 4, 4, 5, 2, 5, 1, 3, 2, 4, 4, 3, …
-## $ R6                    <int> 4, 4, 5, 3, 4, 5, 4, 5, 2, 5, 1, 3, 4, 5, 5, 4, …
-## $ Opt1                  <int> 3, 3, 1, 3, 3, 5, 3, 4, 1, 4, 1, 3, 2, 4, 4, 2, …
-## $ Opt2                  <int> 4, 4, 5, 3, 4, 5, 4, 4, 1, 3, 3, 4, 4, 3, 3, 3, …
-## $ Opt3                  <int> 3, 3, 1, 3, 3, 4, 3, 4, 4, 4, 3, 4, 3, 3, 3, 3, …
-## $ Opt4                  <int> 4, 3, 5, 3, 4, 4, 3, 4, 3, 4, 3, 4, 3, 3, 3, 3, …
-## $ Opt5                  <int> 4, 3, 5, 3, 4, 5, 3, 4, 4, 4, 1, 4, 4, 3, 3, 3, …
-## $ Opt6                  <int> 4, 3, 5, 3, 3, 4, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, …
-## $ TS1                   <int> 4, 3, 1, 3, 4, 3, 3, 4, 4, 4, 3, 4, 4, 4, 4, 2, …
-## $ TS2                   <int> 3, 3, 1, 3, 4, 3, 3, 4, 3, 4, 3, 3, 4, 3, 3, 3, …
-## $ TS3                   <int> 2, 4, 5, 3, 4, 3, 4, 4, 3, 4, 3, 4, 4, 3, 3, 3, …
-## $ TS4                   <int> 4, 4, 4, 3, 3, 5, 4, 4, 3, 4, 3, 4, 2, 4, 4, 3, …
-## $ TS5                   <int> 4, 5, 4, 3, 4, 5, 5, 4, 4, 4, 3, 4, 3, 4, 4, 3, …
-## $ TS6                   <int> 4, 5, 5, 3, 3, 3, 5, 4, 3, 4, 3, 4, 3, 4, 4, 3, …
-## $ TS7                   <int> 4, 4, 5, 3, 4, 5, 4, 4, 3, 4, 3, 4, 2, 4, 4, 3, …
-## $ TS8                   <int> 4, 4, 5, 3, 4, 5, 4, 4, 3, 4, 3, 4, 2, 4, 4, 3, …
-## $ TS9                   <int> 3, 3, 4, 3, 3, 4, 3, 4, 3, 4, 3, 4, 4, 4, 4, 3, …
-## $ TS10                  <int> 4, 4, 4, 3, 3, 4, 4, 4, 3, 4, 3, 4, 4, 4, 4, 3, …
-## $ TS11                  <int> 3, 3, 4, 3, 3, 4, 3, 4, 3, 4, 3, 4, 4, 2, 2, 3, …
-## $ TS12                  <int> 3, 3, 4, 3, 3, 4, 3, 4, 3, 4, 3, 4, 4, 2, 2, 3, …
-## $ TS13                  <int> 3, 4, 4, 3, 4, 4, 4, 4, 3, 4, 3, 4, 5, 4, 4, 3, …
-## $ TS14                  <int> 3, 4, 4, 3, 4, 4, 4, 4, 3, 4, 3, 4, 5, 4, 4, 3, …
-## $ TS15                  <int> 3, 4, 4, 3, 4, 4, 4, 4, 3, 4, 3, 4, 4, 4, 4, 3, …
-## $ TS16                  <int> 3, 4, 4, 3, 4, 4, 4, 4, 3, 4, 3, 4, 4, 4, 4, 3, …
-## $ TS17                  <int> 3, 3, 4, 3, 4, 4, 3, 4, 3, 4, 3, 4, 4, 4, 4, 3, …
-## $ INO1                  <int> 4, 4, 5, 4, 4, 4, 4, 3, 4, 3, 1, 4, 4, 3, 3, 5, …
-## $ INO2                  <int> 3, 4, 4, 4, 4, 4, 4, 2, 3, 4, 3, 3, 4, 3, 3, 4, …
-## $ INO3                  <int> 3, 4, 5, 2, 4, 3, 4, 4, 4, 4, 3, 4, 3, 4, 4, 5, …
-## $ INO4                  <int> 3, 4, 5, 3, 3, 4, 4, 3, 4, 4, 3, 4, 4, 3, 3, 4, …
-## $ INO5                  <int> 3, 4, 5, 3, 3, 4, 4, 3, 4, 4, 2, 4, 4, 3, 3, 5, …
-## $ PDC1                  <int> 4, 4, 4, 3, 4, 3, 4, 3, 4, 4, 1, 5, 4, 4, 4, 5, …
-## $ PDC2                  <int> 4, 4, 5, 3, 4, 5, 4, 4, 4, 4, 1, 4, 5, 4, 4, 4, …
-## $ PDC3                  <int> 3, 4, 5, 3, 4, 5, 4, 4, 4, 4, 1, 4, 4, 3, 3, 5, …
-## $ KA1                   <int> 4, 5, 1, 3, 2, 4, 5, 3, 4, 4, 1, 4, 4, 4, 4, 3, …
-## $ KA2                   <int> 4, 4, 5, 3, 3, 5, 4, 4, 4, 4, 3, 4, 4, 4, 4, 3, …
-## $ KA3                   <int> 4, 4, 5, 3, 3, 1, 4, 4, 4, 4, 3, 4, 5, 4, 4, 3, …
-## $ KA4                   <int> 3, 4, 5, 3, 3, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 3, …
-## $ KA5                   <int> 3, 4, 5, 3, 3, 3, 4, 4, 4, 4, 3, 5, 4, 4, 4, 3, …
-## $ CCE1                  <int> 4, 4, 4, 3, 4, 4, 4, 3, 4, 5, 1, 4, 4, 4, 4, 5, …
-## $ CCE2                  <int> 3, 3, 3, 3, 3, 5, 3, 5, 5, 4, 1, 3, 2, 3, 3, 5, …
-## $ CCE3                  <int> 3, 4, 4, 3, 4, 3, 4, 4, 5, 4, 1, 4, 5, 3, 3, 4, …
-## $ CCE4                  <int> 4, 4, 4, 3, 4, 4, 4, 3, 5, 4, 1, 4, 5, 4, 4, 5, …
-## $ CCE5                  <int> 4, 4, 4, 3, 4, 5, 4, 4, 3, 5, 1, 4, 4, 4, 4, 4, …
-## $ CCE6                  <int> 4, 4, 4, 3, 4, 4, 4, 3, 3, 4, 3, 3, 3, 3, 3, 5, …
-## $ CCE7                  <int> 4, 4, 4, 3, 4, 5, 4, 4, 3, 5, 3, 4, 4, 4, 4, 4, …
-## $ CCE8                  <int> 3, 4, 4, 3, 4, 4, 4, 4, 3, 4, 1, 4, 4, 3, 3, 5, …
-## $ CCE9                  <int> 4, 4, 4, 3, 4, 3, 4, 4, 3, 4, 3, 4, 5, 3, 3, 4, …
-## $ CCE10                 <int> 4, 4, 4, 3, 3, 4, 4, 4, 3, 5, 3, 4, 4, 3, 3, 5, …
-## $ CCE11                 <int> 4, 4, 5, 3, 4, 4, 4, 3, 3, 5, 3, 4, 5, 2, 2, 5, …
-## $ CCE12                 <int> 3, 3, 5, 3, 4, 5, 3, 4, 3, 2, 3, 4, 3, 1, 1, 5, …
-## $ CCE13                 <int> 4, 3, 5, 3, 4, 5, 3, 4, 3, 4, 1, 4, 5, 4, 4, 5, …
-## $ CCE14                 <int> 3, 4, 5, 3, 4, 1, 4, 3, 3, 4, 3, 4, 4, 4, 4, 4, …
-## $ CCE15                 <int> 3, 3, 5, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 4, …
-## $ CCE16                 <int> 4, 4, 5, 3, 4, 5, 4, 4, 3, 4, 1, 4, 4, 4, 4, 5, …
-## $ CCE17                 <int> 4, 4, 5, 3, 4, 5, 4, 3, 3, 4, 1, 4, 4, 4, 4, 5, …
-## $ CCE18                 <int> 4, 4, 5, 3, 4, 5, 4, 4, 4, 4, 1, 4, 5, 4, 4, 5, …
-## $ CCE19                 <int> 3, 4, 5, 3, 4, 5, 4, 4, 4, 4, 1, 4, 4, 4, 4, 5, …
-## $ CCE20                 <int> 3, 3, 5, 3, 4, 5, 3, 4, 4, 4, 3, 4, 4, 5, 5, 5, …
-## $ ethics                <dbl> 3.5, 5.0, 1.0, 2.0, 4.0, 3.5, 5.0, 3.5, 3.0, 4.0…
-## $ Motivation            <dbl> 2.000000, 3.000000, 1.333333, 3.000000, 2.333333…
-## $ Resilience            <dbl> 4.000000, 4.333333, 5.000000, 3.000000, 4.000000…
-## $ SelfEfficacy          <dbl> 3.666667, 4.000000, 5.000000, 3.000000, 3.666667…
-## $ TeamStrain            <dbl> 3.125, 3.625, 4.000, 3.000, 3.625, 4.000, 3.625,…
-## $ KnowledgeArticulation <dbl> 3.6, 4.2, 4.2, 3.0, 2.8, 3.4, 4.2, 3.8, 4.0, 4.0…
-## $ CoopClass             <dbl> 3.750, 4.000, 4.125, 3.000, 3.875, 3.875, 4.000,…
+# View(df)
+# df %>% glimpse()
 ```
 
 Skim do dataset para vermos a estrutura detalhada dos dados.
 
 
-```r
+``` r
 df %>% skimr::skim() -> skim_output
 ###########
 # skim_output
@@ -197,23 +65,17 @@ Ao guardarmos o skim num objeto podemos ver a estrutura e filtrar as informaçõ
 Ou seja, não teremos de lidar com omissos.
 
 
-```r
+``` r
 # select character columns
 skim_output$skim_variable[skim_output$skim_type == "character"] -> char_cols
 char_cols
-```
-
-```
-## [1] "Fak"
-```
-
-```r
 # select numeric columns
 skim_output$skim_variable[skim_output$skim_type == "numeric"] -> num_cols
 length(num_cols) # = 127 total - 1 (Fak)
 ```
 
 ```
+## [1] "Fak"
 ## [1] 126
 ```
 
@@ -233,7 +95,7 @@ No dataset só temos uma variável categórica, a `Fak`. Vamos fazer uma tabela 
    
 
 
-```r
+``` r
 # fazer uma tabela de frequências para as variáveis categóricas
 df %>% select(all_of(char_cols)) %>% map(table)
 ```
@@ -245,7 +107,7 @@ df %>% select(all_of(char_cols)) %>% map(table)
 ##  120  114   15   73   61   98   85
 ```
 
-```r
+``` r
 # gráfico de barras
 df %>%
   group_by(Fak) %>%
@@ -278,7 +140,7 @@ Conseguimos perceber que há uma relação com os resultados mencionados no arti
 A partir de agora vamos guardar os dados num novo dataset para podermos fazer a modelação.
 
 
-```r
+``` r
 df_transform <- df
 df_transform <- df_transform %>%
   mutate(Fak = case_when(
@@ -320,7 +182,7 @@ O artigo menciona que o questionário tem 7 grupos de perguntas que medem dimens
 Vamos selecionar as variáveis que pertencem a cada grupo e guardá-las em objetos diferentes. No final vamos juntar estas variáveis num novo dataset.
 
 
-```r
+``` r
 # select das variáveis numéricas mencionadas no artigo -> regex para ser + facil :)
 ethical_behaviour <- df_transform %>%
   select(matches("^ET[1-9]$|^ET1[0-4]$"))
@@ -368,12 +230,426 @@ vars_artigo
 
 **O que não consta no artigo: 3xPOP; 6xPC; 6xOPT; 5xINO; 3xPDC**
 
-### Construtos criados no artigo
+#### Correlação entre variáveis
+
+
+``` r
+construct_patterns <- list(
+  ethical_behaviour = "^ET[1-9]$|^ET1[0-4]$",
+  motivation = "^Mot[1-9]$|^Mot1[0-5]$",
+  self_efficacy = "^SE[1-6]$",
+  resilience = "^R[1-6]$",
+  knowledge_articulation = "^KA[1-5]$",
+  team_strain = "^TS[1-9]$|^TS1[0-7]$",
+  cooperative_classroom_environment = "^CCE[1-9]$|^CCE1[0-9]$|^CCE20$"
+)
+
+for (name in names(construct_patterns)) {
+  pattern <- construct_patterns[[name]]
+  dataset <- df_transform %>% select(matches(pattern))
+  
+  if (ncol(dataset) >= 2) {
+    corr_matrix <- round(cor(dataset, use = "pairwise.complete.obs"), 2)
+    
+    corrplot(corr_matrix,
+             method = "ellipse",
+             type = "upper",  
+             tl.col = "black",
+             tl.cex = 0.8,
+             addCoef.col = "black",
+             number.cex = 1.0,
+             mar = c(1, 1, 2, 1),
+             title = paste("Matriz de Correlação -", name),
+             width = 12,
+             height = 10)
+  }
+}
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "height" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "height" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "width" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "height" is not a graphical parameter
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "height" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "height" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "width" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "height" is not a graphical parameter
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "height" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "height" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "width" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "height" is not a graphical parameter
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-8-3.png)<!-- -->
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "height" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "height" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "width" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "height" is not a graphical parameter
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-8-4.png)<!-- -->
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "height" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "height" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "width" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "height" is not a graphical parameter
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-8-5.png)<!-- -->
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "height" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "height" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "width" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "height" is not a graphical parameter
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-8-6.png)<!-- -->
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.xlabel[, 1], pos.xlabel[, 2], newcolnames, srt =
+## tl.srt, : "height" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "width" is not a graphical parameter
+```
+
+```
+## Warning in text.default(pos.ylabel[, 1], pos.ylabel[, 2], newrownames, col =
+## tl.col, : "height" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "width" is not a graphical parameter
+```
+
+```
+## Warning in title(title, ...): "height" is not a graphical parameter
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-8-7.png)<!-- -->
+
+#### Construtos
+
+
+``` r
+calculate_metrics_all <- function(df, construct_patterns) {
+  results <- list()
+  
+  for (name in names(construct_patterns)) {
+    pattern <- construct_patterns[[name]]
+    dataset <- df %>% select(matches(pattern))
+    
+    if (ncol(dataset) >= 2) {
+      alpha_result <- alpha(dataset)
+      cronbach_alpha <- alpha_result$total$raw_alpha
+
+      fa_result <- fa(dataset, nfactors = 1, rotate = "none")
+      loadings <- fa_result$loadings[, 1]
+
+      results[[name]] <- list(
+        construct = name,
+        cronbach_alpha = cronbach_alpha,
+        loadings = loadings
+      )
+    }
+  }
+
+  for (metric in results) {
+    cat("\nConstruct: ", metric$construct, "\n")
+    cat("Cronbach Alpha: ", round(metric$cronbach_alpha, 2), "\n")
+    cat("Factor Loadings:\n")
+    print(round(metric$loadings, 2))
+  }
+  
+  return(results)
+}
+```
+
+
+
+``` r
+metrics_results <- calculate_metrics_all(vars_artigo, construct_patterns)
+```
+
+```
+## Warning in alpha(dataset): Some items were negatively correlated with the first principal component and probably 
+## should be reversed.  
+## To do this, run the function again with the 'check.keys=TRUE' option
+```
+
+```
+## Some items ( Mot5 Mot8 Mot11 Mot15 ) were negatively correlated with the first principal component and 
+## probably should be reversed.  
+## To do this, run the function again with the 'check.keys=TRUE' option
+## Construct:  ethical_behaviour 
+## Cronbach Alpha:  0.73 
+## Factor Loadings:
+##  ET1  ET2  ET3  ET4  ET5  ET6  ET7  ET8  ET9 ET10 ET11 ET12 ET13 ET14 
+## 0.26 0.27 0.30 0.28 0.32 0.34 0.36 0.37 0.39 0.54 0.53 0.60 0.63 0.47 
+## 
+## Construct:  motivation 
+## Cronbach Alpha:  0.68 
+## Factor Loadings:
+##  Mot1  Mot2  Mot3  Mot4  Mot5  Mot6  Mot7  Mot8  Mot9 Mot10 Mot11 Mot12 Mot13 
+##  0.50  0.57  0.28  0.49 -0.08  0.58  0.34 -0.11  0.49  0.46 -0.06  0.41  0.61 
+## Mot14 Mot15 
+##  0.48 -0.13 
+## 
+## Construct:  self_efficacy 
+## Cronbach Alpha:  0.82 
+## Factor Loadings:
+##  SE1  SE2  SE3  SE4  SE5  SE6 
+## 0.57 0.59 0.76 0.74 0.63 0.71 
+## 
+## Construct:  resilience 
+## Cronbach Alpha:  0.78 
+## Factor Loadings:
+##   R1   R2   R3   R4   R5   R6 
+## 0.58 0.65 0.57 0.58 0.65 0.60 
+## 
+## Construct:  knowledge_articulation 
+## Cronbach Alpha:  0.87 
+## Factor Loadings:
+##  KA1  KA2  KA3  KA4  KA5 
+## 0.70 0.81 0.77 0.81 0.70 
+## 
+## Construct:  team_strain 
+## Cronbach Alpha:  0.89 
+## Factor Loadings:
+##  TS1  TS2  TS3  TS4  TS5  TS6  TS7  TS8  TS9 TS10 TS11 TS12 TS13 TS14 TS15 TS16 
+## 0.40 0.31 0.40 0.39 0.46 0.47 0.53 0.57 0.63 0.65 0.65 0.66 0.73 0.78 0.82 0.74 
+## TS17 
+## 0.76 
+## 
+## Construct:  cooperative_classroom_environment 
+## Cronbach Alpha:  0.89 
+## Factor Loadings:
+##  CCE1  CCE2  CCE3  CCE4  CCE5  CCE6  CCE7  CCE8  CCE9 CCE10 CCE11 CCE12 CCE13 
+##  0.63  0.17  0.49  0.47  0.66  0.44  0.58  0.54  0.58  0.66  0.62  0.36  0.58 
+## CCE14 CCE15 CCE16 CCE17 CCE18 CCE19 CCE20 
+##  0.57  0.29  0.72  0.70  0.68  0.70  0.55
+```
+
+
+
+``` r
+selected_construct_patterns <- list(
+  ethical_behaviour = c("ET12", "ET13"),
+  motivation = c("Mot5", "Mot8", "Mot11"),
+  self_efficacy = c("SE1", "SE2", "SE3", "SE4", "SE5", "SE6"),
+  resilience = c("R2", "R5", "R6"),
+  knowledge_articulation = c("KA1", "KA2", "KA3", "KA4", "KA5"),
+  team_strain = c("TS10", "TS11", "TS12", "TS13", "TS14", "TS15", "TS16", "TS17"),
+  cooperative_classroom_environment = c("CCE1", "CCE3", "CCE4", "CCE5", "CCE8", "CCE9","CCE10", "CCE11")
+)
+metrics_results <- calculate_metrics_all(vars_artigo, selected_construct_patterns)
+```
+
+```
+## 
+## Construct:  ethical_behaviour 
+## Cronbach Alpha:  0.84 
+## Factor Loadings:
+## ET12 ET13 
+## 0.85 0.85 
+## 
+## Construct:  motivation 
+## Cronbach Alpha:  0.69 
+## Factor Loadings:
+##  Mot5  Mot8 Mot11 
+##  0.63  0.67  0.67 
+## 
+## Construct:  self_efficacy 
+## Cronbach Alpha:  0.82 
+## Factor Loadings:
+##  SE1  SE2  SE3  SE4  SE5  SE6 
+## 0.57 0.59 0.76 0.74 0.63 0.71 
+## 
+## Construct:  resilience 
+## Cronbach Alpha:  0.74 
+## Factor Loadings:
+##   R2   R5   R6 
+## 0.51 0.86 0.74 
+## 
+## Construct:  knowledge_articulation 
+## Cronbach Alpha:  0.87 
+## Factor Loadings:
+##  KA1  KA2  KA3  KA4  KA5 
+## 0.70 0.81 0.77 0.81 0.70 
+## 
+## Construct:  team_strain 
+## Cronbach Alpha:  0.91 
+## Factor Loadings:
+## TS10 TS11 TS12 TS13 TS14 TS15 TS16 TS17 
+## 0.70 0.70 0.72 0.78 0.84 0.86 0.74 0.74 
+## 
+## Construct:  cooperative_classroom_environment 
+## Cronbach Alpha:  0.88 
+## Factor Loadings:
+##  CCE1 CCE10 CCE11 CCE12 CCE13 CCE14 CCE15 CCE16 CCE17 CCE18 CCE19  CCE3  CCE4 
+##  0.64  0.65  0.63  0.36  0.59  0.57  0.29  0.71  0.69  0.67  0.69  0.51  0.48 
+##  CCE5  CCE8  CCE9 
+##  0.66  0.53  0.59
+```
+
+
+### Análise das variáveis
+
+
+#### Construtos criados no artigo
 
 Ainda, temos acesso aos construtos criados pelos autores do artigo após a fase de análise fatorial. Vamos selecionar estas variáveis e guardá-las num objeto. Os construtos estão referidos na **Table 9** do artigo.
 
 
-```r
+``` r
 construtos_autores <- df_transform[, 121:127]
 construtos_autores
 ```
@@ -384,14 +660,14 @@ construtos_autores
   </script>
 </div>
 
-### Variáveis descritivas?
+#### Variáveis descritivas
 
 Guardamos agora 8 variáveis do início do dataset que parecem ser apenas descritivas e que são referidas (algumas destas) no artigo, na tabela com as correlações. As correlações entre construtos pode ser encontrada na **Table 10** do artigo.
 
 Uma destas variáveis é a `Fak` que já foi tratada anteriormente. Esta será incluída juntamente com as outras 7 e já terá os nomes alterados.
 
 
-```r
+``` r
 descritivas <- df_transform[, 1:8]
 descritivas
 ```
@@ -404,7 +680,7 @@ descritivas
 
 
 
-```r
+``` r
 skimr::skim(descritivas)$skim_variable
 ```
 
@@ -413,7 +689,7 @@ skimr::skim(descritivas)$skim_variable
 ## [6] "Status"      "IPK"         "Semester"
 ```
 
-```r
+``` r
 skimr::skim(descritivas)$numeric.p0
 ```
 
@@ -421,7 +697,7 @@ skimr::skim(descritivas)$numeric.p0
 ## [1]   NA    1 1995    0    1    1    1    1
 ```
 
-```r
+``` r
 skimr::skim(descritivas)$numeric.p100
 ```
 
@@ -441,17 +717,14 @@ Após alguma pesquisa fomos tentar verificar o que representavam estas variávei
 
 Verificamos o mínimo e o máximo de cada variável descritiva e percebemos alguns valores estranhos, dado o contexto pesquisado. Um deles é por exemplo o `Tlahir`. Talvez o valor mais alto $\rightarrow 31031999$ corresponde a $31/03/1999$. Para além disso o mês `BLhair` tem valores de 0 a 12, pelo que o 0 não faz muito sentido. 
 
+Estes valores não vão ser alterados, por enquanto, porque não serão importantes para a análise e replicação dos resultados.
 
-```r
-# TODO: "vou fazer, não mexam pls :)" - Botas
-```
-
-### Variáveis não citadas no artigo
+#### Variáveis não citadas no artigo
 
 As colunas que não estão nos outros datasets.
 
 
-```r
+``` r
 # selecionar do dataset df_transform aquelas que não estao em descritivas, vars_artigo e construtos_autores
 vars_nao_citadas <- df_transform %>%
   select(-all_of(c(colnames(descritivas), colnames(vars_artigo), colnames(construtos_autores))))
@@ -464,10 +737,10 @@ vars_nao_citadas
   </script>
 </div>
 
-### Criar ficheiros csv na pasta data com os 4 conjuntos anteriores
+#### Criar ficheiros csv na pasta data com os 4 conjuntos anteriores
 
 
-```r
+``` r
 # escrever uma função
 write_csvs <- function(data, name){
   write_csv(data, paste0("../data/4_conjuntos(dev)/", name, ".csv"))
@@ -479,4 +752,4237 @@ write_csvs(vars_nao_citadas, "vars_nao_citadas")
 ```
 
 
+## Fase 2: Replicação do artigo
+
+### 1 - CFA para cada conjunto de questões
+
+
+``` r
+# ler csv 
+df <- read_csv("../data/4_conjuntos(dev)/vars_artigo.csv")
+```
+
+```
+## Rows: 566 Columns: 83
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## dbl (83): ET1, ET2, ET3, ET4, ET5, ET6, ET7, ET8, ET9, ET10, ET11, ET12, ET1...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+``` r
+df
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ET1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["ET2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["ET3"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["ET4"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["ET5"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["ET6"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ET7"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["ET8"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ET9"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["ET10"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["ET11"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["ET12"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["ET13"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["ET14"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["Mot1"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["Mot2"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["Mot3"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["Mot4"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["Mot5"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["Mot6"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["Mot7"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["Mot8"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["Mot9"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["Mot10"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["Mot11"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["Mot12"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["Mot13"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["Mot14"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["Mot15"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["SE1"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["SE2"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["SE3"],"name":[32],"type":["dbl"],"align":["right"]},{"label":["SE4"],"name":[33],"type":["dbl"],"align":["right"]},{"label":["SE5"],"name":[34],"type":["dbl"],"align":["right"]},{"label":["SE6"],"name":[35],"type":["dbl"],"align":["right"]},{"label":["R1"],"name":[36],"type":["dbl"],"align":["right"]},{"label":["R2"],"name":[37],"type":["dbl"],"align":["right"]},{"label":["R3"],"name":[38],"type":["dbl"],"align":["right"]},{"label":["R4"],"name":[39],"type":["dbl"],"align":["right"]},{"label":["R5"],"name":[40],"type":["dbl"],"align":["right"]},{"label":["R6"],"name":[41],"type":["dbl"],"align":["right"]},{"label":["KA1"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["KA2"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["KA3"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["KA4"],"name":[45],"type":["dbl"],"align":["right"]},{"label":["KA5"],"name":[46],"type":["dbl"],"align":["right"]},{"label":["TS1"],"name":[47],"type":["dbl"],"align":["right"]},{"label":["TS2"],"name":[48],"type":["dbl"],"align":["right"]},{"label":["TS3"],"name":[49],"type":["dbl"],"align":["right"]},{"label":["TS4"],"name":[50],"type":["dbl"],"align":["right"]},{"label":["TS5"],"name":[51],"type":["dbl"],"align":["right"]},{"label":["TS6"],"name":[52],"type":["dbl"],"align":["right"]},{"label":["TS7"],"name":[53],"type":["dbl"],"align":["right"]},{"label":["TS8"],"name":[54],"type":["dbl"],"align":["right"]},{"label":["TS9"],"name":[55],"type":["dbl"],"align":["right"]},{"label":["TS10"],"name":[56],"type":["dbl"],"align":["right"]},{"label":["TS11"],"name":[57],"type":["dbl"],"align":["right"]},{"label":["TS12"],"name":[58],"type":["dbl"],"align":["right"]},{"label":["TS13"],"name":[59],"type":["dbl"],"align":["right"]},{"label":["TS14"],"name":[60],"type":["dbl"],"align":["right"]},{"label":["TS15"],"name":[61],"type":["dbl"],"align":["right"]},{"label":["TS16"],"name":[62],"type":["dbl"],"align":["right"]},{"label":["TS17"],"name":[63],"type":["dbl"],"align":["right"]},{"label":["CCE1"],"name":[64],"type":["dbl"],"align":["right"]},{"label":["CCE2"],"name":[65],"type":["dbl"],"align":["right"]},{"label":["CCE3"],"name":[66],"type":["dbl"],"align":["right"]},{"label":["CCE4"],"name":[67],"type":["dbl"],"align":["right"]},{"label":["CCE5"],"name":[68],"type":["dbl"],"align":["right"]},{"label":["CCE6"],"name":[69],"type":["dbl"],"align":["right"]},{"label":["CCE7"],"name":[70],"type":["dbl"],"align":["right"]},{"label":["CCE8"],"name":[71],"type":["dbl"],"align":["right"]},{"label":["CCE9"],"name":[72],"type":["dbl"],"align":["right"]},{"label":["CCE10"],"name":[73],"type":["dbl"],"align":["right"]},{"label":["CCE11"],"name":[74],"type":["dbl"],"align":["right"]},{"label":["CCE12"],"name":[75],"type":["dbl"],"align":["right"]},{"label":["CCE13"],"name":[76],"type":["dbl"],"align":["right"]},{"label":["CCE14"],"name":[77],"type":["dbl"],"align":["right"]},{"label":["CCE15"],"name":[78],"type":["dbl"],"align":["right"]},{"label":["CCE16"],"name":[79],"type":["dbl"],"align":["right"]},{"label":["CCE17"],"name":[80],"type":["dbl"],"align":["right"]},{"label":["CCE18"],"name":[81],"type":["dbl"],"align":["right"]},{"label":["CCE19"],"name":[82],"type":["dbl"],"align":["right"]},{"label":["CCE20"],"name":[83],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"4","3":"4","4":"3","5":"1","6":"1","7":"3","8":"3","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"3","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"2","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"4","48":"3","49":"2","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"3","83":"3"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"2","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"5","38":"5","39":"5","40":"4","41":"4","42":"5","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"5","52":"5","53":"4","54":"4","55":"3","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"3","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"1","3":"1","4":"5","5":"1","6":"1","7":"5","8":"5","9":"5","10":"1","11":"1","12":"1","13":"1","14":"1","15":"4","16":"5","17":"2","18":"2","19":"2","20":"5","21":"5","22":"1","23":"1","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"1","43":"5","44":"5","45":"5","46":"5","47":"1","48":"1","49":"5","50":"4","51":"4","52":"5","53":"5","54":"5","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"4","3":"1","4":"1","5":"1","6":"3","7":"4","8":"4","9":"5","10":"5","11":"4","12":"2","13":"2","14":"2","15":"4","16":"4","17":"4","18":"3","19":"2","20":"4","21":"2","22":"4","23":"3","24":"3","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"3","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"3","66":"3","67":"3","68":"3","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"3","2":"3","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"5","10":"4","11":"4","12":"4","13":"4","14":"3","15":"4","16":"3","17":"2","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"3","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"2","43":"3","44":"3","45":"3","46":"3","47":"4","48":"4","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"1","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"2","11":"3","12":"3","13":"4","14":"5","15":"4","16":"4","17":"3","18":"3","19":"3","20":"4","21":"4","22":"1","23":"4","24":"3","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"3","39":"5","40":"4","41":"5","42":"4","43":"5","44":"1","45":"4","46":"3","47":"3","48":"3","49":"3","50":"5","51":"5","52":"3","53":"5","54":"5","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"3","67":"4","68":"5","69":"4","70":"5","71":"4","72":"3","73":"4","74":"4","75":"5","76":"5","77":"1","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"2","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"5","38":"5","39":"5","40":"4","41":"4","42":"5","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"5","52":"5","53":"4","54":"4","55":"3","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"3","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"4","2":"4","3":"3","4":"4","5":"4","6":"3","7":"4","8":"4","9":"4","10":"5","11":"3","12":"4","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"5","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"5","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"3","75":"4","76":"4","77":"3","78":"4","79":"4","80":"3","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"4","4":"4","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"5","16":"5","17":"3","18":"4","19":"2","20":"4","21":"3","22":"2","23":"4","24":"4","25":"4","26":"5","27":"5","28":"4","29":"1","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"2","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"3","51":"4","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"5","66":"5","67":"5","68":"3","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"2","4":"3","5":"3","6":"3","7":"5","8":"5","9":"4","10":"5","11":"4","12":"4","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"3","20":"5","21":"4","22":"4","23":"5","24":"5","25":"3","26":"5","27":"5","28":"5","29":"3","30":"4","31":"4","32":"4","33":"4","34":"3","35":"3","36":"4","37":"5","38":"5","39":"5","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"4","67":"4","68":"5","69":"4","70":"5","71":"4","72":"4","73":"5","74":"5","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"1","5":"2","6":"1","7":"1","8":"2","9":"2","10":"1","11":"1","12":"1","13":"1","14":"1","15":"3","16":"3","17":"3","18":"3","19":"2","20":"1","21":"3","22":"3","23":"3","24":"1","25":"3","26":"3","27":"1","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"1","38":"3","39":"1","40":"1","41":"1","42":"1","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"1","65":"1","66":"1","67":"1","68":"1","69":"3","70":"3","71":"1","72":"3","73":"3","74":"3","75":"3","76":"1","77":"3","78":"3","79":"1","80":"1","81":"1","82":"1","83":"3"},{"1":"2","2":"3","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"5","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"5","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"2","5":"2","6":"2","7":"4","8":"5","9":"5","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"5","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"4","39":"4","40":"2","41":"4","42":"4","43":"4","44":"5","45":"4","46":"4","47":"4","48":"4","49":"4","50":"2","51":"3","52":"3","53":"2","54":"2","55":"4","56":"4","57":"4","58":"4","59":"5","60":"5","61":"4","62":"4","63":"4","64":"4","65":"2","66":"5","67":"5","68":"4","69":"3","70":"4","71":"4","72":"5","73":"4","74":"5","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"2","2":"5","3":"2","4":"2","5":"3","6":"2","7":"5","8":"4","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5","15":"4","16":"4","17":"4","18":"4","19":"2","20":"3","21":"4","22":"2","23":"4","24":"4","25":"4","26":"4","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"5","36":"4","37":"4","38":"4","39":"5","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"2","75":"1","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"2","2":"5","3":"2","4":"2","5":"3","6":"2","7":"5","8":"4","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5","15":"4","16":"4","17":"4","18":"4","19":"2","20":"3","21":"4","22":"2","23":"4","24":"4","25":"4","26":"4","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"5","36":"4","37":"4","38":"4","39":"5","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"2","75":"1","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"1","3":"1","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"3","15":"5","16":"5","17":"5","18":"5","19":"5","20":"4","21":"4","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"4","30":"1","31":"2","32":"2","33":"2","34":"3","35":"1","36":"1","37":"3","38":"5","39":"4","40":"3","41":"4","42":"3","43":"3","44":"3","45":"3","46":"3","47":"2","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"5","65":"5","66":"4","67":"5","68":"4","69":"5","70":"4","71":"5","72":"4","73":"5","74":"5","75":"5","76":"5","77":"4","78":"4","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"5","3":"1","4":"2","5":"2","6":"3","7":"5","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"4","15":"5","16":"4","17":"3","18":"4","19":"3","20":"4","21":"5","22":"2","23":"4","24":"2","25":"3","26":"3","27":"5","28":"4","29":"3","30":"4","31":"4","32":"3","33":"4","34":"3","35":"4","36":"3","37":"5","38":"4","39":"4","40":"2","41":"3","42":"4","43":"3","44":"3","45":"4","46":"3","47":"4","48":"5","49":"3","50":"4","51":"4","52":"3","53":"5","54":"3","55":"2","56":"4","57":"4","58":"2","59":"3","60":"3","61":"4","62":"2","63":"4","64":"2","65":"2","66":"2","67":"2","68":"2","69":"2","70":"2","71":"2","72":"2","73":"2","74":"2","75":"2","76":"2","77":"2","78":"2","79":"2","80":"2","81":"2","82":"2","83":"2"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"4","15":"4","16":"4","17":"5","18":"4","19":"2","20":"4","21":"3","22":"2","23":"4","24":"3","25":"2","26":"4","27":"5","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"5","41":"3","42":"4","43":"4","44":"4","45":"4","46":"3","47":"3","48":"3","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"2","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"5","8":"2","9":"5","10":"1","11":"3","12":"3","13":"4","14":"4","15":"4","16":"5","17":"1","18":"5","19":"1","20":"5","21":"3","22":"2","23":"3","24":"4","25":"1","26":"3","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"3","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"2","47":"4","48":"5","49":"4","50":"4","51":"4","52":"3","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"1","67":"3","68":"3","69":"2","70":"2","71":"2","72":"2","73":"2","74":"2","75":"2","76":"2","77":"2","78":"1","79":"2","80":"2","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"2","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"4","29":"2","30":"3","31":"3","32":"4","33":"3","34":"4","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"3","52":"3","53":"3","54":"3","55":"4","56":"4","57":"3","58":"3","59":"3","60":"3","61":"3","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"3","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"1","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"3","14":"4","15":"2","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"3","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"1","6":"1","7":"5","8":"5","9":"5","10":"2","11":"2","12":"1","13":"1","14":"4","15":"4","16":"5","17":"1","18":"4","19":"1","20":"5","21":"2","22":"1","23":"5","24":"5","25":"1","26":"1","27":"5","28":"5","29":"1","30":"5","31":"2","32":"5","33":"5","34":"5","35":"5","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"3","43":"3","44":"3","45":"3","46":"3","47":"5","48":"5","49":"5","50":"3","51":"5","52":"4","53":"5","54":"5","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"2","65":"5","66":"5","67":"2","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"1","7":"3","8":"3","9":"3","10":"2","11":"2","12":"2","13":"2","14":"2","15":"3","16":"3","17":"4","18":"4","19":"4","20":"3","21":"3","22":"4","23":"4","24":"4","25":"3","26":"3","27":"2","28":"4","29":"4","30":"1","31":"3","32":"1","33":"3","34":"1","35":"3","36":"1","37":"3","38":"1","39":"2","40":"1","41":"3","42":"3","43":"4","44":"4","45":"5","46":"3","47":"3","48":"4","49":"5","50":"5","51":"3","52":"3","53":"4","54":"4","55":"5","56":"4","57":"3","58":"5","59":"5","60":"4","61":"4","62":"3","63":"5","64":"4","65":"4","66":"4","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"3","75":"3","76":"3","77":"3","78":"3","79":"4","80":"3","81":"4","82":"3","83":"4"},{"1":"3","2":"3","3":"1","4":"2","5":"3","6":"1","7":"4","8":"5","9":"5","10":"3","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"3","24":"4","25":"3","26":"3","27":"5","28":"3","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"5","39":"5","40":"4","41":"3","42":"3","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"5","51":"4","52":"5","53":"5","54":"5","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"5","66":"4","67":"4","68":"3","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"5","2":"4","3":"4","4":"3","5":"4","6":"3","7":"3","8":"2","9":"2","10":"2","11":"3","12":"4","13":"3","14":"3","15":"3","16":"4","17":"4","18":"4","19":"5","20":"4","21":"3","22":"5","23":"4","24":"4","25":"4","26":"3","27":"5","28":"5","29":"4","30":"3","31":"4","32":"3","33":"5","34":"3","35":"4","36":"1","37":"3","38":"2","39":"1","40":"4","41":"4","42":"2","43":"3","44":"2","45":"3","46":"1","47":"2","48":"3","49":"3","50":"2","51":"4","52":"3","53":"3","54":"3","55":"2","56":"4","57":"3","58":"2","59":"4","60":"4","61":"2","62":"3","63":"3","64":"3","65":"4","66":"4","67":"3","68":"4","69":"4","70":"3","71":"4","72":"4","73":"5","74":"2","75":"2","76":"5","77":"5","78":"4","79":"4","80":"4","81":"5","82":"4","83":"3"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"1","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5","15":"3","16":"3","17":"3","18":"3","19":"3","20":"3","21":"3","22":"3","23":"3","24":"3","25":"3","26":"3","27":"3","28":"3","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"2","40":"2","41":"1","42":"2","43":"3","44":"2","45":"2","46":"3","47":"3","48":"3","49":"3","50":"4","51":"3","52":"3","53":"3","54":"3","55":"2","56":"3","57":"3","58":"3","59":"4","60":"3","61":"3","62":"2","63":"3","64":"2","65":"2","66":"2","67":"3","68":"4","69":"2","70":"2","71":"2","72":"4","73":"2","74":"2","75":"2","76":"4","77":"4","78":"3","79":"3","80":"4","81":"3","82":"3","83":"3"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"3","7":"5","8":"4","9":"5","10":"4","11":"4","12":"4","13":"4","14":"3","15":"4","16":"3","17":"3","18":"5","19":"3","20":"5","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"3","31":"2","32":"3","33":"4","34":"4","35":"4","36":"3","37":"3","38":"3","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"5","51":"4","52":"5","53":"4","54":"5","55":"4","56":"5","57":"5","58":"4","59":"5","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"2","67":"2","68":"4","69":"2","70":"4","71":"1","72":"2","73":"2","74":"2","75":"5","76":"5","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"3","4":"4","5":"4","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"3","14":"2","15":"4","16":"3","17":"3","18":"5","19":"4","20":"5","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"5","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"3","73":"3","74":"3","75":"4","76":"4","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"2","5":"1","6":"1","7":"4","8":"4","9":"4","10":"2","11":"3","12":"2","13":"2","14":"2","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"3","25":"2","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"2","72":"2","73":"3","74":"3","75":"4","76":"4","77":"4","78":"1","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"4","4":"4","5":"4","6":"1","7":"5","8":"5","9":"4","10":"3","11":"3","12":"2","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"3","21":"1","22":"3","23":"3","24":"5","25":"3","26":"4","27":"4","28":"4","29":"5","30":"5","31":"5","32":"3","33":"4","34":"3","35":"3","36":"3","37":"5","38":"3","39":"3","40":"5","41":"5","42":"5","43":"5","44":"5","45":"4","46":"4","47":"5","48":"3","49":"5","50":"1","51":"4","52":"4","53":"1","54":"1","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"5","65":"3","66":"5","67":"4","68":"5","69":"5","70":"5","71":"5","72":"5","73":"4","74":"4","75":"3","76":"4","77":"4","78":"1","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"3","16":"3","17":"3","18":"3","19":"3","20":"3","21":"3","22":"3","23":"3","24":"3","25":"3","26":"3","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"3","67":"3","68":"3","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"2","13":"2","14":"5","15":"4","16":"4","17":"4","18":"5","19":"2","20":"5","21":"5","22":"1","23":"4","24":"5","25":"1","26":"4","27":"5","28":"3","29":"1","30":"5","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"5","52":"5","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"5","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"2","15":"4","16":"4","17":"3","18":"3","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"4","72":"3","73":"3","74":"3","75":"5","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"4","5":"1","6":"2","7":"4","8":"5","9":"4","10":"3","11":"3","12":"2","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"3","21":"1","22":"3","23":"3","24":"5","25":"3","26":"4","27":"4","28":"4","29":"5","30":"5","31":"5","32":"3","33":"4","34":"3","35":"3","36":"3","37":"5","38":"3","39":"3","40":"5","41":"5","42":"5","43":"5","44":"5","45":"4","46":"4","47":"5","48":"3","49":"5","50":"1","51":"4","52":"4","53":"1","54":"1","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"5","65":"3","66":"5","67":"4","68":"5","69":"5","70":"5","71":"5","72":"5","73":"4","74":"4","75":"3","76":"4","77":"4","78":"1","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"4","6":"5","7":"4","8":"3","9":"4","10":"3","11":"4","12":"3","13":"3","14":"4","15":"4","16":"3","17":"4","18":"3","19":"4","20":"3","21":"3","22":"4","23":"3","24":"3","25":"4","26":"3","27":"3","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"3","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"3","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"3","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"2","4":"2","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"5","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"4","66":"4","67":"3","68":"4","69":"4","70":"4","71":"3","72":"3","73":"4","74":"4","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"5","3":"2","4":"4","5":"1","6":"4","7":"4","8":"4","9":"4","10":"5","11":"4","12":"2","13":"2","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"5","21":"4","22":"3","23":"5","24":"4","25":"3","26":"5","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"2","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"2","42":"4","43":"5","44":"5","45":"4","46":"4","47":"4","48":"4","49":"5","50":"4","51":"5","52":"4","53":"3","54":"3","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"5","74":"4","75":"4","76":"5","77":"5","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"3","4":"4","5":"1","6":"1","7":"4","8":"4","9":"4","10":"5","11":"4","12":"4","13":"4","14":"3","15":"5","16":"1","17":"4","18":"5","19":"1","20":"4","21":"2","22":"3","23":"3","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"5","31":"1","32":"3","33":"3","34":"1","35":"1","36":"3","37":"5","38":"5","39":"5","40":"5","41":"5","42":"1","43":"4","44":"4","45":"4","46":"4","47":"2","48":"1","49":"2","50":"4","51":"5","52":"5","53":"5","54":"5","55":"3","56":"4","57":"2","58":"3","59":"4","60":"5","61":"5","62":"5","63":"5","64":"5","65":"4","66":"4","67":"4","68":"5","69":"3","70":"4","71":"4","72":"5","73":"5","74":"5","75":"5","76":"5","77":"3","78":"3","79":"5","80":"5","81":"4","82":"4","83":"1"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"1","7":"5","8":"5","9":"5","10":"5","11":"2","12":"1","13":"4","14":"5","15":"5","16":"4","17":"4","18":"5","19":"1","20":"4","21":"3","22":"3","23":"3","24":"3","25":"1","26":"3","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"5","38":"5","39":"4","40":"4","41":"4","42":"5","43":"4","44":"5","45":"4","46":"5","47":"2","48":"2","49":"2","50":"3","51":"2","52":"3","53":"2","54":"3","55":"3","56":"2","57":"3","58":"2","59":"2","60":"3","61":"2","62":"2","63":"3","64":"4","65":"5","66":"4","67":"4","68":"5","69":"4","70":"5","71":"5","72":"4","73":"4","74":"5","75":"5","76":"5","77":"4","78":"4","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"5","3":"4","4":"4","5":"4","6":"4","7":"5","8":"5","9":"5","10":"5","11":"3","12":"4","13":"4","14":"4","15":"4","16":"2","17":"4","18":"4","19":"4","20":"2","21":"4","22":"1","23":"3","24":"5","25":"1","26":"3","27":"5","28":"5","29":"1","30":"4","31":"3","32":"4","33":"3","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"3","42":"4","43":"4","44":"3","45":"4","46":"3","47":"3","48":"3","49":"4","50":"4","51":"5","52":"5","53":"5","54":"5","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"5","64":"5","65":"2","66":"4","67":"5","68":"5","69":"3","70":"5","71":"3","72":"3","73":"4","74":"5","75":"4","76":"5","77":"5","78":"3","79":"5","80":"5","81":"5","82":"4","83":"5"},{"1":"2","2":"3","3":"3","4":"4","5":"4","6":"1","7":"5","8":"4","9":"4","10":"3","11":"3","12":"2","13":"2","14":"4","15":"4","16":"5","17":"3","18":"5","19":"3","20":"5","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"3","35":"5","36":"4","37":"4","38":"5","39":"5","40":"3","41":"4","42":"4","43":"4","44":"4","45":"3","46":"4","47":"3","48":"3","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"3","57":"3","58":"2","59":"3","60":"3","61":"4","62":"4","63":"3","64":"5","65":"3","66":"4","67":"4","68":"4","69":"5","70":"4","71":"4","72":"3","73":"4","74":"5","75":"4","76":"3","77":"4","78":"2","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"1","2":"2","3":"3","4":"2","5":"3","6":"1","7":"4","8":"4","9":"5","10":"4","11":"3","12":"2","13":"1","14":"4","15":"4","16":"4","17":"2","18":"4","19":"2","20":"5","21":"3","22":"1","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"3","31":"4","32":"3","33":"4","34":"4","35":"3","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"2","43":"4","44":"3","45":"4","46":"3","47":"4","48":"3","49":"4","50":"2","51":"4","52":"2","53":"3","54":"3","55":"4","56":"4","57":"2","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"3","74":"4","75":"2","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"5","5":"1","6":"1","7":"5","8":"5","9":"5","10":"5","11":"5","12":"1","13":"1","14":"1","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"5","40":"5","41":"5","42":"1","43":"1","44":"1","45":"1","46":"1","47":"1","48":"1","49":"1","50":"1","51":"1","52":"1","53":"1","54":"1","55":"1","56":"1","57":"1","58":"1","59":"1","60":"1","61":"1","62":"1","63":"1","64":"1","65":"1","66":"1","67":"1","68":"1","69":"1","70":"1","71":"1","72":"1","73":"1","74":"1","75":"1","76":"1","77":"1","78":"1","79":"1","80":"1","81":"1","82":"1","83":"1"},{"1":"3","2":"3","3":"1","4":"2","5":"3","6":"1","7":"5","8":"5","9":"5","10":"5","11":"4","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"5","39":"5","40":"4","41":"3","42":"2","43":"2","44":"2","45":"2","46":"2","47":"4","48":"3","49":"4","50":"4","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"3","71":"4","72":"4","73":"4","74":"4","75":"2","76":"5","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"5","8":"5","9":"5","10":"5","11":"3","12":"3","13":"3","14":"3","15":"3","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"5","25":"2","26":"4","27":"5","28":"5","29":"2","30":"4","31":"4","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"2","43":"2","44":"2","45":"2","46":"2","47":"3","48":"4","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"1","4":"3","5":"1","6":"3","7":"5","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"4","15":"2","16":"4","17":"3","18":"5","19":"3","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"2","76":"4","77":"3","78":"3","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"4","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"3","14":"5","15":"4","16":"3","17":"4","18":"5","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"4","30":"4","31":"5","32":"4","33":"3","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"5","68":"4","69":"4","70":"5","71":"5","72":"4","73":"3","74":"5","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"3","5":"1","6":"2","7":"5","8":"5","9":"4","10":"2","11":"2","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"5","21":"4","22":"3","23":"3","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"4","5":"2","6":"4","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"2","15":"4","16":"3","17":"3","18":"3","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"3","29":"3","30":"3","31":"4","32":"3","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"2","66":"4","67":"2","68":"3","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"3","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"2","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"3","15":"3","16":"3","17":"3","18":"3","19":"3","20":"3","21":"2","22":"4","23":"3","24":"3","25":"3","26":"3","27":"3","28":"3","29":"3","30":"3","31":"2","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"4","39":"3","40":"3","41":"4","42":"4","43":"4","44":"3","45":"4","46":"3","47":"4","48":"4","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"3","62":"4","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"3","73":"4","74":"3","75":"4","76":"4","77":"4","78":"4","79":"3","80":"4","81":"3","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"3","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"4","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"3","25":"2","26":"3","27":"4","28":"4","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"5","15":"3","16":"4","17":"3","18":"3","19":"3","20":"4","21":"2","22":"4","23":"3","24":"5","25":"2","26":"3","27":"5","28":"3","29":"5","30":"3","31":"2","32":"3","33":"4","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"3","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"5","66":"3","67":"3","68":"3","69":"3","70":"4","71":"4","72":"3","73":"4","74":"3","75":"4","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"4","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"5","16":"4","17":"4","18":"4","19":"4","20":"3","21":"3","22":"3","23":"3","24":"4","25":"3","26":"3","27":"5","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"5","39":"3","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"5","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"3","60":"4","61":"4","62":"4","63":"4","64":"2","65":"5","66":"3","67":"2","68":"4","69":"4","70":"3","71":"3","72":"3","73":"3","74":"1","75":"5","76":"5","77":"5","78":"5","79":"4","80":"4","81":"4","82":"4","83":"2"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"4","8":"4","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"3","24":"4","25":"2","26":"4","27":"4","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"3","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"4","69":"2","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"2","15":"5","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"2","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"2","5":"2","6":"1","7":"4","8":"4","9":"4","10":"5","11":"3","12":"3","13":"4","14":"4","15":"3","16":"4","17":"3","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"3","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"3","4":"3","5":"3","6":"3","7":"5","8":"5","9":"5","10":"4","11":"5","12":"5","13":"3","14":"5","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"5","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"3","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"1","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"4","19":"4","20":"4","21":"3","22":"4","23":"3","24":"4","25":"3","26":"4","27":"5","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"3","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"3","4":"3","5":"3","6":"3","7":"5","8":"3","9":"3","10":"2","11":"3","12":"2","13":"2","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"5","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"4","25":"3","26":"3","27":"4","28":"3","29":"2","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"1","4":"1","5":"1","6":"1","7":"4","8":"4","9":"4","10":"2","11":"2","12":"3","13":"3","14":"3","15":"4","16":"3","17":"2","18":"3","19":"2","20":"5","21":"3","22":"1","23":"4","24":"5","25":"1","26":"4","27":"5","28":"2","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"5","66":"3","67":"3","68":"5","69":"5","70":"5","71":"4","72":"4","73":"4","74":"4","75":"2","76":"5","77":"5","78":"4","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"1","5":"2","6":"2","7":"1","8":"1","9":"1","10":"1","11":"1","12":"2","13":"2","14":"1","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"4","25":"2","26":"3","27":"4","28":"4","29":"2","30":"3","31":"2","32":"3","33":"3","34":"3","35":"3","36":"2","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"5","49":"5","50":"4","51":"5","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"2","70":"4","71":"4","72":"2","73":"2","74":"2","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"3","83":"4"},{"1":"3","2":"4","3":"2","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"3","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"3","4":"1","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"5","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"3","31":"5","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"5","51":"3","52":"4","53":"5","54":"4","55":"4","56":"4","57":"5","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"3","67":"3","68":"4","69":"4","70":"5","71":"3","72":"3","73":"4","74":"4","75":"4","76":"4","77":"5","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"2","13":"2","14":"4","15":"3","16":"4","17":"2","18":"4","19":"1","20":"4","21":"4","22":"2","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"5","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"5","54":"5","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"5","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"2","70":"4","71":"2","72":"4","73":"4","74":"4","75":"3","76":"4","77":"2","78":"2","79":"4","80":"5","81":"4","82":"4","83":"3"},{"1":"3","2":"5","3":"2","4":"4","5":"4","6":"1","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"3","30":"3","31":"3","32":"3","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"3","15":"4","16":"4","17":"5","18":"5","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"5","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"2","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"4","15":"3","16":"5","17":"2","18":"4","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"2","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"3","51":"3","52":"4","53":"3","54":"3","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"2","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"2","4":"3","5":"2","6":"1","7":"5","8":"5","9":"5","10":"4","11":"3","12":"2","13":"3","14":"4","15":"5","16":"4","17":"3","18":"3","19":"3","20":"5","21":"3","22":"3","23":"5","24":"5","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"5","37":"4","38":"4","39":"4","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"3","47":"3","48":"3","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"3","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"2","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"4","15":"4","16":"4","17":"3","18":"4","19":"1","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"3","31":"4","32":"4","33":"3","34":"3","35":"4","36":"3","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"3","69":"2","70":"4","71":"3","72":"4","73":"3","74":"3","75":"3","76":"4","77":"3","78":"2","79":"4","80":"4","81":"3","82":"3","83":"3"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"4","12":"3","13":"3","14":"4","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"3","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"3","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"1","4":"2","5":"1","6":"1","7":"5","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"2","15":"5","16":"5","17":"5","18":"5","19":"3","20":"4","21":"4","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"3","31":"4","32":"4","33":"3","34":"3","35":"3","36":"3","37":"4","38":"5","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"3","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"3","40":"3","41":"4","42":"3","43":"4","44":"4","45":"4","46":"3","47":"4","48":"4","49":"3","50":"4","51":"4","52":"3","53":"4","54":"4","55":"3","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"3","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"1","83":"4"},{"1":"2","2":"4","3":"4","4":"4","5":"3","6":"3","7":"4","8":"4","9":"4","10":"5","11":"4","12":"4","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"4","26":"4","27":"4","28":"5","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"5","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"2","65":"2","66":"2","67":"2","68":"2","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"1","2":"5","3":"1","4":"2","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"4","15":"4","16":"3","17":"4","18":"4","19":"2","20":"3","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"2","65":"3","66":"3","67":"3","68":"4","69":"1","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"1","4":"1","5":"1","6":"1","7":"5","8":"4","9":"5","10":"1","11":"3","12":"1","13":"1","14":"5","15":"5","16":"5","17":"5","18":"4","19":"4","20":"5","21":"4","22":"3","23":"5","24":"5","25":"5","26":"3","27":"5","28":"4","29":"3","30":"2","31":"2","32":"2","33":"1","34":"2","35":"2","36":"2","37":"2","38":"2","39":"2","40":"2","41":"2","42":"3","43":"3","44":"3","45":"3","46":"3","47":"2","48":"2","49":"2","50":"2","51":"1","52":"2","53":"2","54":"1","55":"2","56":"2","57":"2","58":"2","59":"1","60":"2","61":"1","62":"2","63":"2","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"2","4":"4","5":"2","6":"1","7":"4","8":"4","9":"4","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"4","26":"3","27":"4","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"4","36":"3","37":"4","38":"4","39":"3","40":"4","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"3","54":"3","55":"3","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"3","71":"4","72":"3","73":"4","74":"4","75":"1","76":"5","77":"4","78":"3","79":"3","80":"3","81":"4","82":"4","83":"3"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"1","7":"4","8":"5","9":"5","10":"4","11":"3","12":"2","13":"2","14":"3","15":"3","16":"5","17":"4","18":"5","19":"1","20":"5","21":"4","22":"1","23":"5","24":"5","25":"1","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"2","37":"4","38":"5","39":"5","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"2","51":"4","52":"2","53":"4","54":"4","55":"2","56":"2","57":"3","58":"2","59":"3","60":"3","61":"3","62":"2","63":"4","64":"5","65":"3","66":"3","67":"4","68":"4","69":"3","70":"5","71":"3","72":"3","73":"4","74":"5","75":"4","76":"5","77":"3","78":"3","79":"5","80":"4","81":"4","82":"5","83":"2"},{"1":"3","2":"4","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"4","23":"4","24":"4","25":"3","26":"3","27":"4","28":"3","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"3","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"4","4":"4","5":"4","6":"5","7":"4","8":"4","9":"5","10":"4","11":"4","12":"5","13":"4","14":"5","15":"4","16":"5","17":"4","18":"4","19":"4","20":"4","21":"4","22":"5","23":"4","24":"5","25":"4","26":"5","27":"4","28":"4","29":"4","30":"3","31":"4","32":"5","33":"5","34":"4","35":"5","36":"4","37":"4","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"5","52":"5","53":"4","54":"5","55":"5","56":"4","57":"5","58":"4","59":"4","60":"4","61":"5","62":"5","63":"5","64":"4","65":"5","66":"4","67":"5","68":"4","69":"5","70":"4","71":"5","72":"4","73":"5","74":"4","75":"5","76":"4","77":"5","78":"4","79":"5","80":"4","81":"5","82":"4","83":"5"},{"1":"1","2":"5","3":"1","4":"1","5":"2","6":"2","7":"5","8":"4","9":"4","10":"3","11":"3","12":"2","13":"2","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"2","23":"4","24":"3","25":"2","26":"3","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"4","4":"2","5":"3","6":"4","7":"4","8":"2","9":"3","10":"4","11":"2","12":"3","13":"4","14":"4","15":"2","16":"4","17":"3","18":"4","19":"3","20":"5","21":"3","22":"4","23":"1","24":"1","25":"3","26":"2","27":"5","28":"4","29":"2","30":"2","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"2","43":"3","44":"4","45":"4","46":"4","47":"1","48":"4","49":"5","50":"4","51":"4","52":"4","53":"3","54":"4","55":"3","56":"1","57":"2","58":"1","59":"3","60":"4","61":"4","62":"4","63":"5","64":"2","65":"3","66":"4","67":"4","68":"4","69":"3","70":"2","71":"2","72":"3","73":"4","74":"3","75":"2","76":"2","77":"2","78":"2","79":"3","80":"5","81":"1","82":"2","83":"2"},{"1":"4","2":"4","3":"3","4":"4","5":"4","6":"4","7":"2","8":"3","9":"5","10":"4","11":"4","12":"3","13":"4","14":"4","15":"3","16":"4","17":"3","18":"4","19":"2","20":"4","21":"2","22":"3","23":"4","24":"4","25":"4","26":"4","27":"2","28":"4","29":"3","30":"2","31":"3","32":"4","33":"2","34":"4","35":"3","36":"2","37":"4","38":"3","39":"4","40":"4","41":"2","42":"2","43":"4","44":"3","45":"4","46":"4","47":"2","48":"4","49":"4","50":"3","51":"3","52":"4","53":"2","54":"3","55":"4","56":"4","57":"2","58":"4","59":"5","60":"5","61":"3","62":"2","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"2","71":"4","72":"3","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"2","80":"3","81":"4","82":"3","83":"4"},{"1":"4","2":"4","3":"5","4":"3","5":"4","6":"5","7":"4","8":"4","9":"3","10":"4","11":"4","12":"3","13":"5","14":"4","15":"4","16":"4","17":"3","18":"4","19":"4","20":"4","21":"3","22":"5","23":"4","24":"3","25":"4","26":"5","27":"3","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"5","39":"4","40":"3","41":"4","42":"4","43":"3","44":"4","45":"5","46":"3","47":"4","48":"3","49":"5","50":"4","51":"4","52":"3","53":"4","54":"2","55":"3","56":"5","57":"4","58":"4","59":"3","60":"4","61":"4","62":"3","63":"4","64":"4","65":"3","66":"5","67":"4","68":"4","69":"4","70":"5","71":"3","72":"4","73":"4","74":"5","75":"4","76":"4","77":"3","78":"4","79":"4","80":"3","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"4","4":"3","5":"5","6":"4","7":"4","8":"3","9":"4","10":"5","11":"4","12":"3","13":"4","14":"4","15":"4","16":"3","17":"5","18":"4","19":"4","20":"3","21":"4","22":"5","23":"2","24":"4","25":"3","26":"3","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"3","38":"3","39":"4","40":"3","41":"3","42":"3","43":"3","44":"4","45":"5","46":"5","47":"3","48":"4","49":"5","50":"4","51":"4","52":"3","53":"4","54":"3","55":"4","56":"5","57":"4","58":"4","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"3","69":"4","70":"4","71":"4","72":"3","73":"4","74":"5","75":"4","76":"3","77":"4","78":"4","79":"3","80":"4","81":"3","82":"4","83":"3"},{"1":"4","2":"4","3":"3","4":"4","5":"3","6":"4","7":"4","8":"4","9":"4","10":"3","11":"4","12":"4","13":"3","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"4","22":"4","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"5","30":"5","31":"4","32":"5","33":"4","34":"3","35":"2","36":"2","37":"3","38":"3","39":"4","40":"3","41":"4","42":"4","43":"4","44":"3","45":"4","46":"5","47":"4","48":"3","49":"4","50":"4","51":"3","52":"4","53":"3","54":"4","55":"3","56":"4","57":"3","58":"4","59":"4","60":"3","61":"3","62":"3","63":"4","64":"4","65":"3","66":"4","67":"3","68":"4","69":"3","70":"2","71":"3","72":"3","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"2","80":"2","81":"4","82":"3","83":"4"},{"1":"3","2":"3","3":"4","4":"2","5":"3","6":"3","7":"4","8":"3","9":"2","10":"3","11":"4","12":"3","13":"3","14":"4","15":"5","16":"4","17":"3","18":"4","19":"4","20":"3","21":"4","22":"4","23":"3","24":"4","25":"4","26":"3","27":"4","28":"3","29":"4","30":"4","31":"3","32":"3","33":"4","34":"3","35":"4","36":"3","37":"4","38":"5","39":"4","40":"4","41":"3","42":"3","43":"3","44":"4","45":"4","46":"5","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"3","55":"4","56":"3","57":"4","58":"3","59":"4","60":"3","61":"4","62":"3","63":"4","64":"3","65":"4","66":"4","67":"4","68":"3","69":"1","70":"3","71":"3","72":"2","73":"3","74":"4","75":"3","76":"4","77":"3","78":"4","79":"3","80":"4","81":"3","82":"4","83":"4"},{"1":"2","2":"4","3":"4","4":"3","5":"4","6":"3","7":"4","8":"2","9":"3","10":"2","11":"3","12":"4","13":"2","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"3","24":"4","25":"5","26":"4","27":"3","28":"2","29":"1","30":"3","31":"4","32":"3","33":"4","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"3","41":"5","42":"4","43":"3","44":"4","45":"4","46":"3","47":"4","48":"3","49":"4","50":"4","51":"3","52":"3","53":"4","54":"4","55":"3","56":"4","57":"3","58":"5","59":"3","60":"4","61":"3","62":"3","63":"2","64":"4","65":"3","66":"4","67":"4","68":"3","69":"4","70":"3","71":"5","72":"4","73":"3","74":"3","75":"4","76":"3","77":"4","78":"4","79":"3","80":"4","81":"4","82":"3","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"1","7":"5","8":"5","9":"4","10":"4","11":"3","12":"3","13":"3","14":"5","15":"4","16":"4","17":"2","18":"4","19":"2","20":"4","21":"2","22":"4","23":"3","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"5","38":"5","39":"3","40":"5","41":"4","42":"4","43":"3","44":"4","45":"5","46":"3","47":"5","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"3","74":"4","75":"4","76":"5","77":"5","78":"4","79":"5","80":"5","81":"5","82":"5","83":"4"},{"1":"1","2":"4","3":"2","4":"2","5":"2","6":"1","7":"5","8":"5","9":"5","10":"4","11":"5","12":"2","13":"3","14":"5","15":"3","16":"5","17":"1","18":"1","19":"1","20":"5","21":"4","22":"1","23":"4","24":"5","25":"1","26":"4","27":"4","28":"4","29":"2","30":"5","31":"5","32":"5","33":"5","34":"5","35":"4","36":"5","37":"4","38":"5","39":"5","40":"2","41":"2","42":"5","43":"5","44":"5","45":"5","46":"5","47":"4","48":"4","49":"5","50":"3","51":"3","52":"3","53":"4","54":"3","55":"2","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"5","66":"4","67":"4","68":"5","69":"4","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"4","78":"1","79":"5","80":"5","81":"5","82":"5","83":"1"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"3","14":"4","15":"3","16":"4","17":"2","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"3","25":"2","26":"3","27":"2","28":"3","29":"2","30":"3","31":"3","32":"3","33":"4","34":"3","35":"3","36":"2","37":"2","38":"2","39":"2","40":"2","41":"2","42":"4","43":"4","44":"4","45":"4","46":"2","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"3","67":"4","68":"4","69":"2","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"3","77":"2","78":"2","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"4","3":"4","4":"4","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"2","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"5","29":"3","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"4","49":"4","50":"5","51":"5","52":"5","53":"5","54":"5","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"5","69":"5","70":"5","71":"3","72":"3","73":"3","74":"3","75":"3","76":"5","77":"4","78":"4","79":"5","80":"4","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"2","4":"3","5":"1","6":"1","7":"4","8":"5","9":"5","10":"3","11":"4","12":"3","13":"4","14":"3","15":"3","16":"3","17":"4","18":"4","19":"3","20":"4","21":"2","22":"5","23":"2","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"4","32":"3","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"5","51":"5","52":"4","53":"4","54":"5","55":"4","56":"4","57":"4","58":"4","59":"4","60":"3","61":"4","62":"4","63":"5","64":"4","65":"4","66":"3","67":"4","68":"5","69":"3","70":"4","71":"4","72":"4","73":"3","74":"3","75":"5","76":"5","77":"4","78":"1","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"1","4":"2","5":"1","6":"1","7":"5","8":"5","9":"5","10":"4","11":"3","12":"2","13":"3","14":"4","15":"5","16":"4","17":"3","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"5","27":"5","28":"5","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"5","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"4","14":"3","15":"3","16":"4","17":"3","18":"3","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"1","7":"5","8":"5","9":"4","10":"1","11":"4","12":"3","13":"2","14":"4","15":"3","16":"4","17":"3","18":"3","19":"1","20":"5","21":"4","22":"2","23":"4","24":"4","25":"1","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"5","33":"4","34":"4","35":"4","36":"4","37":"3","38":"5","39":"5","40":"2","41":"3","42":"5","43":"5","44":"4","45":"5","46":"5","47":"3","48":"4","49":"4","50":"2","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"5","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"4","67":"4","68":"5","69":"3","70":"5","71":"3","72":"4","73":"3","74":"4","75":"4","76":"5","77":"4","78":"3","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"2","4":"4","5":"3","6":"1","7":"4","8":"4","9":"5","10":"4","11":"2","12":"4","13":"4","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"2","22":"4","23":"2","24":"3","25":"2","26":"4","27":"5","28":"3","29":"3","30":"3","31":"3","32":"4","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"4","58":"3","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"1","4":"2","5":"1","6":"1","7":"5","8":"5","9":"5","10":"4","11":"3","12":"2","13":"3","14":"4","15":"5","16":"4","17":"3","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"5","27":"5","28":"5","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"5","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"2","3":"3","4":"3","5":"2","6":"3","7":"5","8":"4","9":"4","10":"5","11":"3","12":"4","13":"4","14":"4","15":"4","16":"3","17":"3","18":"5","19":"4","20":"4","21":"4","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"3","34":"4","35":"3","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"5","72":"3","73":"4","74":"5","75":"5","76":"5","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"3","5":"1","6":"1","7":"5","8":"1","9":"5","10":"2","11":"3","12":"1","13":"3","14":"4","15":"5","16":"4","17":"3","18":"5","19":"3","20":"4","21":"3","22":"2","23":"5","24":"5","25":"1","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"5","37":"4","38":"5","39":"4","40":"3","41":"4","42":"2","43":"3","44":"3","45":"4","46":"4","47":"4","48":"3","49":"3","50":"3","51":"4","52":"4","53":"4","54":"4","55":"5","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"5","3":"3","4":"3","5":"3","6":"1","7":"4","8":"4","9":"4","10":"5","11":"4","12":"3","13":"3","14":"2","15":"4","16":"4","17":"2","18":"4","19":"3","20":"4","21":"4","22":"1","23":"3","24":"4","25":"1","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"5","55":"4","56":"4","57":"4","58":"4","59":"5","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"5","73":"4","74":"4","75":"5","76":"5","77":"1","78":"4","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"1","2":"5","3":"2","4":"2","5":"1","6":"1","7":"5","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"2","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"2","32":"4","33":"4","34":"5","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"5","47":"4","48":"4","49":"5","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"2","67":"2","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"2","4":"3","5":"1","6":"2","7":"4","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"5","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"2","4":"3","5":"2","6":"1","7":"4","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"5","16":"4","17":"2","18":"4","19":"2","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"5","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"2","5":"4","6":"1","7":"4","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"5","16":"4","17":"2","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"5","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"3","11":"5","12":"5","13":"5","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"5","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"3","5":"1","6":"1","7":"5","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"2","18":"4","19":"4","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"5","31":"4","32":"4","33":"3","34":"3","35":"4","36":"2","37":"1","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"3","5":"1","6":"2","7":"5","8":"4","9":"5","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"5","18":"5","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"2","31":"2","32":"4","33":"4","34":"4","35":"4","36":"3","37":"2","38":"4","39":"4","40":"3","41":"3","42":"3","43":"4","44":"4","45":"4","46":"5","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"5","65":"5","66":"3","67":"2","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"4","5":"4","6":"3","7":"3","8":"2","9":"2","10":"2","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"5","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"2","7":"4","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"3","33":"4","34":"5","35":"4","36":"4","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"2","4":"4","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"3","43":"4","44":"3","45":"4","46":"4","47":"4","48":"3","49":"2","50":"4","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"2","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"3","74":"4","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"2","4":"4","5":"3","6":"3","7":"4","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"5","16":"5","17":"3","18":"5","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"5","31":"4","32":"5","33":"5","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"5","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"2","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"4","6":"2","7":"4","8":"4","9":"4","10":"5","11":"4","12":"4","13":"3","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"1","4":"3","5":"2","6":"2","7":"5","8":"5","9":"4","10":"4","11":"2","12":"2","13":"2","14":"4","15":"3","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"2","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"2","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"5","5":"4","6":"4","7":"4","8":"1","9":"5","10":"5","11":"5","12":"5","13":"5","14":"4","15":"4","16":"4","17":"4","18":"5","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"2","38":"4","39":"4","40":"4","41":"4","42":"1","43":"1","44":"1","45":"1","46":"1","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"2","66":"5","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"2","79":"2","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"3","13":"3","14":"4","15":"3","16":"4","17":"3","18":"3","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"2","67":"2","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"2","7":"5","8":"4","9":"5","10":"4","11":"3","12":"2","13":"2","14":"2","15":"3","16":"4","17":"2","18":"5","19":"1","20":"4","21":"3","22":"4","23":"5","24":"5","25":"3","26":"4","27":"5","28":"4","29":"1","30":"5","31":"4","32":"4","33":"4","34":"4","35":"5","36":"4","37":"3","38":"4","39":"5","40":"3","41":"3","42":"4","43":"4","44":"3","45":"3","46":"3","47":"4","48":"4","49":"3","50":"3","51":"5","52":"4","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"5","71":"5","72":"5","73":"4","74":"4","75":"3","76":"3","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"5","29":"3","30":"3","31":"3","32":"3","33":"3","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"5","14":"3","15":"3","16":"4","17":"4","18":"3","19":"2","20":"5","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"2","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"3","37":"3","38":"2","39":"4","40":"2","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"2","51":"3","52":"2","53":"2","54":"2","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"2","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"2","2":"4","3":"3","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"3","29":"2","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"3","40":"4","41":"4","42":"3","43":"4","44":"3","45":"4","46":"4","47":"3","48":"4","49":"3","50":"4","51":"3","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"3","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"1","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"3","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"3","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"3","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"4","3":"1","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"2","13":"2","14":"4","15":"3","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"5","25":"3","26":"5","27":"5","28":"4","29":"4","30":"4","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"4","38":"5","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"1","6":"1","7":"5","8":"5","9":"5","10":"3","11":"3","12":"2","13":"2","14":"4","15":"4","16":"4","17":"4","18":"5","19":"2","20":"5","21":"3","22":"3","23":"3","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"3","33":"4","34":"3","35":"4","36":"5","37":"4","38":"4","39":"5","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"5","53":"4","54":"4","55":"3","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"4","67":"3","68":"3","69":"4","70":"3","71":"3","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"1","4":"2","5":"1","6":"1","7":"5","8":"4","9":"5","10":"5","11":"4","12":"4","13":"4","14":"4","15":"5","16":"5","17":"5","18":"5","19":"3","20":"5","21":"4","22":"3","23":"5","24":"5","25":"4","26":"4","27":"5","28":"5","29":"1","30":"5","31":"4","32":"5","33":"4","34":"4","35":"4","36":"4","37":"5","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"2","6":"3","7":"5","8":"5","9":"4","10":"3","11":"4","12":"3","13":"4","14":"4","15":"5","16":"5","17":"5","18":"5","19":"1","20":"5","21":"4","22":"2","23":"3","24":"4","25":"2","26":"4","27":"5","28":"5","29":"1","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"3","37":"4","38":"5","39":"5","40":"5","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"3","48":"2","49":"3","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"5","71":"3","72":"4","73":"3","74":"5","75":"3","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"2","4":"2","5":"2","6":"2","7":"5","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"2","15":"3","16":"4","17":"2","18":"3","19":"3","20":"5","21":"4","22":"4","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"3","38":"4","39":"5","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"5","51":"3","52":"5","53":"4","54":"4","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"3","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"4","4":"1","5":"3","6":"1","7":"4","8":"4","9":"4","10":"5","11":"4","12":"3","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"2","8":"4","9":"3","10":"2","11":"2","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"3","4":"4","5":"3","6":"2","7":"3","8":"5","9":"5","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"5","17":"4","18":"5","19":"2","20":"5","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"5","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"2","3":"2","4":"2","5":"2","6":"2","7":"2","8":"2","9":"2","10":"2","11":"2","12":"2","13":"2","14":"2","15":"3","16":"3","17":"3","18":"3","19":"3","20":"3","21":"3","22":"3","23":"3","24":"3","25":"3","26":"3","27":"3","28":"3","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"3","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"1","3":"3","4":"4","5":"4","6":"1","7":"4","8":"4","9":"4","10":"5","11":"4","12":"4","13":"3","14":"3","15":"3","16":"3","17":"5","18":"5","19":"1","20":"5","21":"3","22":"4","23":"2","24":"5","25":"1","26":"5","27":"5","28":"3","29":"3","30":"5","31":"3","32":"4","33":"3","34":"5","35":"3","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"5","43":"5","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"5","51":"5","52":"5","53":"5","54":"4","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"3","67":"4","68":"4","69":"4","70":"5","71":"5","72":"4","73":"4","74":"4","75":"4","76":"5","77":"5","78":"3","79":"5","80":"5","81":"5","82":"5","83":"4"},{"1":"1","2":"5","3":"1","4":"4","5":"2","6":"2","7":"5","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"5","16":"4","17":"4","18":"5","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"3","33":"3","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"5","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"3","61":"4","62":"4","63":"4","64":"4","65":"4","66":"2","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"1","7":"4","8":"5","9":"5","10":"2","11":"2","12":"4","13":"3","14":"4","15":"4","16":"3","17":"2","18":"4","19":"3","20":"4","21":"4","22":"1","23":"4","24":"5","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"2","49":"2","50":"4","51":"5","52":"4","53":"5","54":"5","55":"3","56":"4","57":"4","58":"4","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"1","4":"4","5":"4","6":"3","7":"4","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"5","16":"3","17":"2","18":"5","19":"1","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"5","32":"4","33":"5","34":"3","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"5","43":"5","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"2","5":"3","6":"4","7":"3","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"3","15":"4","16":"3","17":"4","18":"3","19":"4","20":"4","21":"4","22":"4","23":"4","24":"3","25":"4","26":"4","27":"4","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"3","39":"4","40":"4","41":"3","42":"3","43":"4","44":"3","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"3","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"3","63":"4","64":"4","65":"3","66":"3","67":"3","68":"3","69":"3","70":"4","71":"3","72":"3","73":"3","74":"3","75":"4","76":"3","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"2","7":"3","8":"3","9":"3","10":"3","11":"2","12":"2","13":"2","14":"2","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"3","27":"4","28":"4","29":"2","30":"4","31":"3","32":"4","33":"3","34":"3","35":"4","36":"3","37":"3","38":"4","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"3","53":"3","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"3","71":"4","72":"4","73":"4","74":"4","75":"3","76":"3","77":"3","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"3","5":"3","6":"2","7":"5","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"5","15":"5","16":"5","17":"4","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"5","33":"3","34":"4","35":"4","36":"3","37":"3","38":"5","39":"4","40":"2","41":"4","42":"5","43":"5","44":"4","45":"4","46":"4","47":"4","48":"3","49":"5","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"5","61":"5","62":"4","63":"4","64":"4","65":"5","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"3","3":"4","4":"3","5":"4","6":"3","7":"4","8":"3","9":"3","10":"3","11":"4","12":"4","13":"3","14":"4","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"3","25":"3","26":"3","27":"3","28":"4","29":"4","30":"4","31":"4","32":"3","33":"4","34":"3","35":"3","36":"4","37":"4","38":"3","39":"4","40":"3","41":"4","42":"3","43":"3","44":"4","45":"3","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"4","54":"3","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"3","64":"3","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"3","74":"4","75":"4","76":"4","77":"4","78":"4","79":"3","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"1","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"1","3":"1","4":"4","5":"3","6":"1","7":"4","8":"5","9":"5","10":"4","11":"3","12":"2","13":"4","14":"3","15":"5","16":"5","17":"5","18":"4","19":"3","20":"4","21":"4","22":"2","23":"5","24":"3","25":"3","26":"5","27":"5","28":"3","29":"1","30":"5","31":"5","32":"4","33":"3","34":"3","35":"5","36":"3","37":"3","38":"3","39":"5","40":"4","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"3","54":"3","55":"2","56":"2","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"5","71":"3","72":"5","73":"5","74":"5","75":"3","76":"3","77":"4","78":"4","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"1","4":"4","5":"3","6":"1","7":"4","8":"5","9":"5","10":"4","11":"3","12":"2","13":"4","14":"3","15":"5","16":"5","17":"5","18":"4","19":"3","20":"4","21":"4","22":"2","23":"5","24":"3","25":"3","26":"5","27":"5","28":"3","29":"1","30":"5","31":"5","32":"4","33":"3","34":"3","35":"5","36":"3","37":"3","38":"3","39":"5","40":"4","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"3","54":"3","55":"2","56":"2","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"5","71":"3","72":"5","73":"5","74":"5","75":"3","76":"3","77":"4","78":"4","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"5","3":"3","4":"3","5":"3","6":"2","7":"4","8":"4","9":"5","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"2","17":"3","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"5","25":"3","26":"4","27":"5","28":"4","29":"3","30":"3","31":"2","32":"4","33":"5","34":"5","35":"4","36":"4","37":"5","38":"5","39":"5","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"3","51":"4","52":"5","53":"4","54":"3","55":"3","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"4","5":"3","6":"1","7":"5","8":"5","9":"5","10":"4","11":"3","12":"2","13":"3","14":"4","15":"4","16":"4","17":"5","18":"4","19":"3","20":"4","21":"3","22":"4","23":"3","24":"3","25":"3","26":"5","27":"5","28":"4","29":"2","30":"3","31":"2","32":"3","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"5","40":"4","41":"4","42":"4","43":"5","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"2","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"5","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"5","66":"3","67":"3","68":"2","69":"2","70":"4","71":"3","72":"3","73":"4","74":"3","75":"4","76":"4","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"4","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"1","13":"1","14":"4","15":"5","16":"3","17":"5","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"5","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"3","50":"2","51":"4","52":"2","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"3","67":"3","68":"3","69":"2","70":"4","71":"2","72":"4","73":"4","74":"4","75":"4","76":"3","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"5","3":"1","4":"2","5":"2","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"1","24":"4","25":"1","26":"4","27":"4","28":"4","29":"1","30":"3","31":"2","32":"2","33":"3","34":"3","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"5","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"1","66":"1","67":"3","68":"3","69":"3","70":"4","71":"4","72":"4","73":"3","74":"4","75":"5","76":"5","77":"3","78":"3","79":"5","80":"5","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"5","21":"3","22":"3","23":"4","24":"5","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"3","73":"3","74":"3","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"1","4":"3","5":"1","6":"1","7":"4","8":"5","9":"4","10":"3","11":"4","12":"3","13":"2","14":"4","15":"3","16":"5","17":"2","18":"2","19":"1","20":"5","21":"4","22":"2","23":"3","24":"5","25":"2","26":"3","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"3","48":"2","49":"3","50":"3","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"3","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"5","80":"5","81":"5","82":"4","83":"5"},{"1":"1","2":"1","3":"1","4":"2","5":"4","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"4","23":"3","24":"3","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"2","6":"1","7":"5","8":"4","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"2","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"5","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"3","38":"5","39":"4","40":"3","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"3","17":"4","18":"3","19":"3","20":"5","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"3","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"3","48":"3","49":"4","50":"2","51":"3","52":"3","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"3","61":"4","62":"4","63":"3","64":"4","65":"4","66":"3","67":"3","68":"3","69":"4","70":"4","71":"3","72":"4","73":"4","74":"3","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"2","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"2","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"5","73":"5","74":"3","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"5","7":"4","8":"5","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"5","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"3","38":"4","39":"3","40":"3","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"4","65":"4","66":"3","67":"2","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"5","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"4","15":"3","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"1","23":"4","24":"3","25":"2","26":"4","27":"4","28":"3","29":"1","30":"3","31":"3","32":"3","33":"4","34":"4","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"3","21":"3","22":"4","23":"4","24":"4","25":"2","26":"5","27":"4","28":"2","29":"1","30":"3","31":"3","32":"3","33":"4","34":"4","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"5","70":"5","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"1","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"2","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"5","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"3","69":"4","70":"4","71":"4","72":"4","73":"4","74":"5","75":"4","76":"4","77":"5","78":"4","79":"4","80":"5","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"1","13":"2","14":"5","15":"5","16":"5","17":"5","18":"5","19":"1","20":"5","21":"5","22":"2","23":"5","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"5","31":"4","32":"5","33":"5","34":"5","35":"5","36":"4","37":"3","38":"5","39":"5","40":"3","41":"3","42":"5","43":"5","44":"4","45":"5","46":"5","47":"3","48":"3","49":"3","50":"4","51":"5","52":"5","53":"5","54":"5","55":"5","56":"4","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"4","67":"3","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"4","75":"5","76":"5","77":"5","78":"2","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"1","4":"3","5":"4","6":"3","7":"4","8":"5","9":"4","10":"4","11":"3","12":"4","13":"4","14":"5","15":"4","16":"4","17":"3","18":"4","19":"3","20":"5","21":"3","22":"2","23":"4","24":"4","25":"1","26":"3","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"3","37":"3","38":"4","39":"5","40":"4","41":"3","42":"4","43":"4","44":"4","45":"5","46":"4","47":"4","48":"3","49":"4","50":"5","51":"5","52":"4","53":"3","54":"4","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"3","65":"4","66":"3","67":"4","68":"4","69":"2","70":"4","71":"5","72":"4","73":"4","74":"5","75":"4","76":"5","77":"2","78":"1","79":"4","80":"4","81":"4","82":"3","83":"4"},{"1":"1","2":"2","3":"2","4":"2","5":"2","6":"2","7":"1","8":"2","9":"2","10":"1","11":"2","12":"2","13":"2","14":"2","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"5","19":"1","20":"5","21":"4","22":"1","23":"3","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"3","31":"4","32":"4","33":"3","34":"4","35":"4","36":"4","37":"3","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"3","62":"4","63":"4","64":"3","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"5","78":"3","79":"4","80":"4","81":"5","82":"4","83":"5"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"3","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"3","25":"3","26":"4","27":"4","28":"4","29":"2","30":"3","31":"3","32":"4","33":"3","34":"4","35":"3","36":"4","37":"2","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"2","49":"2","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"3","73":"3","74":"3","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"5","8":"4","9":"5","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"3","17":"3","18":"3","19":"2","20":"4","21":"2","22":"4","23":"4","24":"3","25":"3","26":"3","27":"4","28":"2","29":"1","30":"3","31":"3","32":"3","33":"3","34":"2","35":"2","36":"2","37":"2","38":"3","39":"4","40":"3","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"3","50":"4","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"3","73":"3","74":"3","75":"2","76":"3","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"2","6":"1","7":"5","8":"5","9":"4","10":"3","11":"5","12":"2","13":"2","14":"4","15":"5","16":"5","17":"5","18":"5","19":"3","20":"5","21":"5","22":"2","23":"3","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"4","37":"5","38":"5","39":"5","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"5","47":"3","48":"3","49":"3","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"4","66":"4","67":"4","68":"5","69":"3","70":"5","71":"3","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"1","4":"2","5":"2","6":"3","7":"5","8":"5","9":"5","10":"5","11":"4","12":"3","13":"4","14":"4","15":"5","16":"4","17":"4","18":"5","19":"1","20":"5","21":"3","22":"3","23":"5","24":"4","25":"1","26":"5","27":"5","28":"5","29":"3","30":"4","31":"5","32":"5","33":"5","34":"4","35":"4","36":"3","37":"4","38":"5","39":"5","40":"1","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"3","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"5","63":"5","64":"5","65":"4","66":"4","67":"5","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"5","78":"3","79":"4","80":"5","81":"5","82":"5","83":"4"},{"1":"1","2":"5","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"5","13":"5","14":"2","15":"4","16":"4","17":"4","18":"5","19":"4","20":"5","21":"2","22":"2","23":"2","24":"5","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"2","32":"3","33":"3","34":"3","35":"3","36":"4","37":"5","38":"5","39":"5","40":"5","41":"4","42":"4","43":"3","44":"4","45":"3","46":"4","47":"3","48":"4","49":"4","50":"4","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"3","64":"3","65":"4","66":"4","67":"3","68":"4","69":"4","70":"3","71":"4","72":"4","73":"4","74":"3","75":"4","76":"2","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"2","2":"2","3":"1","4":"4","5":"4","6":"1","7":"4","8":"3","9":"3","10":"2","11":"3","12":"3","13":"3","14":"2","15":"4","16":"4","17":"4","18":"4","19":"4","20":"3","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"3","30":"4","31":"3","32":"3","33":"4","34":"4","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"3","43":"3","44":"3","45":"3","46":"4","47":"4","48":"3","49":"3","50":"5","51":"5","52":"5","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"3","73":"4","74":"4","75":"5","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"3","83":"4"},{"1":"2","2":"4","3":"1","4":"4","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"3","17":"3","18":"4","19":"3","20":"3","21":"3","22":"3","23":"4","24":"3","25":"3","26":"3","27":"4","28":"4","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"3","54":"3","55":"3","56":"3","57":"4","58":"3","59":"3","60":"3","61":"3","62":"3","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"3","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"5","8":"5","9":"5","10":"5","11":"4","12":"2","13":"3","14":"5","15":"3","16":"3","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"5","24":"5","25":"3","26":"4","27":"5","28":"3","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"3","36":"3","37":"2","38":"3","39":"2","40":"2","41":"2","42":"4","43":"3","44":"4","45":"4","46":"2","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"3","73":"3","74":"3","75":"3","76":"4","77":"3","78":"2","79":"2","80":"2","81":"2","82":"2","83":"2"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"3","8":"3","9":"3","10":"4","11":"2","12":"2","13":"2","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"1","4":"4","5":"1","6":"1","7":"5","8":"4","9":"5","10":"3","11":"3","12":"1","13":"2","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"5","21":"3","22":"3","23":"4","24":"4","25":"3","26":"5","27":"5","28":"5","29":"2","30":"4","31":"2","32":"4","33":"4","34":"3","35":"4","36":"4","37":"5","38":"4","39":"4","40":"4","41":"3","42":"4","43":"5","44":"4","45":"4","46":"3","47":"4","48":"4","49":"4","50":"5","51":"4","52":"4","53":"5","54":"5","55":"3","56":"3","57":"3","58":"4","59":"4","60":"4","61":"3","62":"3","63":"4","64":"5","65":"4","66":"5","67":"4","68":"5","69":"3","70":"4","71":"4","72":"4","73":"4","74":"5","75":"4","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"3","5":"2","6":"2","7":"5","8":"4","9":"5","10":"4","11":"3","12":"2","13":"2","14":"3","15":"4","16":"4","17":"3","18":"5","19":"4","20":"5","21":"2","22":"2","23":"5","24":"5","25":"3","26":"4","27":"5","28":"3","29":"1","30":"4","31":"2","32":"4","33":"4","34":"4","35":"4","36":"5","37":"5","38":"5","39":"5","40":"4","41":"5","42":"3","43":"5","44":"5","45":"5","46":"5","47":"3","48":"4","49":"4","50":"5","51":"5","52":"5","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"5","66":"4","67":"2","68":"2","69":"2","70":"2","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"1","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"4","12":"4","13":"3","14":"3","15":"4","16":"4","17":"3","18":"5","19":"3","20":"5","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"3","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"3","71":"4","72":"4","73":"3","74":"3","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"4","8":"4","9":"4","10":"4","11":"4","12":"2","13":"3","14":"4","15":"5","16":"4","17":"3","18":"3","19":"3","20":"5","21":"4","22":"4","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"5","31":"4","32":"4","33":"4","34":"5","35":"5","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"5","43":"5","44":"4","45":"5","46":"5","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"5","67":"5","68":"5","69":"5","70":"5","71":"5","72":"4","73":"5","74":"3","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"2","4":"3","5":"4","6":"2","7":"4","8":"3","9":"4","10":"3","11":"4","12":"3","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"2","31":"2","32":"4","33":"2","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"4","5":"1","6":"1","7":"5","8":"5","9":"5","10":"5","11":"4","12":"3","13":"4","14":"3","15":"5","16":"5","17":"5","18":"5","19":"1","20":"5","21":"4","22":"3","23":"5","24":"5","25":"1","26":"4","27":"5","28":"5","29":"4","30":"5","31":"4","32":"5","33":"5","34":"4","35":"4","36":"5","37":"4","38":"4","39":"5","40":"5","41":"5","42":"5","43":"5","44":"5","45":"4","46":"4","47":"5","48":"3","49":"3","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"4","61":"4","62":"5","63":"5","64":"1","65":"5","66":"3","67":"1","68":"1","69":"3","70":"5","71":"3","72":"1","73":"1","74":"1","75":"5","76":"5","77":"4","78":"1","79":"5","80":"5","81":"5","82":"5","83":"3"},{"1":"1","2":"2","3":"1","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"5","16":"4","17":"3","18":"5","19":"2","20":"5","21":"2","22":"3","23":"3","24":"4","25":"2","26":"3","27":"5","28":"5","29":"3","30":"4","31":"3","32":"5","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"4","5":"4","6":"2","7":"4","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"2","34":"2","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"2","49":"2","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"2","67":"2","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"2","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"5","31":"3","32":"4","33":"5","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"3","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"3","75":"5","76":"5","77":"5","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"2","4":"3","5":"3","6":"1","7":"4","8":"4","9":"3","10":"4","11":"4","12":"4","13":"4","14":"4","15":"1","16":"4","17":"3","18":"1","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"3","31":"4","32":"1","33":"4","34":"4","35":"4","36":"1","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"5","57":"4","58":"5","59":"3","60":"4","61":"4","62":"4","63":"4","64":"1","65":"2","66":"2","67":"2","68":"3","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"3","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"2","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"5","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"5","73":"5","74":"5","75":"5","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"5","15":"4","16":"3","17":"5","18":"4","19":"3","20":"4","21":"4","22":"4","23":"5","24":"5","25":"3","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"3","39":"4","40":"3","41":"3","42":"3","43":"3","44":"3","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"3","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"4","5":"4","6":"3","7":"5","8":"5","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"5","16":"5","17":"5","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"5","25":"1","26":"4","27":"4","28":"1","29":"4","30":"5","31":"5","32":"5","33":"5","34":"5","35":"4","36":"4","37":"4","38":"3","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"5","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"1","67":"4","68":"3","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"5","83":"5"},{"1":"2","2":"2","3":"1","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"2","22":"4","23":"2","24":"3","25":"3","26":"4","27":"5","28":"5","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"4","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"3","6":"2","7":"3","8":"3","9":"4","10":"2","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"5","19":"2","20":"4","21":"3","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"2","5":"1","6":"1","7":"5","8":"5","9":"5","10":"3","11":"2","12":"2","13":"2","14":"2","15":"4","16":"4","17":"2","18":"4","19":"1","20":"5","21":"2","22":"3","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"1","30":"4","31":"4","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"4","40":"2","41":"3","42":"4","43":"4","44":"3","45":"4","46":"3","47":"2","48":"2","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"4","64":"1","65":"5","66":"1","67":"1","68":"3","69":"3","70":"4","71":"4","72":"2","73":"3","74":"3","75":"3","76":"4","77":"3","78":"3","79":"3","80":"3","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"4","4":"3","5":"4","6":"3","7":"5","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"5","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"2","5":"2","6":"1","7":"5","8":"4","9":"5","10":"5","11":"4","12":"4","13":"5","14":"5","15":"5","16":"4","17":"4","18":"4","19":"2","20":"5","21":"2","22":"3","23":"5","24":"5","25":"5","26":"4","27":"4","28":"5","29":"1","30":"5","31":"2","32":"4","33":"2","34":"4","35":"5","36":"5","37":"4","38":"5","39":"4","40":"4","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"4","48":"4","49":"5","50":"4","51":"4","52":"4","53":"5","54":"4","55":"5","56":"4","57":"3","58":"3","59":"5","60":"5","61":"5","62":"5","63":"5","64":"3","65":"5","66":"3","67":"3","68":"5","69":"4","70":"4","71":"4","72":"5","73":"5","74":"5","75":"3","76":"5","77":"5","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"1","4":"4","5":"3","6":"1","7":"4","8":"5","9":"3","10":"4","11":"4","12":"4","13":"4","14":"4","15":"5","16":"2","17":"2","18":"5","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"5","31":"3","32":"4","33":"4","34":"3","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"5","43":"4","44":"4","45":"4","46":"5","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"5","65":"2","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"2","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"5","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"3","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"5","43":"5","44":"4","45":"4","46":"4","47":"4","48":"4","49":"5","50":"4","51":"5","52":"5","53":"5","54":"5","55":"4","56":"4","57":"4","58":"4","59":"5","60":"4","61":"5","62":"5","63":"4","64":"5","65":"4","66":"5","67":"4","68":"5","69":"4","70":"4","71":"3","72":"4","73":"4","74":"5","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"3","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"2","17":"4","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"4","5":"2","6":"2","7":"5","8":"5","9":"5","10":"5","11":"4","12":"4","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"2","23":"4","24":"5","25":"3","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"3","4":"3","5":"1","6":"2","7":"4","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"5","16":"5","17":"5","18":"5","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"5","31":"4","32":"4","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"2","67":"5","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"5","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"2","49":"2","50":"3","51":"5","52":"5","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"3","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"3","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"3","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"2","15":"5","16":"4","17":"3","18":"4","19":"3","20":"4","21":"5","22":"1","23":"4","24":"3","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"3","34":"2","35":"4","36":"2","37":"3","38":"3","39":"4","40":"3","41":"4","42":"3","43":"4","44":"3","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"5","52":"5","53":"3","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"3","62":"4","63":"4","64":"3","65":"5","66":"3","67":"3","68":"4","69":"3","70":"5","71":"4","72":"3","73":"5","74":"5","75":"4","76":"5","77":"5","78":"5","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"2","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"3","43":"3","44":"4","45":"4","46":"3","47":"3","48":"3","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"3","69":"4","70":"4","71":"3","72":"4","73":"3","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"2","7":"3","8":"3","9":"3","10":"3","11":"2","12":"2","13":"2","14":"3","15":"4","16":"3","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"5","3":"1","4":"4","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"5","5":"2","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"4","13":"4","14":"5","15":"4","16":"3","17":"3","18":"3","19":"1","20":"4","21":"4","22":"1","23":"3","24":"5","25":"3","26":"4","27":"5","28":"5","29":"1","30":"3","31":"3","32":"4","33":"5","34":"5","35":"5","36":"5","37":"4","38":"4","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"5","47":"3","48":"2","49":"3","50":"4","51":"4","52":"2","53":"5","54":"5","55":"3","56":"5","57":"5","58":"4","59":"5","60":"4","61":"5","62":"4","63":"4","64":"4","65":"5","66":"3","67":"2","68":"2","69":"2","70":"5","71":"3","72":"1","73":"4","74":"3","75":"1","76":"5","77":"5","78":"5","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"1","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"4","14":"4","15":"4","16":"4","17":"3","18":"5","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"1","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"5","75":"5","76":"5","77":"4","78":"5","79":"4","80":"5","81":"5","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"4","5":"3","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"3","16":"3","17":"3","18":"3","19":"3","20":"3","21":"3","22":"3","23":"3","24":"3","25":"3","26":"3","27":"3","28":"3","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"4","15":"3","16":"4","17":"2","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"3","25":"2","26":"4","27":"4","28":"3","29":"2","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"3","4":"5","5":"4","6":"3","7":"5","8":"4","9":"3","10":"2","11":"1","12":"5","13":"3","14":"4","15":"4","16":"3","17":"4","18":"5","19":"4","20":"4","21":"2","22":"5","23":"4","24":"5","25":"2","26":"1","27":"5","28":"2","29":"2","30":"4","31":"2","32":"2","33":"2","34":"1","35":"4","36":"3","37":"2","38":"4","39":"3","40":"4","41":"4","42":"4","43":"4","44":"3","45":"2","46":"4","47":"1","48":"1","49":"4","50":"3","51":"4","52":"2","53":"3","54":"3","55":"3","56":"4","57":"3","58":"3","59":"4","60":"2","61":"4","62":"5","63":"3","64":"2","65":"5","66":"3","67":"2","68":"1","69":"1","70":"2","71":"2","72":"3","73":"3","74":"3","75":"1","76":"1","77":"1","78":"5","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"1","2":"2","3":"1","4":"3","5":"4","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"5","15":"4","16":"3","17":"5","18":"5","19":"2","20":"5","21":"5","22":"2","23":"5","24":"5","25":"2","26":"4","27":"5","28":"5","29":"3","30":"4","31":"5","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"3","40":"4","41":"4","42":"5","43":"4","44":"3","45":"3","46":"4","47":"4","48":"3","49":"4","50":"5","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"5","58":"5","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"5","66":"4","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"5","74":"4","75":"4","76":"5","77":"5","78":"5","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"2","2":"4","3":"2","4":"4","5":"3","6":"2","7":"5","8":"4","9":"5","10":"3","11":"3","12":"4","13":"4","14":"3","15":"4","16":"3","17":"4","18":"4","19":"1","20":"4","21":"3","22":"3","23":"5","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"5","34":"3","35":"5","36":"5","37":"1","38":"2","39":"5","40":"1","41":"5","42":"4","43":"4","44":"5","45":"4","46":"4","47":"4","48":"3","49":"4","50":"5","51":"5","52":"5","53":"5","54":"4","55":"3","56":"4","57":"4","58":"3","59":"4","60":"4","61":"3","62":"5","63":"4","64":"5","65":"1","66":"3","67":"3","68":"5","69":"4","70":"5","71":"4","72":"5","73":"4","74":"4","75":"3","76":"5","77":"5","78":"1","79":"5","80":"4","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"2","4":"2","5":"1","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"3","14":"4","15":"4","16":"3","17":"2","18":"4","19":"3","20":"3","21":"4","22":"2","23":"5","24":"4","25":"3","26":"4","27":"5","28":"3","29":"4","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"3","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"5","54":"5","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"3","71":"4","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"4","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"3","6":"1","7":"4","8":"5","9":"4","10":"4","11":"3","12":"2","13":"4","14":"3","15":"5","16":"5","17":"5","18":"4","19":"3","20":"5","21":"4","22":"2","23":"5","24":"3","25":"3","26":"4","27":"5","28":"3","29":"1","30":"5","31":"5","32":"4","33":"3","34":"3","35":"4","36":"3","37":"3","38":"4","39":"5","40":"4","41":"4","42":"5","43":"4","44":"4","45":"5","46":"5","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"4","54":"4","55":"2","56":"2","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"5","71":"3","72":"5","73":"4","74":"4","75":"3","76":"3","77":"4","78":"3","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"1","2":"5","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"5","10":"4","11":"3","12":"4","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"3","25":"3","26":"3","27":"4","28":"4","29":"1","30":"4","31":"3","32":"3","33":"3","34":"4","35":"3","36":"4","37":"4","38":"3","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"3","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"5","73":"4","74":"4","75":"3","76":"3","77":"3","78":"3","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"3","69":"3","70":"4","71":"5","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"2","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"2","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"2","67":"3","68":"4","69":"2","70":"4","71":"3","72":"4","73":"3","74":"4","75":"3","76":"4","77":"3","78":"2","79":"4","80":"3","81":"3","82":"3","83":"2"},{"1":"2","2":"1","3":"3","4":"1","5":"3","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"3","17":"5","18":"4","19":"3","20":"4","21":"5","22":"1","23":"4","24":"4","25":"2","26":"3","27":"4","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"3","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"4","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"2","4":"1","5":"1","6":"1","7":"2","8":"2","9":"2","10":"2","11":"2","12":"1","13":"1","14":"2","15":"5","16":"5","17":"4","18":"4","19":"5","20":"5","21":"5","22":"5","23":"4","24":"5","25":"5","26":"5","27":"5","28":"5","29":"5","30":"3","31":"4","32":"5","33":"5","34":"5","35":"4","36":"5","37":"3","38":"4","39":"3","40":"5","41":"4","42":"2","43":"2","44":"2","45":"1","46":"1","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"5","66":"5","67":"4","68":"5","69":"4","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"4","77":"5","78":"4","79":"5","80":"5","81":"4","82":"5","83":"4"},{"1":"1","2":"1","3":"2","4":"1","5":"2","6":"3","7":"4","8":"4","9":"5","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"5","25":"4","26":"3","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"5","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"3","75":"5","76":"5","77":"5","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"2","3":"4","4":"5","5":"4","6":"4","7":"3","8":"5","9":"4","10":"4","11":"4","12":"2","13":"2","14":"5","15":"5","16":"3","17":"2","18":"5","19":"4","20":"2","21":"2","22":"4","23":"5","24":"5","25":"3","26":"4","27":"5","28":"4","29":"1","30":"2","31":"4","32":"2","33":"2","34":"2","35":"4","36":"4","37":"4","38":"4","39":"5","40":"4","41":"4","42":"4","43":"2","44":"4","45":"2","46":"4","47":"4","48":"1","49":"4","50":"5","51":"4","52":"5","53":"4","54":"4","55":"2","56":"2","57":"2","58":"2","59":"4","60":"3","61":"4","62":"4","63":"4","64":"2","65":"4","66":"4","67":"2","68":"2","69":"2","70":"4","71":"4","72":"3","73":"4","74":"4","75":"5","76":"5","77":"4","78":"3","79":"2","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"5","8":"5","9":"5","10":"3","11":"3","12":"3","13":"3","14":"5","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"3","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"5","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"1","4":"2","5":"3","6":"3","7":"4","8":"5","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"5","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"5","16":"5","17":"5","18":"5","19":"2","20":"5","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"3","29":"3","30":"5","31":"4","32":"4","33":"5","34":"4","35":"4","36":"4","37":"4","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"2","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"5","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"1","4":"1","5":"1","6":"1","7":"5","8":"3","9":"5","10":"3","11":"3","12":"3","13":"1","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"4","25":"1","26":"5","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"5","42":"2","43":"2","44":"1","45":"4","46":"5","47":"2","48":"2","49":"4","50":"4","51":"5","52":"4","53":"5","54":"5","55":"4","56":"4","57":"4","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"5","66":"5","67":"3","68":"3","69":"1","70":"3","71":"4","72":"5","73":"3","74":"3","75":"3","76":"5","77":"5","78":"5","79":"3","80":"3","81":"5","82":"5","83":"1"},{"1":"3","2":"3","3":"4","4":"4","5":"3","6":"4","7":"4","8":"4","9":"5","10":"5","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"5","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"3","34":"4","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"3","53":"3","54":"3","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"5","3":"1","4":"3","5":"3","6":"2","7":"5","8":"5","9":"5","10":"4","11":"3","12":"2","13":"3","14":"3","15":"5","16":"4","17":"4","18":"5","19":"2","20":"4","21":"4","22":"1","23":"4","24":"3","25":"1","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"3","34":"3","35":"4","36":"3","37":"3","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"3","51":"4","52":"4","53":"5","54":"5","55":"3","56":"3","57":"3","58":"3","59":"3","60":"4","61":"4","62":"3","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"3","73":"3","74":"4","75":"4","76":"5","77":"5","78":"3","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"3","5":"3","6":"4","7":"4","8":"3","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"3","21":"4","22":"4","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"2","49":"2","50":"2","51":"2","52":"2","53":"2","54":"2","55":"2","56":"2","57":"2","58":"2","59":"2","60":"2","61":"2","62":"2","63":"2","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"4","5":"2","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"3","43":"3","44":"4","45":"3","46":"4","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"2","76":"4","77":"3","78":"2","79":"4","80":"3","81":"2","82":"4","83":"3"},{"1":"2","2":"1","3":"1","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"3","13":"3","14":"3","15":"5","16":"3","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"2","5":"1","6":"2","7":"5","8":"5","9":"5","10":"5","11":"4","12":"4","13":"4","14":"4","15":"4","16":"5","17":"3","18":"5","19":"2","20":"5","21":"4","22":"3","23":"5","24":"5","25":"2","26":"4","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"5","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"2","8":"3","9":"2","10":"3","11":"4","12":"4","13":"3","14":"4","15":"3","16":"3","17":"3","18":"3","19":"4","20":"3","21":"5","22":"4","23":"2","24":"3","25":"4","26":"3","27":"3","28":"3","29":"3","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"3","46":"4","47":"2","48":"3","49":"2","50":"4","51":"3","52":"3","53":"3","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"3","67":"4","68":"3","69":"3","70":"4","71":"3","72":"3","73":"2","74":"2","75":"2","76":"2","77":"3","78":"5","79":"2","80":"3","81":"3","82":"3","83":"3"},{"1":"2","2":"3","3":"2","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"2","14":"4","15":"3","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"5","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"5","51":"5","52":"5","53":"5","54":"4","55":"3","56":"4","57":"4","58":"4","59":"5","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"5","73":"4","74":"4","75":"4","76":"5","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"5","38":"5","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"5","78":"5","79":"5","80":"5","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"2","4":"1","5":"2","6":"1","7":"2","8":"1","9":"2","10":"1","11":"2","12":"1","13":"2","14":"1","15":"1","16":"2","17":"3","18":"2","19":"1","20":"2","21":"3","22":"2","23":"1","24":"2","25":"3","26":"2","27":"1","28":"2","29":"3","30":"2","31":"2","32":"1","33":"1","34":"3","35":"3","36":"2","37":"3","38":"3","39":"2","40":"1","41":"1","42":"3","43":"2","44":"2","45":"2","46":"3","47":"3","48":"2","49":"2","50":"2","51":"2","52":"2","53":"2","54":"2","55":"3","56":"1","57":"1","58":"2","59":"2","60":"3","61":"1","62":"2","63":"2","64":"1","65":"2","66":"2","67":"3","68":"2","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"2","79":"2","80":"2","81":"3","82":"2","83":"2"},{"1":"1","2":"1","3":"2","4":"2","5":"2","6":"2","7":"2","8":"5","9":"4","10":"5","11":"2","12":"3","13":"3","14":"3","15":"4","16":"4","17":"5","18":"5","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"3","33":"3","34":"4","35":"3","36":"5","37":"4","38":"4","39":"5","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"5","52":"5","53":"4","54":"4","55":"4","56":"3","57":"2","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"5","67":"5","68":"4","69":"4","70":"4","71":"3","72":"5","73":"5","74":"5","75":"5","76":"5","77":"4","78":"5","79":"4","80":"5","81":"5","82":"5","83":"3"},{"1":"2","2":"1","3":"2","4":"2","5":"2","6":"2","7":"2","8":"5","9":"4","10":"5","11":"2","12":"3","13":"3","14":"3","15":"4","16":"4","17":"5","18":"5","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"3","33":"3","34":"4","35":"3","36":"5","37":"4","38":"4","39":"5","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"5","52":"5","53":"4","54":"4","55":"4","56":"3","57":"2","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"5","67":"5","68":"4","69":"4","70":"4","71":"3","72":"5","73":"5","74":"5","75":"5","76":"5","77":"4","78":"5","79":"4","80":"5","81":"5","82":"5","83":"3"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"2","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"2","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"4","12":"3","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"3","39":"4","40":"2","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"3","29":"2","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"3","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"4","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"5","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"5","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"3","6":"3","7":"3","8":"3","9":"3","10":"3","11":"3","12":"3","13":"3","14":"3","15":"3","16":"3","17":"3","18":"4","19":"4","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"3","43":"3","44":"3","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"5","80":"5","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"4","5":"1","6":"1","7":"3","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"3","30":"4","31":"3","32":"3","33":"4","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"3","73":"3","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"4","4":"1","5":"4","6":"4","7":"3","8":"3","9":"3","10":"4","11":"5","12":"3","13":"1","14":"4","15":"4","16":"3","17":"5","18":"5","19":"3","20":"4","21":"3","22":"4","23":"3","24":"4","25":"5","26":"3","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"4","38":"5","39":"3","40":"3","41":"3","42":"4","43":"4","44":"3","45":"3","46":"4","47":"2","48":"2","49":"3","50":"2","51":"4","52":"4","53":"4","54":"5","55":"4","56":"3","57":"3","58":"4","59":"5","60":"4","61":"4","62":"4","63":"3","64":"4","65":"5","66":"4","67":"4","68":"5","69":"4","70":"4","71":"4","72":"2","73":"4","74":"5","75":"4","76":"4","77":"4","78":"5","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"2","6":"1","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"3","15":"4","16":"3","17":"2","18":"5","19":"3","20":"4","21":"3","22":"2","23":"3","24":"3","25":"2","26":"5","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"4","34":"5","35":"4","36":"3","37":"3","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"5","54":"4","55":"3","56":"3","57":"4","58":"3","59":"3","60":"3","61":"4","62":"3","63":"4","64":"4","65":"3","66":"3","67":"3","68":"5","69":"5","70":"5","71":"5","72":"4","73":"4","74":"4","75":"4","76":"2","77":"5","78":"4","79":"3","80":"4","81":"4","82":"5","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"2","11":"2","12":"1","13":"1","14":"5","15":"5","16":"5","17":"5","18":"5","19":"1","20":"5","21":"5","22":"1","23":"5","24":"5","25":"5","26":"5","27":"5","28":"5","29":"1","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"5","37":"5","38":"5","39":"5","40":"5","41":"1","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"5","49":"5","50":"3","51":"5","52":"5","53":"5","54":"4","55":"4","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"4","70":"5","71":"4","72":"5","73":"5","74":"5","75":"1","76":"5","77":"4","78":"2","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"1","4":"3","5":"3","6":"1","7":"5","8":"4","9":"4","10":"3","11":"4","12":"4","13":"3","14":"5","15":"3","16":"4","17":"2","18":"4","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"5","40":"4","41":"4","42":"3","43":"5","44":"5","45":"5","46":"5","47":"3","48":"3","49":"4","50":"3","51":"4","52":"4","53":"2","54":"2","55":"4","56":"4","57":"3","58":"3","59":"3","60":"4","61":"4","62":"5","63":"5","64":"4","65":"4","66":"3","67":"3","68":"3","69":"4","70":"4","71":"4","72":"5","73":"3","74":"4","75":"1","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"5","3":"1","4":"3","5":"2","6":"4","7":"4","8":"4","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"5","16":"5","17":"5","18":"4","19":"4","20":"4","21":"4","22":"2","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"2","30":"4","31":"3","32":"5","33":"4","34":"5","35":"5","36":"4","37":"4","38":"4","39":"4","40":"5","41":"3","42":"4","43":"4","44":"5","45":"4","46":"4","47":"5","48":"4","49":"4","50":"5","51":"4","52":"4","53":"4","54":"5","55":"4","56":"4","57":"5","58":"4","59":"4","60":"4","61":"4","62":"5","63":"5","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"5","74":"4","75":"3","76":"5","77":"5","78":"4","79":"4","80":"5","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"2","23":"4","24":"3","25":"2","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"1","4":"2","5":"2","6":"2","7":"4","8":"5","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"5","17":"4","18":"4","19":"4","20":"5","21":"4","22":"4","23":"5","24":"4","25":"5","26":"3","27":"4","28":"3","29":"4","30":"2","31":"3","32":"2","33":"2","34":"2","35":"3","36":"4","37":"3","38":"4","39":"3","40":"3","41":"4","42":"3","43":"4","44":"3","45":"3","46":"4","47":"2","48":"2","49":"3","50":"2","51":"2","52":"2","53":"2","54":"2","55":"3","56":"2","57":"3","58":"3","59":"2","60":"2","61":"3","62":"2","63":"2","64":"5","65":"4","66":"4","67":"4","68":"4","69":"3","70":"3","71":"4","72":"3","73":"3","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"3","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"3","4":"4","5":"3","6":"1","7":"5","8":"5","9":"5","10":"5","11":"2","12":"2","13":"2","14":"4","15":"5","16":"5","17":"4","18":"4","19":"2","20":"5","21":"4","22":"2","23":"5","24":"5","25":"3","26":"2","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"5","34":"5","35":"5","36":"5","37":"4","38":"5","39":"5","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"5","52":"5","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"5","66":"4","67":"4","68":"5","69":"3","70":"5","71":"5","72":"3","73":"3","74":"4","75":"4","76":"5","77":"5","78":"4","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"5","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"3","11":"4","12":"3","13":"4","14":"4","15":"5","16":"5","17":"5","18":"5","19":"1","20":"5","21":"4","22":"1","23":"5","24":"4","25":"2","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"5","33":"5","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"4","49":"5","50":"4","51":"5","52":"4","53":"4","54":"3","55":"4","56":"4","57":"3","58":"4","59":"3","60":"4","61":"5","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"1","73":"3","74":"1","75":"5","76":"5","77":"4","78":"4","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"3","4":"4","5":"2","6":"3","7":"5","8":"5","9":"5","10":"2","11":"4","12":"3","13":"3","14":"3","15":"5","16":"5","17":"2","18":"5","19":"3","20":"3","21":"3","22":"2","23":"3","24":"4","25":"3","26":"5","27":"5","28":"5","29":"1","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"5","47":"4","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"4","67":"2","68":"4","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"2","2":"2","3":"1","4":"2","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"3","15":"4","16":"5","17":"5","18":"5","19":"1","20":"4","21":"3","22":"1","23":"5","24":"5","25":"3","26":"1","27":"5","28":"5","29":"1","30":"4","31":"3","32":"5","33":"5","34":"5","35":"5","36":"4","37":"4","38":"4","39":"4","40":"3","41":"5","42":"5","43":"5","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"3","61":"3","62":"3","63":"3","64":"5","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"5","75":"4","76":"5","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"3","5":"3","6":"1","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"3","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"3","25":"1","26":"4","27":"4","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"2","38":"5","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"5","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"3","63":"4","64":"4","65":"1","66":"4","67":"4","68":"5","69":"4","70":"5","71":"4","72":"4","73":"5","74":"5","75":"3","76":"5","77":"4","78":"4","79":"5","80":"4","81":"5","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"2","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"5","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"5","25":"3","26":"3","27":"4","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"3","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"2","70":"5","71":"3","72":"3","73":"4","74":"4","75":"2","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"4","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"3","15":"4","16":"3","17":"2","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"1","30":"3","31":"3","32":"3","33":"4","34":"4","35":"3","36":"4","37":"4","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"3","52":"3","53":"3","54":"3","55":"3","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"3","6":"5","7":"5","8":"5","9":"4","10":"4","11":"4","12":"1","13":"2","14":"4","15":"5","16":"4","17":"5","18":"5","19":"1","20":"5","21":"3","22":"2","23":"4","24":"5","25":"1","26":"2","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"5","44":"5","45":"4","46":"4","47":"5","48":"2","49":"3","50":"4","51":"1","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"5","60":"5","61":"5","62":"4","63":"5","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"5","73":"5","74":"5","75":"5","76":"4","77":"4","78":"4","79":"4","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"2","7":"5","8":"4","9":"4","10":"3","11":"3","12":"2","13":"2","14":"4","15":"3","16":"4","17":"4","18":"3","19":"2","20":"4","21":"2","22":"3","23":"3","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"4","34":"3","35":"4","36":"3","37":"4","38":"5","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"3","78":"3","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"1","2":"5","3":"3","4":"3","5":"1","6":"1","7":"5","8":"5","9":"5","10":"5","11":"4","12":"4","13":"4","14":"4","15":"5","16":"5","17":"5","18":"5","19":"1","20":"5","21":"4","22":"1","23":"4","24":"5","25":"1","26":"4","27":"5","28":"4","29":"1","30":"5","31":"4","32":"4","33":"4","34":"4","35":"5","36":"4","37":"4","38":"5","39":"5","40":"3","41":"2","42":"5","43":"5","44":"5","45":"5","46":"5","47":"4","48":"4","49":"4","50":"2","51":"2","52":"2","53":"2","54":"2","55":"3","56":"5","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"2","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"3","77":"4","78":"3","79":"4","80":"4","81":"5","82":"5","83":"3"},{"1":"1","2":"5","3":"3","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"5","19":"2","20":"5","21":"3","22":"3","23":"4","24":"3","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"3","52":"3","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"2","15":"4","16":"4","17":"3","18":"3","19":"3","20":"5","21":"3","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"2","75":"5","76":"5","77":"4","78":"5","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"4","2":"4","3":"3","4":"4","5":"3","6":"4","7":"4","8":"4","9":"3","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"3","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"2","4":"3","5":"2","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"2","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"5","39":"5","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"3","6":"1","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"2","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"3","63":"4","64":"5","65":"2","66":"4","67":"4","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"4","4":"3","5":"4","6":"2","7":"5","8":"5","9":"4","10":"4","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"3","18":"5","19":"3","20":"5","21":"4","22":"2","23":"4","24":"4","25":"4","26":"4","27":"5","28":"3","29":"2","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"2","73":"3","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"2","7":"3","8":"5","9":"5","10":"5","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"5","19":"2","20":"5","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"4","4":"4","5":"2","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"2","15":"4","16":"3","17":"5","18":"4","19":"4","20":"3","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"3","34":"3","35":"4","36":"4","37":"4","38":"3","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"1","4":"3","5":"1","6":"1","7":"5","8":"4","9":"4","10":"3","11":"3","12":"5","13":"4","14":"3","15":"4","16":"4","17":"4","18":"5","19":"1","20":"4","21":"4","22":"4","23":"5","24":"4","25":"5","26":"3","27":"5","28":"4","29":"5","30":"4","31":"1","32":"3","33":"2","34":"5","35":"4","36":"4","37":"5","38":"4","39":"5","40":"5","41":"4","42":"3","43":"3","44":"4","45":"4","46":"4","47":"3","48":"1","49":"1","50":"4","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"3","61":"3","62":"3","63":"3","64":"4","65":"5","66":"3","67":"3","68":"5","69":"4","70":"4","71":"2","72":"3","73":"4","74":"3","75":"2","76":"4","77":"2","78":"5","79":"4","80":"2","81":"4","82":"4","83":"3"},{"1":"3","2":"4","3":"3","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"2","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"3","30":"3","31":"3","32":"4","33":"3","34":"3","35":"4","36":"4","37":"4","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"3","73":"4","74":"4","75":"5","76":"5","77":"5","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"4","8":"5","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"3","22":"2","23":"2","24":"3","25":"1","26":"3","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"3","34":"3","35":"3","36":"3","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"1","51":"1","52":"2","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"3","69":"3","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"2","22":"3","23":"3","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"4","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"1","4":"4","5":"3","6":"1","7":"4","8":"5","9":"5","10":"4","11":"3","12":"2","13":"4","14":"3","15":"5","16":"5","17":"5","18":"4","19":"3","20":"4","21":"4","22":"2","23":"5","24":"3","25":"3","26":"5","27":"5","28":"3","29":"1","30":"5","31":"5","32":"4","33":"3","34":"3","35":"5","36":"3","37":"3","38":"3","39":"5","40":"4","41":"4","42":"5","43":"5","44":"5","45":"4","46":"4","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"3","54":"3","55":"2","56":"2","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"5","71":"3","72":"5","73":"5","74":"5","75":"5","76":"3","77":"3","78":"4","79":"4","80":"3","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"2","6":"1","7":"5","8":"4","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"2","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"5","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"3","38":"5","39":"4","40":"3","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"5","5":"4","6":"4","7":"4","8":"5","9":"5","10":"5","11":"4","12":"3","13":"3","14":"2","15":"5","16":"5","17":"5","18":"5","19":"5","20":"4","21":"5","22":"5","23":"5","24":"5","25":"3","26":"4","27":"4","28":"3","29":"3","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"4","38":"4","39":"4","40":"4","41":"3","42":"5","43":"4","44":"2","45":"5","46":"5","47":"4","48":"4","49":"3","50":"3","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"1","66":"2","67":"3","68":"5","69":"5","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"3","80":"5","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"3","21":"3","22":"3","23":"4","24":"4","25":"4","26":"2","27":"5","28":"4","29":"2","30":"3","31":"3","32":"3","33":"4","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"5","70":"5","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"1","3":"1","4":"2","5":"5","6":"3","7":"4","8":"5","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"2","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"5","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"3","38":"5","39":"4","40":"3","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"2","4":"1","5":"3","6":"1","7":"5","8":"5","9":"5","10":"3","11":"4","12":"3","13":"2","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"5","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"3","49":"3","50":"4","51":"4","52":"3","53":"3","54":"4","55":"3","56":"2","57":"4","58":"3","59":"4","60":"3","61":"3","62":"4","63":"4","64":"4","65":"4","66":"5","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"5","77":"4","78":"4","79":"4","80":"3","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"2","22":"4","23":"2","24":"3","25":"3","26":"4","27":"5","28":"5","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"4","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"1","13":"2","14":"5","15":"5","16":"5","17":"5","18":"5","19":"1","20":"5","21":"5","22":"2","23":"5","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"5","31":"4","32":"5","33":"5","34":"5","35":"5","36":"4","37":"3","38":"5","39":"5","40":"3","41":"3","42":"5","43":"5","44":"4","45":"5","46":"5","47":"2","48":"2","49":"2","50":"4","51":"5","52":"5","53":"5","54":"5","55":"5","56":"4","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"4","67":"3","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"4","75":"5","76":"5","77":"5","78":"2","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"3","3":"4","4":"4","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"5","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"5","22":"1","23":"4","24":"3","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"3","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"3","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"2","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"3","78":"3","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"1","4":"2","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"4","15":"2","16":"3","17":"3","18":"4","19":"1","20":"5","21":"5","22":"3","23":"5","24":"4","25":"2","26":"3","27":"5","28":"5","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"5","2":"1","3":"3","4":"3","5":"5","6":"3","7":"2","8":"4","9":"4","10":"1","11":"1","12":"1","13":"1","14":"3","15":"5","16":"4","17":"4","18":"4","19":"1","20":"3","21":"5","22":"4","23":"5","24":"5","25":"2","26":"2","27":"5","28":"5","29":"5","30":"5","31":"5","32":"4","33":"5","34":"4","35":"5","36":"5","37":"4","38":"4","39":"4","40":"3","41":"5","42":"5","43":"5","44":"4","45":"5","46":"5","47":"5","48":"5","49":"4","50":"5","51":"3","52":"5","53":"5","54":"5","55":"5","56":"1","57":"5","58":"1","59":"3","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"1","71":"5","72":"4","73":"5","74":"5","75":"5","76":"4","77":"5","78":"1","79":"5","80":"1","81":"1","82":"5","83":"4"},{"1":"1","2":"4","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"3","13":"1","14":"5","15":"5","16":"4","17":"4","18":"5","19":"1","20":"5","21":"4","22":"1","23":"5","24":"4","25":"1","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"2","2":"2","3":"2","4":"3","5":"4","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"2","13":"4","14":"4","15":"4","16":"3","17":"4","18":"5","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"3","33":"3","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"5","51":"5","52":"5","53":"5","54":"5","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"5","67":"4","68":"4","69":"4","70":"5","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"3","15":"3","16":"4","17":"4","18":"5","19":"3","20":"5","21":"4","22":"3","23":"5","24":"4","25":"3","26":"4","27":"5","28":"5","29":"3","30":"3","31":"3","32":"3","33":"2","34":"2","35":"3","36":"4","37":"4","38":"5","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"2","51":"2","52":"2","53":"2","54":"2","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"4","80":"3","81":"3","82":"3","83":"3"},{"1":"3","2":"3","3":"2","4":"4","5":"3","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"5","19":"3","20":"5","21":"4","22":"2","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"3","51":"3","52":"3","53":"4","54":"3","55":"3","56":"3","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"3","69":"3","70":"4","71":"3","72":"4","73":"4","74":"5","75":"5","76":"5","77":"4","78":"4","79":"4","80":"3","81":"4","82":"5","83":"5"},{"1":"1","2":"4","3":"1","4":"3","5":"3","6":"3","7":"5","8":"5","9":"5","10":"5","11":"4","12":"3","13":"2","14":"5","15":"5","16":"5","17":"3","18":"5","19":"2","20":"5","21":"4","22":"3","23":"5","24":"5","25":"1","26":"5","27":"5","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"5","38":"5","39":"5","40":"3","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"3","48":"3","49":"5","50":"3","51":"3","52":"4","53":"3","54":"3","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"4","66":"3","67":"4","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"4","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"3","28":"2","29":"2","30":"4","31":"3","32":"3","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"2","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"3","13":"2","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"3","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"3","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"5","4":"3","5":"4","6":"2","7":"3","8":"3","9":"3","10":"5","11":"3","12":"2","13":"3","14":"3","15":"4","16":"4","17":"4","18":"3","19":"3","20":"4","21":"2","22":"3","23":"3","24":"4","25":"2","26":"4","27":"4","28":"3","29":"1","30":"3","31":"2","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"5","41":"5","42":"2","43":"4","44":"4","45":"3","46":"4","47":"3","48":"3","49":"2","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"3","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"2","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"3","5":"1","6":"1","7":"4","8":"4","9":"4","10":"5","11":"4","12":"3","13":"3","14":"3","15":"5","16":"3","17":"3","18":"5","19":"2","20":"3","21":"3","22":"2","23":"2","24":"3","25":"2","26":"4","27":"5","28":"4","29":"3","30":"4","31":"3","32":"5","33":"5","34":"4","35":"4","36":"4","37":"5","38":"5","39":"5","40":"4","41":"4","42":"5","43":"5","44":"4","45":"4","46":"3","47":"4","48":"2","49":"3","50":"5","51":"4","52":"5","53":"5","54":"4","55":"4","56":"4","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"4","80":"4","81":"5","82":"3","83":"4"},{"1":"2","2":"2","3":"3","4":"3","5":"2","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"3","13":"3","14":"3","15":"4","16":"4","17":"5","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"4","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"4","57":"4","58":"3","59":"3","60":"3","61":"3","62":"3","63":"4","64":"3","65":"3","66":"4","67":"3","68":"3","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"4","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"2","12":"4","13":"4","14":"3","15":"2","16":"2","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"2","24":"5","25":"3","26":"4","27":"5","28":"4","29":"2","30":"2","31":"2","32":"2","33":"3","34":"3","35":"5","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"5","62":"4","63":"4","64":"3","65":"4","66":"2","67":"2","68":"4","69":"3","70":"2","71":"2","72":"4","73":"3","74":"4","75":"4","76":"4","77":"2","78":"3","79":"3","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"2","3":"3","4":"4","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"5","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"5","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"2","5":"3","6":"2","7":"5","8":"5","9":"5","10":"5","11":"5","12":"3","13":"1","14":"4","15":"5","16":"4","17":"5","18":"4","19":"3","20":"3","21":"3","22":"1","23":"4","24":"5","25":"3","26":"3","27":"5","28":"4","29":"5","30":"2","31":"5","32":"1","33":"3","34":"5","35":"3","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"5","43":"4","44":"3","45":"5","46":"5","47":"3","48":"3","49":"5","50":"5","51":"5","52":"5","53":"3","54":"3","55":"3","56":"1","57":"1","58":"1","59":"1","60":"1","61":"1","62":"1","63":"1","64":"5","65":"3","66":"1","67":"4","68":"5","69":"1","70":"5","71":"3","72":"4","73":"1","74":"4","75":"3","76":"5","77":"5","78":"3","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"1","2":"4","3":"1","4":"4","5":"1","6":"2","7":"5","8":"4","9":"5","10":"4","11":"2","12":"3","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"2","32":"3","33":"4","34":"4","35":"4","36":"5","37":"3","38":"5","39":"5","40":"3","41":"3","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"4","60":"3","61":"4","62":"4","63":"5","64":"4","65":"4","66":"4","67":"4","68":"4","69":"2","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"4","5":"3","6":"2","7":"3","8":"4","9":"4","10":"5","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"4","18":"4","19":"2","20":"4","21":"2","22":"4","23":"2","24":"3","25":"2","26":"2","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"2","41":"3","42":"3","43":"4","44":"3","45":"4","46":"3","47":"4","48":"3","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"3","63":"4","64":"2","65":"5","66":"2","67":"2","68":"1","69":"1","70":"4","71":"5","72":"3","73":"2","74":"4","75":"3","76":"4","77":"2","78":"2","79":"4","80":"4","81":"4","82":"4","83":"2"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"2","15":"4","16":"4","17":"3","18":"3","19":"3","20":"5","21":"3","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"2","75":"5","76":"5","77":"4","78":"5","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"2","2":"3","3":"2","4":"3","5":"4","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"3","23":"4","24":"5","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"3","36":"4","37":"4","38":"4","39":"5","40":"4","41":"4","42":"4","43":"5","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"5","53":"4","54":"4","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"5","82":"5","83":"3"},{"1":"2","2":"3","3":"2","4":"2","5":"3","6":"2","7":"4","8":"4","9":"4","10":"2","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"3","69":"4","70":"4","71":"4","72":"4","73":"3","74":"4","75":"4","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"1","4":"2","5":"2","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"3","25":"2","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"3","34":"4","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"5","45":"5","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"3","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"5","71":"4","72":"4","73":"3","74":"4","75":"2","76":"4","77":"4","78":"3","79":"5","80":"4","81":"4","82":"5","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"2","4":"3","5":"3","6":"2","7":"5","8":"5","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"2","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"3","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"3","54":"3","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"3","15":"3","16":"5","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"4","25":"4","26":"4","27":"4","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"5","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"2","14":"4","15":"5","16":"4","17":"3","18":"5","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"5","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"5","52":"4","53":"4","54":"3","55":"3","56":"4","57":"4","58":"4","59":"5","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"3","67":"4","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"1","2":"2","3":"2","4":"4","5":"1","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"2","15":"5","16":"4","17":"3","18":"4","19":"3","20":"4","21":"2","22":"4","23":"3","24":"4","25":"3","26":"5","27":"5","28":"4","29":"1","30":"3","31":"2","32":"3","33":"2","34":"3","35":"4","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"3","43":"4","44":"3","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"5","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"3","63":"3","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"4","5":"3","6":"5","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"4","15":"5","16":"4","17":"3","18":"4","19":"2","20":"3","21":"3","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"3","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"3","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"1","4":"3","5":"1","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"5","27":"5","28":"5","29":"5","30":"4","31":"3","32":"3","33":"3","34":"4","35":"4","36":"4","37":"5","38":"3","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"3","67":"3","68":"5","69":"3","70":"4","71":"4","72":"5","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"2","6":"1","7":"5","8":"4","9":"5","10":"4","11":"3","12":"3","13":"2","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"5","27":"4","28":"4","29":"2","30":"3","31":"4","32":"4","33":"3","34":"3","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"3","52":"4","53":"4","54":"4","55":"4","56":"5","57":"5","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"3","67":"2","68":"5","69":"5","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"3","15":"3","16":"4","17":"4","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"5","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"5","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"2","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"2","15":"4","16":"4","17":"3","18":"3","19":"3","20":"2","21":"4","22":"3","23":"3","24":"4","25":"4","26":"2","27":"4","28":"4","29":"2","30":"4","31":"2","32":"2","33":"2","34":"2","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"3","75":"4","76":"4","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"1","4":"3","5":"1","6":"1","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"1","15":"3","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"4","30":"4","31":"2","32":"2","33":"2","34":"2","35":"2","36":"3","37":"3","38":"3","39":"3","40":"4","41":"5","42":"4","43":"4","44":"3","45":"4","46":"4","47":"3","48":"3","49":"3","50":"5","51":"5","52":"5","53":"5","54":"5","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"4","66":"3","67":"2","68":"3","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"3","80":"3","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"1","4":"3","5":"2","6":"3","7":"5","8":"4","9":"4","10":"5","11":"4","12":"3","13":"3","14":"3","15":"5","16":"5","17":"4","18":"4","19":"2","20":"5","21":"3","22":"2","23":"5","24":"3","25":"2","26":"5","27":"4","28":"4","29":"1","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"4","42":"3","43":"5","44":"3","45":"3","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"5","67":"5","68":"5","69":"5","70":"4","71":"4","72":"3","73":"5","74":"5","75":"3","76":"4","77":"4","78":"4","79":"4","80":"5","81":"5","82":"5","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"2","32":"3","33":"2","34":"3","35":"3","36":"4","37":"4","38":"5","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"4","49":"4","50":"5","51":"5","52":"5","53":"4","54":"4","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"2","67":"4","68":"3","69":"4","70":"4","71":"4","72":"3","73":"4","74":"4","75":"4","76":"5","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"3","4":"4","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"2","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"2","30":"3","31":"2","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"3","39":"3","40":"4","41":"4","42":"4","43":"5","44":"4","45":"4","46":"4","47":"2","48":"2","49":"2","50":"4","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"3","68":"3","69":"4","70":"4","71":"4","72":"4","73":"3","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"4","13":"4","14":"5","15":"4","16":"3","17":"4","18":"4","19":"3","20":"3","21":"3","22":"3","23":"4","24":"4","25":"4","26":"2","27":"5","28":"4","29":"2","30":"3","31":"3","32":"3","33":"4","34":"4","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"5","70":"5","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"1","3":"1","4":"2","5":"2","6":"2","7":"4","8":"4","9":"5","10":"5","11":"4","12":"4","13":"2","14":"3","15":"5","16":"5","17":"4","18":"5","19":"5","20":"4","21":"5","22":"4","23":"4","24":"4","25":"1","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"5","33":"4","34":"5","35":"4","36":"4","37":"4","38":"5","39":"5","40":"5","41":"5","42":"1","43":"4","44":"4","45":"4","46":"5","47":"5","48":"4","49":"3","50":"3","51":"3","52":"2","53":"1","54":"2","55":"3","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"4","66":"5","67":"5","68":"5","69":"4","70":"4","71":"4","72":"4","73":"5","74":"4","75":"4","76":"4","77":"4","78":"5","79":"4","80":"4","81":"5","82":"4","83":"5"},{"1":"2","2":"4","3":"3","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"3","16":"4","17":"2","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"5","32":"3","33":"3","34":"4","35":"4","36":"4","37":"2","38":"3","39":"4","40":"4","41":"4","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"3","60":"4","61":"4","62":"4","63":"3","64":"3","65":"4","66":"4","67":"4","68":"3","69":"4","70":"4","71":"4","72":"4","73":"3","74":"3","75":"2","76":"2","77":"2","78":"2","79":"3","80":"4","81":"3","82":"4","83":"3"},{"1":"2","2":"4","3":"2","4":"4","5":"2","6":"3","7":"3","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"2","15":"3","16":"3","17":"4","18":"4","19":"3","20":"4","21":"2","22":"3","23":"4","24":"4","25":"3","26":"2","27":"4","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"2","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"4","64":"3","65":"3","66":"4","67":"3","68":"3","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"1","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"2","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"3","25":"2","26":"4","27":"5","28":"4","29":"3","30":"3","31":"4","32":"3","33":"3","34":"4","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"3","43":"4","44":"4","45":"4","46":"4","47":"2","48":"2","49":"4","50":"3","51":"4","52":"3","53":"3","54":"3","55":"4","56":"3","57":"3","58":"3","59":"4","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"3","80":"3","81":"3","82":"3","83":"2"},{"1":"3","2":"2","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"1","12":"2","13":"1","14":"2","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"2","22":"4","23":"4","24":"2","25":"4","26":"4","27":"5","28":"4","29":"2","30":"2","31":"2","32":"4","33":"4","34":"4","35":"2","36":"1","37":"2","38":"2","39":"2","40":"5","41":"4","42":"3","43":"2","44":"3","45":"3","46":"3","47":"3","48":"3","49":"4","50":"4","51":"3","52":"3","53":"2","54":"4","55":"4","56":"2","57":"3","58":"3","59":"3","60":"4","61":"4","62":"4","63":"3","64":"5","65":"2","66":"5","67":"2","68":"4","69":"3","70":"2","71":"3","72":"4","73":"3","74":"4","75":"2","76":"4","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"1","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"2","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"3","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"5","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"4","5":"4","6":"1","7":"5","8":"5","9":"4","10":"4","11":"3","12":"4","13":"5","14":"4","15":"5","16":"3","17":"5","18":"5","19":"2","20":"4","21":"2","22":"4","23":"5","24":"5","25":"3","26":"5","27":"5","28":"5","29":"1","30":"2","31":"4","32":"4","33":"4","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"4","67":"3","68":"3","69":"3","70":"5","71":"4","72":"4","73":"4","74":"3","75":"3","76":"4","77":"5","78":"4","79":"5","80":"5","81":"5","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"3","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"2","14":"3","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"4","33":"4","34":"4","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"2","51":"2","52":"2","53":"2","54":"2","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"3","66":"3","67":"3","68":"3","69":"2","70":"4","71":"3","72":"3","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"2","4":"3","5":"2","6":"2","7":"4","8":"2","9":"4","10":"4","11":"2","12":"4","13":"4","14":"4","15":"5","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"5","24":"4","25":"3","26":"2","27":"5","28":"3","29":"1","30":"4","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"5","46":"3","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"4","65":"4","66":"4","67":"4","68":"3","69":"4","70":"4","71":"4","72":"4","73":"4","74":"5","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"3","5":"4","6":"2","7":"5","8":"4","9":"4","10":"3","11":"2","12":"2","13":"3","14":"4","15":"4","16":"4","17":"5","18":"5","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"3","30":"3","31":"4","32":"4","33":"3","34":"4","35":"4","36":"4","37":"5","38":"5","39":"5","40":"4","41":"5","42":"3","43":"3","44":"3","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"3","52":"2","53":"2","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"3","71":"3","72":"3","73":"3","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"2","5":"2","6":"2","7":"2","8":"2","9":"2","10":"2","11":"2","12":"2","13":"2","14":"2","15":"2","16":"2","17":"3","18":"3","19":"3","20":"3","21":"3","22":"3","23":"3","24":"3","25":"3","26":"3","27":"3","28":"3","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"2","37":"3","38":"3","39":"3","40":"3","41":"3","42":"2","43":"3","44":"3","45":"2","46":"3","47":"2","48":"2","49":"2","50":"3","51":"3","52":"2","53":"2","54":"2","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"2","63":"2","64":"3","65":"3","66":"3","67":"3","68":"2","69":"2","70":"2","71":"2","72":"3","73":"3","74":"3","75":"3","76":"2","77":"2","78":"2","79":"2","80":"3","81":"2","82":"2","83":"3"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"3","34":"4","35":"4","36":"3","37":"4","38":"3","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"2","4":"4","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"2","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"3","5":"3","6":"3","7":"4","8":"3","9":"3","10":"3","11":"3","12":"3","13":"4","14":"4","15":"4","16":"3","17":"3","18":"4","19":"3","20":"3","21":"4","22":"3","23":"3","24":"4","25":"4","26":"4","27":"4","28":"3","29":"3","30":"4","31":"3","32":"3","33":"4","34":"3","35":"3","36":"4","37":"3","38":"3","39":"4","40":"3","41":"3","42":"3","43":"4","44":"4","45":"2","46":"2","47":"3","48":"4","49":"4","50":"3","51":"4","52":"3","53":"3","54":"3","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"3","65":"5","66":"4","67":"3","68":"3","69":"4","70":"4","71":"3","72":"4","73":"3","74":"4","75":"3","76":"5","77":"4","78":"4","79":"3","80":"3","81":"4","82":"4","83":"3"},{"1":"1","2":"1","3":"2","4":"4","5":"3","6":"2","7":"4","8":"5","9":"4","10":"4","11":"3","12":"3","13":"2","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"5","46":"5","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"5","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"4","6":"2","7":"4","8":"4","9":"4","10":"2","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"3","23":"3","24":"3","25":"4","26":"4","27":"4","28":"3","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"5","19":"1","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"3","27":"4","28":"4","29":"2","30":"3","31":"4","32":"4","33":"4","34":"3","35":"4","36":"3","37":"4","38":"4","39":"5","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"5","51":"5","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"1","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"5","78":"1","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"2","4":"3","5":"2","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"5","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"4","25":"3","26":"3","27":"4","28":"4","29":"2","30":"3","31":"4","32":"3","33":"3","34":"3","35":"4","36":"3","37":"4","38":"5","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"5","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"4","75":"2","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"1","4":"1","5":"1","6":"2","7":"5","8":"5","9":"5","10":"5","11":"4","12":"4","13":"3","14":"4","15":"4","16":"4","17":"3","18":"5","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"2","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"5","15":"4","16":"3","17":"3","18":"4","19":"3","20":"3","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"2","30":"4","31":"3","32":"3","33":"4","34":"3","35":"4","36":"3","37":"3","38":"4","39":"4","40":"2","41":"3","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"4","49":"4","50":"3","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"4","67":"4","68":"3","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"4","3":"1","4":"4","5":"3","6":"1","7":"4","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"5","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"1","23":"5","24":"4","25":"3","26":"5","27":"5","28":"5","29":"1","30":"3","31":"2","32":"2","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"3","40":"5","41":"5","42":"5","43":"5","44":"5","45":"4","46":"3","47":"4","48":"4","49":"5","50":"5","51":"4","52":"5","53":"5","54":"5","55":"5","56":"4","57":"2","58":"2","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"5","72":"4","73":"4","74":"3","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"1","6":"1","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"4","42":"3","43":"4","44":"3","45":"3","46":"3","47":"4","48":"4","49":"4","50":"4","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"3","67":"3","68":"3","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"2","4":"3","5":"1","6":"3","7":"5","8":"5","9":"5","10":"5","11":"3","12":"5","13":"5","14":"5","15":"5","16":"5","17":"5","18":"3","19":"4","20":"3","21":"3","22":"3","23":"5","24":"5","25":"4","26":"5","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"5","37":"4","38":"4","39":"4","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"4","47":"1","48":"1","49":"1","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"4","60":"5","61":"5","62":"4","63":"5","64":"5","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"5","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"1","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"2","4":"3","5":"1","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"2","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"3","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"5","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"5","83":"4"},{"1":"2","2":"1","3":"1","4":"1","5":"1","6":"2","7":"5","8":"5","9":"5","10":"5","11":"4","12":"4","13":"3","14":"4","15":"4","16":"4","17":"3","18":"2","19":"5","20":"5","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"3","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"2","19":"1","20":"3","21":"3","22":"3","23":"5","24":"5","25":"3","26":"3","27":"4","28":"3","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"5","43":"5","44":"4","45":"4","46":"3","47":"2","48":"2","49":"2","50":"4","51":"4","52":"4","53":"5","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"5","61":"5","62":"4","63":"5","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"3","71":"3","72":"4","73":"4","74":"4","75":"2","76":"5","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"2","2":"2","3":"2","4":"3","5":"1","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"3","13":"2","14":"2","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"5","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"3","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"5","83":"4"},{"1":"2","2":"1","3":"1","4":"1","5":"2","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"5","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"5","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"5","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"2","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"4","5":"1","6":"1","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"3","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"4","42":"3","43":"5","44":"3","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"4","64":"4","65":"2","66":"4","67":"3","68":"3","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"1","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"2","15":"5","16":"5","17":"5","18":"3","19":"4","20":"3","21":"3","22":"3","23":"4","24":"4","25":"4","26":"4","27":"4","28":"3","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"3","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"2","48":"2","49":"2","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"3","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"1","15":"2","16":"4","17":"2","18":"2","19":"2","20":"4","21":"4","22":"3","23":"4","24":"5","25":"1","26":"4","27":"5","28":"3","29":"1","30":"4","31":"2","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"3","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"3","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"1","66":"4","67":"4","68":"5","69":"3","70":"3","71":"5","72":"4","73":"4","74":"4","75":"2","76":"5","77":"5","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"2","4":"2","5":"2","6":"3","7":"4","8":"2","9":"4","10":"3","11":"3","12":"4","13":"4","14":"5","15":"4","16":"4","17":"5","18":"4","19":"4","20":"4","21":"3","22":"4","23":"3","24":"4","25":"2","26":"4","27":"5","28":"3","29":"2","30":"5","31":"3","32":"4","33":"4","34":"4","35":"3","36":"3","37":"4","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"2","46":"4","47":"2","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"5","76":"4","77":"5","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"3","4":"3","5":"3","6":"1","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"2","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"3","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"4","5":"3","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"5","15":"3","16":"5","17":"5","18":"5","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"3","27":"5","28":"3","29":"2","30":"3","31":"4","32":"3","33":"4","34":"4","35":"4","36":"4","37":"5","38":"5","39":"5","40":"4","41":"4","42":"4","43":"5","44":"5","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"3","52":"3","53":"4","54":"4","55":"4","56":"3","57":"5","58":"5","59":"4","60":"4","61":"4","62":"5","63":"4","64":"4","65":"5","66":"3","67":"3","68":"4","69":"4","70":"5","71":"4","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"4","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"3","3":"3","4":"3","5":"3","6":"3","7":"4","8":"1","9":"5","10":"2","11":"3","12":"1","13":"1","14":"4","15":"5","16":"4","17":"3","18":"3","19":"3","20":"5","21":"3","22":"3","23":"5","24":"5","25":"2","26":"4","27":"4","28":"4","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"3","39":"3","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"3","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"1","4":"1","5":"1","6":"2","7":"5","8":"5","9":"5","10":"5","11":"5","12":"2","13":"2","14":"3","15":"3","16":"5","17":"4","18":"5","19":"2","20":"5","21":"3","22":"1","23":"3","24":"4","25":"3","26":"4","27":"5","28":"5","29":"1","30":"4","31":"2","32":"3","33":"4","34":"3","35":"4","36":"5","37":"3","38":"5","39":"5","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"2","49":"2","50":"3","51":"3","52":"2","53":"1","54":"2","55":"4","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"3","65":"5","66":"3","67":"2","68":"5","69":"5","70":"5","71":"2","72":"5","73":"5","74":"3","75":"2","76":"5","77":"3","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"4","3":"3","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"3","17":"4","18":"3","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"3","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"1","3":"2","4":"2","5":"1","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"5","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"3","66":"3","67":"3","68":"3","69":"3","70":"3","71":"2","72":"2","73":"2","74":"3","75":"2","76":"3","77":"2","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"5","11":"5","12":"4","13":"4","14":"5","15":"3","16":"3","17":"2","18":"3","19":"2","20":"3","21":"2","22":"2","23":"2","24":"1","25":"1","26":"2","27":"3","28":"3","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"5","47":"4","48":"4","49":"5","50":"4","51":"4","52":"5","53":"5","54":"5","55":"5","56":"5","57":"4","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"2","3":"1","4":"3","5":"1","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"3","17":"3","18":"4","19":"2","20":"5","21":"3","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"5","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"1","6":"1","7":"5","8":"4","9":"4","10":"3","11":"4","12":"3","13":"3","14":"3","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"4","23":"3","24":"3","25":"3","26":"4","27":"4","28":"4","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"3","5":"1","6":"2","7":"5","8":"4","9":"5","10":"4","11":"4","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"3","23":"3","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"3","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"4","47":"4","48":"4","49":"4","50":"4","51":"3","52":"3","53":"4","54":"4","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"3","4":"3","5":"4","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"3","46":"4","47":"5","48":"3","49":"4","50":"4","51":"3","52":"3","53":"4","54":"3","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"2","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"3","11":"2","12":"2","13":"2","14":"3","15":"4","16":"4","17":"3","18":"3","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"3","63":"3","64":"3","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"1","4":"3","5":"1","6":"1","7":"5","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"2","18":"4","19":"2","20":"5","21":"4","22":"2","23":"5","24":"5","25":"1","26":"5","27":"5","28":"5","29":"1","30":"5","31":"5","32":"5","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"5","47":"4","48":"4","49":"4","50":"4","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"5","67":"5","68":"5","69":"3","70":"5","71":"5","72":"5","73":"4","74":"5","75":"3","76":"4","77":"5","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"3","2":"5","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"3","31":"2","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"3","55":"4","56":"2","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"3","55":"4","56":"2","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"3","17":"3","18":"4","19":"2","20":"2","21":"3","22":"2","23":"2","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"4","33":"3","34":"4","35":"3","36":"4","37":"4","38":"4","39":"3","40":"3","41":"3","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"5","75":"3","76":"5","77":"4","78":"2","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"3","5":"1","6":"2","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"3","29":"1","30":"3","31":"1","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"5","51":"5","52":"5","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"4","68":"4","69":"4","70":"2","71":"2","72":"4","73":"4","74":"4","75":"4","76":"4","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"2","7":"5","8":"4","9":"4","10":"3","11":"3","12":"4","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"3","25":"3","26":"4","27":"4","28":"3","29":"3","30":"4","31":"4","32":"4","33":"4","34":"3","35":"3","36":"3","37":"3","38":"4","39":"5","40":"4","41":"4","42":"3","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"4","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"3","67":"4","68":"3","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"3","78":"3","79":"4","80":"4","81":"5","82":"4","83":"5"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"5","22":"2","23":"4","24":"5","25":"1","26":"4","27":"5","28":"3","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"5","38":"5","39":"4","40":"4","41":"4","42":"3","43":"4","44":"4","45":"5","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"5","54":"5","55":"5","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"5","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"5","71":"4","72":"5","73":"5","74":"5","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"1","3":"2","4":"3","5":"3","6":"2","7":"3","8":"4","9":"4","10":"2","11":"3","12":"4","13":"4","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"2","23":"3","24":"3","25":"2","26":"4","27":"4","28":"4","29":"1","30":"3","31":"3","32":"3","33":"4","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"4","49":"4","50":"4","51":"5","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"3","63":"4","64":"4","65":"2","66":"4","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"4","75":"2","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"5","83":"4"},{"1":"2","2":"3","3":"1","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"2","13":"2","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"3","25":"2","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"5","78":"4","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"5","2":"1","3":"3","4":"3","5":"5","6":"3","7":"2","8":"4","9":"4","10":"1","11":"1","12":"1","13":"1","14":"3","15":"5","16":"4","17":"4","18":"1","19":"3","20":"5","21":"4","22":"5","23":"5","24":"2","25":"2","26":"5","27":"5","28":"5","29":"5","30":"5","31":"5","32":"4","33":"5","34":"4","35":"5","36":"5","37":"4","38":"4","39":"4","40":"3","41":"5","42":"5","43":"5","44":"4","45":"5","46":"5","47":"5","48":"5","49":"4","50":"5","51":"3","52":"5","53":"5","54":"5","55":"5","56":"1","57":"4","58":"1","59":"3","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"1","71":"5","72":"4","73":"5","74":"5","75":"5","76":"4","77":"5","78":"1","79":"5","80":"1","81":"1","82":"5","83":"4"},{"1":"2","2":"2","3":"3","4":"4","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"3","17":"3","18":"4","19":"2","20":"4","21":"3","22":"4","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"2","30":"4","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"4","38":"3","39":"2","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"2","49":"4","50":"4","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"5","65":"3","66":"4","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"2","2":"2","3":"1","4":"3","5":"1","6":"2","7":"5","8":"4","9":"5","10":"4","11":"5","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"4","23":"4","24":"5","25":"1","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"5","36":"4","37":"4","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"3","49":"4","50":"4","51":"3","52":"5","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"5","72":"4","73":"4","74":"4","75":"3","76":"5","77":"5","78":"4","79":"4","80":"4","81":"5","82":"4","83":"5"},{"1":"1","2":"1","3":"1","4":"5","5":"1","6":"1","7":"1","8":"1","9":"5","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"5","39":"5","40":"3","41":"3","42":"3","43":"4","44":"4","45":"4","46":"5","47":"3","48":"4","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"3","62":"3","63":"4","64":"5","65":"2","66":"3","67":"2","68":"5","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"3","2":"3","3":"1","4":"2","5":"1","6":"2","7":"5","8":"4","9":"4","10":"4","11":"1","12":"3","13":"3","14":"2","15":"4","16":"3","17":"2","18":"4","19":"3","20":"5","21":"2","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"2","31":"2","32":"3","33":"3","34":"1","35":"2","36":"4","37":"5","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"5","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"2","72":"1","73":"4","74":"4","75":"5","76":"4","77":"4","78":"4","79":"5","80":"5","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"3","5":"4","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"5","16":"5","17":"4","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"5","32":"3","33":"4","34":"4","35":"3","36":"4","37":"5","38":"5","39":"5","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"4","49":"4","50":"5","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"5","59":"5","60":"4","61":"4","62":"4","63":"4","64":"5","65":"2","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"5","80":"5","81":"5","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"2","14":"5","15":"4","16":"4","17":"5","18":"5","19":"3","20":"4","21":"4","22":"3","23":"4","24":"5","25":"3","26":"4","27":"4","28":"3","29":"2","30":"4","31":"5","32":"3","33":"4","34":"4","35":"5","36":"4","37":"2","38":"4","39":"4","40":"5","41":"4","42":"4","43":"5","44":"4","45":"4","46":"4","47":"5","48":"3","49":"4","50":"4","51":"4","52":"4","53":"5","54":"5","55":"5","56":"5","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"5","67":"5","68":"4","69":"3","70":"5","71":"5","72":"5","73":"4","74":"4","75":"5","76":"4","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"1","25":"2","26":"5","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"5","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"5","47":"1","48":"2","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"5","60":"4","61":"4","62":"4","63":"4","64":"5","65":"5","66":"5","67":"5","68":"5","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"4","80":"5","81":"5","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"3","15":"4","16":"4","17":"3","18":"3","19":"3","20":"5","21":"3","22":"3","23":"4","24":"3","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"5","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"5","73":"5","74":"5","75":"4","76":"4","77":"4","78":"3","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"3","4":"3","5":"2","6":"3","7":"5","8":"4","9":"4","10":"5","11":"4","12":"3","13":"3","14":"3","15":"4","16":"4","17":"5","18":"5","19":"3","20":"3","21":"4","22":"3","23":"4","24":"4","25":"5","26":"3","27":"5","28":"5","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"3","36":"4","37":"2","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"3","52":"4","53":"4","54":"5","55":"5","56":"4","57":"4","58":"4","59":"4","60":"3","61":"4","62":"4","63":"4","64":"4","65":"4","66":"5","67":"4","68":"4","69":"4","70":"5","71":"4","72":"4","73":"5","74":"5","75":"5","76":"4","77":"5","78":"4","79":"4","80":"5","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"1","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"3","18":"3","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"5","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"3","50":"5","51":"5","52":"5","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"5","65":"3","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"5","78":"3","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"1","4":"1","5":"1","6":"3","7":"3","8":"3","9":"3","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"3","17":"3","18":"3","19":"3","20":"3","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"4","43":"4","44":"4","45":"3","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"3","80":"3","81":"3","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"2","5":"2","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"5","32":"4","33":"4","34":"5","35":"3","36":"3","37":"4","38":"4","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"3","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"5","8":"5","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"2","16":"4","17":"2","18":"2","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"1","26":"4","27":"4","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"1","66":"5","67":"4","68":"4","69":"4","70":"3","71":"5","72":"4","73":"4","74":"4","75":"2","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"2","4":"3","5":"3","6":"2","7":"5","8":"5","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"2","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"3","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"3","54":"3","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"1","2":"1","3":"2","4":"4","5":"2","6":"1","7":"2","8":"1","9":"5","10":"3","11":"2","12":"1","13":"4","14":"4","15":"4","16":"3","17":"2","18":"4","19":"2","20":"5","21":"3","22":"1","23":"4","24":"5","25":"2","26":"4","27":"5","28":"2","29":"1","30":"3","31":"3","32":"4","33":"3","34":"3","35":"4","36":"4","37":"3","38":"3","39":"3","40":"4","41":"2","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"5","54":"3","55":"3","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"3","67":"4","68":"3","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"2","2":"2","3":"2","4":"3","5":"1","6":"1","7":"4","8":"4","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"5","16":"3","17":"3","18":"3","19":"4","20":"5","21":"3","22":"4","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"3","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"4","69":"3","70":"3","71":"3","72":"5","73":"4","74":"4","75":"1","76":"5","77":"4","78":"1","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"4","26":"3","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"3","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"2","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"3","78":"3","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"2","11":"4","12":"2","13":"2","14":"4","15":"5","16":"4","17":"3","18":"5","19":"3","20":"5","21":"3","22":"2","23":"5","24":"5","25":"1","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"5","44":"5","45":"5","46":"5","47":"4","48":"4","49":"5","50":"3","51":"3","52":"3","53":"4","54":"4","55":"4","56":"5","57":"5","58":"4","59":"4","60":"3","61":"4","62":"4","63":"4","64":"5","65":"2","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"5","74":"5","75":"3","76":"5","77":"5","78":"4","79":"4","80":"5","81":"5","82":"4","83":"5"},{"1":"3","2":"3","3":"3","4":"3","5":"4","6":"3","7":"3","8":"3","9":"4","10":"3","11":"4","12":"3","13":"4","14":"4","15":"5","16":"4","17":"5","18":"5","19":"3","20":"4","21":"3","22":"1","23":"4","24":"5","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"3","32":"4","33":"3","34":"3","35":"4","36":"4","37":"3","38":"5","39":"5","40":"3","41":"3","42":"3","43":"4","44":"3","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"5","53":"4","54":"4","55":"5","56":"3","57":"4","58":"4","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"4","66":"4","67":"3","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"3","79":"5","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"1","3":"3","4":"2","5":"4","6":"4","7":"3","8":"5","9":"3","10":"3","11":"2","12":"1","13":"1","14":"2","15":"4","16":"3","17":"5","18":"5","19":"2","20":"3","21":"2","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"3","39":"3","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"2","49":"4","50":"5","51":"5","52":"5","53":"5","54":"5","55":"3","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"4","63":"3","64":"3","65":"3","66":"3","67":"2","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"5","80":"5","81":"5","82":"4","83":"3"},{"1":"2","2":"4","3":"4","4":"4","5":"3","6":"2","7":"4","8":"5","9":"4","10":"2","11":"3","12":"3","13":"4","14":"3","15":"4","16":"3","17":"5","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"5","25":"3","26":"2","27":"4","28":"4","29":"1","30":"5","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"4","38":"5","39":"5","40":"5","41":"5","42":"2","43":"4","44":"4","45":"4","46":"3","47":"2","48":"2","49":"4","50":"3","51":"4","52":"5","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"2","65":"5","66":"2","67":"4","68":"4","69":"4","70":"4","71":"2","72":"2","73":"2","74":"4","75":"4","76":"5","77":"4","78":"4","79":"4","80":"3","81":"3","82":"3","83":"4"},{"1":"2","2":"4","3":"2","4":"3","5":"2","6":"4","7":"4","8":"4","9":"4","10":"2","11":"3","12":"2","13":"3","14":"4","15":"4","16":"4","17":"3","18":"3","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"4","29":"2","30":"3","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"3","38":"4","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"3","65":"4","66":"3","67":"3","68":"3","69":"4","70":"4","71":"3","72":"3","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"3","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"4","23":"3","24":"4","25":"4","26":"4","27":"3","28":"4","29":"3","30":"4","31":"4","32":"4","33":"3","34":"4","35":"4","36":"3","37":"4","38":"3","39":"3","40":"4","41":"3","42":"3","43":"4","44":"4","45":"3","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"3","71":"3","72":"4","73":"4","74":"4","75":"3","76":"3","77":"4","78":"3","79":"4","80":"3","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"3","4":"4","5":"3","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"3","21":"3","22":"3","23":"3","24":"4","25":"4","26":"3","27":"5","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"4","8":"4","9":"4","10":"1","11":"3","12":"1","13":"1","14":"1","15":"4","16":"4","17":"1","18":"4","19":"1","20":"4","21":"4","22":"1","23":"1","24":"4","25":"1","26":"4","27":"4","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"5","2":"5","3":"4","4":"4","5":"4","6":"5","7":"5","8":"5","9":"5","10":"5","11":"4","12":"4","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"3","4":"4","5":"3","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"3","21":"3","22":"3","23":"3","24":"4","25":"4","26":"3","27":"5","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"3","4":"4","5":"3","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"3","21":"3","22":"3","23":"3","24":"4","25":"4","26":"3","27":"5","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"2","5":"2","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"2","13":"2","14":"4","15":"4","16":"2","17":"4","18":"2","19":"4","20":"2","21":"4","22":"2","23":"4","24":"2","25":"4","26":"2","27":"4","28":"2","29":"4","30":"2","31":"4","32":"2","33":"2","34":"4","35":"2","36":"2","37":"4","38":"2","39":"4","40":"2","41":"4","42":"4","43":"2","44":"4","45":"2","46":"4","47":"2","48":"4","49":"2","50":"4","51":"2","52":"4","53":"2","54":"4","55":"2","56":"4","57":"2","58":"4","59":"2","60":"4","61":"2","62":"4","63":"2","64":"2","65":"4","66":"2","67":"2","68":"4","69":"4","70":"2","71":"4","72":"2","73":"4","74":"2","75":"2","76":"4","77":"2","78":"4","79":"2","80":"4","81":"2","82":"4","83":"2"},{"1":"1","2":"2","3":"2","4":"2","5":"1","6":"1","7":"5","8":"4","9":"4","10":"3","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"5","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"5","81":"4","82":"4","83":"5"},{"1":"2","2":"4","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"5","16":"4","17":"3","18":"4","19":"4","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"1","4":"2","5":"2","6":"1","7":"4","8":"4","9":"5","10":"4","11":"3","12":"4","13":"3","14":"4","15":"5","16":"5","17":"4","18":"3","19":"3","20":"5","21":"4","22":"2","23":"5","24":"4","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"3","32":"4","33":"3","34":"3","35":"3","36":"5","37":"5","38":"5","39":"5","40":"4","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"3","73":"3","74":"3","75":"4","76":"5","77":"4","78":"3","79":"4","80":"3","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"2","6":"2","7":"5","8":"5","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"5","16":"4","17":"3","18":"2","19":"1","20":"5","21":"4","22":"2","23":"5","24":"4","25":"3","26":"5","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"2","38":"5","39":"4","40":"2","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"2","56":"2","57":"2","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"3","70":"5","71":"4","72":"4","73":"4","74":"5","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"5","82":"4","83":"3"},{"1":"3","2":"4","3":"1","4":"2","5":"1","6":"1","7":"5","8":"3","9":"5","10":"4","11":"4","12":"2","13":"2","14":"3","15":"2","16":"4","17":"1","18":"5","19":"1","20":"5","21":"4","22":"1","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"3","52":"3","53":"3","54":"3","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"3","68":"4","69":"3","70":"3","71":"3","72":"4","73":"3","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"3","5":"2","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"2","4":"2","5":"2","6":"1","7":"4","8":"4","9":"4","10":"4","11":"4","12":"2","13":"2","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"5","52":"3","53":"3","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"5","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"2","72":"4","73":"3","74":"4","75":"3","76":"2","77":"2","78":"2","79":"3","80":"3","81":"4","82":"4","83":"4"},{"1":"4","2":"4","3":"1","4":"3","5":"3","6":"2","7":"3","8":"4","9":"1","10":"4","11":"2","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"1","7":"2","8":"2","9":"2","10":"2","11":"1","12":"1","13":"1","14":"1","15":"5","16":"4","17":"4","18":"4","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"4","26":"4","27":"5","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"2","44":"2","45":"2","46":"3","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"1","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"5","11":"2","12":"4","13":"4","14":"2","15":"3","16":"4","17":"4","18":"5","19":"1","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"2","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"5","35":"4","36":"4","37":"2","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"4","49":"5","50":"3","51":"2","52":"2","53":"3","54":"3","55":"2","56":"4","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"5","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"5","76":"5","77":"3","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"4","4":"3","5":"3","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"3","15":"4","16":"3","17":"2","18":"3","19":"2","20":"4","21":"2","22":"3","23":"2","24":"5","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"2","32":"4","33":"4","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"2","50":"5","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"3","61":"3","62":"3","63":"4","64":"3","65":"4","66":"2","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"5","76":"5","77":"4","78":"5","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"5","15":"4","16":"4","17":"4","18":"2","19":"2","20":"4","21":"4","22":"3","23":"4","24":"3","25":"2","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"3","61":"3","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"2","4":"1","5":"1","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"5","15":"2","16":"1","17":"3","18":"2","19":"3","20":"2","21":"2","22":"2","23":"2","24":"3","25":"3","26":"2","27":"2","28":"2","29":"2","30":"3","31":"2","32":"2","33":"3","34":"1","35":"1","36":"2","37":"1","38":"3","39":"1","40":"1","41":"2","42":"2","43":"2","44":"2","45":"2","46":"3","47":"4","48":"3","49":"3","50":"3","51":"5","52":"4","53":"4","54":"4","55":"3","56":"4","57":"3","58":"4","59":"4","60":"4","61":"5","62":"4","63":"3","64":"4","65":"3","66":"3","67":"3","68":"3","69":"3","70":"4","71":"3","72":"4","73":"4","74":"3","75":"5","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"1","3":"2","4":"1","5":"1","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"5","15":"2","16":"1","17":"3","18":"2","19":"3","20":"2","21":"2","22":"2","23":"2","24":"3","25":"3","26":"2","27":"2","28":"2","29":"2","30":"3","31":"2","32":"2","33":"3","34":"1","35":"1","36":"2","37":"1","38":"3","39":"1","40":"1","41":"2","42":"2","43":"2","44":"2","45":"2","46":"3","47":"4","48":"3","49":"3","50":"3","51":"5","52":"4","53":"4","54":"4","55":"3","56":"4","57":"3","58":"4","59":"4","60":"4","61":"5","62":"4","63":"3","64":"4","65":"3","66":"3","67":"3","68":"3","69":"3","70":"4","71":"3","72":"4","73":"4","74":"3","75":"5","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"3","2":"3","3":"3","4":"3","5":"3","6":"3","7":"3","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"3","17":"4","18":"3","19":"3","20":"4","21":"3","22":"4","23":"3","24":"4","25":"4","26":"3","27":"4","28":"3","29":"4","30":"4","31":"3","32":"3","33":"4","34":"4","35":"3","36":"4","37":"5","38":"3","39":"3","40":"4","41":"4","42":"3","43":"2","44":"3","45":"2","46":"3","47":"2","48":"4","49":"3","50":"3","51":"2","52":"2","53":"3","54":"2","55":"2","56":"2","57":"3","58":"1","59":"2","60":"2","61":"2","62":"2","63":"2","64":"4","65":"4","66":"2","67":"2","68":"2","69":"2","70":"3","71":"2","72":"2","73":"4","74":"4","75":"3","76":"3","77":"3","78":"4","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"3","2":"3","3":"4","4":"4","5":"4","6":"4","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"5","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"5","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"5","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"3","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"2","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"3","51":"4","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"2","5":"2","6":"2","7":"5","8":"5","9":"5","10":"4","11":"3","12":"3","13":"3","14":"4","15":"2","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"3","25":"2","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"3","43":"4","44":"4","45":"3","46":"3","47":"2","48":"2","49":"3","50":"3","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"2","4":"2","5":"1","6":"2","7":"5","8":"5","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"5","16":"4","17":"2","18":"4","19":"2","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"4","31":"2","32":"5","33":"4","34":"4","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"2","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"5","3":"5","4":"5","5":"5","6":"5","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5","15":"3","16":"3","17":"3","18":"3","19":"3","20":"3","21":"3","22":"3","23":"3","24":"3","25":"3","26":"3","27":"3","28":"3","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"5","49":"5","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"3","2":"2","3":"3","4":"2","5":"3","6":"2","7":"2","8":"2","9":"2","10":"2","11":"3","12":"3","13":"3","14":"2","15":"2","16":"2","17":"2","18":"2","19":"2","20":"2","21":"3","22":"2","23":"2","24":"2","25":"3","26":"2","27":"2","28":"2","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"2","38":"2","39":"3","40":"2","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"2","50":"2","51":"2","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"4","5":"3","6":"1","7":"4","8":"4","9":"4","10":"3","11":"2","12":"3","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"4","31":"3","32":"3","33":"3","34":"3","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"3","48":"4","49":"4","50":"4","51":"4","52":"4","53":"5","54":"5","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"5","73":"4","74":"4","75":"3","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"4","12":"2","13":"4","14":"4","15":"4","16":"4","17":"2","18":"4","19":"2","20":"4","21":"4","22":"3","23":"4","24":"4","25":"2","26":"3","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"3","43":"4","44":"3","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"1","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"2","22":"4","23":"3","24":"5","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"3","59":"3","60":"3","61":"3","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"4","13":"4","14":"5","15":"4","16":"3","17":"4","18":"3","19":"4","20":"2","21":"3","22":"2","23":"4","24":"5","25":"1","26":"4","27":"5","28":"3","29":"2","30":"2","31":"3","32":"2","33":"3","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"2","48":"3","49":"4","50":"2","51":"3","52":"3","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"3","61":"4","62":"4","63":"3","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"5","73":"4","74":"4","75":"2","76":"5","77":"2","78":"4","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"1","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"2","22":"4","23":"3","24":"5","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"3","59":"3","60":"3","61":"3","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"4","6":"4","7":"5","8":"4","9":"5","10":"4","11":"4","12":"5","13":"5","14":"4","15":"5","16":"4","17":"3","18":"3","19":"3","20":"4","21":"3","22":"1","23":"4","24":"4","25":"3","26":"5","27":"5","28":"5","29":"1","30":"4","31":"2","32":"2","33":"2","34":"4","35":"4","36":"5","37":"5","38":"4","39":"4","40":"5","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"5","50":"4","51":"5","52":"4","53":"4","54":"4","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"4","63":"5","64":"5","65":"4","66":"3","67":"4","68":"4","69":"5","70":"5","71":"3","72":"3","73":"3","74":"3","75":"4","76":"5","77":"5","78":"3","79":"5","80":"5","81":"5","82":"5","83":"3"},{"1":"2","2":"4","3":"2","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"2","18":"4","19":"2","20":"4","21":"4","22":"1","23":"4","24":"4","25":"2","26":"2","27":"5","28":"5","29":"1","30":"4","31":"5","32":"4","33":"4","34":"5","35":"5","36":"5","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"5","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"5","51":"4","52":"3","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"3","68":"5","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"3","78":"4","79":"4","80":"4","81":"4","82":"5","83":"5"},{"1":"1","2":"4","3":"2","4":"3","5":"3","6":"2","7":"5","8":"4","9":"4","10":"3","11":"3","12":"2","13":"2","14":"4","15":"3","16":"4","17":"2","18":"4","19":"3","20":"5","21":"3","22":"4","23":"3","24":"4","25":"3","26":"5","27":"5","28":"4","29":"4","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"3","38":"5","39":"5","40":"3","41":"3","42":"4","43":"4","44":"3","45":"3","46":"3","47":"3","48":"3","49":"5","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"5","57":"3","58":"4","59":"5","60":"3","61":"4","62":"3","63":"4","64":"3","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"5","72":"3","73":"3","74":"4","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"1","2":"2","3":"2","4":"4","5":"4","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"5","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"4","34":"4","35":"3","36":"4","37":"4","38":"4","39":"5","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"5","71":"4","72":"5","73":"5","74":"3","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"1","4":"4","5":"2","6":"2","7":"5","8":"5","9":"4","10":"4","11":"4","12":"2","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"1","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"5","39":"4","40":"4","41":"4","42":"4","43":"5","44":"5","45":"5","46":"5","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"3","68":"5","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"5","80":"4","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"1","4":"4","5":"1","6":"1","7":"5","8":"5","9":"1","10":"4","11":"4","12":"4","13":"4","14":"1","15":"5","16":"4","17":"5","18":"5","19":"1","20":"4","21":"4","22":"3","23":"4","24":"5","25":"2","26":"3","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"3","60":"3","61":"4","62":"3","63":"3","64":"4","65":"5","66":"3","67":"4","68":"5","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"1","3":"1","4":"3","5":"1","6":"3","7":"5","8":"5","9":"5","10":"3","11":"4","12":"3","13":"3","14":"5","15":"4","16":"5","17":"5","18":"5","19":"3","20":"5","21":"4","22":"3","23":"3","24":"4","25":"3","26":"4","27":"4","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"5","36":"3","37":"3","38":"3","39":"3","40":"2","41":"2","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"4","49":"5","50":"3","51":"4","52":"3","53":"5","54":"5","55":"5","56":"5","57":"5","58":"4","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"3","66":"5","67":"5","68":"4","69":"2","70":"5","71":"4","72":"5","73":"5","74":"5","75":"4","76":"5","77":"3","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"2","3":"3","4":"3","5":"4","6":"2","7":"5","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"5","19":"1","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"4","33":"3","34":"3","35":"4","36":"2","37":"2","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"4","58":"5","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"1","66":"2","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"4","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"4","12":"3","13":"3","14":"4","15":"3","16":"4","17":"3","18":"4","19":"2","20":"5","21":"3","22":"2","23":"4","24":"3","25":"3","26":"4","27":"4","28":"3","29":"2","30":"3","31":"3","32":"4","33":"4","34":"4","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"3","42":"3","43":"4","44":"4","45":"4","46":"3","47":"4","48":"4","49":"3","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"2","5":"3","6":"3","7":"5","8":"4","9":"5","10":"4","11":"4","12":"3","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"4","55":"4","56":"4","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"3","4":"3","5":"3","6":"3","7":"5","8":"4","9":"5","10":"4","11":"4","12":"3","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"1","4":"3","5":"2","6":"1","7":"5","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"5","17":"3","18":"4","19":"3","20":"5","21":"4","22":"2","23":"3","24":"5","25":"2","26":"3","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"5","56":"4","57":"4","58":"5","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"4","5":"3","6":"2","7":"4","8":"5","9":"4","10":"4","11":"3","12":"2","13":"4","14":"3","15":"5","16":"5","17":"5","18":"4","19":"3","20":"4","21":"4","22":"2","23":"5","24":"3","25":"3","26":"5","27":"5","28":"3","29":"1","30":"5","31":"4","32":"4","33":"3","34":"3","35":"4","36":"3","37":"3","38":"3","39":"5","40":"4","41":"4","42":"5","43":"5","44":"5","45":"4","46":"4","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"4","54":"4","55":"3","56":"3","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"5","71":"3","72":"5","73":"5","74":"5","75":"3","76":"3","77":"4","78":"4","79":"3","80":"4","81":"5","82":"4","83":"4"},{"1":"3","2":"2","3":"3","4":"3","5":"2","6":"1","7":"5","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"2","41":"3","42":"5","43":"5","44":"5","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"2","5":"2","6":"1","7":"1","8":"1","9":"1","10":"1","11":"2","12":"2","13":"1","14":"1","15":"1","16":"3","17":"3","18":"3","19":"3","20":"4","21":"3","22":"3","23":"1","24":"3","25":"2","26":"3","27":"1","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"1","40":"3","41":"3","42":"3","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"1","65":"3","66":"1","67":"3","68":"1","69":"1","70":"1","71":"1","72":"1","73":"1","74":"1","75":"1","76":"1","77":"1","78":"1","79":"1","80":"1","81":"1","82":"1","83":"1"},{"1":"1","2":"3","3":"2","4":"3","5":"1","6":"1","7":"5","8":"3","9":"3","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"4","28":"4","29":"4","30":"3","31":"3","32":"2","33":"5","34":"3","35":"4","36":"4","37":"3","38":"3","39":"3","40":"4","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"3","55":"4","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"3","63":"4","64":"2","65":"3","66":"3","67":"2","68":"3","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"3","83":"4"},{"1":"2","2":"4","3":"2","4":"4","5":"4","6":"3","7":"3","8":"4","9":"4","10":"4","11":"3","12":"2","13":"3","14":"4","15":"4","16":"3","17":"2","18":"4","19":"4","20":"4","21":"3","22":"4","23":"3","24":"2","25":"3","26":"4","27":"4","28":"2","29":"1","30":"4","31":"2","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"3","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"3","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"2","65":"2","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"3","73":"3","74":"4","75":"4","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"2"},{"1":"2","2":"4","3":"3","4":"4","5":"4","6":"2","7":"4","8":"5","9":"5","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"5","34":"4","35":"5","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"5","46":"5","47":"4","48":"3","49":"3","50":"3","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"5","59":"4","60":"5","61":"4","62":"5","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"5","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"1","3":"1","4":"3","5":"1","6":"3","7":"5","8":"5","9":"5","10":"3","11":"4","12":"3","13":"3","14":"5","15":"4","16":"5","17":"5","18":"5","19":"3","20":"5","21":"4","22":"3","23":"3","24":"4","25":"3","26":"4","27":"4","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"5","36":"3","37":"3","38":"3","39":"3","40":"2","41":"2","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"4","49":"5","50":"3","51":"4","52":"3","53":"5","54":"5","55":"5","56":"5","57":"5","58":"4","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"3","66":"5","67":"5","68":"4","69":"2","70":"5","71":"4","72":"5","73":"5","74":"5","75":"4","76":"5","77":"3","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"3","3":"1","4":"2","5":"1","6":"2","7":"4","8":"5","9":"5","10":"5","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"5","25":"2","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"5","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"2","4":"2","5":"3","6":"2","7":"4","8":"4","9":"3","10":"2","11":"3","12":"3","13":"2","14":"3","15":"5","16":"4","17":"4","18":"3","19":"3","20":"4","21":"3","22":"3","23":"4","24":"2","25":"2","26":"3","27":"3","28":"3","29":"2","30":"2","31":"3","32":"3","33":"4","34":"3","35":"3","36":"3","37":"4","38":"3","39":"3","40":"4","41":"3","42":"3","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"2","50":"3","51":"4","52":"3","53":"3","54":"2","55":"3","56":"2","57":"3","58":"3","59":"2","60":"3","61":"3","62":"4","63":"3","64":"2","65":"4","66":"3","67":"3","68":"2","69":"3","70":"3","71":"3","72":"4","73":"3","74":"3","75":"3","76":"2","77":"3","78":"3","79":"4","80":"3","81":"3","82":"3","83":"3"},{"1":"1","2":"4","3":"2","4":"3","5":"3","6":"2","7":"5","8":"5","9":"5","10":"3","11":"3","12":"2","13":"2","14":"4","15":"3","16":"4","17":"2","18":"4","19":"3","20":"5","21":"3","22":"4","23":"3","24":"5","25":"2","26":"4","27":"5","28":"4","29":"3","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"5","37":"3","38":"5","39":"5","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"5","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"5","69":"5","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"5","81":"5","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"2","5":"3","6":"3","7":"5","8":"4","9":"4","10":"4","11":"4","12":"4","13":"5","14":"4","15":"5","16":"3","17":"3","18":"5","19":"3","20":"3","21":"3","22":"3","23":"2","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"3","31":"3","32":"4","33":"4","34":"3","35":"4","36":"5","37":"4","38":"5","39":"5","40":"4","41":"4","42":"5","43":"5","44":"4","45":"4","46":"4","47":"5","48":"3","49":"4","50":"5","51":"5","52":"4","53":"5","54":"4","55":"5","56":"4","57":"5","58":"5","59":"4","60":"3","61":"4","62":"3","63":"5","64":"5","65":"3","66":"5","67":"4","68":"5","69":"3","70":"5","71":"4","72":"5","73":"5","74":"5","75":"4","76":"5","77":"5","78":"4","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"2","4":"2","5":"2","6":"2","7":"2","8":"5","9":"4","10":"5","11":"2","12":"3","13":"3","14":"3","15":"4","16":"4","17":"5","18":"5","19":"2","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"3","33":"3","34":"4","35":"3","36":"5","37":"4","38":"4","39":"5","40":"3","41":"3","42":"4","43":"5","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"5","52":"5","53":"4","54":"4","55":"4","56":"3","57":"2","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"5","67":"5","68":"4","69":"4","70":"4","71":"3","72":"5","73":"5","74":"5","75":"5","76":"5","77":"4","78":"5","79":"4","80":"5","81":"5","82":"5","83":"4"},{"1":"1","2":"1","3":"1","4":"4","5":"3","6":"4","7":"3","8":"4","9":"3","10":"2","11":"2","12":"2","13":"2","14":"2","15":"4","16":"4","17":"3","18":"3","19":"3","20":"4","21":"3","22":"5","23":"3","24":"4","25":"3","26":"5","27":"5","28":"5","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"5","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"5","62":"4","63":"4","64":"3","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"5","2":"5","3":"5","4":"5","5":"5","6":"5","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5","15":"5","16":"5","17":"5","18":"5","19":"5","20":"5","21":"5","22":"5","23":"5","24":"5","25":"5","26":"5","27":"5","28":"5","29":"5","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"5","49":"5","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"2","4":"1","5":"1","6":"2","7":"5","8":"5","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"2","16":"4","17":"4","18":"4","19":"2","20":"4","21":"4","22":"1","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"2","38":"4","39":"4","40":"4","41":"4","42":"3","43":"4","44":"5","45":"5","46":"5","47":"4","48":"4","49":"4","50":"4","51":"3","52":"3","53":"3","54":"3","55":"3","56":"4","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"3","67":"5","68":"5","69":"4","70":"5","71":"4","72":"5","73":"4","74":"4","75":"1","76":"5","77":"5","78":"4","79":"4","80":"4","81":"4","82":"4","83":"1"},{"1":"3","2":"4","3":"3","4":"3","5":"2","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"3","14":"3","15":"4","16":"3","17":"3","18":"5","19":"2","20":"4","21":"2","22":"4","23":"3","24":"3","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"4","53":"3","54":"3","55":"3","56":"4","57":"3","58":"4","59":"4","60":"4","61":"3","62":"4","63":"4","64":"3","65":"3","66":"4","67":"4","68":"3","69":"4","70":"3","71":"4","72":"4","73":"4","74":"3","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"3","2":"4","3":"4","4":"4","5":"3","6":"2","7":"4","8":"5","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"5","16":"3","17":"4","18":"4","19":"4","20":"3","21":"3","22":"4","23":"5","24":"5","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"3","33":"3","34":"3","35":"4","36":"3","37":"4","38":"4","39":"4","40":"3","41":"4","42":"3","43":"3","44":"3","45":"3","46":"4","47":"4","48":"3","49":"4","50":"3","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"3","73":"4","74":"4","75":"4","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"5","3":"2","4":"2","5":"4","6":"1","7":"3","8":"5","9":"4","10":"3","11":"4","12":"2","13":"3","14":"4","15":"5","16":"5","17":"5","18":"5","19":"2","20":"5","21":"4","22":"1","23":"5","24":"3","25":"1","26":"5","27":"5","28":"5","29":"1","30":"5","31":"5","32":"5","33":"5","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"2","41":"2","42":"5","43":"5","44":"5","45":"5","46":"5","47":"3","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"5","56":"5","57":"5","58":"5","59":"5","60":"4","61":"4","62":"4","63":"4","64":"2","65":"2","66":"4","67":"4","68":"5","69":"2","70":"4","71":"5","72":"5","73":"5","74":"5","75":"4","76":"5","77":"5","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"2","4":"3","5":"3","6":"1","7":"5","8":"4","9":"5","10":"5","11":"3","12":"2","13":"3","14":"5","15":"5","16":"5","17":"5","18":"5","19":"5","20":"5","21":"5","22":"5","23":"5","24":"5","25":"5","26":"5","27":"5","28":"5","29":"5","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"5","49":"5","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"3","65":"5","66":"4","67":"5","68":"4","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"3","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"2","3":"3","4":"3","5":"4","6":"3","7":"5","8":"3","9":"5","10":"5","11":"4","12":"4","13":"4","14":"5","15":"5","16":"3","17":"5","18":"5","19":"3","20":"4","21":"3","22":"3","23":"4","24":"5","25":"1","26":"4","27":"5","28":"5","29":"1","30":"3","31":"3","32":"4","33":"4","34":"4","35":"3","36":"5","37":"4","38":"5","39":"5","40":"4","41":"5","42":"5","43":"4","44":"4","45":"5","46":"4","47":"3","48":"4","49":"4","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"3","59":"4","60":"5","61":"5","62":"5","63":"4","64":"5","65":"3","66":"5","67":"4","68":"5","69":"3","70":"5","71":"5","72":"5","73":"5","74":"5","75":"4","76":"5","77":"5","78":"3","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"3","2":"3","3":"4","4":"4","5":"4","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"3","16":"4","17":"2","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"5","26":"4","27":"5","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"4","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"1","6":"3","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"2","15":"5","16":"5","17":"5","18":"3","19":"4","20":"3","21":"3","22":"3","23":"5","24":"5","25":"1","26":"5","27":"5","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"5","37":"4","38":"4","39":"4","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"5","47":"1","48":"1","49":"1","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"1","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"2","2":"1","3":"1","4":"4","5":"3","6":"1","7":"4","8":"5","9":"5","10":"4","11":"3","12":"2","13":"4","14":"3","15":"5","16":"5","17":"5","18":"4","19":"3","20":"4","21":"4","22":"2","23":"5","24":"3","25":"3","26":"5","27":"5","28":"3","29":"1","30":"5","31":"5","32":"4","33":"3","34":"3","35":"5","36":"3","37":"3","38":"3","39":"5","40":"4","41":"4","42":"5","43":"5","44":"5","45":"5","46":"5","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"3","54":"3","55":"2","56":"2","57":"2","58":"2","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"5","71":"3","72":"5","73":"5","74":"5","75":"3","76":"3","77":"4","78":"4","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"2","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"2","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"5","74":"5","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"4","13":"4","14":"5","15":"4","16":"3","17":"4","18":"3","19":"4","20":"2","21":"3","22":"2","23":"4","24":"5","25":"1","26":"4","27":"5","28":"3","29":"2","30":"2","31":"3","32":"2","33":"3","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"2","48":"3","49":"4","50":"2","51":"3","52":"3","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"3","61":"4","62":"4","63":"3","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"5","73":"4","74":"4","75":"2","76":"5","77":"2","78":"4","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"3","5":"4","6":"2","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"5","16":"5","17":"4","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"5","32":"3","33":"4","34":"4","35":"3","36":"4","37":"5","38":"5","39":"5","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"4","49":"4","50":"5","51":"5","52":"5","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"5","60":"5","61":"4","62":"4","63":"4","64":"5","65":"2","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"5","80":"5","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"2","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"1","20":"5","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"5","75":"4","76":"4","77":"4","78":"3","79":"3","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"2","4":"2","5":"2","6":"3","7":"4","8":"2","9":"4","10":"2","11":"3","12":"3","13":"4","14":"4","15":"4","16":"4","17":"5","18":"4","19":"4","20":"4","21":"3","22":"4","23":"3","24":"4","25":"2","26":"4","27":"5","28":"3","29":"2","30":"5","31":"3","32":"4","33":"4","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"1","46":"4","47":"2","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"5","76":"4","77":"5","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"3","5":"2","6":"1","7":"3","8":"2","9":"1","10":"5","11":"5","12":"5","13":"3","14":"3","15":"4","16":"3","17":"3","18":"5","19":"2","20":"3","21":"4","22":"3","23":"3","24":"4","25":"2","26":"3","27":"5","28":"5","29":"1","30":"5","31":"5","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"5","44":"4","45":"5","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"4","57":"4","58":"5","59":"4","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"4","72":"5","73":"4","74":"5","75":"4","76":"4","77":"4","78":"5","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"4","5":"4","6":"3","7":"4","8":"5","9":"4","10":"5","11":"3","12":"2","13":"2","14":"3","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"5","28":"2","29":"1","30":"3","31":"4","32":"3","33":"4","34":"4","35":"3","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"5","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"2","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"3","4":"4","5":"3","6":"4","7":"4","8":"4","9":"4","10":"4","11":"5","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"3","21":"4","22":"4","23":"4","24":"4","25":"4","26":"3","27":"4","28":"4","29":"3","30":"4","31":"4","32":"3","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"3","51":"4","52":"4","53":"4","54":"3","55":"3","56":"4","57":"4","58":"4","59":"3","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"5","76":"4","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"3","4":"2","5":"3","6":"3","7":"4","8":"3","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"3","17":"3","18":"3","19":"3","20":"3","21":"3","22":"3","23":"3","24":"3","25":"3","26":"3","27":"4","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"4","42":"3","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"5","76":"5","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"4","8":"4","9":"5","10":"3","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"2","22":"4","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"2","30":"3","31":"3","32":"4","33":"4","34":"3","35":"3","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"3","69":"4","70":"5","71":"4","72":"4","73":"4","74":"5","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"1","4":"3","5":"1","6":"2","7":"5","8":"4","9":"5","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"4","17":"2","18":"5","19":"1","20":"5","21":"4","22":"2","23":"4","24":"4","25":"3","26":"4","27":"4","28":"3","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"3","47":"3","48":"3","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"5","71":"3","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"4","5":"2","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"3","15":"4","16":"4","17":"3","18":"5","19":"1","20":"5","21":"5","22":"3","23":"4","24":"5","25":"2","26":"3","27":"5","28":"5","29":"3","30":"4","31":"5","32":"4","33":"4","34":"3","35":"4","36":"5","37":"5","38":"4","39":"5","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"3","48":"3","49":"4","50":"3","51":"3","52":"3","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"5","71":"3","72":"4","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"4","28":"3","29":"3","30":"3","31":"3","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"2","16":"4","17":"2","18":"5","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"3","27":"5","28":"5","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"2","54":"2","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"5","9":"5","10":"3","11":"4","12":"3","13":"3","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"5","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"4","48":"4","49":"5","50":"3","51":"4","52":"4","53":"4","54":"4","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"3","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"2","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"3","25":"4","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"4","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"4","70":"5","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"4","3":"3","4":"3","5":"1","6":"4","7":"5","8":"5","9":"2","10":"5","11":"3","12":"4","13":"4","14":"4","15":"5","16":"4","17":"3","18":"5","19":"3","20":"5","21":"5","22":"2","23":"4","24":"3","25":"2","26":"4","27":"5","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"5","36":"4","37":"4","38":"5","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"3","53":"3","54":"4","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"5","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"5","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"4","29":"3","30":"5","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"3","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"3","25":"4","26":"4","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"3","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"4","12":"3","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"2","30":"4","31":"3","32":"3","33":"4","34":"4","35":"4","36":"4","37":"5","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"3","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"5","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"2","2":"3","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"2","67":"2","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"2","5":"2","6":"1","7":"4","8":"4","9":"4","10":"3","11":"3","12":"2","13":"1","14":"1","15":"3","16":"5","17":"3","18":"3","19":"2","20":"5","21":"4","22":"2","23":"3","24":"4","25":"2","26":"3","27":"5","28":"5","29":"1","30":"5","31":"4","32":"4","33":"4","34":"5","35":"4","36":"4","37":"4","38":"4","39":"5","40":"2","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"3","77":"3","78":"4","79":"4","80":"5","81":"5","82":"5","83":"5"},{"1":"4","2":"4","3":"4","4":"4","5":"4","6":"4","7":"3","8":"4","9":"4","10":"3","11":"4","12":"4","13":"4","14":"3","15":"4","16":"4","17":"3","18":"4","19":"5","20":"4","21":"4","22":"4","23":"3","24":"4","25":"4","26":"4","27":"3","28":"3","29":"4","30":"3","31":"4","32":"3","33":"4","34":"3","35":"4","36":"4","37":"4","38":"3","39":"4","40":"4","41":"4","42":"4","43":"3","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"3","54":"4","55":"3","56":"4","57":"4","58":"3","59":"3","60":"4","61":"4","62":"4","63":"3","64":"3","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"3","75":"4","76":"3","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"3","4":"3","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"5","81":"5","82":"4","83":"5"},{"1":"3","2":"2","3":"3","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"2","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"3","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"2","32":"4","33":"4","34":"3","35":"3","36":"4","37":"3","38":"3","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"2","56":"2","57":"2","58":"2","59":"2","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"3","69":"4","70":"3","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"3","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"3","13":"3","14":"3","15":"4","16":"3","17":"3","18":"4","19":"3","20":"3","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"2","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"3","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"1","4":"4","5":"4","6":"1","7":"4","8":"4","9":"4","10":"1","11":"5","12":"4","13":"4","14":"4","15":"5","16":"4","17":"3","18":"1","19":"1","20":"4","21":"4","22":"1","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"2","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"3","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"3","46":"3","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"2","7":"5","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"5","15":"4","16":"4","17":"4","18":"4","19":"2","20":"5","21":"5","22":"1","23":"4","24":"5","25":"1","26":"2","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"5","60":"5","61":"5","62":"3","63":"4","64":"5","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"3","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"3","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"2","3":"4","4":"3","5":"2","6":"4","7":"5","8":"4","9":"4","10":"4","11":"2","12":"3","13":"4","14":"2","15":"4","16":"3","17":"3","18":"4","19":"2","20":"3","21":"3","22":"3","23":"4","24":"4","25":"2","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"4","38":"3","39":"3","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"3","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"1","6":"2","7":"5","8":"4","9":"4","10":"3","11":"4","12":"2","13":"2","14":"2","15":"3","16":"3","17":"2","18":"2","19":"1","20":"5","21":"4","22":"3","23":"3","24":"3","25":"1","26":"2","27":"4","28":"4","29":"2","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"4","38":"4","39":"4","40":"4","41":"4","42":"3","43":"3","44":"3","45":"3","46":"3","47":"4","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"4","56":"5","57":"5","58":"5","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"4","75":"2","76":"5","77":"4","78":"3","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"5","11":"3","12":"5","13":"5","14":"5","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"4","26":"4","27":"4","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"5","49":"5","50":"2","51":"5","52":"5","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"5","61":"5","62":"4","63":"4","64":"5","65":"3","66":"3","67":"4","68":"4","69":"4","70":"3","71":"5","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"4","2":"5","3":"1","4":"2","5":"2","6":"3","7":"5","8":"3","9":"3","10":"5","11":"3","12":"3","13":"3","14":"5","15":"5","16":"5","17":"4","18":"4","19":"3","20":"4","21":"5","22":"3","23":"4","24":"5","25":"3","26":"3","27":"5","28":"5","29":"2","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"5","44":"4","45":"5","46":"4","47":"5","48":"5","49":"5","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"4","59":"5","60":"4","61":"5","62":"5","63":"4","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"4","72":"5","73":"4","74":"5","75":"4","76":"5","77":"5","78":"4","79":"5","80":"5","81":"4","82":"5","83":"4"},{"1":"3","2":"3","3":"2","4":"4","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"1","12":"5","13":"5","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"3","21":"3","22":"3","23":"3","24":"4","25":"3","26":"4","27":"5","28":"3","29":"1","30":"4","31":"3","32":"4","33":"3","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"5","42":"3","43":"3","44":"4","45":"3","46":"3","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"3","62":"3","63":"3","64":"4","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"3","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"3","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"3","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"5","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"3","22":"4","23":"3","24":"5","25":"4","26":"3","27":"4","28":"3","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"3","50":"3","51":"4","52":"3","53":"3","54":"3","55":"3","56":"4","57":"3","58":"3","59":"3","60":"3","61":"3","62":"4","63":"3","64":"3","65":"3","66":"3","67":"3","68":"3","69":"3","70":"4","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"2","2":"2","3":"2","4":"2","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"2","30":"3","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"5","70":"5","71":"4","72":"5","73":"4","74":"4","75":"3","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"5","8":"5","9":"4","10":"4","11":"3","12":"4","13":"4","14":"4","15":"2","16":"5","17":"3","18":"2","19":"2","20":"4","21":"4","22":"2","23":"2","24":"4","25":"1","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"3","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"1","66":"4","67":"4","68":"5","69":"3","70":"3","71":"5","72":"4","73":"4","74":"4","75":"2","76":"5","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"2","7":"5","8":"5","9":"4","10":"4","11":"3","12":"3","13":"2","14":"3","15":"4","16":"4","17":"4","18":"3","19":"2","20":"4","21":"4","22":"3","23":"5","24":"4","25":"2","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"5","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"1","2":"2","3":"1","4":"2","5":"1","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"1","13":"2","14":"2","15":"4","16":"4","17":"2","18":"4","19":"2","20":"4","21":"2","22":"2","23":"4","24":"5","25":"2","26":"5","27":"5","28":"5","29":"1","30":"4","31":"2","32":"3","33":"3","34":"2","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"5","43":"5","44":"4","45":"4","46":"4","47":"3","48":"3","49":"5","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"5","65":"2","66":"5","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"5","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"3"},{"1":"2","2":"2","3":"1","4":"3","5":"1","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"5","15":"4","16":"3","17":"3","18":"4","19":"2","20":"4","21":"3","22":"2","23":"5","24":"4","25":"3","26":"3","27":"5","28":"4","29":"2","30":"3","31":"4","32":"4","33":"4","34":"3","35":"4","36":"2","37":"4","38":"4","39":"5","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"2","47":"5","48":"5","49":"5","50":"2","51":"5","52":"4","53":"4","54":"4","55":"3","56":"4","57":"4","58":"4","59":"4","60":"5","61":"5","62":"4","63":"4","64":"5","65":"2","66":"4","67":"4","68":"5","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"2","76":"5","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"1","4":"3","5":"3","6":"3","7":"4","8":"3","9":"4","10":"4","11":"3","12":"4","13":"3","14":"5","15":"5","16":"5","17":"4","18":"4","19":"3","20":"4","21":"5","22":"3","23":"4","24":"5","25":"3","26":"3","27":"5","28":"5","29":"2","30":"3","31":"3","32":"4","33":"4","34":"3","35":"3","36":"4","37":"4","38":"3","39":"3","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"3","75":"4","76":"4","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"5","19":"3","20":"4","21":"3","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"1","30":"3","31":"3","32":"4","33":"3","34":"3","35":"3","36":"3","37":"4","38":"4","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"5","52":"4","53":"4","54":"4","55":"3","56":"3","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"4","3":"2","4":"4","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"5","15":"4","16":"3","17":"4","18":"3","19":"4","20":"2","21":"3","22":"2","23":"4","24":"5","25":"1","26":"4","27":"5","28":"3","29":"2","30":"2","31":"3","32":"2","33":"3","34":"4","35":"4","36":"5","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"2","48":"3","49":"4","50":"2","51":"3","52":"3","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"3","61":"4","62":"4","63":"3","64":"4","65":"4","66":"3","67":"4","68":"4","69":"3","70":"4","71":"3","72":"5","73":"4","74":"4","75":"2","76":"5","77":"2","78":"4","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"1","4":"3","5":"2","6":"2","7":"4","8":"5","9":"5","10":"4","11":"4","12":"3","13":"3","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"3","21":"3","22":"4","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"3","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"1","4":"3","5":"1","6":"3","7":"5","8":"5","9":"5","10":"3","11":"4","12":"1","13":"2","14":"3","15":"5","16":"5","17":"5","18":"5","19":"3","20":"5","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"5","33":"5","34":"5","35":"5","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"2","51":"2","52":"3","53":"4","54":"4","55":"3","56":"3","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"1","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"1","3":"1","4":"2","5":"4","6":"1","7":"5","8":"5","9":"5","10":"5","11":"3","12":"2","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"2","20":"4","21":"3","22":"1","23":"4","24":"4","25":"1","26":"4","27":"4","28":"3","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"2","67":"2","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"2","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"3","5":"2","6":"1","7":"4","8":"5","9":"4","10":"2","11":"3","12":"2","13":"2","14":"4","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"2","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"4","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"2","49":"3","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"3","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"4","4":"4","5":"4","6":"2","7":"5","8":"5","9":"5","10":"4","11":"3","12":"3","13":"4","14":"3","15":"5","16":"5","17":"3","18":"4","19":"2","20":"4","21":"4","22":"2","23":"3","24":"4","25":"2","26":"3","27":"4","28":"5","29":"2","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"4","61":"3","62":"3","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"3","71":"1","72":"1","73":"1","74":"1","75":"5","76":"4","77":"4","78":"4","79":"4","80":"4","81":"5","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"2","5":"3","6":"2","7":"4","8":"4","9":"5","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"5","18":"5","19":"4","20":"3","21":"3","22":"2","23":"3","24":"4","25":"3","26":"4","27":"5","28":"4","29":"1","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"4","40":"4","41":"5","42":"4","43":"5","44":"5","45":"4","46":"4","47":"4","48":"4","49":"4","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"4","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"3","4":"4","5":"3","6":"1","7":"3","8":"4","9":"4","10":"4","11":"3","12":"2","13":"4","14":"3","15":"2","16":"4","17":"2","18":"4","19":"2","20":"4","21":"3","22":"4","23":"4","24":"4","25":"2","26":"3","27":"4","28":"4","29":"3","30":"4","31":"3","32":"3","33":"3","34":"4","35":"4","36":"4","37":"4","38":"3","39":"3","40":"4","41":"4","42":"5","43":"3","44":"4","45":"4","46":"5","47":"2","48":"2","49":"4","50":"5","51":"5","52":"5","53":"5","54":"5","55":"4","56":"4","57":"4","58":"3","59":"3","60":"3","61":"4","62":"3","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"5","71":"4","72":"3","73":"4","74":"4","75":"3","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"4","3":"4","4":"4","5":"4","6":"2","7":"3","8":"3","9":"3","10":"4","11":"2","12":"3","13":"3","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"2","22":"4","23":"4","24":"4","25":"5","26":"5","27":"5","28":"3","29":"1","30":"2","31":"2","32":"2","33":"2","34":"2","35":"2","36":"4","37":"3","38":"4","39":"3","40":"3","41":"4","42":"4","43":"4","44":"4","45":"4","46":"5","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"5","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"3","4":"3","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"5","34":"4","35":"4","36":"3","37":"4","38":"5","39":"5","40":"4","41":"3","42":"4","43":"5","44":"4","45":"5","46":"5","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"4","54":"4","55":"5","56":"3","57":"3","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"5","65":"4","66":"5","67":"5","68":"4","69":"5","70":"4","71":"4","72":"4","73":"5","74":"5","75":"4","76":"4","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"2","5":"2","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"5","13":"5","14":"5","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"1","23":"4","24":"4","25":"1","26":"1","27":"3","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"3","38":"4","39":"3","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"1","50":"4","51":"4","52":"3","53":"3","54":"3","55":"3","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"5","69":"5","70":"5","71":"4","72":"5","73":"4","74":"5","75":"4","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"1","4":"2","5":"4","6":"3","7":"4","8":"5","9":"4","10":"4","11":"4","12":"2","13":"5","14":"5","15":"4","16":"5","17":"2","18":"4","19":"1","20":"5","21":"2","22":"3","23":"3","24":"4","25":"1","26":"3","27":"5","28":"4","29":"1","30":"4","31":"5","32":"4","33":"4","34":"3","35":"3","36":"3","37":"5","38":"4","39":"5","40":"5","41":"5","42":"4","43":"4","44":"4","45":"5","46":"4","47":"3","48":"4","49":"3","50":"4","51":"4","52":"5","53":"3","54":"3","55":"3","56":"1","57":"5","58":"2","59":"3","60":"3","61":"3","62":"4","63":"2","64":"4","65":"3","66":"4","67":"3","68":"3","69":"4","70":"5","71":"2","72":"1","73":"4","74":"4","75":"2","76":"5","77":"5","78":"1","79":"3","80":"3","81":"5","82":"5","83":"4"},{"1":"1","2":"5","3":"2","4":"5","5":"2","6":"1","7":"4","8":"5","9":"5","10":"4","11":"3","12":"2","13":"3","14":"3","15":"3","16":"4","17":"3","18":"5","19":"2","20":"5","21":"3","22":"1","23":"4","24":"4","25":"3","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"4","34":"2","35":"4","36":"3","37":"3","38":"5","39":"4","40":"5","41":"4","42":"5","43":"4","44":"5","45":"4","46":"4","47":"3","48":"3","49":"4","50":"5","51":"5","52":"2","53":"2","54":"3","55":"4","56":"2","57":"3","58":"3","59":"4","60":"4","61":"3","62":"5","63":"3","64":"5","65":"1","66":"5","67":"5","68":"5","69":"1","70":"5","71":"3","72":"4","73":"4","74":"3","75":"4","76":"3","77":"4","78":"5","79":"4","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"2","4":"2","5":"3","6":"1","7":"4","8":"4","9":"5","10":"4","11":"3","12":"3","13":"3","14":"4","15":"5","16":"4","17":"4","18":"4","19":"3","20":"5","21":"3","22":"4","23":"5","24":"5","25":"3","26":"4","27":"5","28":"5","29":"1","30":"4","31":"3","32":"3","33":"3","34":"3","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"3","44":"5","45":"4","46":"5","47":"3","48":"3","49":"3","50":"5","51":"4","52":"4","53":"4","54":"3","55":"4","56":"2","57":"2","58":"3","59":"3","60":"3","61":"3","62":"3","63":"4","64":"4","65":"5","66":"4","67":"4","68":"4","69":"4","70":"3","71":"3","72":"3","73":"4","74":"4","75":"5","76":"5","77":"5","78":"2","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"2","3":"3","4":"3","5":"4","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"3","16":"4","17":"2","18":"4","19":"3","20":"4","21":"3","22":"3","23":"4","24":"4","25":"3","26":"3","27":"4","28":"3","29":"3","30":"3","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"3","45":"4","46":"4","47":"4","48":"4","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"4","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"5","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"3","4":"4","5":"4","6":"3","7":"5","8":"5","9":"5","10":"4","11":"3","12":"3","13":"3","14":"5","15":"4","16":"4","17":"4","18":"2","19":"2","20":"5","21":"4","22":"3","23":"4","24":"4","25":"2","26":"4","27":"5","28":"4","29":"1","30":"5","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"3","50":"3","51":"4","52":"2","53":"5","54":"5","55":"2","56":"2","57":"4","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"2","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"2","5":"2","6":"3","7":"5","8":"4","9":"4","10":"4","11":"3","12":"3","13":"4","14":"3","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"2","22":"4","23":"3","24":"5","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"3","32":"4","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"4","53":"3","54":"3","55":"4","56":"4","57":"4","58":"3","59":"3","60":"3","61":"3","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"2","7":"3","8":"3","9":"3","10":"3","11":"2","12":"2","13":"2","14":"3","15":"4","16":"3","17":"4","18":"4","19":"3","20":"4","21":"2","22":"4","23":"3","24":"3","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"2","32":"4","33":"4","34":"2","35":"2","36":"4","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"4","48":"4","49":"3","50":"3","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"3","74":"4","75":"4","76":"4","77":"5","78":"5","79":"4","80":"4","81":"4","82":"3","83":"4"},{"1":"2","2":"1","3":"2","4":"2","5":"2","6":"2","7":"5","8":"5","9":"5","10":"5","11":"5","12":"2","13":"2","14":"5","15":"3","16":"4","17":"3","18":"3","19":"3","20":"4","21":"4","22":"3","23":"3","24":"5","25":"2","26":"4","27":"5","28":"4","29":"1","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"2","49":"2","50":"4","51":"5","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"2","2":"4","3":"3","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"3","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"4","27":"5","28":"5","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"5","73":"5","74":"4","75":"5","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"2","4":"2","5":"1","6":"1","7":"4","8":"1","9":"1","10":"1","11":"3","12":"3","13":"4","14":"3","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"4","22":"2","23":"3","24":"4","25":"3","26":"3","27":"5","28":"4","29":"2","30":"3","31":"3","32":"3","33":"4","34":"4","35":"3","36":"3","37":"3","38":"4","39":"4","40":"3","41":"3","42":"3","43":"3","44":"3","45":"4","46":"4","47":"3","48":"3","49":"3","50":"3","51":"4","52":"3","53":"4","54":"3","55":"3","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"3","72":"3","73":"4","74":"4","75":"2","76":"5","77":"4","78":"3","79":"4","80":"4","81":"5","82":"5","83":"3"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"3","15":"4","16":"3","17":"2","18":"4","19":"2","20":"4","21":"3","22":"3","23":"4","24":"4","25":"2","26":"3","27":"4","28":"4","29":"3","30":"4","31":"3","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"3","50":"3","51":"3","52":"3","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"2","68":"4","69":"4","70":"4","71":"3","72":"3","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"2","7":"5","8":"4","9":"5","10":"4","11":"3","12":"3","13":"4","14":"4","15":"5","16":"5","17":"5","18":"5","19":"2","20":"5","21":"3","22":"3","23":"4","24":"5","25":"4","26":"5","27":"5","28":"5","29":"5","30":"4","31":"4","32":"2","33":"2","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"5","66":"3","67":"3","68":"3","69":"3","70":"3","71":"3","72":"3","73":"3","74":"1","75":"3","76":"4","77":"3","78":"2","79":"4","80":"4","81":"5","82":"5","83":"5"},{"1":"1","2":"2","3":"1","4":"2","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"3","16":"5","17":"3","18":"4","19":"3","20":"5","21":"3","22":"1","23":"4","24":"4","25":"1","26":"4","27":"4","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"3","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"3","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"5","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"5","3":"1","4":"2","5":"1","6":"5","7":"5","8":"5","9":"5","10":"5","11":"4","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"5","19":"1","20":"5","21":"4","22":"2","23":"4","24":"5","25":"2","26":"4","27":"5","28":"5","29":"5","30":"4","31":"5","32":"4","33":"5","34":"5","35":"5","36":"5","37":"4","38":"4","39":"5","40":"5","41":"4","42":"5","43":"5","44":"5","45":"4","46":"5","47":"5","48":"3","49":"3","50":"4","51":"4","52":"5","53":"5","54":"5","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"3","68":"4","69":"4","70":"5","71":"3","72":"4","73":"4","74":"4","75":"4","76":"5","77":"3","78":"3","79":"4","80":"4","81":"5","82":"5","83":"4"},{"1":"5","2":"5","3":"5","4":"5","5":"5","6":"5","7":"5","8":"5","9":"5","10":"5","11":"5","12":"5","13":"5","14":"5","15":"5","16":"5","17":"5","18":"5","19":"5","20":"5","21":"5","22":"5","23":"5","24":"5","25":"5","26":"5","27":"5","28":"5","29":"5","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"5","37":"5","38":"5","39":"5","40":"5","41":"5","42":"5","43":"5","44":"5","45":"5","46":"5","47":"5","48":"5","49":"5","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"5","78":"5","79":"5","80":"5","81":"5","82":"5","83":"5"},{"1":"1","2":"1","3":"1","4":"1","5":"3","6":"4","7":"4","8":"5","9":"4","10":"5","11":"4","12":"5","13":"5","14":"5","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"4","23":"4","24":"4","25":"4","26":"3","27":"5","28":"5","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"3","40":"4","41":"4","42":"3","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"4","67":"3","68":"3","69":"3","70":"4","71":"3","72":"3","73":"3","74":"3","75":"3","76":"4","77":"4","78":"4","79":"4","80":"3","81":"3","82":"4","83":"3"},{"1":"3","2":"3","3":"4","4":"3","5":"4","6":"4","7":"4","8":"5","9":"5","10":"4","11":"1","12":"2","13":"3","14":"3","15":"4","16":"4","17":"4","18":"3","19":"3","20":"4","21":"2","22":"4","23":"4","24":"5","25":"5","26":"4","27":"4","28":"4","29":"2","30":"3","31":"3","32":"3","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"3","40":"3","41":"3","42":"3","43":"2","44":"4","45":"2","46":"2","47":"3","48":"4","49":"3","50":"2","51":"2","52":"3","53":"4","54":"4","55":"3","56":"2","57":"2","58":"2","59":"4","60":"4","61":"3","62":"3","63":"3","64":"3","65":"4","66":"3","67":"4","68":"3","69":"5","70":"5","71":"4","72":"4","73":"4","74":"4","75":"3","76":"3","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"5"},{"1":"1","2":"4","3":"2","4":"3","5":"4","6":"1","7":"5","8":"5","9":"5","10":"4","11":"3","12":"4","13":"4","14":"3","15":"5","16":"4","17":"2","18":"4","19":"1","20":"4","21":"3","22":"1","23":"5","24":"5","25":"2","26":"4","27":"5","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"5","37":"3","38":"5","39":"5","40":"2","41":"2","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"4","49":"4","50":"2","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"1","58":"1","59":"2","60":"2","61":"3","62":"4","63":"3","64":"5","65":"2","66":"4","67":"4","68":"5","69":"5","70":"5","71":"3","72":"4","73":"4","74":"3","75":"5","76":"5","77":"4","78":"4","79":"5","80":"4","81":"4","82":"3","83":"4"},{"1":"1","2":"1","3":"1","4":"3","5":"2","6":"1","7":"4","8":"5","9":"5","10":"3","11":"4","12":"3","13":"4","14":"3","15":"3","16":"4","17":"3","18":"3","19":"1","20":"4","21":"3","22":"3","23":"3","24":"4","25":"2","26":"3","27":"5","28":"3","29":"1","30":"4","31":"3","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"5","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"3","57":"3","58":"3","59":"3","60":"3","61":"2","62":"2","63":"3","64":"5","65":"4","66":"3","67":"4","68":"4","69":"4","70":"5","71":"5","72":"3","73":"4","74":"4","75":"3","76":"5","77":"4","78":"4","79":"4","80":"4","81":"5","82":"5","83":"3"},{"1":"2","2":"2","3":"2","4":"3","5":"3","6":"2","7":"4","8":"4","9":"4","10":"4","11":"2","12":"4","13":"4","14":"3","15":"4","16":"4","17":"3","18":"4","19":"2","20":"4","21":"3","22":"2","23":"2","24":"4","25":"3","26":"3","27":"4","28":"4","29":"2","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"3","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"2","2":"2","3":"2","4":"2","5":"2","6":"2","7":"4","8":"4","9":"4","10":"3","11":"3","12":"4","13":"4","14":"4","15":"4","16":"4","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"4","28":"4","29":"3","30":"4","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"5","39":"5","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"4","67":"3","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"4","16":"3","17":"4","18":"4","19":"3","20":"3","21":"3","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"3","29":"2","30":"3","31":"3","32":"3","33":"3","34":"4","35":"3","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"3","52":"4","53":"2","54":"2","55":"2","56":"2","57":"4","58":"2","59":"4","60":"2","61":"3","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"4","73":"4","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"3","2":"3","3":"4","4":"3","5":"4","6":"3","7":"5","8":"4","9":"4","10":"4","11":"4","12":"4","13":"4","14":"5","15":"4","16":"3","17":"4","18":"4","19":"2","20":"4","21":"3","22":"3","23":"3","24":"2","25":"3","26":"4","27":"4","28":"3","29":"2","30":"4","31":"3","32":"3","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"3","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"3","66":"3","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"2","3":"3","4":"4","5":"4","6":"3","7":"3","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"5","15":"4","16":"3","17":"3","18":"4","19":"3","20":"5","21":"3","22":"2","23":"4","24":"4","25":"1","26":"5","27":"5","28":"4","29":"1","30":"3","31":"3","32":"3","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"5","41":"5","42":"4","43":"4","44":"4","45":"4","46":"4","47":"3","48":"3","49":"3","50":"4","51":"5","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"5","80":"5","81":"5","82":"4","83":"4"},{"1":"1","2":"3","3":"1","4":"4","5":"2","6":"1","7":"4","8":"4","9":"5","10":"4","11":"3","12":"4","13":"4","14":"2","15":"4","16":"4","17":"3","18":"4","19":"2","20":"5","21":"2","22":"2","23":"4","24":"4","25":"2","26":"4","27":"5","28":"3","29":"2","30":"3","31":"2","32":"3","33":"3","34":"4","35":"3","36":"3","37":"4","38":"4","39":"4","40":"5","41":"5","42":"4","43":"4","44":"3","45":"4","46":"5","47":"2","48":"4","49":"4","50":"4","51":"3","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"3","65":"4","66":"3","67":"3","68":"3","69":"4","70":"4","71":"2","72":"1","73":"1","74":"3","75":"5","76":"4","77":"4","78":"4","79":"4","80":"4","81":"3","82":"3","83":"3"},{"1":"2","2":"4","3":"3","4":"3","5":"3","6":"4","7":"5","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"2","15":"5","16":"5","17":"1","18":"5","19":"1","20":"5","21":"2","22":"4","23":"3","24":"4","25":"4","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"3","33":"4","34":"3","35":"3","36":"5","37":"3","38":"4","39":"4","40":"4","41":"3","42":"4","43":"3","44":"3","45":"4","46":"4","47":"3","48":"3","49":"4","50":"5","51":"5","52":"5","53":"4","54":"4","55":"4","56":"2","57":"2","58":"3","59":"2","60":"2","61":"2","62":"4","63":"4","64":"4","65":"4","66":"3","67":"4","68":"3","69":"3","70":"4","71":"4","72":"4","73":"3","74":"4","75":"5","76":"5","77":"4","78":"5","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"3","3":"3","4":"3","5":"3","6":"4","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"4","15":"3","16":"4","17":"3","18":"4","19":"3","20":"4","21":"3","22":"2","23":"3","24":"3","25":"3","26":"4","27":"5","28":"4","29":"1","30":"3","31":"3","32":"4","33":"3","34":"4","35":"3","36":"4","37":"3","38":"4","39":"4","40":"3","41":"4","42":"4","43":"3","44":"3","45":"4","46":"4","47":"4","48":"3","49":"4","50":"3","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"2","61":"1","62":"3","63":"3","64":"4","65":"2","66":"4","67":"4","68":"3","69":"4","70":"4","71":"4","72":"4","73":"3","74":"3","75":"3","76":"4","77":"3","78":"2","79":"3","80":"4","81":"4","82":"4","83":"3"},{"1":"3","2":"4","3":"3","4":"4","5":"4","6":"3","7":"4","8":"4","9":"4","10":"3","11":"3","12":"3","13":"3","14":"4","15":"4","16":"4","17":"4","18":"4","19":"3","20":"4","21":"4","22":"3","23":"3","24":"4","25":"3","26":"3","27":"4","28":"4","29":"1","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"3","37":"3","38":"4","39":"4","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"4","47":"4","48":"4","49":"4","50":"3","51":"4","52":"3","53":"3","54":"3","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"4","72":"4","73":"4","74":"4","75":"4","76":"4","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"3"},{"1":"1","2":"3","3":"4","4":"4","5":"4","6":"2","7":"2","8":"4","9":"4","10":"4","11":"4","12":"2","13":"3","14":"2","15":"5","16":"4","17":"5","18":"3","19":"4","20":"3","21":"3","22":"4","23":"5","24":"5","25":"4","26":"4","27":"5","28":"5","29":"1","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"4","38":"2","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"5","48":"4","49":"4","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"5","57":"5","58":"5","59":"5","60":"5","61":"5","62":"4","63":"4","64":"3","65":"5","66":"3","67":"3","68":"3","69":"3","70":"3","71":"3","72":"3","73":"3","74":"3","75":"3","76":"3","77":"3","78":"3","79":"3","80":"3","81":"3","82":"3","83":"3"},{"1":"1","2":"1","3":"5","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"5","11":"5","12":"1","13":"5","14":"1","15":"1","16":"5","17":"5","18":"5","19":"1","20":"5","21":"1","22":"1","23":"5","24":"5","25":"1","26":"5","27":"5","28":"5","29":"1","30":"5","31":"5","32":"5","33":"5","34":"5","35":"5","36":"1","37":"1","38":"1","39":"5","40":"5","41":"5","42":"1","43":"1","44":"1","45":"1","46":"1","47":"5","48":"5","49":"5","50":"5","51":"5","52":"5","53":"5","54":"5","55":"5","56":"1","57":"1","58":"1","59":"1","60":"1","61":"1","62":"5","63":"5","64":"5","65":"5","66":"5","67":"5","68":"5","69":"5","70":"5","71":"5","72":"5","73":"5","74":"5","75":"5","76":"5","77":"1","78":"1","79":"1","80":"1","81":"1","82":"1","83":"1"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"1","7":"4","8":"4","9":"4","10":"4","11":"3","12":"4","13":"4","14":"3","15":"2","16":"4","17":"3","18":"4","19":"3","20":"4","21":"4","22":"3","23":"4","24":"3","25":"3","26":"4","27":"4","28":"4","29":"3","30":"3","31":"4","32":"4","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"2","41":"4","42":"3","43":"4","44":"3","45":"3","46":"3","47":"4","48":"4","49":"4","50":"4","51":"4","52":"3","53":"2","54":"3","55":"3","56":"3","57":"3","58":"2","59":"3","60":"3","61":"4","62":"4","63":"3","64":"4","65":"3","66":"3","67":"3","68":"3","69":"4","70":"4","71":"4","72":"4","73":"4","74":"3","75":"4","76":"4","77":"3","78":"4","79":"4","80":"4","81":"4","82":"4","83":"4"},{"1":"1","2":"1","3":"1","4":"2","5":"1","6":"2","7":"1","8":"2","9":"2","10":"2","11":"1","12":"1","13":"2","14":"1","15":"1","16":"1","17":"1","18":"2","19":"2","20":"3","21":"1","22":"1","23":"3","24":"2","25":"1","26":"3","27":"1","28":"1","29":"1","30":"1","31":"2","32":"3","33":"1","34":"2","35":"2","36":"1","37":"3","38":"3","39":"3","40":"2","41":"1","42":"1","43":"1","44":"1","45":"1","46":"2","47":"1","48":"2","49":"1","50":"2","51":"1","52":"1","53":"3","54":"2","55":"2","56":"2","57":"1","58":"1","59":"2","60":"1","61":"2","62":"1","63":"2","64":"1","65":"1","66":"2","67":"2","68":"1","69":"1","70":"2","71":"1","72":"1","73":"2","74":"1","75":"2","76":"2","77":"1","78":"1","79":"1","80":"2","81":"2","82":"1","83":"2"},{"1":"1","2":"3","3":"2","4":"4","5":"3","6":"3","7":"3","8":"4","9":"4","10":"4","11":"2","12":"2","13":"2","14":"3","15":"4","16":"4","17":"2","18":"4","19":"2","20":"4","21":"2","22":"2","23":"4","24":"4","25":"2","26":"4","27":"4","28":"3","29":"1","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"4","41":"4","42":"4","43":"4","44":"4","45":"4","46":"3","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"3","60":"3","61":"3","62":"4","63":"4","64":"4","65":"3","66":"4","67":"4","68":"4","69":"3","70":"3","71":"4","72":"3","73":"3","74":"3","75":"4","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"3","83":"3"},{"1":"2","2":"2","3":"1","4":"2","5":"2","6":"2","7":"1","8":"1","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2","15":"2","16":"3","17":"3","18":"1","19":"2","20":"1","21":"3","22":"2","23":"2","24":"2","25":"1","26":"1","27":"3","28":"3","29":"3","30":"2","31":"1","32":"1","33":"3","34":"3","35":"2","36":"1","37":"3","38":"2","39":"3","40":"1","41":"1","42":"3","43":"3","44":"3","45":"1","46":"1","47":"2","48":"1","49":"1","50":"3","51":"2","52":"3","53":"2","54":"3","55":"2","56":"1","57":"1","58":"1","59":"2","60":"2","61":"1","62":"2","63":"2","64":"2","65":"1","66":"3","67":"3","68":"2","69":"2","70":"3","71":"1","72":"1","73":"2","74":"3","75":"1","76":"3","77":"3","78":"1","79":"2","80":"1","81":"2","82":"1","83":"2"},{"1":"2","2":"2","3":"2","4":"3","5":"2","6":"2","7":"4","8":"4","9":"4","10":"4","11":"3","12":"3","13":"3","14":"3","15":"4","16":"4","17":"3","18":"4","19":"3","20":"3","21":"3","22":"2","23":"4","24":"4","25":"3","26":"3","27":"5","28":"4","29":"3","30":"3","31":"3","32":"3","33":"3","34":"3","35":"3","36":"3","37":"3","38":"3","39":"3","40":"4","41":"4","42":"3","43":"3","44":"3","45":"3","46":"3","47":"3","48":"3","49":"3","50":"4","51":"4","52":"4","53":"4","54":"4","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"3","65":"5","66":"3","67":"3","68":"3","69":"3","70":"4","71":"4","72":"3","73":"3","74":"3","75":"3","76":"5","77":"4","78":"5","79":"3","80":"3","81":"4","82":"4","83":"3"},{"1":"4","2":"2","3":"3","4":"4","5":"3","6":"3","7":"4","8":"4","9":"4","10":"4","11":"4","12":"3","13":"4","14":"4","15":"4","16":"5","17":"4","18":"4","19":"4","20":"4","21":"4","22":"3","23":"4","24":"4","25":"3","26":"4","27":"5","28":"4","29":"3","30":"4","31":"4","32":"5","33":"4","34":"4","35":"4","36":"4","37":"4","38":"4","39":"4","40":"4","41":"4","42":"4","43":"5","44":"5","45":"4","46":"4","47":"4","48":"4","49":"4","50":"4","51":"4","52":"4","53":"4","54":"4","55":"4","56":"4","57":"4","58":"4","59":"4","60":"4","61":"4","62":"4","63":"4","64":"4","65":"5","66":"4","67":"5","68":"4","69":"4","70":"4","71":"5","72":"4","73":"5","74":"4","75":"4","76":"4","77":"4","78":"4","79":"4","80":"4","81":"4","82":"5","83":"4"},{"1":"2","2":"2","3":"4","4":"3","5":"3","6":"4","7":"3","8":"1","9":"3","10":"4","11":"3","12":"4","13":"3","14":"4","15":"4","16":"3","17":"3","18":"4","19":"3","20":"4","21":"3","22":"4","23":"4","24":"3","25":"3","26":"4","27":"3","28":"3","29":"4","30":"3","31":"4","32":"3","33":"4","34":"2","35":"3","36":"4","37":"2","38":"3","39":"2","40":"3","41":"2","42":"4","43":"3","44":"4","45":"3","46":"3","47":"3","48":"3","49":"3","50":"3","51":"4","52":"2","53":"3","54":"2","55":"3","56":"3","57":"4","58":"3","59":"2","60":"3","61":"3","62":"4","63":"3","64":"2","65":"4","66":"3","67":"4","68":"4","69":"3","70":"3","71":"2","72":"3","73":"4","74":"3","75":"3","76":"5","77":"4","78":"3","79":"2","80":"3","81":"3","82":"2","83":"4"},{"1":"2","2":"4","3":"4","4":"3","5":"3","6":"3","7":"4","8":"3","9":"2","10":"3","11":"3","12":"2","13":"3","14":"3","15":"3","16":"3","17":"4","18":"4","19":"3","20":"3","21":"4","22":"4","23":"4","24":"4","25":"4","26":"3","27":"4","28":"3","29":"3","30":"4","31":"3","32":"3","33":"3","34":"3","35":"3","36":"4","37":"4","38":"4","39":"3","40":"3","41":"4","42":"4","43":"3","44":"3","45":"3","46":"4","47":"4","48":"4","49":"4","50":"3","51":"3","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"4","63":"3","64":"4","65":"4","66":"4","67":"4","68":"4","69":"4","70":"4","71":"3","72":"3","73":"3","74":"4","75":"4","76":"5","77":"5","78":"4","79":"4","80":"4","81":"3","82":"3","83":"4"},{"1":"1","2":"1","3":"1","4":"1","5":"1","6":"1","7":"5","8":"5","9":"5","10":"4","11":"4","12":"2","13":"2","14":"5","15":"2","16":"5","17":"4","18":"5","19":"2","20":"4","21":"3","22":"3","23":"3","24":"2","25":"2","26":"3","27":"4","28":"4","29":"4","30":"4","31":"4","32":"4","33":"4","34":"3","35":"4","36":"4","37":"3","38":"4","39":"4","40":"3","41":"3","42":"4","43":"4","44":"4","45":"4","46":"4","47":"2","48":"2","49":"3","50":"5","51":"5","52":"3","53":"3","54":"3","55":"3","56":"3","57":"3","58":"3","59":"3","60":"3","61":"3","62":"3","63":"3","64":"4","65":"4","66":"3","67":"3","68":"4","69":"2","70":"4","71":"4","72":"4","73":"4","74":"4","75":"3","76":"4","77":"4","78":"3","79":"4","80":"4","81":"4","82":"3","83":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+Como primeira análise vamos fazer uma análise fatorial confirmatória (CFA) para tentar verificar se as variáveis utilizadas nos construtos são as que têm valores de loadings mais elevados. Vamos usar o pacote `blavaan` para fazer a modelação bayesiana.
+
+
+``` r
+# individual params
+n_chains <- 3 # 5
+burn_in <- 1500
+sample_estimate <- 3000
+```
+
+
+``` r
+plot_sem_model <- function(model, title = "") {
+  semPaths(model,
+           what = "std",
+           layout = "spring",
+           edge.label.cex = 0.8,
+           sizeMan = 5,
+           sizeLat = 7,
+           nCharNodes = 0,
+           residuals = TRUE,
+           intercepts = FALSE,
+           optimizeLatRes = TRUE,
+           edge.color = "darkgreen",
+           color = list(lat = "skyblue", man = "white"),
+           node.width = 2,
+           mar = c(6, 6, 6, 6))
+}
+```
+
+
+
+
+#### CFA com todas as variáveis para tentar justificar/perceber as escolhas para os construtos
+
+##### Student Ethics
+
+
+``` r
+# Student Ethics
+model.ethics <- 'StudentEthics =~ ET1 + ET2 + ET3 + ET4 + ET5 + ET6 + ET7 + 
+                                  ET8 + ET9 + ET10 + ET11 + ET12 + ET13 + ET14'
+fit.ethics <- bcfa(model.ethics, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000517 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 5.17 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 5.801 seconds (Warm-up)
+## Chain 1:                10.384 seconds (Sampling)
+## Chain 1:                16.185 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000406 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 4.06 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 6.079 seconds (Warm-up)
+## Chain 2:                11.353 seconds (Sampling)
+## Chain 2:                17.432 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000463 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 4.63 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 6.02 seconds (Warm-up)
+## Chain 3:                10.75 seconds (Sampling)
+## Chain 3:                16.77 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.ethics, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        28
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -10180.825       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   StudentEthics =~                                                      
+##     ET1               0.183    0.043    0.098    0.268    0.183    0.204
+##     ET2               0.243    0.064    0.119    0.370    0.243    0.185
+##     ET3               0.258    0.048    0.163    0.353    0.258    0.261
+##     ET4               0.221    0.045    0.133    0.309    0.221    0.236
+##     ET5               0.275    0.050    0.178    0.375    0.275    0.269
+##     ET6               0.289    0.046    0.198    0.380    0.289    0.298
+##     ET7               0.199    0.042    0.117    0.284    0.199    0.247
+##     ET8               0.195    0.041    0.115    0.277    0.195    0.252
+##     ET9               0.191    0.038    0.118    0.269    0.191    0.268
+##     ET10              0.396    0.042    0.314    0.478    0.396    0.458
+##     ET11              0.412    0.038    0.339    0.489    0.412    0.503
+##     ET12              0.741    0.043    0.654    0.824    0.741    0.780
+##     ET13              0.749    0.042    0.664    0.830    0.749    0.795
+##     ET14              0.364    0.042    0.281    0.448    0.364    0.406
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.001    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET1               0.770    0.047    0.682    0.864    0.770    0.958
+##    .ET2               1.667    0.100    1.481    1.872    1.667    0.966
+##    .ET3               0.911    0.055    0.808    1.024    0.911    0.932
+##    .ET4               0.829    0.050    0.735    0.934    0.829    0.944
+##    .ET5               0.973    0.060    0.862    1.098    0.973    0.928
+##    .ET6               0.857    0.052    0.760    0.965    0.857    0.911
+##    .ET7               0.609    0.038    0.539    0.688    0.609    0.939
+##    .ET8               0.563    0.035    0.497    0.635    0.563    0.936
+##    .ET9               0.469    0.030    0.415    0.529    0.469    0.928
+##    .ET10              0.591    0.039    0.520    0.671    0.591    0.790
+##    .ET11              0.502    0.034    0.439    0.571    0.502    0.747
+##    .ET12              0.353    0.042    0.279    0.445    0.353    0.391
+##    .ET13              0.326    0.041    0.254    0.417    0.326    0.368
+##    .ET14              0.671    0.043    0.588    0.759    0.671    0.835
+##     StudentEthics     1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET1               0.042
+##     ET2               0.034
+##     ET3               0.068
+##     ET4               0.056
+##     ET5               0.072
+##     ET6               0.089
+##     ET7               0.061
+##     ET8               0.064
+##     ET9               0.072
+##     ET10              0.210
+##     ET11              0.253
+##     ET12              0.609
+##     ET13              0.632
+##     ET14              0.165
+```
+
+``` r
+fitMeasures(fit.ethics)
+```
+
+```
+## Warning: 
+## 32 (5.7%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     28.000 -10057.983      0.000  20293.396  20172.138     28.086  20200.636 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     57.457    246.598  20201.406     57.842    246.724 -10180.825
+```
+1500 burn-in + 3000 samples
+
+| Item  | Loadings  |
+|-------|-----------|
+| ET1   | 0.183     |
+| ET2   | 0.244     |
+| ET3   | 0.258     |
+| ET4   | 0.221     |
+| ET5   | 0.275     |
+| ET6   | 0.288     |
+| ET7   | 0.198     |
+| ET8   | 0.194     |
+| ET9   | 0.190     |
+| ET10  | 0.395     |
+| ET11  | 0.411     |
+| ET12  | **0.741**     |
+| ET13  | **0.749**     |
+| ET14  | 0.364     |
+
+O artigo opta por selecionar apenas 2 variáveis para o `Student Ethics` (ET12 e ET13), que são os que têm os loadings mais expressivos.
+
+##### Motivation
+
+
+
+``` r
+# Motivation
+model.motivation <- 'Motivation =~ Mot1 + Mot2 + Mot3 + Mot4 + Mot5 + 
+                                  Mot6 + Mot7 + Mot8 + Mot9 + Mot10 + 
+                                  Mot11 + Mot12 + Mot13 + Mot14 + 
+                                  Mot15'
+fit.motivation <- bcfa(model.motivation, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000497 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 4.97 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 6.41 seconds (Warm-up)
+## Chain 1:                12.307 seconds (Sampling)
+## Chain 1:                18.717 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000597 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 5.97 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 7.064 seconds (Warm-up)
+## Chain 2:                12.862 seconds (Sampling)
+## Chain 2:                19.926 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000478 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 4.78 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 6.986 seconds (Warm-up)
+## Chain 3:                12.801 seconds (Sampling)
+## Chain 3:                19.787 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.motivation, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        30
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -9592.072       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation =~                                                         
+##     Mot1              0.364    0.034    0.299    0.431    0.364    0.498
+##     Mot2              0.387    0.030    0.328    0.445    0.387    0.574
+##     Mot3              0.244    0.043    0.160    0.328    0.244    0.280
+##     Mot4              0.367    0.033    0.303    0.433    0.367    0.497
+##     Mot5             -0.078    0.044   -0.166    0.009   -0.078   -0.089
+##     Mot6              0.409    0.031    0.350    0.472    0.409    0.594
+##     Mot7              0.259    0.036    0.188    0.330    0.259    0.344
+##     Mot8             -0.101    0.046   -0.192   -0.010   -0.101   -0.111
+##     Mot9              0.354    0.034    0.289    0.421    0.354    0.485
+##     Mot10             0.318    0.031    0.258    0.379    0.318    0.462
+##     Mot11            -0.059    0.047   -0.151    0.034   -0.059   -0.063
+##     Mot12             0.285    0.032    0.222    0.347    0.285    0.414
+##     Mot13             0.422    0.030    0.364    0.482    0.422    0.615
+##     Mot14             0.354    0.033    0.291    0.420    0.354    0.487
+##     Mot15            -0.166    0.055   -0.275   -0.057   -0.166   -0.149
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .Mot1              0.402    0.027    0.352    0.457    0.402    0.752
+##    .Mot2              0.305    0.021    0.265    0.348    0.305    0.671
+##    .Mot3              0.698    0.044    0.619    0.788    0.698    0.921
+##    .Mot4              0.411    0.027    0.361    0.466    0.411    0.753
+##    .Mot5              0.773    0.047    0.687    0.871    0.773    0.992
+##    .Mot6              0.307    0.022    0.265    0.353    0.307    0.647
+##    .Mot7              0.499    0.031    0.442    0.562    0.499    0.882
+##    .Mot8              0.828    0.051    0.735    0.936    0.828    0.988
+##    .Mot9              0.409    0.027    0.359    0.466    0.409    0.765
+##    .Mot10             0.372    0.024    0.328    0.421    0.372    0.786
+##    .Mot11             0.862    0.051    0.768    0.969    0.862    0.996
+##    .Mot12             0.392    0.024    0.346    0.442    0.392    0.829
+##    .Mot13             0.294    0.022    0.253    0.339    0.294    0.622
+##    .Mot14             0.403    0.026    0.355    0.457    0.403    0.763
+##    .Mot15             1.207    0.074    1.070    1.359    1.207    0.978
+##     Motivation        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     Mot1              0.248
+##     Mot2              0.329
+##     Mot3              0.079
+##     Mot4              0.247
+##     Mot5              0.008
+##     Mot6              0.353
+##     Mot7              0.118
+##     Mot8              0.012
+##     Mot9              0.235
+##     Mot10             0.214
+##     Mot11             0.004
+##     Mot12             0.171
+##     Mot13             0.378
+##     Mot14             0.237
+##     Mot15             0.022
+```
+
+``` r
+fitMeasures(fit.motivation)
+```
+
+```
+## Warning: 
+## 26 (4.6%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     30.000  -9454.842      0.000  19099.789  18969.752     30.034  18992.486 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     51.780    261.357  18992.379     51.727    261.332  -9592.072
+```
+
+1500 burn-in + 3000 samples
+
+| Item  | Loadings  |
+|--------|----------|
+| Mot1   | 0.364    |
+| Mot2   | 0.386    |
+| Mot3   | 0.244    |
+| Mot4   | 0.368    |
+| Mot5   | -0.078   |
+| Mot6   | 0.409    |
+| Mot7   | 0.259    |
+| Mot8   | -0.101   |
+| Mot9   | 0.354    |
+| Mot10  | 0.318    |
+| Mot11  | -0.058   |
+| Mot12  | 0.285    |
+| Mot13  | 0.422    |
+| Mot14  | 0.354    |
+| Mot15  | -0.165   |
+
+O artigo opta por selecionar apenas 3 variáveis para o `Motivation` (Mot5, Mot8 e Mot11), que são os que têm os loadings negativos, a par do Mot15. São as três variáveis que têm os loadings mais parto de 0 (com diferença menor que 0.1), que talvez seja uma forma de tentar perceber a relação entre a pouca motivação e a ética.
+ 
+##### Self-Efficacy
+
+
+``` r
+# Self-Efficacy
+model.efficacy <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
+fit.efficacy <- bcfa(model.efficacy, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000186 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.86 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 2.171 seconds (Warm-up)
+## Chain 1:                4.372 seconds (Sampling)
+## Chain 1:                6.543 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000185 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.85 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 2.16 seconds (Warm-up)
+## Chain 2:                4.347 seconds (Sampling)
+## Chain 2:                6.507 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000188 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.88 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 2.159 seconds (Warm-up)
+## Chain 3:                4.358 seconds (Sampling)
+## Chain 3:                6.517 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.efficacy, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        12
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3092.362       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   SelfEfficacy =~                                                       
+##     SE1               0.414    0.030    0.356    0.474    0.414    0.578
+##     SE2               0.447    0.032    0.384    0.510    0.447    0.584
+##     SE3               0.514    0.026    0.462    0.566    0.514    0.762
+##     SE4               0.494    0.026    0.443    0.546    0.494    0.741
+##     SE5               0.441    0.029    0.386    0.497    0.441    0.638
+##     SE6               0.458    0.026    0.407    0.511    0.458    0.705
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .SE1               0.343    0.023    0.301    0.390    0.343    0.666
+##    .SE2               0.385    0.025    0.339    0.436    0.385    0.659
+##    .SE3               0.191    0.016    0.162    0.223    0.191    0.420
+##    .SE4               0.201    0.016    0.171    0.232    0.201    0.451
+##    .SE5               0.283    0.019    0.247    0.323    0.283    0.593
+##    .SE6               0.212    0.016    0.182    0.245    0.212    0.503
+##     SelfEfficacy      1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     SE1               0.334
+##     SE2               0.341
+##     SE3               0.580
+##     SE4               0.549
+##     SE5               0.407
+##     SE6               0.497
+```
+
+``` r
+fitMeasures(fit.efficacy)
+```
+
+```
+## Warning: 
+## 13 (2.3%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     12.000  -3033.293      0.000   6142.627   6090.500     11.957   6099.079 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     20.216    162.027   6099.134     20.243    162.036  -3092.362
+```
+
+1500 burn-in + 3000 samples
+
+| Item  | Loadings  |
+|-------|-----------|
+| SE1   | 0.414     |
+| SE2   | 0.447     |
+| SE3   | 0.514     |
+| SE4   | 0.494     |
+| SE5   | 0.441     |
+| SE6   | 0.458     |
+
+Optam-se por utilizar todas as variáveis para o `Self Efficacy`, dado que todas têm loadings positivos e acima de 0.4.
+
+##### Resilience
+
+
+``` r
+# Resilience
+model.resilience <- 'Resilience =~ R1 + R2 + R3 + R4 + R5 + R6'
+fit.resilience <- bcfa(model.resilience, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000188 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.88 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 2.272 seconds (Warm-up)
+## Chain 1:                4.788 seconds (Sampling)
+## Chain 1:                7.06 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.00022 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.2 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 2.278 seconds (Warm-up)
+## Chain 2:                4.58 seconds (Sampling)
+## Chain 2:                6.858 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000246 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 2.46 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 2.356 seconds (Warm-up)
+## Chain 3:                4.675 seconds (Sampling)
+## Chain 3:                7.031 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.resilience, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        12
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3502.237       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Resilience =~                                                         
+##     R1                0.438    0.035    0.371    0.508    0.438    0.565
+##     R2                0.501    0.034    0.436    0.569    0.501    0.643
+##     R3                0.356    0.034    0.291    0.422    0.356    0.531
+##     R4                0.381    0.033    0.317    0.448    0.381    0.551
+##     R5                0.548    0.038    0.473    0.623    0.548    0.687
+##     R6                0.485    0.036    0.415    0.556    0.485    0.642
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .R1                0.410    0.030    0.354    0.472    0.410    0.681
+##    .R2                0.357    0.027    0.306    0.414    0.357    0.587
+##    .R3                0.323    0.025    0.277    0.374    0.323    0.718
+##    .R4                0.333    0.024    0.287    0.383    0.333    0.696
+##    .R5                0.336    0.032    0.274    0.401    0.336    0.529
+##    .R6                0.336    0.029    0.282    0.397    0.336    0.588
+##     Resilience        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     R1                0.319
+##     R2                0.413
+##     R3                0.282
+##     R4                0.304
+##     R5                0.471
+##     R6                0.412
+```
+
+``` r
+fitMeasures(fit.resilience)
+```
+
+```
+## Warning: 
+## 10 (1.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     12.000  -3445.917      0.000   6967.875   6915.659     11.913   6926.187 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     22.079    162.481   6926.173     22.072    162.477  -3502.237
+```
+
+1500 burn-in + 3000 samples
+
+| Item  | Loadings  |
+|-------|-----------|
+| R1    | 0.438     |
+| R2    | 0.501     |
+| R3    | 0.356     |
+| R4    | 0.381     |
+| R5    | 0.548     |
+| R6    | 0.485     |
+
+O artigo opta por selecionar 3 variáveis para o `Resilience` (R2, R5 e R6), que são os que têm os loadings mais expressivos (os três arredondados são acima 0.5).
+
+
+##### Knowledge Articulation
+
+
+``` r
+# Knowledge Articulation
+model.knowledge <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
+fit.knowledge <- bcfa(model.knowledge, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000177 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.77 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 2.068 seconds (Warm-up)
+## Chain 1:                4.108 seconds (Sampling)
+## Chain 1:                6.176 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000419 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 4.19 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 2.028 seconds (Warm-up)
+## Chain 2:                3.919 seconds (Sampling)
+## Chain 2:                5.947 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000199 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.99 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 1.954 seconds (Warm-up)
+## Chain 3:                4.19 seconds (Sampling)
+## Chain 3:                6.144 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.knowledge, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        10
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -2156.761       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   KnowledgeArticulation =~                                             
+##     KA1                       0.476    0.026    0.426    0.529    0.476
+##     KA2                       0.522    0.024    0.476    0.568    0.522
+##     KA3                       0.477    0.023    0.433    0.523    0.477
+##     KA4                       0.511    0.024    0.465    0.557    0.511
+##     KA5                       0.450    0.025    0.402    0.499    0.450
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.704    1.000    normal(0,10)
+##     0.807    1.000    normal(0,10)
+##     0.774    1.000    normal(0,10)
+##     0.801    1.000    normal(0,10)
+##     0.709    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .KA1               0.231    0.016    0.201    0.265    0.231    0.504
+##    .KA2               0.146    0.012    0.124    0.170    0.146    0.349
+##    .KA3               0.153    0.012    0.131    0.178    0.153    0.401
+##    .KA4               0.145    0.012    0.122    0.170    0.145    0.358
+##    .KA5               0.200    0.014    0.173    0.230    0.200    0.498
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     KA1               0.496
+##     KA2               0.651
+##     KA3               0.599
+##     KA4               0.642
+##     KA5               0.502
+```
+
+``` r
+fitMeasures(fit.knowledge)
+```
+
+```
+## Warning: 
+## 15 (2.7%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     10.000  -2105.026      0.000   4273.421   4229.976      9.961   4252.906 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     31.780    195.597   4252.970     31.812    195.625  -2156.761
+```
+
+1500 burn-in + 3000 samples
+
+| Item  | Loadings  |
+|-------|-----------|
+| KA1   | 0.476     |
+| KA2   | 0.521     |
+| KA3   | 0.476     |
+| KA4   | 0.510     |
+| KA5   | 0.449     |
+
+O artigo opta por selecionar todas as variáveis para o `Knowledge Articulation`, dado que todas têm loadings positivos e acima de 0.4.
+
+
+##### Team Strain
+
+
+``` r
+# Team Strain
+model.teamstrain <- 'TeamStrain =~ TS1 + TS2 + TS3 + TS4 + TS5 + 
+                                  TS6 + TS7 + TS8 + TS9 + TS10 + 
+                                  TS11 + TS12 + TS13 + TS14 + 
+                                  TS15 + TS16 + TS17'
+fit.teamstrain <- bcfa(model.teamstrain, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000606 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.06 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 9.126 seconds (Warm-up)
+## Chain 1:                15.999 seconds (Sampling)
+## Chain 1:                25.125 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000634 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 6.34 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 8.927 seconds (Warm-up)
+## Chain 2:                16.024 seconds (Sampling)
+## Chain 2:                24.951 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000613 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 6.13 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 8.944 seconds (Warm-up)
+## Chain 3:                15.826 seconds (Sampling)
+## Chain 3:                24.77 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.teamstrain, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        34
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -8488.216       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   TeamStrain =~                                                         
+##     TS1               0.294    0.033    0.232    0.359    0.294    0.386
+##     TS2               0.216    0.033    0.153    0.282    0.216    0.288
+##     TS3               0.266    0.030    0.207    0.325    0.266    0.377
+##     TS4               0.245    0.033    0.181    0.309    0.245    0.322
+##     TS5               0.284    0.030    0.224    0.345    0.284    0.401
+##     TS6               0.288    0.031    0.227    0.349    0.288    0.398
+##     TS7               0.350    0.031    0.291    0.411    0.350    0.473
+##     TS8               0.354    0.029    0.297    0.412    0.354    0.504
+##     TS9               0.414    0.027    0.363    0.468    0.414    0.608
+##     TS10              0.484    0.029    0.429    0.541    0.484    0.658
+##     TS11              0.490    0.029    0.434    0.549    0.490    0.659
+##     TS12              0.502    0.030    0.445    0.562    0.502    0.667
+##     TS13              0.500    0.023    0.456    0.548    0.500    0.774
+##     TS14              0.506    0.021    0.465    0.548    0.506    0.833
+##     TS15              0.549    0.022    0.507    0.593    0.549    0.868
+##     TS16              0.454    0.022    0.413    0.497    0.454    0.773
+##     TS17              0.450    0.021    0.409    0.491    0.450    0.778
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .TS1               0.496    0.030    0.440    0.559    0.496    0.851
+##    .TS2               0.515    0.031    0.458    0.579    0.515    0.917
+##    .TS3               0.427    0.026    0.380    0.481    0.427    0.858
+##    .TS4               0.520    0.031    0.463    0.583    0.520    0.897
+##    .TS5               0.422    0.026    0.375    0.475    0.422    0.839
+##    .TS6               0.439    0.027    0.389    0.494    0.439    0.841
+##    .TS7               0.426    0.026    0.378    0.480    0.426    0.777
+##    .TS8               0.367    0.023    0.325    0.415    0.367    0.746
+##    .TS9               0.292    0.018    0.259    0.329    0.292    0.630
+##    .TS10              0.306    0.020    0.270    0.347    0.306    0.567
+##    .TS11              0.312    0.020    0.275    0.355    0.312    0.566
+##    .TS12              0.316    0.020    0.278    0.357    0.316    0.556
+##    .TS13              0.167    0.011    0.146    0.191    0.167    0.401
+##    .TS14              0.113    0.008    0.098    0.129    0.113    0.306
+##    .TS15              0.098    0.008    0.084    0.114    0.098    0.246
+##    .TS16              0.139    0.009    0.122    0.157    0.139    0.402
+##    .TS17              0.131    0.009    0.115    0.150    0.131    0.394
+##     TeamStrain        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     TS1               0.149
+##     TS2               0.083
+##     TS3               0.142
+##     TS4               0.103
+##     TS5               0.161
+##     TS6               0.159
+##     TS7               0.223
+##     TS8               0.254
+##     TS9               0.370
+##     TS10              0.433
+##     TS11              0.434
+##     TS12              0.444
+##     TS13              0.599
+##     TS14              0.694
+##     TS15              0.754
+##     TS16              0.598
+##     TS17              0.606
+```
+
+``` r
+fitMeasures(fit.teamstrain)
+```
+
+```
+## Warning: 
+## 33 (5.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     34.000  -8319.262      0.000  16853.976  16706.625     34.051  16753.081 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     78.664    471.799  16752.743     78.495    471.569  -8488.216
+```
+
+1500 burn-in + 3000 samples
+
+| Item  | Loadings  |
+|-------|-----------|
+| TS1    | 0.295     |
+| TS2    | 0.216     |
+| TS3    | 0.266     |
+| TS4    | 0.245     |
+| TS5    | 0.284     |
+| TS6    | 0.288     |
+| TS7    | 0.350     |
+| TS8    | 0.355     |
+| TS9    | 0.415     |
+| TS10   | 0.485     |
+| TS11   | 0.491     |
+| TS12   | 0.503     |
+| TS13   | 0.500     |
+| TS14   | 0.506     |
+| TS15   | 0.549     |
+| TS16   | 0.455     |
+| TS17   | 0.450     |
+
+O artigo opta por selecionar 8 variáveis para o `Team Strain` (TS10, TS11, TS12, TS13, TS14, TS15, TS16 e TS17), que são os que têm os loadings mais expressivos (os 8 arredondados são acima 0.5).
+
+
+##### Cooperative Classroom Environment
+
+
+``` r
+# Cooperative Classroom Environment
+model.cce <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE2 + CCE3 + 
+                                  CCE4 + CCE5 + CCE6 + CCE7 + CCE8 + 
+                                  CCE9 + CCE10 + CCE11 + CCE12 + CCE13 +
+                                  CCE14 + CCE15 + CCE16 + CCE17 + CCE18 +
+                                  CCE19 + CCE20'
+fit.cce <- bcfa(model.cce, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000944 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 9.44 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 12.618 seconds (Warm-up)
+## Chain 1:                23.071 seconds (Sampling)
+## Chain 1:                35.689 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000775 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 7.75 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 12.151 seconds (Warm-up)
+## Chain 2:                21.873 seconds (Sampling)
+## Chain 2:                34.024 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000926 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 9.26 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 12.212 seconds (Warm-up)
+## Chain 3:                21.663 seconds (Sampling)
+## Chain 3:                33.875 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.cce, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        40
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -10777.077       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.465    0.030    0.408    0.525
+##     CCE2                                0.145    0.039    0.071    0.221
+##     CCE3                                0.357    0.033    0.292    0.422
+##     CCE4                                0.321    0.030    0.262    0.381
+##     CCE5                                0.417    0.026    0.368    0.469
+##     CCE6                                0.324    0.033    0.260    0.389
+##     CCE7                                0.387    0.027    0.337    0.440
+##     CCE8                                0.389    0.031    0.331    0.451
+##     CCE9                                0.413    0.029    0.356    0.472
+##     CCE10                               0.418    0.026    0.368    0.471
+##     CCE11                               0.415    0.028    0.361    0.471
+##     CCE12                               0.329    0.041    0.250    0.410
+##     CCE13                               0.412    0.028    0.359    0.468
+##     CCE14                               0.411    0.030    0.354    0.470
+##     CCE15                               0.277    0.041    0.195    0.357
+##     CCE16                               0.471    0.024    0.425    0.519
+##     CCE17                               0.444    0.023    0.399    0.491
+##     CCE18                               0.465    0.025    0.417    0.514
+##     CCE19                               0.455    0.024    0.408    0.503
+##     CCE20                               0.396    0.028    0.342    0.452
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.465    0.619    1.000    normal(0,10)
+##     0.145    0.168    1.000    normal(0,10)
+##     0.357    0.465    1.000    normal(0,10)
+##     0.321    0.443    1.000    normal(0,10)
+##     0.417    0.644    1.000    normal(0,10)
+##     0.324    0.422    1.000    normal(0,10)
+##     0.387    0.588    1.000    normal(0,10)
+##     0.389    0.524    1.000    normal(0,10)
+##     0.413    0.572    1.000    normal(0,10)
+##     0.418    0.633    1.000    normal(0,10)
+##     0.415    0.603    1.000    normal(0,10)
+##     0.329    0.353    1.000    normal(0,10)
+##     0.412    0.594    1.000    normal(0,10)
+##     0.411    0.576    1.000    normal(0,10)
+##     0.277    0.298    1.000    normal(0,10)
+##     0.471    0.748    1.000    normal(0,10)
+##     0.444    0.733    1.000    normal(0,10)
+##     0.465    0.724    1.000    normal(0,10)
+##     0.455    0.734    1.000    normal(0,10)
+##     0.396    0.575    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .CCE1              0.348    0.022    0.306    0.394    0.348    0.616
+##    .CCE2              0.721    0.044    0.641    0.814    0.721    0.972
+##    .CCE3              0.462    0.029    0.410    0.522    0.462    0.784
+##    .CCE4              0.420    0.026    0.372    0.473    0.420    0.803
+##    .CCE5              0.246    0.015    0.217    0.277    0.246    0.586
+##    .CCE6              0.486    0.030    0.430    0.548    0.486    0.822
+##    .CCE7              0.284    0.018    0.251    0.321    0.284    0.654
+##    .CCE8              0.400    0.025    0.355    0.451    0.400    0.726
+##    .CCE9              0.350    0.022    0.309    0.395    0.350    0.673
+##    .CCE10             0.261    0.017    0.229    0.296    0.261    0.599
+##    .CCE11             0.302    0.019    0.265    0.342    0.302    0.637
+##    .CCE12             0.762    0.045    0.678    0.856    0.762    0.875
+##    .CCE13             0.312    0.019    0.277    0.352    0.312    0.647
+##    .CCE14             0.341    0.021    0.301    0.386    0.341    0.668
+##    .CCE15             0.788    0.047    0.702    0.886    0.788    0.911
+##    .CCE16             0.174    0.012    0.152    0.199    0.174    0.440
+##    .CCE17             0.170    0.012    0.148    0.193    0.170    0.462
+##    .CCE18             0.196    0.014    0.171    0.224    0.196    0.475
+##    .CCE19             0.177    0.012    0.154    0.204    0.177    0.462
+##    .CCE20             0.317    0.020    0.280    0.359    0.317    0.670
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     CCE1              0.384
+##     CCE2              0.028
+##     CCE3              0.216
+##     CCE4              0.197
+##     CCE5              0.414
+##     CCE6              0.178
+##     CCE7              0.346
+##     CCE8              0.274
+##     CCE9              0.327
+##     CCE10             0.401
+##     CCE11             0.363
+##     CCE12             0.125
+##     CCE13             0.353
+##     CCE14             0.332
+##     CCE15             0.089
+##     CCE16             0.560
+##     CCE17             0.538
+##     CCE18             0.525
+##     CCE19             0.538
+##     CCE20             0.330
+```
+
+``` r
+fitMeasures(fit.cce)
+```
+
+```
+## Warning: 
+## 48 (8.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     40.000 -10582.748      0.000  21418.970  21245.387     39.945  21308.592 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##    100.047    582.446  21308.577    100.039    582.437 -10777.077
+```
+
+1500 burn-in + 3000 samples
+
+| Item  | Loadings  |
+|-------|-----------|
+| CCE1   | 0.466     |
+| CCE2   | 0.145     |
+| CCE3   | 0.357     |
+| CCE4   | 0.321     |
+| CCE5   | 0.418     |
+| CCE6   | 0.325     |
+| CCE7   | 0.388     |
+| CCE8   | 0.389     |
+| CCE9   | 0.413     |
+| CCE10  | 0.418     |
+| CCE11  | 0.415     |
+| CCE12  | 0.330     |
+| CCE13  | 0.413     |
+| CCE14  | 0.412     |
+| CCE15  | 0.278     |
+| CCE16  | 0.472     |
+| CCE17  | 0.445     |
+| CCE18  | 0.466     |
+| CCE19  | 0.455     |
+| CCE20  | 0.396     |
+
+O artigo opta por selecionar 8 variáveis para o `Cooperative Classroom Environment` (CCE1, CCE3, CCE4, CCE5, CCE8, CCE9, CCE10 e CCE11). 
+
+
+##### Gráficos 
+
+
+
+``` r
+p1 <- plot_sem_model(fit.ethics, "Student Ethics")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
+
+``` r
+p2 <- plot_sem_model(fit.motivation, "Motivation")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-27-2.png)<!-- -->
+
+``` r
+p3 <- plot_sem_model(fit.efficacy, "Self Efficacy")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-27-3.png)<!-- -->
+
+``` r
+p4 <- plot_sem_model(fit.resilience, "Resilience")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-27-4.png)<!-- -->
+
+``` r
+p5 <- plot_sem_model(fit.knowledge, "Knowledge Articulation")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-27-5.png)<!-- -->
+
+``` r
+p6 <- plot_sem_model(fit.teamstrain, "Team Strain")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-27-6.png)<!-- -->
+
+``` r
+p7 <- plot_sem_model(fit.cce, "Cooperative Classroom Environment")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-27-7.png)<!-- -->
+
+
+``` r
+plot(seq(0,10,.1), dnorm(seq(0,10,.1),0,10), type="l", lty=1, lwd = 3, xlab="x value",
+     ylab="Density", main="Prior Latent variables: normal distribution (0,10)")
+# vertical line
+abline(v=1, col="darkred", lwd=2)
+abline(v=5, col="darkred", lwd=2)
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
+
+
+``` r
+plot(seq(0,10,.1), dgamma(seq(0,10,.1),1,0.5), type="l", lty=1, lwd = 3, xlab="x value",
+     ylab="Density", main="Prior Var: gamma distribution (1,0.5)")
+# vertical line
+abline(v=1, col="darkred", lwd=2)
+abline(v=5, col="darkred", lwd=2)
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
+
+#### CFA com as variáveis sugeridos pelo artigo
+
+
+``` r
+# individual params
+n_chains <- 3 # 5
+burn_in <- 1500
+sample_estimate <- 3000
+```
+
+##### Student Ethics
+
+
+``` r
+# Student Ethics
+model.ethics_article <- 'StudentEthics =~ ET12 + ET13'
+fit.ethics_article <- bcfa(model.ethics_article, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000152 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.52 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 4.825 seconds (Warm-up)
+## Chain 1:                11.514 seconds (Sampling)
+## Chain 1:                16.339 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000122 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.22 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 4.718 seconds (Warm-up)
+## Chain 2:                10.964 seconds (Sampling)
+## Chain 2:                15.682 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000106 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.06 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 4.997 seconds (Warm-up)
+## Chain 3:                9.668 seconds (Sampling)
+## Chain 3:                14.665 seconds (Total)
+## Chain 3:
+```
+
+```
+## Warning: There were 2 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.ethics_article, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                         4
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1334.122       0.506
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   StudentEthics =~                                                      
+##     ET12              0.812    0.095    0.656    0.969    0.812    0.864
+##     ET13              0.803    0.096    0.647    0.961    0.803    0.862
+##      Rhat    Prior       
+##                          
+##     1.009    normal(0,10)
+##     1.010    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.223    0.149    0.001    0.436    0.223    0.253
+##    .ET13              0.222    0.146    0.001    0.431    0.222    0.256
+##     StudentEthics     1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.010 gamma(1,.5)[sd]
+##     1.011 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.747
+##     ET13              0.744
+```
+
+``` r
+fitMeasures(fit.ethics_article)
+```
+
+```
+## Warning: 
+## 1 (0.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##      4.000  -1317.439      0.506   2660.226   2638.628      1.875   2641.456 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##      4.626     64.512   2641.472      4.634     64.517  -1334.122
+```
+
+##### Motivation
+
+
+
+``` r
+# Motivation
+model.motivation_article <- 'Motivation =~ Mot5 + Mot8 + Mot11'
+fit.motivation_article <- bcfa(model.motivation_article, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000233 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.33 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 1.35 seconds (Warm-up)
+## Chain 1:                2.913 seconds (Sampling)
+## Chain 1:                4.263 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000131 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.31 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 1.235 seconds (Warm-up)
+## Chain 2:                2.764 seconds (Sampling)
+## Chain 2:                3.999 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000121 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.21 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 1.296 seconds (Warm-up)
+## Chain 3:                2.62 seconds (Sampling)
+## Chain 3:                3.916 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.motivation_article, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                         6
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -2126.810       0.495
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation =~                                                         
+##     Mot5              0.555    0.043    0.470    0.639    0.555    0.629
+##     Mot8              0.614    0.046    0.525    0.703    0.614    0.670
+##     Mot11             0.620    0.046    0.530    0.711    0.620    0.666
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .Mot5              0.472    0.042    0.392    0.556    0.472    0.605
+##    .Mot8              0.462    0.047    0.371    0.553    0.462    0.551
+##    .Mot11             0.482    0.048    0.388    0.577    0.482    0.556
+##     Motivation        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     Mot5              0.395
+##     Mot8              0.449
+##     Mot11             0.444
+```
+
+``` r
+fitMeasures(fit.motivation_article)
+```
+
+```
+## Warning: 
+## 1 (0.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##      6.000  -2100.663      0.495   4239.346   4213.284      5.980   4214.462 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##      7.097     68.905   4214.466      7.099     68.905  -2126.810
+```
+
+##### Self-Efficacy
+
+
+``` r
+# Self-Efficacy
+model.efficacy_article <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
+fit.efficacy_article <- bcfa(model.efficacy_article, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000385 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 3.85 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 2.119 seconds (Warm-up)
+## Chain 1:                4.2 seconds (Sampling)
+## Chain 1:                6.319 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000172 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.72 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 2.109 seconds (Warm-up)
+## Chain 2:                4.063 seconds (Sampling)
+## Chain 2:                6.172 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000178 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.78 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 2.149 seconds (Warm-up)
+## Chain 3:                4.28 seconds (Sampling)
+## Chain 3:                6.429 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.efficacy_article, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        12
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3092.317       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   SelfEfficacy =~                                                       
+##     SE1               0.414    0.030    0.357    0.474    0.414    0.578
+##     SE2               0.447    0.032    0.384    0.510    0.447    0.584
+##     SE3               0.514    0.026    0.462    0.567    0.514    0.762
+##     SE4               0.494    0.027    0.445    0.547    0.494    0.741
+##     SE5               0.441    0.029    0.385    0.498    0.441    0.638
+##     SE6               0.458    0.026    0.407    0.511    0.458    0.705
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .SE1               0.342    0.023    0.300    0.389    0.342    0.666
+##    .SE2               0.385    0.026    0.337    0.439    0.385    0.659
+##    .SE3               0.191    0.016    0.161    0.224    0.191    0.419
+##    .SE4               0.200    0.016    0.172    0.232    0.200    0.451
+##    .SE5               0.283    0.020    0.247    0.324    0.283    0.593
+##    .SE6               0.212    0.016    0.182    0.245    0.212    0.503
+##     SelfEfficacy      1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     SE1               0.334
+##     SE2               0.341
+##     SE3               0.581
+##     SE4               0.549
+##     SE5               0.407
+##     SE6               0.497
+```
+
+``` r
+fitMeasures(fit.efficacy_article)
+```
+
+```
+## Warning: 
+## 13 (2.3%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     12.000  -3033.293      0.000   6142.628   6090.675     12.045   6099.259 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     20.325    162.053   6099.244     20.318    162.046  -3092.317
+```
+
+##### Resilience
+
+
+``` r
+# Resilience
+model.resilience_article <- 'Resilience =~ R2 + R5 + R6'
+fit.resilience_article <- bcfa(model.resilience_article, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000153 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.53 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 1.695 seconds (Warm-up)
+## Chain 1:                3.79 seconds (Sampling)
+## Chain 1:                5.485 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000115 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 1.15 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 1.616 seconds (Warm-up)
+## Chain 2:                3.704 seconds (Sampling)
+## Chain 2:                5.32 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000138 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.38 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 1.644 seconds (Warm-up)
+## Chain 3:                3.816 seconds (Sampling)
+## Chain 3:                5.46 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.resilience_article, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                         6
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1788.946       0.487
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Resilience =~                                                         
+##     R2                0.395    0.035    0.326    0.462    0.395    0.506
+##     R5                0.693    0.040    0.616    0.775    0.693    0.869
+##     R6                0.555    0.036    0.484    0.625    0.555    0.736
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .R2                0.452    0.030    0.395    0.515    0.452    0.744
+##    .R5                0.155    0.043    0.062    0.233    0.155    0.244
+##    .R6                0.262    0.031    0.202    0.325    0.262    0.459
+##     Resilience        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     R2                0.256
+##     R5                0.756
+##     R6                0.541
+```
+
+``` r
+fitMeasures(fit.resilience_article)
+```
+
+```
+## Warning: 
+## 3 (0.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##      6.000  -1761.057      0.487   3560.135   3534.266      6.076   3539.688 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     11.192     97.906   3539.646     11.171     97.885  -1788.946
+```
+
+##### Knowledge Articulation
+
+
+``` r
+# Knowledge Articulation
+model.knowledge_article <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
+fit.knowledge_article <- bcfa(model.knowledge_article, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000217 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.17 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 1.871 seconds (Warm-up)
+## Chain 1:                3.694 seconds (Sampling)
+## Chain 1:                5.565 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000227 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.27 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 1.852 seconds (Warm-up)
+## Chain 2:                3.642 seconds (Sampling)
+## Chain 2:                5.494 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.00016 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 1.6 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 1.862 seconds (Warm-up)
+## Chain 3:                3.698 seconds (Sampling)
+## Chain 3:                5.56 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.knowledge_article, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        10
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -2156.758       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   KnowledgeArticulation =~                                             
+##     KA1                       0.477    0.026    0.426    0.529    0.477
+##     KA2                       0.522    0.024    0.476    0.570    0.522
+##     KA3                       0.477    0.023    0.432    0.524    0.477
+##     KA4                       0.511    0.024    0.465    0.559    0.511
+##     KA5                       0.450    0.025    0.402    0.499    0.450
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.704    1.000    normal(0,10)
+##     0.807    1.000    normal(0,10)
+##     0.774    1.000    normal(0,10)
+##     0.802    1.000    normal(0,10)
+##     0.709    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .KA1               0.231    0.016    0.202    0.264    0.231    0.504
+##    .KA2               0.146    0.012    0.124    0.171    0.146    0.349
+##    .KA3               0.153    0.012    0.131    0.177    0.153    0.402
+##    .KA4               0.145    0.012    0.123    0.170    0.145    0.357
+##    .KA5               0.200    0.014    0.173    0.230    0.200    0.498
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     KA1               0.496
+##     KA2               0.651
+##     KA3               0.598
+##     KA4               0.643
+##     KA5               0.502
+```
+
+``` r
+fitMeasures(fit.knowledge_article)
+```
+
+```
+## Warning: 
+## 15 (2.7%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     10.000  -2105.026      0.000   4273.420   4229.966      9.957   4252.401 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     31.324    195.531   4252.429     31.338    195.532  -2156.758
+```
+
+##### Team Strain
+
+
+``` r
+# Team Strain
+model.teamstrain_article <- 'TeamStrain =~ TS10 + TS11 + TS12 + TS13 + 
+                                   TS14 + TS15 + TS16 + TS17'
+fit.teamstrain_article <- bcfa(model.teamstrain_article, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000251 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.51 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 2.888 seconds (Warm-up)
+## Chain 1:                5.239 seconds (Sampling)
+## Chain 1:                8.127 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000246 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.46 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 2.893 seconds (Warm-up)
+## Chain 2:                5.478 seconds (Sampling)
+## Chain 2:                8.371 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000223 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 2.23 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 2.795 seconds (Warm-up)
+## Chain 3:                5.281 seconds (Sampling)
+## Chain 3:                8.076 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.teamstrain_article, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        16
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3250.269       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   TeamStrain =~                                                         
+##     TS10              0.481    0.028    0.427    0.537    0.481    0.656
+##     TS11              0.486    0.028    0.431    0.542    0.486    0.655
+##     TS12              0.504    0.029    0.447    0.562    0.504    0.671
+##     TS13              0.510    0.023    0.466    0.557    0.510    0.793
+##     TS14              0.520    0.020    0.480    0.561    0.520    0.860
+##     TS15              0.556    0.021    0.516    0.598    0.556    0.885
+##     TS16              0.446    0.022    0.404    0.490    0.446    0.762
+##     TS17              0.436    0.021    0.397    0.478    0.436    0.759
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .TS10              0.307    0.020    0.271    0.348    0.307    0.570
+##    .TS11              0.314    0.020    0.276    0.356    0.314    0.571
+##    .TS12              0.310    0.020    0.273    0.352    0.310    0.550
+##    .TS13              0.154    0.011    0.134    0.176    0.154    0.372
+##    .TS14              0.095    0.007    0.082    0.110    0.095    0.261
+##    .TS15              0.086    0.007    0.072    0.101    0.086    0.218
+##    .TS16              0.143    0.010    0.125    0.163    0.143    0.419
+##    .TS17              0.140    0.009    0.122    0.160    0.140    0.424
+##     TeamStrain        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     TS10              0.430
+##     TS11              0.429
+##     TS12              0.450
+##     TS13              0.628
+##     TS14              0.739
+##     TS15              0.782
+##     TS16              0.581
+##     TS17              0.576
+```
+
+``` r
+fitMeasures(fit.teamstrain_article)
+```
+
+```
+## Warning: 
+## 20 (3.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     16.000  -3166.250      0.000   6433.890   6364.082     15.791   6396.123 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     46.259    301.440   6395.766     46.080    301.275  -3250.269
+```
+
+##### Cooperative Classroom Environment
+
+
+``` r
+# Cooperative Classroom Environment
+model.cce_article <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + 
+                                  CCE5 + CCE8 + CCE9 + CCE10 + CCE11'
+fit.cce_article <- bcfa(model.cce_article, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000231 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.31 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 1: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 1: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 1: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 1: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 1: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 1: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 1: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 1: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 1: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 1: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 1: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 2.527 seconds (Warm-up)
+## Chain 1:                5.101 seconds (Sampling)
+## Chain 1:                7.628 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000225 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.25 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 2: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 2: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 2: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 2: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 2: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 2: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 2: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 2: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 2: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 2: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 2: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 2.579 seconds (Warm-up)
+## Chain 2:                5.011 seconds (Sampling)
+## Chain 2:                7.59 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000228 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 2.28 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 4500 [  0%]  (Warmup)
+## Chain 3: Iteration:  450 / 4500 [ 10%]  (Warmup)
+## Chain 3: Iteration:  900 / 4500 [ 20%]  (Warmup)
+## Chain 3: Iteration: 1350 / 4500 [ 30%]  (Warmup)
+## Chain 3: Iteration: 1501 / 4500 [ 33%]  (Sampling)
+## Chain 3: Iteration: 1950 / 4500 [ 43%]  (Sampling)
+## Chain 3: Iteration: 2400 / 4500 [ 53%]  (Sampling)
+## Chain 3: Iteration: 2850 / 4500 [ 63%]  (Sampling)
+## Chain 3: Iteration: 3300 / 4500 [ 73%]  (Sampling)
+## Chain 3: Iteration: 3750 / 4500 [ 83%]  (Sampling)
+## Chain 3: Iteration: 4200 / 4500 [ 93%]  (Sampling)
+## Chain 3: Iteration: 4500 / 4500 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 2.614 seconds (Warm-up)
+## Chain 3:                4.981 seconds (Sampling)
+## Chain 3:                7.595 seconds (Total)
+## Chain 3: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+``` r
+summary(fit.cce_article, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        16
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -4217.866       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.488    0.031    0.429    0.549
+##     CCE3                                0.421    0.032    0.359    0.486
+##     CCE4                                0.406    0.031    0.347    0.469
+##     CCE5                                0.435    0.026    0.386    0.486
+##     CCE8                                0.422    0.031    0.361    0.483
+##     CCE9                                0.506    0.029    0.451    0.562
+##     CCE10                               0.482    0.026    0.433    0.535
+##     CCE11                               0.499    0.027    0.447    0.552
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.488    0.653    1.000    normal(0,10)
+##     0.421    0.550    1.000    normal(0,10)
+##     0.406    0.563    1.000    normal(0,10)
+##     0.435    0.673    1.000    normal(0,10)
+##     0.422    0.570    1.000    normal(0,10)
+##     0.506    0.703    1.000    normal(0,10)
+##     0.482    0.733    1.000    normal(0,10)
+##     0.499    0.727    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .CCE1              0.321    0.023    0.278    0.368    0.321    0.574
+##    .CCE3              0.410    0.027    0.359    0.466    0.410    0.698
+##    .CCE4              0.356    0.024    0.312    0.406    0.356    0.683
+##    .CCE5              0.228    0.016    0.198    0.261    0.228    0.547
+##    .CCE8              0.370    0.024    0.327    0.419    0.370    0.676
+##    .CCE9              0.262    0.019    0.226    0.301    0.262    0.506
+##    .CCE10             0.200    0.016    0.171    0.232    0.200    0.463
+##    .CCE11             0.222    0.017    0.192    0.257    0.222    0.472
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     CCE1              0.426
+##     CCE3              0.302
+##     CCE4              0.317
+##     CCE5              0.453
+##     CCE8              0.324
+##     CCE9              0.494
+##     CCE10             0.537
+##     CCE11             0.528
+```
+
+``` r
+fitMeasures(fit.cce_article)
+```
+
+```
+## Warning: 
+## 21 (3.7%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     16.000  -4139.713      0.000   8380.815   8311.440     16.007   8329.217 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     33.232    208.507   8329.298     33.273    208.520  -4217.866
+```
+
+##### Gráficos 
+
+
+
+``` r
+p1 <- plot_sem_model(fit.ethics_article, "Student Ethics")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-1.png)<!-- -->
+
+``` r
+p2 <- plot_sem_model(fit.motivation_article, "Motivation")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-2.png)<!-- -->
+
+``` r
+p3 <- plot_sem_model(fit.efficacy_article, "Self Efficacy")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-3.png)<!-- -->
+
+``` r
+p4 <- plot_sem_model(fit.resilience_article, "Resilience")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-4.png)<!-- -->
+
+``` r
+p5 <- plot_sem_model(fit.knowledge_article, "Knowledge Articulation")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-5.png)<!-- -->
+
+``` r
+p6 <- plot_sem_model(fit.teamstrain_article, "Team Strain")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-6.png)<!-- -->
+
+``` r
+p7 <- plot_sem_model(fit.cce_article, "Cooperative Classroom Environment")
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-7.png)<!-- -->
+
+
+
+
+### 2 - CFA Global
+
+Vai ter em conta as covariâncias entre os fatores e ver as variâncias.
+
+
+``` r
+# individual params
+n_chains <- 3 # 5
+burn_in <- 500
+sample_estimate <- 1500
+```
+
+
+#### Com as variáveis que os autores escolheram
+
+
+``` r
+modelcfa.authors <- '
+  StudentEthics =~ ET12 + ET13
+  Motivation =~ Mot5 + Mot8 + Mot11
+  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+  Resilience =~ R2 + R5 + R6
+  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+  TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+  CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+  
+   # variances
+  ET12 ~~ ET12
+  ET13 ~~ ET13
+  Mot5 ~~ Mot5
+  Mot8 ~~ Mot8
+  Mot11 ~~ Mot11
+  SE1 ~~ SE1
+  SE2 ~~ SE2
+  SE3 ~~ SE3
+  SE4 ~~ SE4
+  SE5 ~~ SE5
+  SE6 ~~ SE6
+  R2 ~~ R2
+  R5 ~~ R5
+  R6 ~~ R6
+  KA1 ~~ KA1
+  KA2 ~~ KA2
+  KA3 ~~ KA3
+  KA4 ~~ KA4
+  KA5 ~~ KA5
+  TS10 ~~ TS10
+  TS11 ~~ TS11
+  TS12 ~~ TS12
+  TS13 ~~ TS13
+  TS14 ~~ TS14
+  TS15 ~~ TS15
+  TS16 ~~ TS16
+  TS17 ~~ TS17
+  CCE1 ~~ CCE1
+  CCE3 ~~ CCE3
+  CCE4 ~~ CCE4
+  CCE5 ~~ CCE5
+  CCE8 ~~ CCE8
+  CCE9 ~~ CCE9
+  CCE10 ~~ CCE10
+  CCE11 ~~ CCE11
+'
+fitcfa.authors <- bcfa(modelcfa.authors, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.004482 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 44.82 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 1: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 1: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 1: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 1: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 1: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 1: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 1: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 1: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 42.276 seconds (Warm-up)
+## Chain 1:                116.302 seconds (Sampling)
+## Chain 1:                158.578 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.004277 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 42.77 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 2: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 2: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 2: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 2: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 2: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 2: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 2: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 2: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 56.303 seconds (Warm-up)
+## Chain 2:                163.481 seconds (Sampling)
+## Chain 2:                219.784 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.003478 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 34.78 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 3: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 3: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 3: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 3: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 3: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 3: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 3: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 3: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 47.51 seconds (Warm-up)
+## Chain 3:                170.806 seconds (Sampling)
+## Chain 3:                218.316 seconds (Total)
+## Chain 3:
+```
+
+```
+## Warning: There were 15 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#tail-ess
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+
+
+``` r
+summary(fitcfa.authors, standardized = TRUE, rsquare = TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        91
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -17777.438       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.917    0.043    0.814    0.990
+##     ET13                                0.710    0.041    0.634    0.802
+##   Motivation =~                                                         
+##     Mot5                                0.595    0.044    0.511    0.683
+##     Mot8                                0.604    0.045    0.516    0.694
+##     Mot11                               0.592    0.045    0.504    0.678
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.425    0.030    0.368    0.483
+##     SE2                                 0.442    0.031    0.384    0.504
+##     SE3                                 0.518    0.026    0.467    0.570
+##     SE4                                 0.487    0.026    0.436    0.538
+##     SE5                                 0.439    0.029    0.382    0.495
+##     SE6                                 0.463    0.026    0.412    0.514
+##   Resilience =~                                                         
+##     R2                                  0.406    0.035    0.339    0.478
+##     R5                                  0.679    0.035    0.608    0.748
+##     R6                                  0.569    0.034    0.501    0.635
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.476    0.026    0.425    0.528
+##     KA2                                 0.527    0.023    0.483    0.576
+##     KA3                                 0.479    0.023    0.434    0.527
+##     KA4                                 0.513    0.024    0.469    0.560
+##     KA5                                 0.447    0.025    0.400    0.497
+##   TeamStrain =~                                                         
+##     TS10                                0.481    0.028    0.426    0.536
+##     TS11                                0.490    0.028    0.434    0.545
+##     TS12                                0.504    0.029    0.448    0.563
+##     TS13                                0.509    0.024    0.465    0.557
+##     TS14                                0.521    0.021    0.482    0.562
+##     TS15                                0.557    0.021    0.515    0.599
+##     TS16                                0.451    0.021    0.411    0.494
+##     TS17                                0.443    0.022    0.403    0.491
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.491    0.030    0.433    0.552
+##     CCE3                                0.418    0.033    0.355    0.482
+##     CCE4                                0.404    0.030    0.345    0.464
+##     CCE5                                0.442    0.025    0.392    0.492
+##     CCE8                                0.422    0.031    0.365    0.485
+##     CCE9                                0.507    0.028    0.453    0.563
+##     CCE10                               0.482    0.026    0.430    0.532
+##     CCE11                               0.496    0.027    0.444    0.550
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.917    0.968    1.016    normal(0,10)
+##     0.710    0.757    1.005    normal(0,10)
+##                                            
+##     0.595    0.672    1.000    normal(0,10)
+##     0.604    0.658    1.000    normal(0,10)
+##     0.592    0.634    1.000    normal(0,10)
+##                                            
+##     0.425    0.592    1.001    normal(0,10)
+##     0.442    0.578    1.001    normal(0,10)
+##     0.518    0.767    1.000    normal(0,10)
+##     0.487    0.730    1.001    normal(0,10)
+##     0.439    0.635    1.001    normal(0,10)
+##     0.463    0.711    1.001    normal(0,10)
+##                                            
+##     0.406    0.521    1.000    normal(0,10)
+##     0.679    0.848    1.003    normal(0,10)
+##     0.569    0.751    1.000    normal(0,10)
+##                                            
+##     0.476    0.702    1.000    normal(0,10)
+##     0.527    0.814    1.001    normal(0,10)
+##     0.479    0.776    1.001    normal(0,10)
+##     0.513    0.802    1.002    normal(0,10)
+##     0.447    0.703    1.000    normal(0,10)
+##                                            
+##     0.481    0.655    1.001    normal(0,10)
+##     0.490    0.659    1.000    normal(0,10)
+##     0.504    0.669    1.002    normal(0,10)
+##     0.509    0.788    1.001    normal(0,10)
+##     0.521    0.859    1.005    normal(0,10)
+##     0.557    0.884    1.003    normal(0,10)
+##     0.451    0.770    0.999    normal(0,10)
+##     0.443    0.767    1.006    normal(0,10)
+##                                            
+##     0.491    0.656    1.001    normal(0,10)
+##     0.418    0.545    1.001    normal(0,10)
+##     0.404    0.559    1.002    normal(0,10)
+##     0.442    0.684    1.001    normal(0,10)
+##     0.422    0.570    1.001    normal(0,10)
+##     0.507    0.704    1.003    normal(0,10)
+##     0.482    0.732    1.002    normal(0,10)
+##     0.496    0.723    1.002    normal(0,10)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   StudentEthics ~~                                                     
+##     Motivation                0.193    0.052    0.087    0.293    0.193
+##     SelfEfficacy              0.078    0.049   -0.016    0.171    0.078
+##     Resilience                0.143    0.048    0.051    0.239    0.143
+##     KnowldgArtcltn            0.140    0.044    0.052    0.227    0.140
+##     TeamStrain                0.180    0.044    0.094    0.264    0.180
+##     CprtvClssrmEnv            0.071    0.047   -0.019    0.165    0.071
+##   Motivation ~~                                                        
+##     SelfEfficacy             -0.161    0.053   -0.261   -0.054   -0.161
+##     Resilience                0.164    0.056    0.055    0.271    0.164
+##     KnowldgArtcltn           -0.169    0.052   -0.268   -0.065   -0.169
+##     TeamStrain                0.019    0.052   -0.079    0.121    0.019
+##     CprtvClssrmEnv           -0.047    0.055   -0.154    0.065   -0.047
+##   SelfEfficacy ~~                                                      
+##     Resilience                0.293    0.048    0.195    0.384    0.293
+##     KnowldgArtcltn            0.416    0.043    0.331    0.497    0.416
+##     TeamStrain                0.397    0.040    0.317    0.471    0.397
+##     CprtvClssrmEnv            0.399    0.042    0.314    0.482    0.399
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.185    0.049    0.089    0.283    0.185
+##     TeamStrain                0.168    0.047    0.075    0.260    0.168
+##     CprtvClssrmEnv            0.151    0.049    0.054    0.246    0.151
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.467    0.038    0.391    0.537    0.467
+##     CprtvClssrmEnv            0.436    0.040    0.354    0.512    0.436
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.395    0.041    0.314    0.474    0.395
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.193    1.001     lkj_corr(1)
+##     0.078    1.001     lkj_corr(1)
+##     0.143    1.003     lkj_corr(1)
+##     0.140    1.000     lkj_corr(1)
+##     0.180    1.001     lkj_corr(1)
+##     0.071    1.000     lkj_corr(1)
+##                                   
+##    -0.161    1.001     lkj_corr(1)
+##     0.164    1.000     lkj_corr(1)
+##    -0.169    1.002     lkj_corr(1)
+##     0.019    1.003     lkj_corr(1)
+##    -0.047    1.000     lkj_corr(1)
+##                                   
+##     0.293    1.001     lkj_corr(1)
+##     0.416    1.000     lkj_corr(1)
+##     0.397    1.001     lkj_corr(1)
+##     0.399    1.001     lkj_corr(1)
+##                                   
+##     0.185    1.001     lkj_corr(1)
+##     0.168    1.000     lkj_corr(1)
+##     0.151    1.001     lkj_corr(1)
+##                                   
+##     0.467    1.003     lkj_corr(1)
+##     0.436    1.002     lkj_corr(1)
+##                                   
+##     0.395    1.000     lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.057    0.056    0.000    0.192    0.057    0.064
+##    .ET13              0.377    0.041    0.284    0.446    0.377    0.428
+##    .Mot5              0.430    0.042    0.347    0.514    0.430    0.549
+##    .Mot8              0.477    0.044    0.394    0.568    0.477    0.567
+##    .Mot11             0.521    0.044    0.437    0.610    0.521    0.598
+##    .SE1               0.334    0.022    0.293    0.379    0.334    0.649
+##    .SE2               0.390    0.025    0.344    0.443    0.390    0.666
+##    .SE3               0.188    0.016    0.159    0.220    0.188    0.412
+##    .SE4               0.208    0.016    0.179    0.240    0.208    0.467
+##    .SE5               0.285    0.019    0.249    0.325    0.285    0.597
+##    .SE6               0.209    0.015    0.180    0.239    0.209    0.494
+##    .R2                0.443    0.028    0.391    0.500    0.443    0.729
+##    .R5                0.180    0.032    0.117    0.243    0.180    0.281
+##    .R6                0.250    0.026    0.201    0.302    0.250    0.436
+##    .KA1               0.233    0.016    0.202    0.266    0.233    0.507
+##    .KA2               0.142    0.012    0.120    0.166    0.142    0.338
+##    .KA3               0.152    0.012    0.131    0.176    0.152    0.398
+##    .KA4               0.146    0.012    0.124    0.170    0.146    0.356
+##    .KA5               0.204    0.014    0.178    0.233    0.204    0.505
+##    .TS10              0.308    0.019    0.272    0.347    0.308    0.571
+##    .TS11              0.312    0.020    0.275    0.352    0.312    0.566
+##    .TS12              0.313    0.020    0.276    0.354    0.313    0.552
+##    .TS13              0.158    0.011    0.139    0.179    0.158    0.379
+##    .TS14              0.096    0.008    0.081    0.112    0.096    0.262
+##    .TS15              0.087    0.007    0.074    0.102    0.087    0.219
+##    .TS16              0.140    0.009    0.122    0.159    0.140    0.407
+##    .TS17              0.137    0.009    0.120    0.156    0.137    0.411
+##    .CCE1              0.320    0.022    0.278    0.366    0.320    0.570
+##    .CCE3              0.414    0.027    0.363    0.469    0.414    0.703
+##    .CCE4              0.358    0.024    0.314    0.408    0.358    0.687
+##    .CCE5              0.222    0.016    0.193    0.254    0.222    0.532
+##    .CCE8              0.370    0.023    0.327    0.417    0.370    0.675
+##    .CCE9              0.262    0.019    0.226    0.301    0.262    0.505
+##    .CCE10             0.201    0.016    0.173    0.233    0.201    0.464
+##    .CCE11             0.225    0.016    0.195    0.259    0.225    0.478
+##     StudentEthics     1.000                               1.000    1.000
+##     Motivation        1.000                               1.000    1.000
+##     SelfEfficacy      1.000                               1.000    1.000
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.014 gamma(1,.5)[sd]
+##     1.009 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.006 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.936
+##     ET13              0.572
+##     Mot5              0.451
+##     Mot8              0.433
+##     Mot11             0.402
+##     SE1               0.351
+##     SE2               0.334
+##     SE3               0.588
+##     SE4               0.533
+##     SE5               0.403
+##     SE6               0.506
+##     R2                0.271
+##     R5                0.719
+##     R6                0.564
+##     KA1               0.493
+##     KA2               0.662
+##     KA3               0.602
+##     KA4               0.644
+##     KA5               0.495
+##     TS10              0.429
+##     TS11              0.434
+##     TS12              0.448
+##     TS13              0.621
+##     TS14              0.738
+##     TS15              0.781
+##     TS16              0.593
+##     TS17              0.589
+##     CCE1              0.430
+##     CCE3              0.297
+##     CCE4              0.313
+##     CCE5              0.468
+##     CCE8              0.325
+##     CCE9              0.495
+##     CCE10             0.536
+##     CCE11             0.522
+```
+
+``` r
+fitMeasures(fitcfa.authors)
+```
+
+```
+## Warning: 
+## 90 (15.9%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     91.000 -17383.463      0.000  35343.576  34945.449     89.262  35063.360 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##    200.183    707.466  35059.401    198.203    705.778 -17777.438
+```
+
+
+``` r
+semPaths(fitcfa.authors,
+         what = "std",      
+         layout = "tree", 
+         edge.label.cex = 1.0,
+         sizeMan = 6,       
+         sizeLat = 8,       
+         nCharNodes = 6,    
+         residuals = TRUE,        
+         intercepts = FALSE,    
+         optimizeLatRes = TRUE,  
+         edge.color = "black",
+         color = list(lat = "darkgreen", man = "white"),
+         mar = c(6, 6, 6, 6) 
+)
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-42-1.png)<!-- -->
+
+
+
+#### (X) Com todas as variáveis
+
+
+``` r
+if(FALSE){
+modelcfa.global <- '
+  StudentEthics =~ ET1 + ET2 + ET3 + ET4 + ET5 + ET6 + ET7 + ET8 + ET9 + ET10 + ET11 + ET12 + ET13
+  Motivation =~ Mot1 + Mot2 + Mot3 + Mot4 + Mot5 + Mot6 + Mot7 + Mot8 + Mot9 + Mot10 + Mot11 + Mot12 + Mot13 + Mot14 + Mot15
+  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+  Resilience =~ R1 + R2 + R3 + R4 + R5 + R6
+  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+  TeamStrain =~ TS1 + TS2 + TS3 + TS4 + TS5 + TS6 + TS7 + TS8 + TS9 + TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+  CooperativeClassroomEnvironment =~ CCE1 + CCE2 + CCE3 + CCE4 + CCE5 + CCE6 + CCE7 + CCE8 + CCE9 + CCE10 + CCE11
+'
+fitcfa.global <- bcfa(modelcfa.global, data = df, std.lv = TRUE,
+                      n.chains = n_chains, burnin=burn_in, 
+                      sample=sample_estimate, target = "stan")
+summary(fitcfa.global, standardized = TRUE, rsquare = TRUE)
+fitMeasures(fitcfa.global)
+
+semPaths(fitcfa.global,
+         what = "std",      
+         layout = "tree", 
+         edge.label.cex = 1.0,
+         sizeMan = 6,       
+         sizeLat = 8,       
+         nCharNodes = 6,    
+         residuals = TRUE,        
+         intercepts = FALSE,    
+         optimizeLatRes = TRUE,  
+         edge.color = "black",
+         color = list(lat = "darkgreen", man = "white"),
+         mar = c(6, 6, 6, 6) 
+)
+}
+```
+
+
+
+### 3 - SEM
+
+#### Estimação com FA criadas por nós
+
+
+``` r
+# individual params
+n_chains <- 5 # 5
+burn_in <- 500
+sample_estimate <- 1500
+```
+
+
+
+``` r
+model.sem <- '
+  # measurement model
+  StudentEthics =~ ET12 + ET13
+  Motivation =~ Mot5 + Mot8 + Mot11
+  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+  Resilience =~ R2 + R5 + R6
+  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+  TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+  CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+  
+  # regressions
+  Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+  SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+  StudentEthics ~ Motivation + SelfEfficacy
+  
+'
+
+model.sem <- bcfa(model.sem, data=df, std.lv=TRUE, n.chains = n_chains,
+                 burnin=burn_in, sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.004379 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 43.79 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 1: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 1: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 1: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 1: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 1: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 1: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 1: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 1: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 67.488 seconds (Warm-up)
+## Chain 1:                387.871 seconds (Sampling)
+## Chain 1:                455.359 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.003457 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 34.57 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 2: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 2: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 2: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 2: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 2: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 2: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 2: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 2: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 76.511 seconds (Warm-up)
+## Chain 2:                170.395 seconds (Sampling)
+## Chain 2:                246.906 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.003392 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 33.92 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 3: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 3: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 3: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 3: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 3: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 3: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 3: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 3: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 71.001 seconds (Warm-up)
+## Chain 3:                171.812 seconds (Sampling)
+## Chain 3:                242.813 seconds (Total)
+## Chain 3: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 4).
+## Chain 4: 
+## Chain 4: Gradient evaluation took 0.003667 seconds
+## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 36.67 seconds.
+## Chain 4: Adjust your expectations accordingly!
+## Chain 4: 
+## Chain 4: 
+## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 4: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 4: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 4: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 4: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 4: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 4: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 4: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 4: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 4: 
+## Chain 4:  Elapsed Time: 63.809 seconds (Warm-up)
+## Chain 4:                358.549 seconds (Sampling)
+## Chain 4:                422.358 seconds (Total)
+## Chain 4: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 5).
+## Chain 5: 
+## Chain 5: Gradient evaluation took 0.003614 seconds
+## Chain 5: 1000 transitions using 10 leapfrog steps per transition would take 36.14 seconds.
+## Chain 5: Adjust your expectations accordingly!
+## Chain 5: 
+## Chain 5: 
+## Chain 5: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 5: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 5: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 5: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 5: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 5: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 5: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 5: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 5: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 5: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 5: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 5: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 5: 
+## Chain 5:  Elapsed Time: 63.838 seconds (Warm-up)
+## Chain 5:                178.08 seconds (Sampling)
+## Chain 5:                241.918 seconds (Total)
+## Chain 5:
+```
+
+```
+## Warning: There were 119 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#bulk-ess
+```
+
+```
+## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#tail-ess
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+
+
+``` r
+summary(model.sem, standardized=TRUE, rsquare=TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        86
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -17810.359       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.877    0.050    0.766    0.957
+##     ET13                                0.695    0.048    0.614    0.801
+##   Motivation =~                                                         
+##     Mot5                                0.556    0.041    0.478    0.637
+##     Mot8                                0.583    0.044    0.496    0.670
+##     Mot11                               0.570    0.044    0.485    0.657
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.353    0.025    0.305    0.403
+##     SE2                                 0.368    0.027    0.316    0.423
+##     SE3                                 0.428    0.023    0.385    0.474
+##     SE4                                 0.406    0.024    0.361    0.454
+##     SE5                                 0.365    0.024    0.316    0.412
+##     SE6                                 0.386    0.022    0.343    0.428
+##   Resilience =~                                                         
+##     R2                                  0.407    0.034    0.341    0.474
+##     R5                                  0.683    0.036    0.613    0.756
+##     R6                                  0.567    0.034    0.501    0.635
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.477    0.027    0.425    0.530
+##     KA2                                 0.529    0.024    0.481    0.577
+##     KA3                                 0.482    0.024    0.436    0.529
+##     KA4                                 0.513    0.024    0.468    0.562
+##     KA5                                 0.447    0.024    0.399    0.496
+##   TeamStrain =~                                                         
+##     TS10                                0.481    0.028    0.426    0.536
+##     TS11                                0.488    0.029    0.433    0.546
+##     TS12                                0.503    0.029    0.445    0.561
+##     TS13                                0.511    0.024    0.466    0.561
+##     TS14                                0.522    0.020    0.482    0.563
+##     TS15                                0.558    0.021    0.516    0.599
+##     TS16                                0.452    0.021    0.411    0.493
+##     TS17                                0.444    0.021    0.403    0.485
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.493    0.030    0.435    0.551
+##     CCE3                                0.419    0.032    0.357    0.483
+##     CCE4                                0.405    0.031    0.346    0.466
+##     CCE5                                0.446    0.026    0.396    0.498
+##     CCE8                                0.425    0.031    0.365    0.484
+##     CCE9                                0.509    0.028    0.454    0.565
+##     CCE10                               0.482    0.026    0.434    0.534
+##     CCE11                               0.498    0.027    0.445    0.552
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.904    0.957    1.017    normal(0,10)
+##     0.716    0.766    1.015    normal(0,10)
+##                                            
+##     0.579    0.657    1.000    normal(0,10)
+##     0.606    0.663    1.001    normal(0,10)
+##     0.593    0.638    1.003    normal(0,10)
+##                                            
+##     0.425    0.592    1.002    normal(0,10)
+##     0.443    0.579    1.002    normal(0,10)
+##     0.516    0.764    1.000    normal(0,10)
+##     0.488    0.731    1.003    normal(0,10)
+##     0.439    0.634    1.000    normal(0,10)
+##     0.465    0.713    1.002    normal(0,10)
+##                                            
+##     0.407    0.522    1.002    normal(0,10)
+##     0.683    0.853    1.000    normal(0,10)
+##     0.567    0.749    1.001    normal(0,10)
+##                                            
+##     0.477    0.703    1.001    normal(0,10)
+##     0.529    0.815    1.001    normal(0,10)
+##     0.482    0.777    1.004    normal(0,10)
+##     0.513    0.802    1.002    normal(0,10)
+##     0.447    0.702    1.001    normal(0,10)
+##                                            
+##     0.481    0.654    1.003    normal(0,10)
+##     0.488    0.657    1.001    normal(0,10)
+##     0.503    0.668    1.002    normal(0,10)
+##     0.511    0.791    1.011    normal(0,10)
+##     0.522    0.860    1.004    normal(0,10)
+##     0.558    0.885    1.006    normal(0,10)
+##     0.452    0.771    1.002    normal(0,10)
+##     0.444    0.769    1.003    normal(0,10)
+##                                            
+##     0.493    0.658    1.001    normal(0,10)
+##     0.419    0.547    1.001    normal(0,10)
+##     0.405    0.560    1.001    normal(0,10)
+##     0.446    0.688    1.001    normal(0,10)
+##     0.425    0.573    1.003    normal(0,10)
+##     0.509    0.706    1.002    normal(0,10)
+##     0.482    0.732    1.000    normal(0,10)
+##     0.498    0.723    1.001    normal(0,10)
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.201    0.062    0.085    0.325    0.193    0.193
+##     KnowldgArtcltn   -0.256    0.071   -0.396   -0.121   -0.246   -0.246
+##     TeamStrain        0.122    0.066   -0.007    0.256    0.118    0.118
+##     CprtvClssrmEnv   -0.021    0.070   -0.158    0.124   -0.021   -0.021
+##   SelfEfficacy ~                                                        
+##     Resilience        0.228    0.057    0.117    0.338    0.190    0.190
+##     KnowldgArtcltn    0.260    0.067    0.127    0.391    0.216    0.216
+##     TeamStrain        0.227    0.062    0.105    0.349    0.189    0.189
+##     CprtvClssrmEnv    0.249    0.064    0.123    0.375    0.207    0.207
+##   StudentEthics ~                                                       
+##     Motivation        0.203    0.054    0.097    0.309    0.205    0.205
+##     SelfEfficacy      0.109    0.043    0.024    0.196    0.127    0.127
+##      Rhat    Prior       
+##                          
+##     1.001    normal(0,10)
+##     1.002    normal(0,10)
+##     1.000    normal(0,10)
+##     1.013    normal(0,10)
+##                          
+##     1.000    normal(0,10)
+##     1.004    normal(0,10)
+##     1.000    normal(0,10)
+##     1.001    normal(0,10)
+##                          
+##     1.001    normal(0,10)
+##     1.007    normal(0,10)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.187    0.050    0.089    0.285    0.187
+##     TeamStrain                0.171    0.048    0.074    0.262    0.171
+##     CprtvClssrmEnv            0.155    0.050    0.053    0.253    0.155
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.473    0.037    0.398    0.544    0.473
+##     CprtvClssrmEnv            0.444    0.042    0.360    0.524    0.444
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.402    0.041    0.319    0.481    0.402
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.187    1.001     lkj_corr(1)
+##     0.171    1.001     lkj_corr(1)
+##     0.155    1.001     lkj_corr(1)
+##                                   
+##     0.473    1.000     lkj_corr(1)
+##     0.444    1.004     lkj_corr(1)
+##                                   
+##     0.402    1.001     lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.075    0.075    0.000    0.253    0.075    0.084
+##    .ET13              0.362    0.058    0.223    0.444    0.362    0.414
+##    .Mot5              0.442    0.041    0.363    0.526    0.442    0.569
+##    .Mot8              0.468    0.045    0.382    0.560    0.468    0.560
+##    .Mot11             0.512    0.045    0.426    0.603    0.512    0.593
+##    .SE1               0.334    0.022    0.294    0.380    0.334    0.649
+##    .SE2               0.389    0.026    0.341    0.443    0.389    0.665
+##    .SE3               0.190    0.015    0.161    0.220    0.190    0.416
+##    .SE4               0.208    0.016    0.178    0.240    0.208    0.466
+##    .SE5               0.286    0.019    0.251    0.327    0.286    0.597
+##    .SE6               0.208    0.016    0.180    0.240    0.208    0.491
+##    .R2                0.443    0.029    0.389    0.504    0.443    0.728
+##    .R5                0.175    0.034    0.106    0.240    0.175    0.273
+##    .R6                0.253    0.027    0.199    0.306    0.253    0.440
+##    .KA1               0.233    0.016    0.204    0.267    0.233    0.506
+##    .KA2               0.141    0.011    0.120    0.165    0.141    0.335
+##    .KA3               0.152    0.012    0.131    0.176    0.152    0.396
+##    .KA4               0.146    0.012    0.124    0.170    0.146    0.356
+##    .KA5               0.206    0.014    0.179    0.236    0.206    0.507
+##    .TS10              0.310    0.020    0.272    0.350    0.310    0.572
+##    .TS11              0.313    0.020    0.277    0.355    0.313    0.568
+##    .TS12              0.313    0.020    0.276    0.355    0.313    0.553
+##    .TS13              0.157    0.010    0.137    0.178    0.157    0.375
+##    .TS14              0.096    0.007    0.082    0.111    0.096    0.261
+##    .TS15              0.087    0.007    0.073    0.101    0.087    0.217
+##    .TS16              0.139    0.009    0.122    0.159    0.139    0.405
+##    .TS17              0.136    0.009    0.119    0.155    0.136    0.409
+##    .CCE1              0.318    0.022    0.279    0.364    0.318    0.567
+##    .CCE3              0.412    0.027    0.364    0.469    0.412    0.701
+##    .CCE4              0.358    0.023    0.315    0.406    0.358    0.686
+##    .CCE5              0.221    0.016    0.192    0.253    0.221    0.526
+##    .CCE8              0.370    0.024    0.325    0.419    0.370    0.672
+##    .CCE9              0.261    0.020    0.221    0.302    0.261    0.502
+##    .CCE10             0.202    0.016    0.172    0.234    0.202    0.465
+##    .CCE11             0.226    0.016    0.196    0.260    0.226    0.477
+##    .StudentEthics     1.000                               0.942    0.942
+##    .Motivation        1.000                               0.924    0.924
+##    .SelfEfficacy      1.000                               0.690    0.690
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.024 gamma(1,.5)[sd]
+##     1.025 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.007 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.010 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.916
+##     ET13              0.586
+##     Mot5              0.431
+##     Mot8              0.440
+##     Mot11             0.407
+##     SE1               0.351
+##     SE2               0.335
+##     SE3               0.584
+##     SE4               0.534
+##     SE5               0.403
+##     SE6               0.509
+##     R2                0.272
+##     R5                0.727
+##     R6                0.560
+##     KA1               0.494
+##     KA2               0.665
+##     KA3               0.604
+##     KA4               0.644
+##     KA5               0.493
+##     TS10              0.428
+##     TS11              0.432
+##     TS12              0.447
+##     TS13              0.625
+##     TS14              0.739
+##     TS15              0.783
+##     TS16              0.595
+##     TS17              0.591
+##     CCE1              0.433
+##     CCE3              0.299
+##     CCE4              0.314
+##     CCE5              0.474
+##     CCE8              0.328
+##     CCE9              0.498
+##     CCE10             0.535
+##     CCE11             0.523
+##     StudentEthics     0.058
+##     Motivation        0.076
+##     SelfEfficacy      0.310
+```
+
+
+
+``` r
+semPaths(model.sem,
+         what = "std",      
+         layout = "tree", 
+         edge.label.cex = 1.0,
+         sizeMan = 6,       
+         sizeLat = 8,       
+         nCharNodes = 6,    
+         residuals = TRUE,        
+         intercepts = FALSE,    
+         optimizeLatRes = TRUE,  
+         edge.color = "black",
+         color = list(lat = "darkgreen", man = "white"),
+         mar = c(6, 6, 6, 6) 
+)
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-47-1.png)<!-- -->
+
+
+#### Estimação com construtos dos autores
+
+
+
+``` r
+# ler csv 
+df_FAauth <- read_csv("../data/4_conjuntos(dev)/construtos_autores.csv")
+```
+
+```
+## Rows: 566 Columns: 7
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## dbl (7): ethics, Motivation, Resilience, SelfEfficacy, TeamStrain, Knowledge...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+``` r
+df_FAauth
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ethics"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Motivation"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Resilience"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["SelfEfficacy"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["TeamStrain"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["KnowledgeArticulation"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["CoopClass"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.5","2":"2.000000","3":"4.000000","4":"3.666667","5":"3.125","6":"3.6","7":"3.750"},{"1":"5.0","2":"3.000000","3":"4.333333","4":"4.000000","5":"3.625","6":"4.2","7":"4.000"},{"1":"1.0","2":"1.333333","3":"5.000000","4":"5.000000","5":"4.000","6":"4.2","7":"4.125"},{"1":"2.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"3.000","6":"3.0","7":"3.000"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"3.666667","5":"3.625","6":"2.8","7":"3.875"},{"1":"3.5","2":"2.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"3.4","7":"3.875"},{"1":"5.0","2":"3.000000","3":"4.333333","4":"4.000000","5":"3.625","6":"4.2","7":"4.000"},{"1":"3.5","2":"4.000000","3":"5.000000","4":"4.000000","5":"4.000","6":"3.8","7":"3.625"},{"1":"3.0","2":"2.666667","3":"2.666667","4":"3.166667","5":"3.000","6":"4.0","7":"3.625"},{"1":"4.0","2":"3.333333","3":"5.000000","4":"3.666667","5":"4.000","6":"4.0","7":"4.500"},{"1":"1.0","2":"2.666667","3":"1.000000","4":"3.000000","5":"3.000","6":"2.6","7":"1.750"},{"1":"3.5","2":"3.000000","3":"3.333333","4":"3.833333","5":"4.000","6":"4.2","7":"4.000"},{"1":"3.0","2":"2.000000","3":"3.000000","4":"3.666667","5":"4.250","6":"4.2","7":"4.500"},{"1":"5.0","2":"2.666667","3":"4.333333","4":"4.166667","5":"3.500","6":"4.0","7":"3.250"},{"1":"5.0","2":"2.666667","3":"4.333333","4":"4.166667","5":"3.500","6":"4.0","7":"3.250"},{"1":"4.0","2":"3.666667","3":"3.333333","4":"1.833333","5":"3.000","6":"3.0","7":"4.625"},{"1":"2.0","2":"2.666667","3":"3.333333","4":"3.666667","5":"3.250","6":"3.4","7":"2.000"},{"1":"2.0","2":"2.000000","3":"4.000000","4":"3.000000","5":"4.000","6":"3.8","7":"4.000"},{"1":"3.5","2":"1.333333","3":"4.000000","4":"3.333333","5":"4.000","6":"3.6","7":"2.375"},{"1":"2.5","2":"3.000000","3":"3.666667","4":"3.333333","5":"3.375","6":"4.0","7":"3.500"},{"1":"3.5","2":"2.333333","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"4.000"},{"1":"1.0","2":"1.000000","3":"5.000000","4":"4.500000","5":"4.000","6":"3.0","7":"4.250"},{"1":"2.0","2":"3.666667","3":"2.333333","4":"2.000000","5":"4.125","6":"3.8","7":"3.625"},{"1":"3.0","2":"3.000000","3":"3.333333","4":"4.000000","5":"3.750","6":"3.8","7":"3.625"},{"1":"3.5","2":"4.666667","3":"3.666667","4":"3.666667","5":"3.125","6":"2.2","7":"3.625"},{"1":"5.0","2":"3.000000","3":"2.000000","4":"3.000000","5":"3.000","6":"2.4","7":"2.625"},{"1":"4.0","2":"3.000000","3":"3.666667","4":"3.333333","5":"4.375","6":"4.0","7":"2.250"},{"1":"3.5","2":"3.333333","3":"3.666667","4":"3.833333","5":"4.125","6":"4.0","7":"3.375"},{"1":"2.0","2":"2.000000","3":"4.000000","4":"4.000000","5":"3.000","6":"4.0","7":"3.000"},{"1":"2.5","2":"3.333333","3":"5.000000","4":"3.833333","5":"3.000","6":"4.6","7":"4.625"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.000"},{"1":"2.0","2":"1.333333","3":"5.000000","4":"4.166667","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"3.833333","5":"3.875","6":"4.0","7":"3.500"},{"1":"2.5","2":"3.333333","3":"5.000000","4":"3.833333","5":"3.000","6":"4.6","7":"4.625"},{"1":"3.0","2":"4.000000","3":"3.333333","4":"4.000000","5":"3.875","6":"4.0","7":"3.875"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"4.000000","5":"4.250","6":"4.0","7":"3.625"},{"1":"2.0","2":"3.000000","3":"2.666667","4":"3.166667","5":"4.000","6":"4.4","7":"4.000"},{"1":"4.0","2":"1.666667","3":"5.000000","4":"2.333333","5":"4.125","6":"3.4","7":"4.625"},{"1":"2.5","2":"1.666667","3":"4.333333","4":"3.000000","5":"2.375","6":"4.6","7":"4.375"},{"1":"4.0","2":"2.000000","3":"3.666667","4":"3.500000","5":"3.875","6":"3.6","7":"4.250"},{"1":"2.0","2":"2.666667","3":"3.666667","4":"3.833333","5":"3.125","6":"3.8","7":"4.125"},{"1":"1.5","2":"1.666667","3":"3.000000","4":"3.500000","5":"3.625","6":"3.2","7":"3.750"},{"1":"1.0","2":"4.000000","3":"4.666667","4":"4.000000","5":"1.000","6":"1.0","7":"1.000"},{"1":"3.0","2":"3.000000","3":"3.333333","4":"3.000000","5":"5.000","6":"2.0","7":"4.000"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.333333","5":"3.000","6":"2.0","7":"4.000"},{"1":"2.0","2":"2.333333","3":"3.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.500"},{"1":"2.5","2":"2.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"3.8","7":"4.250"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.500000","5":"4.000","6":"4.0","7":"3.500"},{"1":"4.0","2":"3.333333","3":"3.333333","4":"2.833333","5":"3.625","6":"3.6","7":"3.750"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.875"},{"1":"4.0","2":"2.666667","3":"3.666667","4":"3.833333","5":"3.875","6":"3.8","7":"3.625"},{"1":"3.0","2":"3.000000","3":"3.333333","4":"3.000000","5":"4.000","6":"3.8","7":"3.250"},{"1":"3.0","2":"3.333333","3":"4.333333","4":"3.000000","5":"3.500","6":"4.0","7":"2.625"},{"1":"3.0","2":"2.000000","3":"3.000000","4":"3.666667","5":"3.875","6":"4.0","7":"3.625"},{"1":"3.0","2":"3.666667","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"2.5","2":"2.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.5","2":"2.666667","3":"3.666667","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"3.8","7":"3.750"},{"1":"3.0","2":"3.666667","3":"4.000000","4":"3.833333","5":"4.000","6":"3.8","7":"3.750"},{"1":"2.0","2":"2.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.875"},{"1":"2.0","2":"3.333333","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"1.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"2.0","2":"2.333333","3":"3.333333","4":"2.833333","5":"3.625","6":"4.0","7":"3.250"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"4.000000","5":"3.875","6":"3.8","7":"4.125"},{"1":"3.0","2":"3.000000","3":"4.333333","4":"4.000000","5":"4.125","6":"4.0","7":"3.500"},{"1":"2.0","2":"2.000000","3":"3.000000","4":"3.500000","5":"3.750","6":"4.2","7":"3.750"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"3.333333","5":"4.000","6":"4.0","7":"4.000"},{"1":"2.0","2":"2.333333","3":"3.333333","4":"3.666667","5":"3.625","6":"4.4","7":"4.000"},{"1":"2.0","2":"2.333333","3":"2.333333","4":"4.000000","5":"3.875","6":"4.0","7":"3.875"},{"1":"2.5","2":"2.666667","3":"4.666667","4":"3.833333","5":"4.000","6":"3.8","7":"4.000"},{"1":"2.0","2":"2.000000","3":"2.666667","4":"3.500000","5":"3.750","6":"3.8","7":"3.250"},{"1":"3.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"3.750","6":"4.0","7":"3.750"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"3.333333","5":"3.750","6":"4.0","7":"3.375"},{"1":"4.0","2":"4.000000","3":"3.333333","4":"3.166667","5":"3.625","6":"3.6","7":"3.875"},{"1":"4.0","2":"3.666667","3":"4.000000","4":"4.000000","5":"3.125","6":"4.2","7":"2.500"},{"1":"2.0","2":"2.666667","3":"3.666667","4":"3.500000","5":"4.000","6":"4.0","7":"3.375"},{"1":"1.0","2":"4.000000","3":"2.000000","4":"1.833333","5":"1.750","6":"3.0","7":"5.000"},{"1":"2.0","2":"3.333333","3":"4.000000","4":"3.166667","5":"3.875","6":"3.6","7":"3.625"},{"1":"2.0","2":"1.000000","3":"3.333333","4":"3.833333","5":"2.750","6":"4.2","7":"3.875"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.625"},{"1":"4.5","2":"4.333333","3":"4.000000","4":"4.333333","5":"4.500","6":"4.0","7":"4.375"},{"1":"2.0","2":"2.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"3.333333","3":"3.666667","4":"3.666667","5":"3.000","6":"3.4","7":"3.250"},{"1":"3.5","2":"3.000000","3":"3.333333","4":"3.000000","5":"3.500","6":"3.4","7":"3.875"},{"1":"4.0","2":"4.333333","3":"3.333333","4":"3.666667","5":"3.875","6":"3.8","7":"4.125"},{"1":"3.5","2":"4.000000","3":"3.000000","4":"3.333333","5":"3.875","6":"4.0","7":"3.875"},{"1":"3.5","2":"3.333333","3":"3.333333","4":"3.833333","5":"3.500","6":"4.0","7":"3.625"},{"1":"3.0","2":"4.000000","3":"3.666667","4":"3.500000","5":"3.500","6":"3.8","7":"3.250"},{"1":"3.0","2":"3.666667","3":"4.000000","4":"3.500000","5":"3.375","6":"3.6","7":"3.750"},{"1":"3.0","2":"2.666667","3":"4.666667","4":"3.666667","5":"3.750","6":"3.8","7":"3.750"},{"1":"2.5","2":"1.000000","3":"2.666667","4":"4.833333","5":"4.000","6":"5.0","7":"4.750"},{"1":"3.5","2":"2.333333","3":"2.000000","4":"3.166667","5":"4.000","6":"3.6","7":"3.750"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.166667","5":"3.000","6":"5.0","7":"3.625"},{"1":"3.5","2":"3.666667","3":"4.333333","4":"3.666667","5":"4.000","6":"4.0","7":"3.750"},{"1":"2.5","2":"3.000000","3":"3.666667","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"2.333333","3":"3.666667","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"2.5","2":"1.333333","3":"2.666667","4":"4.000000","5":"4.125","6":"4.8","7":"3.875"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.166667","5":"3.500","6":"4.0","7":"4.000"},{"1":"2.5","2":"3.000000","3":"3.666667","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.333333","3":"4.333333","4":"3.333333","5":"4.000","6":"4.0","7":"4.250"},{"1":"2.0","2":"2.000000","3":"3.666667","4":"3.000000","5":"3.875","6":"3.2","7":"3.875"},{"1":"3.0","2":"1.666667","3":"4.000000","4":"4.000000","5":"4.125","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"3.833333","5":"3.875","6":"4.4","7":"3.625"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"4.000000","5":"3.875","6":"4.4","7":"3.875"},{"1":"4.0","2":"2.333333","3":"2.666667","4":"4.000000","5":"3.875","6":"4.4","7":"3.875"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"4.000000","5":"3.875","6":"4.4","7":"4.000"},{"1":"5.0","2":"2.333333","3":"2.666667","4":"4.000000","5":"4.000","6":"4.2","7":"3.875"},{"1":"4.0","2":"2.666667","3":"2.333333","4":"3.833333","5":"3.875","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.333333","3":"2.666667","4":"3.333333","5":"3.875","6":"4.0","7":"3.750"},{"1":"3.0","2":"3.333333","3":"4.333333","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.333333","3":"2.666667","4":"4.000000","5":"3.875","6":"4.2","7":"4.000"},{"1":"3.0","2":"3.000000","3":"3.000000","4":"3.333333","5":"3.000","6":"3.6","7":"3.625"},{"1":"4.0","2":"2.000000","3":"3.000000","4":"4.500000","5":"3.875","6":"4.2","7":"3.750"},{"1":"3.5","2":"3.333333","3":"4.000000","4":"3.166667","5":"3.625","6":"3.6","7":"3.625"},{"1":"2.0","2":"2.666667","3":"4.000000","4":"3.166667","5":"3.750","6":"4.0","7":"3.625"},{"1":"3.5","2":"2.000000","3":"3.333333","4":"4.000000","5":"3.875","6":"4.0","7":"3.875"},{"1":"5.0","2":"2.000000","3":"3.333333","4":"4.000000","5":"4.000","6":"1.0","7":"4.250"},{"1":"3.0","2":"2.333333","3":"3.666667","4":"3.333333","5":"3.625","6":"4.0","7":"3.375"},{"1":"2.0","2":"2.666667","3":"3.000000","4":"4.333333","5":"3.000","6":"3.4","7":"4.250"},{"1":"3.0","2":"3.333333","3":"3.000000","4":"3.333333","5":"4.000","6":"4.0","7":"3.750"},{"1":"4.5","2":"2.333333","3":"3.000000","4":"3.666667","5":"4.000","6":"4.0","7":"4.125"},{"1":"3.5","2":"3.000000","3":"4.000000","4":"3.666667","5":"3.750","6":"3.6","7":"4.000"},{"1":"3.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"4.000","6":"3.8","7":"3.750"},{"1":"2.0","2":"2.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.000000","3":"4.333333","4":"3.333333","5":"4.000","6":"4.0","7":"3.875"},{"1":"2.0","2":"2.333333","3":"4.333333","4":"3.500000","5":"3.875","6":"4.0","7":"3.500"},{"1":"4.0","2":"3.333333","3":"4.333333","4":"4.333333","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"1.666667","3":"4.333333","4":"5.000000","5":"3.750","6":"5.0","7":"3.875"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.250"},{"1":"3.5","2":"3.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"4.000000","3":"3.000000","4":"3.000000","5":"4.000","6":"3.8","7":"3.750"},{"1":"3.5","2":"2.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"2.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"3.000","6":"3.0","7":"4.000"},{"1":"3.5","2":"2.000000","3":"5.000000","4":"3.833333","5":"3.750","6":"4.4","7":"4.125"},{"1":"4.0","2":"2.666667","3":"2.666667","4":"3.500000","5":"3.875","6":"4.4","7":"3.625"},{"1":"3.5","2":"2.333333","3":"3.666667","4":"3.000000","5":"3.750","6":"4.0","7":"3.625"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"4.000000","5":"3.875","6":"4.4","7":"3.750"},{"1":"3.5","2":"4.000000","3":"3.666667","4":"3.833333","5":"3.750","6":"3.6","7":"3.125"},{"1":"2.0","2":"2.666667","3":"3.000000","4":"3.500000","5":"3.875","6":"4.0","7":"3.875"},{"1":"4.0","2":"2.666667","3":"3.000000","4":"3.833333","5":"4.125","6":"4.4","7":"3.750"},{"1":"3.5","2":"3.000000","3":"3.666667","4":"3.500000","5":"3.625","6":"3.4","7":"3.625"},{"1":"3.0","2":"3.333333","3":"3.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"4.166667","5":"3.250","6":"5.0","7":"4.000"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"4.166667","5":"3.250","6":"5.0","7":"4.000"},{"1":"2.0","2":"2.666667","3":"4.666667","4":"3.833333","5":"3.750","6":"4.0","7":"4.000"},{"1":"2.5","2":"3.333333","3":"4.000000","4":"3.000000","5":"4.000","6":"4.2","7":"3.000"},{"1":"1.0","2":"2.666667","3":"3.666667","4":"4.000000","5":"4.000","6":"4.0","7":"3.375"},{"1":"4.0","2":"2.666667","3":"3.666667","4":"2.666667","5":"4.000","6":"4.0","7":"3.250"},{"1":"4.0","2":"2.666667","3":"3.666667","4":"3.833333","5":"4.000","6":"4.0","7":"3.375"},{"1":"2.5","2":"1.666667","3":"4.333333","4":"3.666667","5":"4.000","6":"3.8","7":"3.750"},{"1":"3.0","2":"3.333333","3":"3.666667","4":"3.000000","5":"3.000","6":"3.8","7":"4.000"},{"1":"3.0","2":"2.666667","3":"2.666667","4":"3.666667","5":"3.875","6":"4.0","7":"3.750"},{"1":"3.5","2":"2.666667","3":"3.666667","4":"3.500000","5":"3.375","6":"3.8","7":"3.375"},{"1":"2.5","2":"3.000000","3":"4.000000","4":"3.166667","5":"4.000","6":"4.0","7":"4.125"},{"1":"3.0","2":"3.000000","3":"2.666667","4":"3.666667","5":"3.875","6":"4.0","7":"3.625"},{"1":"3.0","2":"1.666667","3":"3.333333","4":"3.333333","5":"4.000","6":"3.8","7":"3.875"},{"1":"4.0","2":"3.000000","3":"3.666667","4":"3.333333","5":"4.000","6":"3.8","7":"3.750"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"3.750","6":"4.0","7":"3.875"},{"1":"1.5","2":"1.333333","3":"3.000000","4":"4.833333","5":"3.500","6":"4.8","7":"4.375"},{"1":"4.0","2":"2.000000","3":"3.333333","4":"3.833333","5":"3.750","6":"4.2","7":"4.000"},{"1":"2.0","2":"3.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"1.000000","3":"3.666667","4":"3.666667","5":"3.875","6":"4.0","7":"3.750"},{"1":"4.0","2":"2.333333","3":"3.000000","4":"3.333333","5":"4.000","6":"4.0","7":"3.625"},{"1":"3.0","2":"3.000000","3":"2.333333","4":"2.666667","5":"3.000","6":"4.0","7":"3.250"},{"1":"2.0","2":"2.000000","3":"5.000000","4":"5.000000","5":"5.000","6":"5.0","7":"4.375"},{"1":"3.5","2":"1.666667","3":"2.666667","4":"4.500000","5":"4.250","6":"4.0","7":"4.250"},{"1":"5.0","2":"3.000000","3":"4.666667","4":"3.000000","5":"3.750","6":"3.6","7":"3.625"},{"1":"3.0","2":"3.333333","3":"4.333333","4":"3.500000","5":"4.000","6":"3.2","7":"3.500"},{"1":"2.0","2":"2.666667","3":"4.000000","4":"4.000000","5":"4.000","6":"3.6","7":"3.875"},{"1":"3.0","2":"3.000000","3":"3.333333","4":"3.000000","5":"3.250","6":"4.0","7":"3.250"},{"1":"2.5","2":"2.666667","3":"2.000000","4":"3.666667","5":"4.000","6":"3.4","7":"3.500"},{"1":"2.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"1.5","2":"3.000000","3":"4.000000","4":"3.500000","5":"3.500","6":"4.0","7":"4.500"},{"1":"2.0","2":"3.000000","3":"4.666667","4":"3.666667","5":"4.000","6":"4.6","7":"3.375"},{"1":"3.5","2":"2.666667","3":"3.666667","4":"3.666667","5":"3.875","6":"4.0","7":"3.500"},{"1":"2.5","2":"3.000000","3":"3.666667","4":"4.500000","5":"4.000","6":"4.8","7":"4.625"},{"1":"3.5","2":"2.333333","3":"3.000000","4":"3.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"1.666667","3":"4.666667","4":"4.500000","5":"4.750","6":"4.6","7":"1.500"},{"1":"4.0","2":"2.333333","3":"4.333333","4":"3.833333","5":"3.625","6":"4.0","7":"3.750"},{"1":"4.0","2":"3.333333","3":"2.666667","4":"3.333333","5":"3.875","6":"4.0","7":"3.500"},{"1":"3.0","2":"2.666667","3":"2.666667","4":"3.833333","5":"3.875","6":"4.0","7":"3.500"},{"1":"4.0","2":"2.333333","3":"2.666667","4":"3.333333","5":"4.125","6":"4.0","7":"3.000"},{"1":"2.0","2":"3.000000","3":"4.000000","4":"3.166667","5":"4.000","6":"4.2","7":"4.375"},{"1":"4.0","2":"3.333333","3":"3.333333","4":"3.833333","5":"4.000","6":"3.4","7":"3.625"},{"1":"3.5","2":"2.333333","3":"4.000000","4":"4.833333","5":"4.000","6":"4.0","7":"3.375"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.666667","5":"3.750","6":"4.0","7":"3.750"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"4.000000","5":"3.875","6":"4.0","7":"3.750"},{"1":"2.0","2":"2.333333","3":"2.666667","4":"3.333333","5":"3.125","6":"3.6","7":"2.250"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"4.000000","5":"3.875","6":"4.2","7":"3.750"},{"1":"4.5","2":"3.333333","3":"4.000000","4":"3.666667","5":"4.375","6":"5.0","7":"4.125"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"3.833333","5":"3.875","6":"4.4","7":"4.000"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"3.500000","5":"4.375","6":"4.4","7":"4.375"},{"1":"4.0","2":"2.333333","3":"2.666667","4":"3.833333","5":"3.875","6":"4.0","7":"3.750"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.333333","3":"2.666667","4":"4.166667","5":"3.875","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.000000","3":"4.666667","4":"3.000000","5":"3.875","6":"4.0","7":"3.750"},{"1":"4.0","2":"2.333333","3":"3.333333","4":"3.000000","5":"3.500","6":"3.6","7":"3.750"},{"1":"2.0","2":"3.000000","3":"4.000000","4":"3.166667","5":"4.000","6":"3.4","7":"3.250"},{"1":"2.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"3.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"1.666667","3":"3.333333","4":"4.166667","5":"4.500","6":"4.2","7":"2.750"},{"1":"3.5","2":"1.666667","3":"3.666667","4":"4.000000","5":"3.875","6":"4.0","7":"4.125"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"2.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"3.8","7":"3.625"},{"1":"4.0","2":"3.666667","3":"3.333333","4":"2.500000","5":"3.500","6":"3.4","7":"2.375"},{"1":"3.0","2":"2.000000","3":"4.000000","4":"4.166667","5":"4.000","6":"3.8","7":"3.875"},{"1":"4.0","2":"2.000000","3":"2.333333","4":"3.833333","5":"3.875","6":"4.2","7":"4.125"},{"1":"2.5","2":"2.666667","3":"4.000000","4":"3.833333","5":"3.875","6":"4.0","7":"3.875"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"4.000000","5":"3.250","6":"4.6","7":"3.750"},{"1":"4.0","2":"3.333333","3":"3.666667","4":"3.333333","5":"3.625","6":"4.0","7":"3.625"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"3.8","7":"4.000"},{"1":"3.0","2":"2.333333","3":"3.666667","4":"3.000000","5":"3.750","6":"4.0","7":"3.375"},{"1":"4.0","2":"2.000000","3":"3.333333","4":"3.833333","5":"3.875","6":"4.0","7":"4.000"},{"1":"1.0","2":"5.000000","3":"4.000000","4":"4.333333","5":"4.000","6":"1.6","7":"4.875"},{"1":"3.0","2":"3.333333","3":"4.333333","4":"4.000000","5":"3.625","6":"4.0","7":"3.750"},{"1":"2.0","2":"3.666667","3":"4.000000","4":"2.666667","5":"3.125","6":"3.2","7":"3.125"},{"1":"3.0","2":"3.000000","3":"4.666667","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.333333","3":"4.666667","4":"4.166667","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"4.333333","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.125","6":"4.0","7":"4.000"},{"1":"2.0","2":"2.000000","3":"4.000000","4":"3.000000","5":"3.250","6":"2.8","7":"3.625"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"3.666667","5":"3.750","6":"3.8","7":"3.625"},{"1":"2.5","2":"1.333333","3":"3.666667","4":"3.500000","5":"3.375","6":"4.0","7":"3.625"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"4.000000","5":"2.000","6":"4.0","7":"4.000"},{"1":"2.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"4.000","6":"3.4","7":"3.750"},{"1":"3.0","2":"3.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"4.000000","3":"4.000000","4":"3.166667","5":"4.000","6":"3.6","7":"2.875"},{"1":"2.5","2":"3.000000","3":"3.333333","4":"3.000000","5":"4.125","6":"4.0","7":"4.000"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"1.5","2":"2.000000","3":"1.666667","4":"2.000000","5":"1.750","6":"2.4","7":"2.500"},{"1":"3.0","2":"2.000000","3":"3.333333","4":"3.333333","5":"3.625","6":"4.2","7":"4.625"},{"1":"3.0","2":"2.000000","3":"3.333333","4":"3.333333","5":"3.625","6":"4.2","7":"4.625"},{"1":"3.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"4.000","6":"4.0","7":"3.625"},{"1":"3.5","2":"2.333333","3":"3.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"3.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.875"},{"1":"4.0","2":"3.666667","3":"3.333333","4":"3.833333","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.333333","3":"3.000000","4":"3.000000","5":"4.000","6":"3.4","7":"3.875"},{"1":"4.0","2":"3.000000","3":"3.666667","4":"3.333333","5":"4.000","6":"4.0","7":"3.750"},{"1":"2.0","2":"4.000000","3":"3.333333","4":"3.333333","5":"3.750","6":"3.6","7":"4.000"},{"1":"3.0","2":"2.333333","3":"3.666667","4":"3.833333","5":"3.375","6":"4.0","7":"4.000"},{"1":"1.0","2":"2.333333","3":"3.666667","4":"5.000000","5":"5.000","6":"5.0","7":"4.875"},{"1":"3.5","2":"2.666667","3":"4.000000","4":"3.833333","5":"3.875","6":"4.6","7":"3.625"},{"1":"3.0","2":"3.333333","3":"4.000000","4":"4.333333","5":"4.375","6":"4.2","7":"4.125"},{"1":"4.0","2":"2.666667","3":"4.333333","4":"3.666667","5":"4.000","6":"4.0","7":"3.875"},{"1":"4.0","2":"4.333333","3":"3.333333","4":"2.333333","5":"2.375","6":"3.4","7":"3.875"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"3.166667","5":"4.000","6":"4.0","7":"3.375"},{"1":"2.0","2":"2.333333","3":"4.666667","4":"4.500000","5":"3.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"1.333333","3":"3.666667","4":"4.333333","5":"3.875","6":"4.0","7":"2.875"},{"1":"3.0","2":"2.666667","3":"5.000000","4":"3.166667","5":"3.000","6":"5.0","7":"3.250"},{"1":"2.0","2":"1.666667","3":"4.000000","4":"4.500000","5":"3.375","6":"4.4","7":"3.875"},{"1":"3.5","2":"2.000000","3":"3.333333","4":"3.833333","5":"3.875","6":"3.8","7":"4.375"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"3.000000","5":"3.875","6":"4.0","7":"3.625"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.333333","5":"3.750","6":"4.0","7":"3.750"},{"1":"1.5","2":"1.333333","3":"4.000000","4":"3.833333","5":"4.500","6":"4.4","7":"4.500"},{"1":"2.0","2":"2.333333","3":"3.333333","4":"3.500000","5":"3.875","6":"4.0","7":"3.875"},{"1":"4.0","2":"1.000000","3":"3.000000","4":"4.333333","5":"4.125","6":"5.0","7":"3.750"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"2.333333","3":"3.666667","4":"3.666667","5":"4.000","6":"4.0","7":"3.375"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"3.833333","5":"3.375","6":"3.8","7":"3.875"},{"1":"2.5","2":"3.333333","3":"3.333333","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.666667","3":"3.333333","4":"3.833333","5":"3.875","6":"4.0","7":"4.125"},{"1":"2.0","2":"3.000000","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"3.625"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.833333","5":"4.000","6":"3.8","7":"4.000"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.500000","5":"4.000","6":"4.0","7":"3.875"},{"1":"4.5","2":"3.333333","3":"4.666667","4":"3.166667","5":"3.500","6":"3.6","7":"3.375"},{"1":"2.5","2":"2.666667","3":"4.000000","4":"3.333333","5":"4.000","6":"3.6","7":"3.875"},{"1":"3.0","2":"2.000000","3":"4.000000","4":"3.333333","5":"4.000","6":"4.0","7":"3.875"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"3.750","6":"4.0","7":"3.750"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"4.166667","5":"3.250","6":"4.6","7":"4.000"},{"1":"3.0","2":"2.666667","3":"2.666667","4":"3.666667","5":"3.750","6":"4.0","7":"3.750"},{"1":"3.0","2":"4.333333","3":"3.666667","4":"3.833333","5":"4.000","6":"4.2","7":"3.875"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"3.333333","5":"4.000","6":"3.8","7":"3.750"},{"1":"3.0","2":"2.666667","3":"2.666667","4":"3.666667","5":"3.875","6":"4.0","7":"3.750"},{"1":"2.5","2":"3.333333","3":"3.333333","4":"3.833333","5":"3.375","6":"3.8","7":"4.125"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.666667","5":"3.750","6":"4.0","7":"3.750"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"1.5","2":"1.333333","3":"3.000000","4":"4.833333","5":"3.500","6":"4.8","7":"4.375"},{"1":"4.5","2":"2.000000","3":"3.666667","4":"4.000000","5":"4.000","6":"4.0","7":"3.750"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"2.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"1.0","2":"2.333333","3":"4.000000","4":"4.666667","5":"3.750","6":"4.8","7":"4.875"},{"1":"2.0","2":"1.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"3.666667","5":"3.875","6":"4.0","7":"4.000"},{"1":"3.0","2":"3.000000","3":"3.333333","4":"2.666667","5":"3.000","6":"4.0","7":"3.500"},{"1":"4.0","2":"2.666667","3":"3.666667","4":"3.833333","5":"3.750","6":"3.8","7":"4.000"},{"1":"2.5","2":"2.000000","3":"4.000000","4":"3.666667","5":"5.000","6":"5.0","7":"4.625"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.666667","5":"3.625","6":"4.0","7":"3.500"},{"1":"2.5","2":"3.000000","3":"3.666667","4":"3.000000","5":"3.750","6":"4.0","7":"3.750"},{"1":"2.5","2":"2.666667","3":"4.666667","4":"2.833333","5":"3.625","6":"3.4","7":"3.750"},{"1":"3.0","2":"2.000000","3":"4.333333","4":"4.166667","5":"4.875","6":"4.2","7":"4.125"},{"1":"3.0","2":"3.666667","3":"4.000000","4":"3.166667","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"2.666667","3":"3.333333","4":"3.166667","5":"3.375","6":"4.0","7":"3.500"},{"1":"4.0","2":"3.000000","3":"3.666667","4":"2.833333","5":"4.125","6":"4.0","7":"3.000"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"4.166667","5":"4.000","6":"4.0","7":"4.000"},{"1":"2.0","2":"2.333333","3":"5.000000","4":"3.166667","5":"1.000","6":"4.4","7":"3.375"},{"1":"3.5","2":"3.000000","3":"3.000000","4":"3.333333","5":"3.625","6":"3.8","7":"4.000"},{"1":"2.0","2":"2.666667","3":"2.666667","4":"3.000000","5":"3.500","6":"3.4","7":"2.625"},{"1":"3.0","2":"2.333333","3":"3.666667","4":"3.666667","5":"4.000","6":"4.0","7":"3.375"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"3.750","6":"4.2","7":"4.000"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"3.875","6":"4.4","7":"4.000"},{"1":"3.5","2":"2.666667","3":"4.000000","4":"3.666667","5":"3.875","6":"4.0","7":"3.750"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"4.000","6":"3.8","7":"3.750"},{"1":"3.0","2":"3.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"2.5","2":"3.000000","3":"3.333333","4":"3.833333","5":"4.125","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.333333","3":"3.666667","4":"2.833333","5":"3.500","6":"3.6","7":"3.750"},{"1":"3.5","2":"2.000000","3":"3.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"3.000000","3":"4.333333","4":"3.500000","5":"4.000","6":"4.0","7":"4.125"},{"1":"2.5","2":"2.000000","3":"3.666667","4":"3.500000","5":"4.250","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.875"},{"1":"2.0","2":"3.333333","3":"3.666667","4":"2.500000","5":"4.000","6":"4.0","7":"3.750"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"2.333333","5":"3.000","6":"3.8","7":"3.250"},{"1":"3.0","2":"2.000000","3":"3.666667","4":"3.666667","5":"3.625","6":"3.6","7":"4.625"},{"1":"2.0","2":"2.666667","3":"3.666667","4":"2.833333","5":"3.875","6":"4.0","7":"3.500"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"3.500000","5":"4.000","6":"4.2","7":"3.625"},{"1":"4.0","2":"3.333333","3":"3.666667","4":"3.333333","5":"4.000","6":"3.8","7":"3.750"},{"1":"3.0","2":"3.333333","3":"4.666667","4":"4.333333","5":"5.000","6":"3.6","7":"4.500"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"3.833333","5":"3.625","6":"3.8","7":"3.500"},{"1":"2.0","2":"3.000000","3":"3.666667","4":"3.000000","5":"3.125","6":"4.0","7":"3.500"},{"1":"2.5","2":"2.000000","3":"3.666667","4":"3.333333","5":"3.125","6":"3.8","7":"3.625"},{"1":"1.5","2":"3.333333","3":"3.666667","4":"3.000000","5":"3.250","6":"2.8","7":"3.750"},{"1":"2.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"3.750","6":"3.6","7":"3.500"},{"1":"4.5","2":"3.000000","3":"4.000000","4":"3.333333","5":"3.750","6":"3.8","7":"3.750"},{"1":"2.5","2":"3.000000","3":"3.666667","4":"3.500000","5":"3.000","6":"4.0","7":"3.250"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"3.500000","5":"3.750","6":"4.0","7":"4.000"},{"1":"2.5","2":"3.000000","3":"4.666667","4":"3.666667","5":"4.000","6":"3.4","7":"3.625"},{"1":"2.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"2.750","6":"2.6","7":"2.750"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"3.500000","5":"4.000","6":"3.8","7":"4.000"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.125"},{"1":"3.5","2":"3.333333","3":"3.000000","4":"3.333333","5":"3.875","6":"3.0","7":"3.375"},{"1":"2.5","2":"2.333333","3":"3.000000","4":"3.833333","5":"3.750","6":"4.4","7":"3.875"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"1.666667","3":"3.666667","4":"3.666667","5":"4.000","6":"4.0","7":"4.125"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"3.333333","5":"4.000","6":"4.0","7":"4.125"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"4.000000","5":"3.875","6":"4.0","7":"3.625"},{"1":"3.5","2":"2.333333","3":"3.333333","4":"3.833333","5":"4.000","6":"4.0","7":"3.500"},{"1":"4.0","2":"2.666667","3":"2.666667","4":"3.500000","5":"3.875","6":"3.8","7":"3.875"},{"1":"4.0","2":"2.333333","3":"4.666667","4":"3.000000","5":"3.250","6":"4.4","7":"4.000"},{"1":"4.0","2":"3.000000","3":"3.666667","4":"3.833333","5":"3.000","6":"3.2","7":"3.625"},{"1":"5.0","2":"3.666667","3":"4.666667","4":"3.833333","5":"4.750","6":"4.8","7":"4.125"},{"1":"2.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"3.625","6":"3.6","7":"3.500"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"4.000000","5":"4.125","6":"4.0","7":"3.625"},{"1":"3.5","2":"3.333333","3":"3.333333","4":"3.833333","5":"3.875","6":"4.0","7":"3.500"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"3.833333","5":"4.375","6":"4.2","7":"3.750"},{"1":"2.5","2":"3.000000","3":"3.333333","4":"4.000000","5":"4.125","6":"3.6","7":"3.875"},{"1":"3.0","2":"2.333333","3":"3.333333","4":"3.833333","5":"4.000","6":"4.0","7":"3.500"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"3.833333","5":"3.125","6":"3.8","7":"3.750"},{"1":"4.0","2":"3.666667","3":"3.666667","4":"3.833333","5":"3.750","6":"3.6","7":"3.875"},{"1":"4.0","2":"2.000000","3":"3.666667","4":"3.500000","5":"4.000","6":"4.0","7":"4.375"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"3.833333","5":"3.625","6":"3.6","7":"3.875"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.5","2":"2.666667","3":"4.333333","4":"3.666667","5":"4.250","6":"4.4","7":"4.125"},{"1":"1.0","2":"2.666667","3":"3.333333","4":"3.833333","5":"4.000","6":"3.8","7":"3.750"},{"1":"2.0","2":"2.000000","3":"4.333333","4":"3.333333","5":"5.000","6":"5.0","7":"3.500"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"3.000000","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"3.666667","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"2.625"},{"1":"4.0","2":"1.666667","3":"5.000000","4":"4.000000","5":"4.875","6":"5.0","7":"4.875"},{"1":"4.0","2":"2.000000","3":"4.333333","4":"4.000000","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.333333","3":"3.000000","4":"3.000000","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"2.333333","3":"3.666667","4":"3.500000","5":"4.000","6":"3.8","7":"3.750"},{"1":"3.5","2":"2.333333","3":"4.000000","4":"3.833333","5":"3.750","6":"3.6","7":"4.000"},{"1":"2.0","2":"2.666667","3":"3.666667","4":"3.833333","5":"3.500","6":"4.0","7":"3.625"},{"1":"4.0","2":"1.666667","3":"4.000000","4":"4.500000","5":"4.000","6":"4.2","7":"4.875"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"3.500000","5":"3.500","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"3.500","6":"4.0","7":"3.875"},{"1":"3.5","2":"2.000000","3":"3.333333","4":"3.333333","5":"3.625","6":"3.8","7":"4.125"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"3.333333","5":"4.000","6":"4.0","7":"3.500"},{"1":"3.5","2":"3.333333","3":"3.666667","4":"3.666667","5":"3.125","6":"3.8","7":"3.625"},{"1":"3.0","2":"1.666667","3":"4.333333","4":"4.000000","5":"3.750","6":"4.0","7":"4.375"},{"1":"4.0","2":"2.333333","3":"3.333333","4":"3.166667","5":"3.875","6":"3.8","7":"4.000"},{"1":"2.0","2":"2.333333","3":"3.666667","4":"3.333333","5":"4.000","6":"4.0","7":"3.875"},{"1":"1.0","2":"3.333333","3":"4.000000","4":"4.666667","5":"3.625","6":"4.8","7":"4.875"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.500000","5":"3.250","6":"4.0","7":"4.125"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.125"},{"1":"4.0","2":"2.000000","3":"3.000000","4":"4.000000","5":"3.625","6":"4.0","7":"3.875"},{"1":"3.0","2":"2.333333","3":"4.333333","4":"2.166667","5":"4.125","6":"4.0","7":"3.375"},{"1":"4.0","2":"2.333333","3":"5.000000","4":"3.833333","5":"4.250","6":"4.0","7":"4.000"},{"1":"2.5","2":"3.000000","3":"3.666667","4":"4.166667","5":"4.000","6":"4.2","7":"4.625"},{"1":"3.0","2":"2.666667","3":"4.333333","4":"3.666667","5":"4.125","6":"4.2","7":"4.500"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.666667","5":"3.875","6":"3.8","7":"4.125"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.250"},{"1":"3.0","2":"3.666667","3":"3.333333","4":"3.833333","5":"3.875","6":"4.0","7":"4.375"},{"1":"4.0","2":"3.000000","3":"3.666667","4":"3.333333","5":"3.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.666667","3":"3.000000","4":"4.000000","5":"4.000","6":"3.8","7":"4.000"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"4.166667","5":"3.125","6":"3.8","7":"3.625"},{"1":"4.0","2":"2.000000","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.250"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"4.000","6":"3.8","7":"3.750"},{"1":"2.5","2":"1.666667","3":"3.000000","4":"3.333333","5":"3.750","6":"3.8","7":"3.750"},{"1":"3.0","2":"3.666667","3":"3.666667","4":"3.833333","5":"3.750","6":"4.0","7":"3.625"},{"1":"4.0","2":"3.666667","3":"4.000000","4":"4.000000","5":"3.750","6":"3.6","7":"4.000"},{"1":"2.0","2":"2.000000","3":"4.000000","4":"3.833333","5":"4.125","6":"4.8","7":"4.250"},{"1":"3.5","2":"2.333333","3":"3.000000","4":"3.500000","5":"3.250","6":"3.6","7":"3.750"},{"1":"1.0","2":"2.666667","3":"3.666667","4":"3.000000","5":"4.625","6":"4.0","7":"3.375"},{"1":"3.5","2":"3.000000","3":"4.666667","4":"3.500000","5":"4.000","6":"3.4","7":"2.750"},{"1":"2.5","2":"2.666667","3":"3.666667","4":"3.333333","5":"3.750","6":"4.0","7":"3.250"},{"1":"3.5","2":"3.666667","3":"3.666667","4":"3.833333","5":"3.875","6":"3.6","7":"3.750"},{"1":"4.0","2":"3.666667","3":"3.666667","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"1.0","2":"1.000000","3":"3.666667","4":"4.000000","5":"4.000","6":"3.8","7":"3.750"},{"1":"4.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.666667","3":"3.666667","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"4.0","2":"3.666667","3":"3.666667","4":"3.833333","5":"4.000","6":"4.0","7":"3.750"},{"1":"2.0","2":"3.333333","3":"3.333333","4":"2.666667","5":"3.000","6":"3.2","7":"2.750"},{"1":"3.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.875","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"3.833333","5":"4.000","6":"3.6","7":"3.875"},{"1":"3.5","2":"2.333333","3":"4.333333","4":"3.333333","5":"3.875","6":"5.0","7":"3.500"},{"1":"3.0","2":"2.000000","3":"2.333333","4":"3.666667","5":"3.375","6":"4.0","7":"4.250"},{"1":"2.0","2":"1.666667","3":"4.000000","4":"3.833333","5":"4.000","6":"4.0","7":"3.625"},{"1":"4.0","2":"3.000000","3":"4.333333","4":"4.000000","5":"3.875","6":"4.0","7":"4.000"},{"1":"2.0","2":"3.333333","3":"4.000000","4":"3.166667","5":"3.750","6":"4.0","7":"3.625"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"3.8","7":"3.750"},{"1":"1.0","2":"3.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"2.6","7":"4.000"},{"1":"4.0","2":"1.666667","3":"3.333333","4":"4.166667","5":"3.500","6":"3.8","7":"3.875"},{"1":"3.5","2":"2.666667","3":"4.333333","4":"3.166667","5":"3.500","6":"4.0","7":"3.500"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"3.833333","5":"3.625","6":"4.0","7":"4.000"},{"1":"2.0","2":"2.666667","3":"1.333333","4":"2.000000","5":"3.875","6":"2.2","7":"3.375"},{"1":"2.0","2":"2.666667","3":"1.333333","4":"2.000000","5":"3.875","6":"2.2","7":"3.375"},{"1":"4.0","2":"3.666667","3":"4.333333","4":"3.500000","5":"2.000","6":"2.6","7":"2.750"},{"1":"3.0","2":"3.000000","3":"3.333333","4":"4.000000","5":"4.125","6":"4.0","7":"3.875"},{"1":"3.0","2":"2.333333","3":"3.000000","4":"3.500000","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.166667","5":"4.000","6":"3.4","7":"3.750"},{"1":"4.0","2":"2.000000","3":"2.666667","4":"3.833333","5":"3.875","6":"4.0","7":"3.875"},{"1":"5.0","2":"3.000000","3":"3.000000","4":"3.000000","5":"5.000","6":"5.0","7":"5.000"},{"1":"3.0","2":"2.333333","3":"2.000000","4":"3.000000","5":"3.000","6":"4.0","7":"3.875"},{"1":"3.5","2":"2.666667","3":"3.666667","4":"3.333333","5":"4.000","6":"3.6","7":"4.125"},{"1":"3.0","2":"2.333333","3":"3.000000","4":"3.500000","5":"4.000","6":"3.6","7":"4.000"},{"1":"3.5","2":"3.333333","3":"4.333333","4":"3.666667","5":"3.500","6":"4.0","7":"3.750"},{"1":"4.0","2":"2.333333","3":"3.666667","4":"3.000000","5":"3.375","6":"3.8","7":"3.875"},{"1":"3.5","2":"3.333333","3":"4.333333","4":"3.666667","5":"3.500","6":"4.0","7":"3.750"},{"1":"5.0","2":"2.333333","3":"4.333333","4":"3.000000","5":"4.875","6":"4.0","7":"3.500"},{"1":"4.0","2":"1.666667","3":"4.000000","4":"4.500000","5":"3.375","6":"4.2","7":"4.000"},{"1":"2.0","2":"3.333333","3":"3.000000","4":"3.666667","5":"3.875","6":"3.4","7":"3.750"},{"1":"3.5","2":"2.666667","3":"3.333333","4":"3.333333","5":"4.000","6":"4.0","7":"4.125"},{"1":"3.0","2":"2.000000","3":"3.666667","4":"4.000000","5":"3.750","6":"4.8","7":"4.000"},{"1":"4.0","2":"2.000000","3":"4.333333","4":"3.833333","5":"3.125","6":"4.0","7":"4.000"},{"1":"3.0","2":"3.000000","3":"2.333333","4":"4.166667","5":"4.875","6":"5.0","7":"4.625"},{"1":"4.0","2":"1.666667","3":"2.666667","4":"3.333333","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"2.333333","3":"3.666667","4":"3.500000","5":"3.875","6":"3.6","7":"3.750"},{"1":"3.5","2":"3.000000","3":"4.000000","4":"4.000000","5":"3.750","6":"4.0","7":"3.625"},{"1":"3.5","2":"2.333333","3":"4.000000","4":"4.000000","5":"3.875","6":"4.0","7":"3.875"},{"1":"3.0","2":"2.333333","3":"3.333333","4":"4.000000","5":"4.125","6":"3.8","7":"3.875"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"3.833333","5":"3.375","6":"4.6","7":"4.000"},{"1":"4.0","2":"3.000000","3":"3.000000","4":"4.000000","5":"4.000","6":"4.6","7":"4.000"},{"1":"1.5","2":"2.666667","3":"3.000000","4":"3.000000","5":"3.000","6":"3.0","7":"1.250"},{"1":"2.0","2":"4.000000","3":"3.000000","4":"3.333333","5":"3.750","6":"4.0","7":"3.250"},{"1":"2.5","2":"3.666667","3":"4.000000","4":"3.000000","5":"3.000","6":"3.0","7":"3.375"},{"1":"3.0","2":"3.000000","3":"4.333333","4":"4.333333","5":"4.375","6":"4.4","7":"4.000"},{"1":"3.0","2":"3.000000","3":"2.333333","4":"4.166667","5":"4.875","6":"5.0","7":"4.625"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"3.166667","5":"4.000","6":"4.0","7":"4.125"},{"1":"2.5","2":"2.666667","3":"3.666667","4":"3.000000","5":"2.875","6":"3.0","7":"2.875"},{"1":"2.0","2":"3.000000","3":"3.000000","4":"3.666667","5":"4.125","6":"4.2","7":"4.250"},{"1":"4.5","2":"2.333333","3":"4.000000","4":"3.500000","5":"4.125","6":"4.4","7":"4.750"},{"1":"3.0","2":"2.000000","3":"3.333333","4":"3.333333","5":"3.625","6":"4.2","7":"4.625"},{"1":"2.0","2":"3.666667","3":"4.666667","4":"4.000000","5":"4.125","6":"4.0","7":"3.875"},{"1":"5.0","2":"5.000000","3":"5.000000","4":"5.000000","5":"5.000","6":"5.0","7":"5.000"},{"1":"4.0","2":"1.666667","3":"3.333333","4":"4.000000","5":"3.125","6":"4.4","7":"4.250"},{"1":"3.5","2":"3.000000","3":"4.666667","4":"3.166667","5":"3.750","6":"4.0","7":"3.625"},{"1":"3.0","2":"3.666667","3":"3.666667","4":"3.500000","5":"4.000","6":"3.2","7":"3.750"},{"1":"2.5","2":"1.333333","3":"2.666667","4":"4.666667","5":"4.500","6":"5.0","7":"4.375"},{"1":"2.5","2":"5.000000","3":"4.000000","4":"4.000000","5":"5.000","6":"5.0","7":"4.500"},{"1":"4.0","2":"2.333333","3":"4.333333","4":"3.500000","5":"4.500","6":"4.4","7":"4.875"},{"1":"3.0","2":"3.333333","3":"4.000000","4":"3.833333","5":"3.125","6":"4.0","7":"4.000"},{"1":"5.0","2":"2.666667","3":"4.666667","4":"3.833333","5":"5.000","6":"5.0","7":"3.875"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"4.166667","5":"3.250","6":"5.0","7":"4.000"},{"1":"2.5","2":"3.000000","3":"4.000000","4":"3.166667","5":"4.000","6":"4.0","7":"4.250"},{"1":"4.0","2":"2.333333","3":"3.666667","4":"3.000000","5":"3.375","6":"3.8","7":"3.875"},{"1":"4.0","2":"2.333333","3":"5.000000","4":"3.833333","5":"4.250","6":"4.0","7":"4.000"},{"1":"2.5","2":"1.666667","3":"3.333333","4":"4.000000","5":"3.250","6":"4.0","7":"4.125"},{"1":"3.5","2":"3.333333","3":"4.333333","4":"3.833333","5":"3.625","6":"3.4","7":"3.875"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"4.333333","5":"4.625","6":"4.4","7":"4.750"},{"1":"2.0","2":"3.000000","3":"3.666667","4":"3.500000","5":"4.000","6":"4.2","7":"3.625"},{"1":"4.0","2":"3.666667","3":"3.333333","4":"3.833333","5":"3.875","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"3.000000","5":"3.000","6":"3.0","7":"3.500"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.333333","5":"3.750","6":"4.0","7":"3.875"},{"1":"3.5","2":"2.000000","3":"4.333333","4":"4.000000","5":"3.625","6":"3.8","7":"3.875"},{"1":"3.5","2":"2.000000","3":"4.666667","4":"4.000000","5":"3.625","6":"3.8","7":"3.875"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"3.000000","3":"4.333333","4":"4.000000","5":"5.000","6":"3.6","7":"3.750"},{"1":"2.5","2":"3.333333","3":"3.333333","4":"4.000000","5":"4.000","6":"4.0","7":"4.125"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"4.166667","5":"4.125","6":"4.0","7":"4.000"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"4.000000","5":"4.000","6":"4.0","7":"3.500"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.5","2":"2.666667","3":"4.333333","4":"3.666667","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.0","2":"2.333333","3":"4.000000","4":"3.000000","5":"4.000","6":"4.0","7":"3.375"},{"1":"1.5","2":"2.000000","3":"2.666667","4":"4.333333","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"4.333333","3":"4.000000","4":"3.500000","5":"3.625","6":"3.8","7":"3.500"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.333333","3":"3.666667","4":"3.166667","5":"3.000","6":"4.0","7":"3.750"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.666667","5":"3.875","6":"3.6","7":"3.750"},{"1":"4.0","2":"1.666667","3":"4.000000","4":"3.666667","5":"3.875","6":"3.6","7":"3.750"},{"1":"4.0","2":"1.333333","3":"3.333333","4":"3.833333","5":"4.250","6":"4.0","7":"4.000"},{"1":"3.5","2":"3.000000","3":"3.666667","4":"4.000000","5":"3.875","6":"4.0","7":"3.625"},{"1":"3.5","2":"2.333333","3":"4.000000","4":"3.333333","5":"3.750","6":"3.8","7":"3.375"},{"1":"2.0","2":"1.666667","3":"4.000000","4":"3.833333","5":"4.375","6":"3.0","7":"3.500"},{"1":"5.0","2":"3.666667","3":"3.666667","4":"4.000000","5":"4.250","6":"4.0","7":"4.125"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"5.000000","5":"4.625","6":"4.4","7":"4.750"},{"1":"5.0","2":"3.000000","3":"4.666667","4":"3.666667","5":"3.625","6":"3.2","7":"3.500"},{"1":"4.5","2":"3.666667","3":"3.000000","4":"3.000000","5":"3.250","6":"4.0","7":"3.000"},{"1":"3.0","2":"3.000000","3":"4.333333","4":"3.166667","5":"3.000","6":"4.0","7":"4.125"},{"1":"4.0","2":"1.666667","3":"3.666667","4":"3.833333","5":"4.000","6":"4.0","7":"4.375"},{"1":"2.5","2":"2.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.625"},{"1":"1.5","2":"2.000000","3":"4.000000","4":"2.833333","5":"3.000","6":"4.4","7":"4.375"},{"1":"4.0","2":"2.333333","3":"3.666667","4":"3.666667","5":"4.250","6":"3.6","7":"4.250"},{"1":"3.5","2":"3.000000","3":"4.000000","4":"3.333333","5":"3.750","6":"3.8","7":"3.375"},{"1":"3.0","2":"2.333333","3":"4.000000","4":"3.166667","5":"3.875","6":"4.0","7":"3.875"},{"1":"4.0","2":"2.333333","3":"3.666667","4":"3.000000","5":"3.375","6":"3.8","7":"3.875"},{"1":"3.0","2":"3.333333","3":"4.333333","4":"3.666667","5":"3.000","6":"4.0","7":"3.875"},{"1":"1.5","2":"3.000000","3":"4.000000","4":"4.666667","5":"3.750","6":"4.0","7":"4.000"},{"1":"2.5","2":"1.333333","3":"3.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.375"},{"1":"2.0","2":"2.666667","3":"3.666667","4":"3.166667","5":"4.000","6":"4.0","7":"3.750"},{"1":"3.5","2":"2.000000","3":"4.000000","4":"3.833333","5":"3.125","6":"4.0","7":"2.500"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"4.000000","5":"5.000","6":"4.4","7":"4.000"},{"1":"3.0","2":"2.666667","3":"4.000000","4":"3.500000","5":"3.500","6":"4.2","7":"3.875"},{"1":"3.0","2":"4.000000","3":"3.333333","4":"2.000000","5":"3.875","6":"4.2","7":"3.875"},{"1":"4.0","2":"3.333333","3":"3.666667","4":"4.166667","5":"3.750","6":"4.6","7":"4.625"},{"1":"5.0","2":"1.333333","3":"3.000000","4":"3.833333","5":"4.000","6":"4.0","7":"4.125"},{"1":"3.5","2":"1.666667","3":"5.000000","4":"3.833333","5":"2.875","6":"4.2","7":"3.125"},{"1":"2.5","2":"2.000000","3":"4.000000","4":"3.666667","5":"3.375","6":"4.4","7":"4.250"},{"1":"3.0","2":"3.333333","3":"3.333333","4":"3.333333","5":"2.875","6":"4.2","7":"3.750"},{"1":"4.0","2":"3.000000","3":"4.000000","4":"3.500000","5":"3.125","6":"3.8","7":"3.875"},{"1":"3.0","2":"2.333333","3":"4.000000","4":"3.833333","5":"3.625","6":"4.0","7":"4.000"},{"1":"3.5","2":"3.333333","3":"4.333333","4":"3.166667","5":"3.500","6":"4.0","7":"3.750"},{"1":"2.0","2":"3.333333","3":"3.666667","4":"2.833333","5":"3.000","6":"3.6","7":"3.625"},{"1":"2.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"4.000"},{"1":"3.5","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.250"},{"1":"3.5","2":"2.666667","3":"3.000000","4":"3.333333","5":"3.625","6":"3.4","7":"3.750"},{"1":"4.0","2":"2.333333","3":"3.000000","4":"3.833333","5":"3.625","6":"4.0","7":"3.250"},{"1":"3.5","2":"3.000000","3":"4.000000","4":"3.333333","5":"3.250","6":"4.0","7":"2.750"},{"1":"3.0","2":"1.666667","3":"3.666667","4":"3.000000","5":"3.875","6":"4.0","7":"3.625"},{"1":"4.0","2":"1.666667","3":"4.333333","4":"4.666667","5":"4.000","6":"4.8","7":"3.625"},{"1":"5.0","2":"5.000000","3":"5.000000","4":"5.000000","5":"5.000","6":"5.0","7":"5.000"},{"1":"5.0","2":"4.000000","3":"4.000000","4":"4.000000","5":"4.000","6":"3.8","7":"3.125"},{"1":"2.5","2":"4.000000","3":"3.333333","4":"3.500000","5":"2.875","6":"2.6","7":"3.625"},{"1":"4.0","2":"1.333333","3":"2.333333","4":"3.833333","5":"2.375","6":"4.0","7":"4.000"},{"1":"3.5","2":"2.000000","3":"3.666667","4":"3.666667","5":"2.750","6":"4.2","7":"4.000"},{"1":"4.0","2":"2.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"3.333333","3":"4.000000","4":"4.000000","5":"4.000","6":"4.0","7":"3.875"},{"1":"3.0","2":"3.000000","3":"4.000000","4":"3.166667","5":"3.125","6":"4.0","7":"3.875"},{"1":"4.0","2":"2.666667","3":"4.000000","4":"3.666667","5":"4.000","6":"4.0","7":"3.875"},{"1":"4.0","2":"2.000000","3":"4.666667","4":"3.500000","5":"3.000","6":"4.0","7":"4.000"},{"1":"4.0","2":"2.000000","3":"4.666667","4":"3.000000","5":"4.000","6":"4.0","7":"2.375"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"3.500000","5":"2.625","6":"3.6","7":"3.625"},{"1":"3.0","2":"2.666667","3":"3.333333","4":"3.333333","5":"2.625","6":"3.6","7":"3.625"},{"1":"3.0","2":"3.000000","3":"3.666667","4":"3.833333","5":"4.000","6":"4.0","7":"4.000"},{"1":"2.5","2":"4.000000","3":"3.333333","4":"3.833333","5":"4.750","6":"4.0","7":"3.000"},{"1":"3.0","2":"1.000000","3":"3.666667","4":"5.000000","5":"2.000","6":"1.0","7":"5.000"},{"1":"4.0","2":"3.000000","3":"3.333333","4":"3.833333","5":"3.125","6":"3.2","7":"3.500"},{"1":"1.5","2":"1.333333","3":"2.000000","4":"1.833333","5":"1.500","6":"1.2","7":"1.375"},{"1":"2.0","2":"2.000000","3":"3.666667","4":"3.000000","5":"3.625","6":"3.8","7":"3.625"},{"1":"1.0","2":"1.666667","3":"1.666667","4":"2.000000","5":"1.500","6":"2.2","7":"2.125"},{"1":"3.0","2":"2.666667","3":"3.666667","4":"3.000000","5":"3.000","6":"3.0","7":"3.125"},{"1":"3.5","2":"3.333333","3":"4.000000","4":"4.166667","5":"4.000","6":"4.4","7":"4.375"},{"1":"3.5","2":"3.333333","3":"2.333333","4":"3.166667","5":"3.125","6":"3.4","7":"3.125"},{"1":"2.5","2":"3.666667","3":"3.666667","4":"3.166667","5":"3.125","6":"3.4","7":"3.625"},{"1":"2.0","2":"2.333333","3":"3.000000","4":"3.833333","5":"3.000","6":"4.0","7":"3.750"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+
+
+``` r
+model.sem_FAauthors <- '
+  # regressions
+  Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CoopClass
+  SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CoopClass
+  ethics ~ Motivation + SelfEfficacy
+'
+
+model.sem_FAauthors <- bcfa(model.sem_FAauthors, data=df_FAauth, std.lv=TRUE, n.chains = n_chains,
+                 burnin=burn_in, sample=sample_estimate, target = "stan")
+```
+
+```
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0.000764 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 7.64 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 1: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 1: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 1: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 1: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 1: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 1: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 1: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 1: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 1.223 seconds (Warm-up)
+## Chain 1:                3.038 seconds (Sampling)
+## Chain 1:                4.261 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0.000241 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.41 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 2: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 2: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 2: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 2: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 2: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 2: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 2: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 2: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 1.187 seconds (Warm-up)
+## Chain 2:                3.498 seconds (Sampling)
+## Chain 2:                4.685 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0.000264 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 2.64 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 3: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 3: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 3: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 3: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 3: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 3: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 3: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 3: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 1.264 seconds (Warm-up)
+## Chain 3:                3.305 seconds (Sampling)
+## Chain 3:                4.569 seconds (Total)
+## Chain 3: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 4).
+## Chain 4: 
+## Chain 4: Gradient evaluation took 0.000308 seconds
+## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 3.08 seconds.
+## Chain 4: Adjust your expectations accordingly!
+## Chain 4: 
+## Chain 4: 
+## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 4: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 4: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 4: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 4: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 4: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 4: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 4: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 4: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 4: 
+## Chain 4:  Elapsed Time: 1.373 seconds (Warm-up)
+## Chain 4:                3.288 seconds (Sampling)
+## Chain 4:                4.661 seconds (Total)
+## Chain 4: 
+## 
+## SAMPLING FOR MODEL 'stanmarg' NOW (CHAIN 5).
+## Chain 5: 
+## Chain 5: Gradient evaluation took 0.000234 seconds
+## Chain 5: 1000 transitions using 10 leapfrog steps per transition would take 2.34 seconds.
+## Chain 5: Adjust your expectations accordingly!
+## Chain 5: 
+## Chain 5: 
+## Chain 5: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 5: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 5: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 5: Iteration:  501 / 2000 [ 25%]  (Sampling)
+## Chain 5: Iteration:  700 / 2000 [ 35%]  (Sampling)
+## Chain 5: Iteration:  900 / 2000 [ 45%]  (Sampling)
+## Chain 5: Iteration: 1100 / 2000 [ 55%]  (Sampling)
+## Chain 5: Iteration: 1300 / 2000 [ 65%]  (Sampling)
+## Chain 5: Iteration: 1500 / 2000 [ 75%]  (Sampling)
+## Chain 5: Iteration: 1700 / 2000 [ 85%]  (Sampling)
+## Chain 5: Iteration: 1900 / 2000 [ 95%]  (Sampling)
+## Chain 5: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 5: 
+## Chain 5:  Elapsed Time: 1.285 seconds (Warm-up)
+## Chain 5:                3.311 seconds (Sampling)
+## Chain 5:                4.596 seconds (Total)
+## Chain 5: 
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
+
+``` r
+summary(model.sem_FAauthors, standardized=TRUE, rsquare=TRUE)
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        13
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1721.184       0.004
+## 
+## Parameter Estimates:
+## 
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.171    0.049    0.076    0.266    0.171    0.150
+##     KnowldgArtcltn   -0.248    0.065   -0.377   -0.121   -0.248   -0.179
+##     TeamStrain        0.110    0.064   -0.015    0.231    0.110    0.079
+##     CoopClass        -0.014    0.065   -0.140    0.114   -0.014   -0.009
+##   SelfEfficacy ~                                                        
+##     Resilience        0.133    0.031    0.072    0.195    0.133    0.165
+##     KnowldgArtcltn    0.192    0.041    0.111    0.270    0.192    0.196
+##     TeamStrain        0.158    0.040    0.077    0.239    0.158    0.161
+##     CoopClass         0.203    0.042    0.120    0.284    0.203    0.198
+##   ethics ~                                                              
+##     Motivation        0.165    0.052    0.061    0.269    0.165    0.135
+##     SelfEfficacy      0.196    0.073    0.054    0.339    0.196    0.113
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     0.999    normal(0,10)
+##     1.000    normal(0,10)
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .Motivation        0.494    0.030    0.439    0.555    0.494    0.957
+##    .SelfEfficacy      0.197    0.012    0.175    0.221    0.197    0.765
+##    .ethics            0.744    0.045    0.662    0.838    0.744    0.969
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+## 
+## R-Square:
+##                    Estimate
+##     Motivation        0.043
+##     SelfEfficacy      0.235
+##     ethics            0.031
+```
+
+
+``` r
+semPaths(model.sem_FAauthors,
+         what = "std",      
+         layout = "tree", 
+         edge.label.cex = 1.0,
+         sizeMan = 6,       
+         sizeLat = 8,       
+         nCharNodes = 6,    
+         residuals = TRUE,        
+         intercepts = FALSE,    
+         optimizeLatRes = TRUE,  
+         edge.color = "black",
+         color = list(lat = "darkgreen", man = "lightblue"),
+         mar = c(6, 6, 6, 6) 
+)
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-51-1.png)<!-- -->
 

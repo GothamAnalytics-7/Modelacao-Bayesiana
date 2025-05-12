@@ -43,8 +43,8 @@ pacman::p_load(foreign, haven, tidyverse, rstan, blavaan, lavaan,
 ```{r}
 # load data
 df <- read.csv("../data/dados_raw.csv")
-View(df)
-df %>% glimpse()
+# View(df)
+# df %>% glimpse()
 ```
 
 Skim do dataset para vermos a estrutura detalhada dos dados.
@@ -65,7 +65,7 @@ Ao guardarmos o skim num objeto podemos ver a estrutura e filtrar as informaçõ
 
 Ou seja, não teremos de lidar com omissos.
 
-```{r}
+```{r, results='hold'}
 # select character columns
 skim_output$skim_variable[skim_output$skim_type == "character"] -> char_cols
 char_cols
