@@ -339,6 +339,90 @@ vars_nao_citadas <- df_transform %>%
 vars_nao_citadas
 ```
 
+#### Criar próprios CFA como fazem no artigo (erradamente)
+
+```{r, echo=TRUE, results='hide'}
+run_CFA_extract_scores <- function(df, construtos_lista) {
+  df_resultado <- data.frame(matrix(nrow = nrow(df), ncol = 0))
+  modelos <- list()
+  
+  for (nome_construto in names(construtos_lista)) {
+    itens <- construtos_lista[[nome_construto]]
+    formula_cfa <- paste0(nome_construto, " =~ ", paste(itens, collapse = " + "))
+    
+    modelo <- cfa(formula_cfa, data = df, std.lv = TRUE)
+    modelos[[nome_construto]] <- modelo 
+    
+    cat("\n\n--- CFA:", nome_construto, "---\n")
+    print(summary(modelo, standardized = TRUE, rsquare = TRUE))
+    
+    loadings <- parameterEstimates(modelo) %>% filter(op == "=~")
+    print(loadings)
+    
+    # CFA scores
+    scores <- lavPredict(modelo)
+    if (is.vector(scores)) {
+      df_resultado[[paste0("score_", nome_construto)]] <- scores
+    } else if (is.matrix(scores)) {
+      df_resultado[[paste0("score_", nome_construto)]] <- scores[, 1]
+    }
+  }
+  
+  return(list(scores_df = df_resultado, modelos = modelos))
+}
+
+construtos <- list(
+  factor_Ethics = c("ET12", "ET13"),
+  factor_Motivation = c("Mot5", "Mot8", "Mot11"),
+  factor_SelfEfficacy = c("SE1", "SE2", "SE3", "SE4", "SE5", "SE6"),
+  factor_Resilience = c("R2", "R5", "R6"),
+  factor_KnowledgeArticulation = c("KA1", "KA2", "KA3", "KA4", "KA5"),
+  factor_TeamStrain = c("TS10", "TS11", "TS12", "TS13", "TS14", "TS15", "TS16", "TS17"),
+  factor_CooperativeClassroomEnvironment = c("CCE1", "CCE3", "CCE4", "CCE5", "CCE8", "CCE9", "CCE10", "CCE11")
+)
+
+resultado_CFA <- run_CFA_extract_scores(df, construtos)
+df_OUR_CFA <- resultado_CFA$scores_df
+
+# modelos_CFA <- resultado_CFA$modelos
+```
+
+
+
+```{r, echo=TRUE, results='hide'}
+run_item_means <- function(df, construtos_lista) {
+  df_resultado <- data.frame(matrix(nrow = nrow(df), ncol = 0))
+  
+  for (nome_construto in names(construtos_lista)) {
+    itens <- construtos_lista[[nome_construto]]
+    
+    media_itens <- rowMeans(df[, itens], na.rm = TRUE)
+    df_resultado[[paste0("mean_", nome_construto)]] <- media_itens
+  }
+  return(df_resultado)
+}
+
+construtos <- list(
+  factor_Ethics = c("ET12", "ET13"),
+  factor_Motivation = c("Mot5", "Mot8", "Mot11"),
+  factor_SelfEfficacy = c("SE1", "SE2", "SE3", "SE4", "SE5", "SE6"),
+  factor_Resilience = c("R2", "R5", "R6"),
+  factor_KnowledgeArticulation = c("KA1", "KA2", "KA3", "KA4", "KA5"),
+  factor_TeamStrain = c("TS10", "TS11", "TS12", "TS13", "TS14", "TS15", "TS16", "TS17"),
+  factor_CooperativeClassroomEnvironment = c("CCE1", "CCE3", "CCE4", "CCE5", "CCE8", "CCE9", "CCE10", "CCE11")
+)
+
+df_means_only <- run_item_means(df, construtos)
+```
+
+```{r}
+# juntar os dois dataframes
+df_OUR_results <- cbind(df_OUR_CFA, df_means_only)
+colnames(df_OUR_results)
+df_OUR_results
+```
+
+
 #### Criar ficheiros csv na pasta data com os 4 conjuntos anteriores
 
 ```{r}
@@ -350,6 +434,7 @@ write_csvs(descritivas, "descritivas")
 write_csvs(vars_artigo, "vars_artigo")
 write_csvs(construtos_autores, "construtos_autores")
 write_csvs(vars_nao_citadas, "vars_nao_citadas")
+write_csvs(df_OUR_results, "df_OUR_results")
 ```
 
 
@@ -377,10 +462,10 @@ plot_sem_model <- function(model, title = "") {
   semPaths(model,
            what = "std",
            layout = "spring",
-           edge.label.cex = 0.8,
-           sizeMan = 5,
+           edge.label.cex = 0.6,
+           sizeMan = 3,
            sizeLat = 7,
-           nCharNodes = 0,
+           nCharNodes = 4,
            residuals = TRUE,
            intercepts = FALSE,
            optimizeLatRes = TRUE,
@@ -938,12 +1023,12 @@ summary(model.sem, standardized=TRUE, rsquare=TRUE)
 ```
 
 
-```{r}
+```{r, fig.width=12, fig.height=10}
 semPaths(model.sem,
          what = "std",      
          layout = "tree", 
-         edge.label.cex = 1.0,
-         sizeMan = 6,       
+         edge.label.cex = 0.4,
+         sizeMan = 3,       
          sizeLat = 8,       
          nCharNodes = 6,    
          residuals = TRUE,        
@@ -956,12 +1041,12 @@ semPaths(model.sem,
 ```
 
 
-#### Estimação com construtos dos autores
+#### Estimação com construtos dos autores (dataset original)
 
 
 ```{r}
 # ler csv 
-df_FAauth <- read_csv("../data/4_conjuntos(dev)/construtos_autores.csv")
+df_FAauth <- read.csv("../data/4_conjuntos(dev)/construtos_autores.csv")
 df_FAauth
 ```
 
@@ -987,7 +1072,7 @@ semPaths(model.sem_FAauthors,
          what = "std",      
          layout = "tree", 
          edge.label.cex = 1.0,
-         sizeMan = 6,       
+         sizeMan = 10,       
          sizeLat = 8,       
          nCharNodes = 6,    
          residuals = TRUE,        
@@ -998,4 +1083,88 @@ semPaths(model.sem_FAauthors,
          mar = c(6, 6, 6, 6) 
 )
 ```
+
+#### Construtos criados por nós
+
+```{r}
+df_FAour <- read.csv("../data/4_conjuntos(dev)/df_OUR_results.csv")
+df_FAour
+```
+
+
+##### CFA
+
+```{r}
+model.sem_CFAOUR <- '
+  # regressions
+  score_factor_Motivation ~ score_factor_Resilience + score_factor_KnowledgeArticulation + score_factor_TeamStrain + score_factor_CooperativeClassroomEnvironment
+  score_factor_SelfEfficacy ~ score_factor_Resilience + score_factor_KnowledgeArticulation + score_factor_TeamStrain + score_factor_CooperativeClassroomEnvironment
+  score_factor_Ethics ~ score_factor_Motivation + score_factor_SelfEfficacy
+'
+
+model.sem_CFAOUR <- bcfa(model.sem_CFAOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
+                 burnin=burn_in, sample=sample_estimate, target = "stan")
+```
+
+```{r}
+summary(model.sem_CFAOUR, standardized=TRUE, rsquare=TRUE)
+```
+
+```{r}
+semPaths(model.sem_CFAOUR,
+         what = "std",      
+         layout = "tree", 
+         edge.label.cex = 1.0,
+         sizeMan = 10,       
+         sizeLat = 8,       
+         nCharNodes = 6,    
+         residuals = TRUE,        
+         intercepts = FALSE,    
+         optimizeLatRes = TRUE,  
+         edge.color = "black",
+         color = list(lat = "darkgreen", man = "lightblue"),
+         mar = c(6, 6, 6, 6) 
+)
+```
+
+##### Média variáveis
+
+Vai ser igual à análise de cima
+
+```{r}
+model.sem_meanOUR <- '
+  # regressions
+  mean_factor_Motivation ~ mean_factor_Resilience + mean_factor_KnowledgeArticulation + mean_factor_TeamStrain + mean_factor_CooperativeClassroomEnvironment
+  mean_factor_SelfEfficacy ~ mean_factor_Resilience + mean_factor_KnowledgeArticulation + mean_factor_TeamStrain + mean_factor_CooperativeClassroomEnvironment
+  mean_factor_Ethics ~ mean_factor_Motivation + mean_factor_SelfEfficacy
+'
+
+model.sem_meanOUR <- bcfa(model.sem_meanOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
+                 burnin=burn_in, sample=sample_estimate, target = "stan")
+```
+
+```{r}
+summary(model.sem_meanOUR, standardized=TRUE, rsquare=TRUE)
+```
+
+```{r}
+semPaths(model.sem_meanOUR,
+         what = "std",      
+         layout = "tree", 
+         edge.label.cex = 1.0,
+         sizeMan = 10,       
+         sizeLat = 8,       
+         nCharNodes = 6,    
+         residuals = TRUE,        
+         intercepts = FALSE,    
+         optimizeLatRes = TRUE,  
+         edge.color = "black",
+         color = list(lat = "darkgreen", man = "lightblue"),
+         mar = c(6, 6, 6, 6) 
+)
+```
+
+
+
+
 
