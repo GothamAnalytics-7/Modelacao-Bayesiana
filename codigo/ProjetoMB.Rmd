@@ -35,7 +35,20 @@ if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(foreign, haven, tidyverse, rstan, blavaan, lavaan, 
                brms, psych, bayesplot, skimr, semPlot, gridExtra, gridGraphics, 
                grid, corrplot)
+
+options(blavaan.dir = "temp_bcfa")
+dir.create("temp_bcfa", showWarnings = FALSE)
+rstan_options(auto_write = TRUE)
+options(mc.cores = 1)
 ```
+
+```{r}
+correr_single_CFAs <- FALSE
+correr_multiple_CFA <- FALSE
+correr_SEM <- TRUE
+correr_SEM_priors <- TRUE
+```
+
 
 
 ## Fase 1 - EDA
@@ -228,7 +241,7 @@ for (name in names(construct_patterns)) {
 }
 ```
 
-#### Construtos
+#### Ver loadings e alpha de Cronbach
 
 ```{r}
 calculate_metrics_all <- function(df, construct_patterns) {
@@ -457,6 +470,10 @@ burn_in <- 1500
 sample_estimate <- 3000
 ```
 
+A função `bcfa` do pacote `blavaan` é utilizada para fazer a modelação bayesiana. Esta função tem como parâmetros o modelo, os dados, o número de cadeias, o burn-in e o número de amostras.
+
+Vamos fazer o semplot para ver os resultados da modelação. O semPaths é uma função do pacote `semPlot` que permite visualizar os resultados da modelação.
+
 ```{r}
 plot_sem_model <- function(model, title = "") {
   semPaths(model,
@@ -476,10 +493,17 @@ plot_sem_model <- function(model, title = "") {
 }
 ```
 
+Já fizemos uma análise fatorial confirmatória (CFA) para tentar verificar se as variáveis utilizadas nos construtos são as que têm valores de loadings mais elevados. Vamos usar o pacote `blavaan` para fazer a modelação bayesiana de cada grupo de variáveis em separado. 
 
+Para isso vamos seguir três abordagens:
+
+- A primeira abordagem com todas as variáveis para cada construto a ser constituído;
+- A segunda abordagem será com as variáveis consideradas no artigo para a formação dos construtos;
+- A terceira abordagem com as variáveis que têm os loadings mais elevados para cada construto a ser constituído.
 
 
 #### CFA com todas as variáveis para tentar justificar/perceber as escolhas para os construtos
+
 
 ##### Student Ethics
 
@@ -985,7 +1009,7 @@ semPaths(fitcfa.global,
 
 ### 3 - SEM
 
-#### Estimação com FA criadas por nós
+#### Estimação com FA criadas seguidas
 
 ```{r}
 # individual params
@@ -1203,9 +1227,9 @@ abline(v=c(-0.5, 0.4), col="red", lty=2)
 
 ```{r}
 # individual params
-n_chains <- 3 # 5
-burn_in <- 200
-sample_estimate <- 1000
+n_chains <- 5 # 3
+burn_in <- 500 # 200
+sample_estimate <- 1500 #1000
 ```
 
 
@@ -1230,14 +1254,16 @@ model.sem_priors <- '
   
 '
 
-model.sem_priors <- bcfa(model.sem_priors, data=df, std.lv=TRUE, n.chains = n_chains,
+fit.sem_priors <- bcfa(model.sem_priors, data=df, std.lv=TRUE, n.chains = n_chains,
                  burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+```
+
+```{r}
+summary(fit.sem_priors, standardized=TRUE, rsquare=TRUE)
 ```
 
 
 ```{r}
-summary(model.sem_priors, standardized=TRUE, rsquare=TRUE)
+blavCompare(fit.sem_priors, model.sem)
 ```
-
-
 
