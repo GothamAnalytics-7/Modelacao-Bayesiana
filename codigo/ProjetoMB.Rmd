@@ -444,7 +444,7 @@ write_csvs(df_OUR_results, "df_OUR_results")
 
 ```{r}
 # ler csv 
-df <- read_csv("../data/4_conjuntos(dev)/vars_artigo.csv")
+df <- read.csv("../data/4_conjuntos(dev)/vars_artigo.csv")
 df
 ```
 
@@ -1022,6 +1022,11 @@ model.sem <- bcfa(model.sem, data=df, std.lv=TRUE, n.chains = n_chains,
 summary(model.sem, standardized=TRUE, rsquare=TRUE)
 ```
 
+```{r}
+inspect(model.sem, what = "std")$lambda
+```
+
+
 
 ```{r, fig.width=12, fig.height=10}
 semPaths(model.sem,
@@ -1165,6 +1170,74 @@ semPaths(model.sem_meanOUR,
 ```
 
 
+### 4- SEM com priors
+
+Estudo de algumas priors baseado nos valores de loadings obtidos e os do paper. Veremos algumas distribuições conhecidas e tentar adaptar o valor do lambda para uma normal porque a função `dpriors` tem limitações em quais priors pode replicar.
+
+```{r}
+curve(dgamma(x, 25, 50), from=0, to=1.2, main="(Ñ) Prior para Lambda (loadings)", col = "green", ylab="Densidade")
+abline(v=c(0.3, 1), col="red", lty=2)
+
+curve(dlnorm(x, meanlog = -0.7, sdlog = 0.3),
+      from = 0, to = 1.5, 
+      col = "green", lwd = 2,
+      ylab = "Densidade", xlab = "Valor do Loading",
+      main = "(Ñ) Distribuição Lognormal(-0.7, 0.3) para Lambda (loadings)")
+abline(v = c(0.3, 0.8), col = "red", lty = 2)
+
+curve(dnorm(x, 0.5, 0.1), from=0, to=1.2, main="Prior para Lambda (loadings)", col = "green", ylab="Densidade")
+abline(v=c(0.3, 1), col="red", lty=2)
+
+curve(c(dnorm(x, 0.85, 0.05)), from=-1, to=1, col = "green", main="Prior para Lambda (loadings - ET12)", ylab="Densidade")
+abline(v=c(0.75, 1.0), col="red", lty=2)
+
+curve(c(dnorm(x, 0.7, 0.05)), from=-1, to=1, col = "green", main="Prior para Lambda (loadings - ET13)", ylab="Densidade")
+abline(v=c(0.6, 0.83), col="red", lty=2)
+
+
+
+curve(dnorm(x, 0, 0.25), from=-1, to=1,col = "blue", main="Prior para Beta (regressão)", ylab="Densidade")
+abline(v=c(-0.5, 0.4), col="red", lty=2)
+```
+
+
+```{r}
+# individual params
+n_chains <- 3 # 5
+burn_in <- 200
+sample_estimate <- 1000
+```
+
+
+```{r}
+dp <- dpriors(lambda = "normal(0.5, 0.1)", # semelhante "gamma(25, 50)"; nao conchigo utilizar gamma :(
+              beta   = "normal(0, 0.25)" # talvez aumentar um pouco mais sd (cauda mais longa)
+              )
+model.sem_priors <- '
+  # measurement model
+  StudentEthics =~ prior("normal(0.85, 0.05)")*ET12 + prior("normal(0.7, 0.05)")*ET13
+  Motivation =~ Mot5 + Mot8 + Mot11
+  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+  Resilience =~ R2 + R5 + R6
+  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+  TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+  CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+  
+  # regressions
+  Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+  SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+  StudentEthics ~ Motivation + SelfEfficacy
+  
+'
+
+model.sem_priors <- bcfa(model.sem_priors, data=df, std.lv=TRUE, n.chains = n_chains,
+                 burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+```
+
+
+```{r}
+summary(model.sem_priors, standardized=TRUE, rsquare=TRUE)
+```
 
 
 
