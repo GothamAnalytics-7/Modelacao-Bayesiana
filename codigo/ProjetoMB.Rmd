@@ -243,6 +243,8 @@ for (name in names(construct_patterns)) {
 
 #### Ver loadings e alpha de Cronbach
 
+Para cada grupo de variáveis, vamos calcular o alpha de Cronbach e os loadings. O alpha de Cronbach é uma medida de consistência interna, enquanto os loadings são as cargas fatoriais que indicam a relação entre as variáveis observadas e o fator latente a ser criado.
+
 ```{r}
 calculate_metrics_all <- function(df, construct_patterns) {
   results <- list()
@@ -277,6 +279,7 @@ calculate_metrics_all <- function(df, construct_patterns) {
 }
 ```
 
+Vamos primeiro experimentar com todos as variáveis dos itens que são citados no artigo. Após isso, experimentamos com aquelas que são mencionadas no artigo para fazer os construtos.
 
 ```{r}
 metrics_results <- calculate_metrics_all(vars_artigo, construct_patterns)
@@ -352,7 +355,11 @@ vars_nao_citadas <- df_transform %>%
 vars_nao_citadas
 ```
 
+Estas colunas, assim como as variáveis descritivas, vamos ignorar porque não servem para a replicação do artigo.
+
 #### Criar próprios CFA como fazem no artigo (erradamente)
+
+Vamos começar por fazer uma análise fatorial confirmatória (CFA) com as variáveis que foram criados pelos autores do artigo. Vamos usar a função `cfa` do pacote `lavaan`.
 
 ```{r, echo=TRUE, results='hide'}
 run_CFA_extract_scores <- function(df, construtos_lista) {
@@ -400,7 +407,7 @@ df_OUR_CFA <- resultado_CFA$scores_df
 # modelos_CFA <- resultado_CFA$modelos
 ```
 
-
+Para além do CFA, vamos ver como seria se fizéssemos a média, pois os autores também o fazem para ter os construtos "Motivation", "SelfEfficacy", "Resilience", etc.. Apenas nos apercebemos disto porque o dataset contém a informação dos construtos que os autores criaram e podemos perceber que não representavam scores, apenas uma média das variáveis. Por exemplo: Student Ethics: (ET12+ET13)/2 para cada uma das 566 linhas/respostas.
 
 ```{r, echo=TRUE, results='hide'}
 run_item_means <- function(df, construtos_lista) {
@@ -428,6 +435,8 @@ construtos <- list(
 df_means_only <- run_item_means(df, construtos)
 ```
 
+Juntar os dois datasets para serem utilizados depois.
+
 ```{r}
 # juntar os dois dataframes
 df_OUR_results <- cbind(df_OUR_CFA, df_means_only)
@@ -437,6 +446,8 @@ df_OUR_results
 
 
 #### Criar ficheiros csv na pasta data com os 4 conjuntos anteriores
+
+Guardar numa pasta específica para ajudar os dados mais facilmente com a separação realizada. Isto porque algumas variáveis serão utilizadas e outras não.
 
 ```{r}
 # escrever uma função
@@ -452,6 +463,8 @@ write_csvs(df_OUR_results, "df_OUR_results")
 
 
 ## Fase 2: Replicação do artigo
+
+Depois de percebermos o dataset que temos e o que é que os autores fizeram, vamos replicar o artigo. Vamos fazer a replicação do artigo de forma a percebermos como é que os autores chegaram aos resultados e discutir os valores obtidos do ponto de vista de Bayesiana.
 
 ### 1 - CFA para cada conjunto de questões
 
@@ -504,6 +517,9 @@ Para isso vamos seguir três abordagens:
 
 #### CFA com todas as variáveis para tentar justificar/perceber as escolhas para os construtos
 
+Esta é a primeira abordagem em que vamos verificar os valores dos loadings e tentar justificar as escolhas dos autores.
+
+**Nota**: é necessário ter em conta que os autores não utilizaram todas as variáveis para a formação dos construtos e podem ter optado por algumas pelos valores dos loadings ou pelas perguntas que fariam mais sentido dado o questionário. Levaremos isso em conta.
 
 ##### Student Ethics
 
@@ -517,6 +533,7 @@ fit.ethics <- bcfa(model.ethics, data = df, std.lv = TRUE,
 summary(fit.ethics, standardized = TRUE, rsquare = TRUE)
 fitMeasures(fit.ethics)
 ```
+
 1500 burn-in + 3000 samples
 
 | Item  | Loadings  |
@@ -536,10 +553,9 @@ fitMeasures(fit.ethics)
 | ET13  | **0.749**     |
 | ET14  | 0.364     |
 
-O artigo opta por selecionar apenas 2 variáveis para o `Student Ethics` (ET12 e ET13), que são os que têm os loadings mais expressivos.
+O artigo opta por selecionar apenas 2 variáveis para o `Student Ethics` (ET12 e ET13), que são os que têm os loadings mais expressivos! Por isso, acabamos por concordar e não vamos incluir ou excluir variáveis.
 
 ##### Motivation
-
 
 ```{r}
 # Motivation
