@@ -43,10 +43,14 @@ options(mc.cores = 1)
 ```
 
 ```{r}
-correr_single_CFAs <- FALSE
+# Escolher que modelos executar (sobretudo para a geração do ficheiro knited)
+
+correr_single_CFAs_all <- FALSE
+correr_single_CFAs_article <- FALSE
+correr_single_CFAs_purpose <- correr_single_CFAs_article
 correr_multiple_CFA <- FALSE
 correr_SEM <- TRUE
-correr_SEM_priors <- TRUE
+correr_SEM_cpriors <- TRUE
 ```
 
 
@@ -234,9 +238,7 @@ for (name in names(construct_patterns)) {
              addCoef.col = "black",
              number.cex = 1.0,
              mar = c(1, 1, 2, 1),
-             title = paste("Matriz de Correlação -", name),
-             width = 12,
-             height = 10)
+             title = paste("Matriz de Correlação -", name))
   }
 }
 ```
@@ -279,7 +281,7 @@ calculate_metrics_all <- function(df, construct_patterns) {
 }
 ```
 
-Vamos primeiro experimentar com todos as variáveis dos itens que são citados no artigo. Após isso, experimentamos com aquelas que são mencionadas no artigo para fazer os construtos.
+Vamos primeiro experimentar com todas as variáveis dos itens que são citados no artigo. Após isso, experimentamos com aquelas que são mencionadas no artigo para fazer os construtos.
 
 ```{r}
 metrics_results <- calculate_metrics_all(vars_artigo, construct_patterns)
@@ -523,15 +525,17 @@ Esta é a primeira abordagem em que vamos verificar os valores dos loadings e te
 
 ##### Student Ethics
 
-```{r}
-# Student Ethics
-model.ethics <- 'StudentEthics =~ ET1 + ET2 + ET3 + ET4 + ET5 + ET6 + ET7 + 
-                                  ET8 + ET9 + ET10 + ET11 + ET12 + ET13 + ET14'
-fit.ethics <- bcfa(model.ethics, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.ethics, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.ethics)
+```{r stethics todas}
+if(correr_single_CFAs_all){
+  # Student Ethics
+  model.ethics <- 'StudentEthics =~ ET1 + ET2 + ET3 + ET4 + ET5 + ET6 + ET7 + 
+                                    ET8 + ET9 + ET10 + ET11 + ET12 + ET13 + ET14'
+  fit.ethics <- bcfa(model.ethics, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.ethics, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.ethics)
+}
 ```
 
 1500 burn-in + 3000 samples
@@ -557,17 +561,19 @@ O artigo opta por selecionar apenas 2 variáveis para o `Student Ethics` (ET12 e
 
 ##### Motivation
 
-```{r}
-# Motivation
-model.motivation <- 'Motivation =~ Mot1 + Mot2 + Mot3 + Mot4 + Mot5 + 
-                                  Mot6 + Mot7 + Mot8 + Mot9 + Mot10 + 
-                                  Mot11 + Mot12 + Mot13 + Mot14 + 
-                                  Mot15'
-fit.motivation <- bcfa(model.motivation, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.motivation, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.motivation)
+```{r motivation todas}
+if(correr_single_CFAs_all){
+  # Motivation
+  model.motivation <- 'Motivation =~ Mot1 + Mot2 + Mot3 + Mot4 + Mot5 + 
+                                    Mot6 + Mot7 + Mot8 + Mot9 + Mot10 + 
+                                    Mot11 + Mot12 + Mot13 + Mot14 + 
+                                    Mot15'
+  fit.motivation <- bcfa(model.motivation, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.motivation, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.motivation)
+}
 ```
 
 1500 burn-in + 3000 samples
@@ -594,14 +600,16 @@ O artigo opta por selecionar apenas 3 variáveis para o `Motivation` (Mot5, Mot8
  
 ##### Self-Efficacy
 
-```{r}
-# Self-Efficacy
-model.efficacy <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
-fit.efficacy <- bcfa(model.efficacy, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.efficacy, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.efficacy)
+```{r selfeff todas}
+if(correr_single_CFAs_all){
+  # Self-Efficacy
+  model.efficacy <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
+  fit.efficacy <- bcfa(model.efficacy, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.efficacy, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.efficacy)
+}
 ```
 
 1500 burn-in + 3000 samples
@@ -619,14 +627,16 @@ Optam-se por utilizar todas as variáveis para o `Self Efficacy`, dado que todas
 
 ##### Resilience
 
-```{r}
-# Resilience
-model.resilience <- 'Resilience =~ R1 + R2 + R3 + R4 + R5 + R6'
-fit.resilience <- bcfa(model.resilience, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.resilience, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.resilience)
+```{r res todas}
+if(correr_single_CFAs_all){
+  # Resilience
+  model.resilience <- 'Resilience =~ R1 + R2 + R3 + R4 + R5 + R6'
+  fit.resilience <- bcfa(model.resilience, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.resilience, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.resilience)
+}
 ```
 
 1500 burn-in + 3000 samples
@@ -645,14 +655,16 @@ O artigo opta por selecionar 3 variáveis para o `Resilience` (R2, R5 e R6), que
 
 ##### Knowledge Articulation
 
-```{r}
-# Knowledge Articulation
-model.knowledge <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
-fit.knowledge <- bcfa(model.knowledge, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.knowledge, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.knowledge)
+```{r ka todas}
+if(correr_single_CFAs_all){
+  # Knowledge Articulation
+  model.knowledge <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
+  fit.knowledge <- bcfa(model.knowledge, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.knowledge, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.knowledge)
+}
 ```
 
 1500 burn-in + 3000 samples
@@ -670,17 +682,19 @@ O artigo opta por selecionar todas as variáveis para o `Knowledge Articulation`
 
 ##### Team Strain
 
-```{r}
-# Team Strain
-model.teamstrain <- 'TeamStrain =~ TS1 + TS2 + TS3 + TS4 + TS5 + 
-                                  TS6 + TS7 + TS8 + TS9 + TS10 + 
-                                  TS11 + TS12 + TS13 + TS14 + 
-                                  TS15 + TS16 + TS17'
-fit.teamstrain <- bcfa(model.teamstrain, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.teamstrain, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.teamstrain)
+```{r ts todas}
+if(correr_single_CFAs_all){
+  # Team Strain
+  model.teamstrain <- 'TeamStrain =~ TS1 + TS2 + TS3 + TS4 + TS5 + 
+                                    TS6 + TS7 + TS8 + TS9 + TS10 + 
+                                    TS11 + TS12 + TS13 + TS14 + 
+                                    TS15 + TS16 + TS17'
+  fit.teamstrain <- bcfa(model.teamstrain, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.teamstrain, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.teamstrain)
+}
 ```
 
 1500 burn-in + 3000 samples
@@ -710,18 +724,20 @@ O artigo opta por selecionar 8 variáveis para o `Team Strain` (TS10, TS11, TS12
 
 ##### Cooperative Classroom Environment
 
-```{r}
-# Cooperative Classroom Environment
-model.cce <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE2 + CCE3 + 
-                                  CCE4 + CCE5 + CCE6 + CCE7 + CCE8 + 
-                                  CCE9 + CCE10 + CCE11 + CCE12 + CCE13 +
-                                  CCE14 + CCE15 + CCE16 + CCE17 + CCE18 +
-                                  CCE19 + CCE20'
-fit.cce <- bcfa(model.cce, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.cce, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.cce)
+```{r cce todas}
+if(correr_single_CFAs_all){
+  # Cooperative Classroom Environment
+  model.cce <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE2 + CCE3 + 
+                                    CCE4 + CCE5 + CCE6 + CCE7 + CCE8 + 
+                                    CCE9 + CCE10 + CCE11 + CCE12 + CCE13 +
+                                    CCE14 + CCE15 + CCE16 + CCE17 + CCE18 +
+                                    CCE19 + CCE20'
+  fit.cce <- bcfa(model.cce, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.cce, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.cce)
+}
 ```
 
 1500 burn-in + 3000 samples
@@ -754,17 +770,21 @@ O artigo opta por selecionar 8 variáveis para o `Cooperative Classroom Environm
 
 ##### Gráficos 
 
+Desenhar os semplots com a função definida acima.
 
-```{r}
-p1 <- plot_sem_model(fit.ethics, "Student Ethics")
-p2 <- plot_sem_model(fit.motivation, "Motivation")
-p3 <- plot_sem_model(fit.efficacy, "Self Efficacy")
-p4 <- plot_sem_model(fit.resilience, "Resilience")
-p5 <- plot_sem_model(fit.knowledge, "Knowledge Articulation")
-p6 <- plot_sem_model(fit.teamstrain, "Team Strain")
-p7 <- plot_sem_model(fit.cce, "Cooperative Classroom Environment")
-
+```{r graficos todas}
+if(correr_single_CFAs_all){
+  p1 <- plot_sem_model(fit.ethics, "Student Ethics")
+  p2 <- plot_sem_model(fit.motivation, "Motivation")
+  p3 <- plot_sem_model(fit.efficacy, "Self Efficacy")
+  p4 <- plot_sem_model(fit.resilience, "Resilience")
+  p5 <- plot_sem_model(fit.knowledge, "Knowledge Articulation")
+  p6 <- plot_sem_model(fit.teamstrain, "Team Strain")
+  p7 <- plot_sem_model(fit.cce, "Cooperative Classroom Environment")
+}
 ```
+
+Distribuição de N(0,10) para lambda e Gama(1,0.5) para a variância.
 
 ```{r}
 plot(seq(0,10,.1), dnorm(seq(0,10,.1),0,10), type="l", lty=1, lwd = 3, xlab="x value",
@@ -784,6 +804,8 @@ abline(v=5, col="darkred", lwd=2)
 
 #### CFA com as variáveis sugeridos pelo artigo
 
+Agora vamos restringir ao conjunto de variáveis que os autores escolheram para cada construto. Usamos o pacote `blavaan` para fazer a modelação bayesiana.
+
 ```{r}
 # individual params
 n_chains <- 3 # 5
@@ -793,106 +815,210 @@ sample_estimate <- 3000
 
 ##### Student Ethics
 
-```{r}
-# Student Ethics
-model.ethics_article <- 'StudentEthics =~ ET12 + ET13'
-fit.ethics_article <- bcfa(model.ethics_article, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.ethics_article, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.ethics_article)
+```{r stethics artigo}
+if(correr_single_CFAs_article){
+  # Student Ethics
+  model.ethics_article <- 'StudentEthics =~ ET12 + ET13'
+  fit.ethics_article <- bcfa(model.ethics_article, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.ethics_article, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.ethics_article)
+}
 ```
+
+São apenas 2 variáveis e parecem adequadas para usarmos só estas.
 
 ##### Motivation
 
-
-```{r}
-# Motivation
-model.motivation_article <- 'Motivation =~ Mot5 + Mot8 + Mot11'
-fit.motivation_article <- bcfa(model.motivation_article, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.motivation_article, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.motivation_article)
+```{r motivation artigo}
+if(correr_single_CFAs_article){
+  # Motivation
+  model.motivation_article <- 'Motivation =~ Mot5 + Mot8 + Mot11'
+  fit.motivation_article <- bcfa(model.motivation_article, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.motivation_article, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.motivation_article)
+}
 ```
+
+Eram as únicas que tinham os loadings negativos quando fizemos para todas as variáveis (também as únicas utilizadas pelos autores), mas parecem ser adequadas para usarmos só estas. Valores de loadings altos e 
 
 ##### Self-Efficacy
 
-```{r}
-# Self-Efficacy
-model.efficacy_article <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
-fit.efficacy_article <- bcfa(model.efficacy_article, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.efficacy_article, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.efficacy_article)
+```{r selfeff artigo}
+if(correr_single_CFAs_article){
+  # Self-Efficacy
+  model.efficacy_article <- 'SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6'
+  fit.efficacy_article <- bcfa(model.efficacy_article, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.efficacy_article, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.efficacy_article)
+}
 ```
+
+São utilizadas todos os itens para o construto, deixaremos assim mesmo.
 
 ##### Resilience
 
-```{r}
-# Resilience
-model.resilience_article <- 'Resilience =~ R2 + R5 + R6'
-fit.resilience_article <- bcfa(model.resilience_article, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.resilience_article, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.resilience_article)
+```{r res artigo}
+if(correr_single_CFAs_article){
+  # Resilience
+  model.resilience_article <- 'Resilience =~ R2 + R5 + R6'
+  fit.resilience_article <- bcfa(model.resilience_article, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.resilience_article, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.resilience_article)
+}
 ```
+
+São utilizadas 3 variáveis para o construto, que são as que têm os loadings mais expressivos quando usadas todos os itens. O R2 parece que tem o loading mais baixo e, por isso, testaremos com R5 e R6 apenas para critério de comparação.
 
 ##### Knowledge Articulation
 
-```{r}
-# Knowledge Articulation
-model.knowledge_article <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
-fit.knowledge_article <- bcfa(model.knowledge_article, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.knowledge_article, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.knowledge_article)
+```{r ka artigo}
+if(correr_single_CFAs_article){
+  # Knowledge Articulation
+  model.knowledge_article <- 'KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5'
+  fit.knowledge_article <- bcfa(model.knowledge_article, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.knowledge_article, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.knowledge_article)
+}
 ```
+
+São utilizadas todos os itens para o construto, deixaremos assim mesmo.
 
 ##### Team Strain
 
-```{r}
-# Team Strain
-model.teamstrain_article <- 'TeamStrain =~ TS10 + TS11 + TS12 + TS13 + 
-                                   TS14 + TS15 + TS16 + TS17'
-fit.teamstrain_article <- bcfa(model.teamstrain_article, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.teamstrain_article, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.teamstrain_article)
+```{r ts artigo}
+if(correr_single_CFAs_article){
+  # Team Strain
+  model.teamstrain_article <- 'TeamStrain =~ TS10 + TS11 + TS12 + TS13 + 
+                                     TS14 + TS15 + TS16 + TS17'
+  fit.teamstrain_article <- bcfa(model.teamstrain_article, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.teamstrain_article, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.teamstrain_article)
+}
 ```
+
+São utilizados aqueles que têm os loadings mais expressivos e são os que os autores escolheram. Os valores continuam altos e por isso deixamos.
 
 ##### Cooperative Classroom Environment
 
-```{r}
-# Cooperative Classroom Environment
-model.cce_article <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + 
-                                  CCE5 + CCE8 + CCE9 + CCE10 + CCE11'
-fit.cce_article <- bcfa(model.cce_article, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
-summary(fit.cce_article, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fit.cce_article)
+```{r cce artigo}
+if(correr_single_CFAs_article){
+  # Cooperative Classroom Environment
+  model.cce_article <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + 
+                                    CCE5 + CCE8 + CCE9 + CCE10 + CCE11'
+  fit.cce_article <- bcfa(model.cce_article, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.cce_article, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.cce_article)
+}
 ```
+
+Este construto parece ter itens mais interessantes para serem testados, então vamos experimentar com os valores mais altos e ver mais detalhadamente para tentar melhorar a análise.
+
+- CCE1: 0.488
+- CCE3: 0.421
+- CCE4: 0.406
+- CCE5: 0.435
+- CCE8: 0.422
+- CCE9: 0.506
+- CCE10: 0.482
+- CCE11: 0.499
+
 
 ##### Gráficos 
 
 
-```{r}
-p1 <- plot_sem_model(fit.ethics_article, "Student Ethics")
-p2 <- plot_sem_model(fit.motivation_article, "Motivation")
-p3 <- plot_sem_model(fit.efficacy_article, "Self Efficacy")
-p4 <- plot_sem_model(fit.resilience_article, "Resilience")
-p5 <- plot_sem_model(fit.knowledge_article, "Knowledge Articulation")
-p6 <- plot_sem_model(fit.teamstrain_article, "Team Strain")
-p7 <- plot_sem_model(fit.cce_article, "Cooperative Classroom Environment")
+```{r graficos artigo}
+if(correr_single_CFAs_article){
+  p1 <- plot_sem_model(fit.ethics_article, "Student Ethics")
+  p2 <- plot_sem_model(fit.motivation_article, "Motivation")
+  p3 <- plot_sem_model(fit.efficacy_article, "Self Efficacy")
+  p4 <- plot_sem_model(fit.resilience_article, "Resilience")
+  p5 <- plot_sem_model(fit.knowledge_article, "Knowledge Articulation")
+  p6 <- plot_sem_model(fit.teamstrain_article, "Team Strain")
+  p7 <- plot_sem_model(fit.cce_article, "Cooperative Classroom Environment")
+}
 ```
 
+#### CFA com variáveis a escolher
 
+Vamos apenas alterar os construtos de "Resilience" e o de "Cooperative Classroom Environment" para ver se conseguimos melhorar os resultados. Serão ajustados os valores e, após isso, comparados com o CFA já realizado.
 
+```{r}
+construct_patterns <- list(
+  resilience = "^R[1-6]$",
+  cooperative_classroom_environment = "^CCE[1-9]$|^CCE1[0-9]$|^CCE20$"
+)
+
+selected_construct_patterns <- list(
+  resilience_com_R2 = c("R2", "R5", "R6"),
+  resilience_sem_R2 = c("R5", "R6"), # retirar o R2 apesar de ter um valor alto
+  cce = c("CCE1", "CCE5", "CCE10", "CCE11", "CCE16", "CCE17", "CCE18", "CCE19") 
+)
+
+# metrics_results_search1 <- calculate_metrics_all(vars_artigo, construct_patterns)
+# metrics_results_search2 <- calculate_metrics_all(vars_artigo, selected_construct_patterns)
+```
+
+Para o Resilience vimos que se retirarmos os valores dos loadings ficam melhores e, ao mesmo tempo, o alpha de Cronbach também melhora. Contudo, ficaríamos só com 2 variáveis, o que não é muito interessante porque não tem graus de liberdade (df=0). Vamos testar, mas teremos isto em consideração.
+
+##### Resilience
+
+```{r res proposta}
+if(correr_single_CFAs_purpose){
+  # Resilience
+  model.resilience_purpose <- 'Resilience =~ R5 + R6'
+  fit.resilience_purpose <- bcfa(model.resilience_purpose, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.resilience_purpose, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.resilience_purpose)
+}
+```
+
+```{r compres proposta}
+if(correr_single_CFAs_purpose){
+  blavCompare(fit.resilience_article, fit.resilience_purpose)
+}
+```
+O modelo sem R2 e só com 2 variáveis parece ser melhor.
+
+##### Cooperative Classroom Environment
+
+```{r cce proposta}
+if(correr_single_CFAs_purpose){
+  # Cooperative Classroom Environment
+  model.cce_purpose <- 'CooperativeClassroomEnvironment =~ CCE1 + CCE5 + CCE10 + CCE11 + 
+                                                           CCE16 + CCE17  + CCE18 + CCE19'
+  fit.cce_purpose <- bcfa(model.cce_purpose, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+  summary(fit.cce_purpose, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fit.cce_purpose)
+}
+```
+
+```{r compcce proposta}
+if(correr_single_CFAs_purpose){
+  blavCompare(fit.cce_article, fit.cce_purpose)
+}
+```
+
+O modelo com as variáveis escolhidas parece ser melhor, mas não temos certeza se é mesmo assim e se os itens foram escolhidos pelo seu significado. Isto apenas porque não temos detalhes o que todos os itens indicam, só do CCE1 até ao CCE5.
+
+Vamos sempre comparar as duas abordagens e ver se as nossas variáveis propostas acabam por ser melhores.
 
 ### 2 - CFA Global
 
@@ -908,82 +1034,168 @@ sample_estimate <- 1500
 
 #### Com as variáveis que os autores escolheram
 
-```{r}
-modelcfa.authors <- '
-  StudentEthics =~ ET12 + ET13
-  Motivation =~ Mot5 + Mot8 + Mot11
-  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
-  Resilience =~ R2 + R5 + R6
-  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
-  TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
-  CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
-  
-   # variances
-  ET12 ~~ ET12
-  ET13 ~~ ET13
-  Mot5 ~~ Mot5
-  Mot8 ~~ Mot8
-  Mot11 ~~ Mot11
-  SE1 ~~ SE1
-  SE2 ~~ SE2
-  SE3 ~~ SE3
-  SE4 ~~ SE4
-  SE5 ~~ SE5
-  SE6 ~~ SE6
-  R2 ~~ R2
-  R5 ~~ R5
-  R6 ~~ R6
-  KA1 ~~ KA1
-  KA2 ~~ KA2
-  KA3 ~~ KA3
-  KA4 ~~ KA4
-  KA5 ~~ KA5
-  TS10 ~~ TS10
-  TS11 ~~ TS11
-  TS12 ~~ TS12
-  TS13 ~~ TS13
-  TS14 ~~ TS14
-  TS15 ~~ TS15
-  TS16 ~~ TS16
-  TS17 ~~ TS17
-  CCE1 ~~ CCE1
-  CCE3 ~~ CCE3
-  CCE4 ~~ CCE4
-  CCE5 ~~ CCE5
-  CCE8 ~~ CCE8
-  CCE9 ~~ CCE9
-  CCE10 ~~ CCE10
-  CCE11 ~~ CCE11
-'
-fitcfa.authors <- bcfa(modelcfa.authors, data = df, std.lv = TRUE,
-                      n.chains = n_chains, burnin=burn_in, 
-                      sample=sample_estimate, target = "stan")
+```{r multipleCFA article}
+if(correr_multiple_CFA){
+  modelcfa.authors <- '
+    StudentEthics =~ ET12 + ET13
+    Motivation =~ Mot5 + Mot8 + Mot11
+    SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+    Resilience =~ R2 + R5 + R6
+    KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+    TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+    CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+    
+     # variances
+    ET12 ~~ ET12
+    ET13 ~~ ET13
+    Mot5 ~~ Mot5
+    Mot8 ~~ Mot8
+    Mot11 ~~ Mot11
+    SE1 ~~ SE1
+    SE2 ~~ SE2
+    SE3 ~~ SE3
+    SE4 ~~ SE4
+    SE5 ~~ SE5
+    SE6 ~~ SE6
+    R2 ~~ R2
+    R5 ~~ R5
+    R6 ~~ R6
+    KA1 ~~ KA1
+    KA2 ~~ KA2
+    KA3 ~~ KA3
+    KA4 ~~ KA4
+    KA5 ~~ KA5
+    TS10 ~~ TS10
+    TS11 ~~ TS11
+    TS12 ~~ TS12
+    TS13 ~~ TS13
+    TS14 ~~ TS14
+    TS15 ~~ TS15
+    TS16 ~~ TS16
+    TS17 ~~ TS17
+    CCE1 ~~ CCE1
+    CCE3 ~~ CCE3
+    CCE4 ~~ CCE4
+    CCE5 ~~ CCE5
+    CCE8 ~~ CCE8
+    CCE9 ~~ CCE9
+    CCE10 ~~ CCE10
+    CCE11 ~~ CCE11
+  '
+  fitcfa.authors <- bcfa(modelcfa.authors, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+}
 ```
 
 
 ```{r}
-summary(fitcfa.authors, standardized = TRUE, rsquare = TRUE)
-fitMeasures(fitcfa.authors)
+if(correr_multiple_CFA){
+  summary(fitcfa.authors, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fitcfa.authors)
+}
 ```
 
 ```{r}
-semPaths(fitcfa.authors,
-         what = "std",      
-         layout = "tree", 
-         edge.label.cex = 1.0,
-         sizeMan = 6,       
-         sizeLat = 8,       
-         nCharNodes = 6,    
-         residuals = TRUE,        
-         intercepts = FALSE,    
-         optimizeLatRes = TRUE,  
-         edge.color = "black",
-         color = list(lat = "darkgreen", man = "white"),
-         mar = c(6, 6, 6, 6) 
-)
+if(correr_multiple_CFA){
+  semPaths(fitcfa.authors,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 6,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "white"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
 ```
 
+#### Com as variáveis que escolhemos
 
+```{r multipleCFA nossa escolha}
+if(correr_multiple_CFA){
+  modelcfa.purpose <- '
+    StudentEthics =~ ET12 + ET13
+    Motivation =~ Mot5 + Mot8 + Mot11
+    SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+    Resilience =~ R5 + R6
+    KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+    TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+    CooperativeClassroomEnvironment =~ CCE1 + CCE5 + CCE10 + CCE11 + CCE16 + CCE17 + CCE18 + CCE19
+    
+     # variances
+    ET12 ~~ ET12
+    ET13 ~~ ET13
+    Mot5 ~~ Mot5
+    Mot8 ~~ Mot8
+    Mot11 ~~ Mot11
+    SE1 ~~ SE1
+    SE2 ~~ SE2
+    SE3 ~~ SE3
+    SE4 ~~ SE4
+    SE5 ~~ SE5
+    SE6 ~~ SE6
+    # R2 ~~ R2
+    R5 ~~ R5
+    R6 ~~ R6
+    KA1 ~~ KA1
+    KA2 ~~ KA2
+    KA3 ~~ KA3
+    KA4 ~~ KA4
+    KA5 ~~ KA5
+    TS10 ~~ TS10
+    TS11 ~~ TS11
+    TS12 ~~ TS12
+    TS13 ~~ TS13
+    TS14 ~~ TS14
+    TS15 ~~ TS15
+    TS16 ~~ TS16
+    TS17 ~~ TS17
+    CCE1 ~~ CCE1
+    CCE5 ~~ CCE5
+    CCE10 ~~ CCE10
+    CCE11 ~~ CCE11
+    CCE16 ~~ CCE16
+    CCE17 ~~ CCE17
+    CCE18 ~~ CCE18
+    CCE19 ~~ CCE19
+  '
+  fitcfa.purpose <- bcfa(modelcfa.purpose, data = df, std.lv = TRUE,
+                        n.chains = n_chains, burnin=burn_in, 
+                        sample=sample_estimate, target = "stan")
+}
+```
+
+```{r}
+if(correr_multiple_CFA){
+  summary(fitcfa.purpose, standardized = TRUE, rsquare = TRUE)
+  fitMeasures(fitcfa.purpose)
+}
+```
+
+```{r}
+if(correr_multiple_CFA){
+  semPaths(fitcfa.purpose,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 6,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "white"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
+```
 
 #### (X) Com todas as variáveis
 
@@ -996,7 +1208,7 @@ modelcfa.global <- '
   Resilience =~ R1 + R2 + R3 + R4 + R5 + R6
   KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
   TeamStrain =~ TS1 + TS2 + TS3 + TS4 + TS5 + TS6 + TS7 + TS8 + TS9 + TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
-  CooperativeClassroomEnvironment =~ CCE1 + CCE2 + CCE3 + CCE4 + CCE5 + CCE6 + CCE7 + CCE8 + CCE9 + CCE10 + CCE11
+  CooperativeClassroomEnvironment =~ CCE1 + CCE2 + CCE3 + CCE4 + CCE5 + CCE6 + CCE7 + CCE8 + CCE9 + CCE10 + CCE11 + CCE12 + CCE13 + CCE14 + CCE15 + CCE16 + CCE17 + CCE18 + CCE19 + CCE20
 '
 fitcfa.global <- bcfa(modelcfa.global, data = df, std.lv = TRUE,
                       n.chains = n_chains, burnin=burn_in, 
@@ -1025,7 +1237,7 @@ semPaths(fitcfa.global,
 
 ### 3 - SEM
 
-#### Estimação com FA criadas seguidas
+Vamos utilizar mais cadeias mas menos samples para correr mais rápido. Este número de samples já permite convergir. :)
 
 ```{r}
 # individual params
@@ -1035,59 +1247,9 @@ sample_estimate <- 1500
 ```
 
 
-```{r}
-model.sem <- '
-  # measurement model
-  StudentEthics =~ ET12 + ET13
-  Motivation =~ Mot5 + Mot8 + Mot11
-  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
-  Resilience =~ R2 + R5 + R6
-  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
-  TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
-  CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
-  
-  # regressions
-  Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
-  SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
-  StudentEthics ~ Motivation + SelfEfficacy
-  
-'
-
-model.sem <- bcfa(model.sem, data=df, std.lv=TRUE, n.chains = n_chains,
-                 burnin=burn_in, sample=sample_estimate, target = "stan")
-```
-
-
-```{r}
-summary(model.sem, standardized=TRUE, rsquare=TRUE)
-```
-
-```{r}
-inspect(model.sem, what = "std")$lambda
-```
-
-
-
-```{r, fig.width=12, fig.height=10}
-semPaths(model.sem,
-         what = "std",      
-         layout = "tree", 
-         edge.label.cex = 0.4,
-         sizeMan = 3,       
-         sizeLat = 8,       
-         nCharNodes = 6,    
-         residuals = TRUE,        
-         intercepts = FALSE,    
-         optimizeLatRes = TRUE,  
-         edge.color = "black",
-         color = list(lat = "darkgreen", man = "white"),
-         mar = c(6, 6, 6, 6) 
-)
-```
-
-
 #### Estimação com construtos dos autores (dataset original)
 
+Estes itens já foram vistos que serão a média correspondente aos itens escolhidos para os construtos.
 
 ```{r}
 # ler csv 
@@ -1096,37 +1258,43 @@ df_FAauth
 ```
 
 
-```{r}
-model.sem_FAauthors <- '
-  # regressions
-  Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CoopClass
-  SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CoopClass
-  ethics ~ Motivation + SelfEfficacy
-'
-
-model.sem_FAauthors <- bcfa(model.sem_FAauthors, data=df_FAauth, std.lv=TRUE, n.chains = n_chains,
-                 burnin=burn_in, sample=sample_estimate, target = "stan")
+```{r SEM com construtos autores}
+if(correr_SEM){
+  model.sem_FAauthors <- '
+    # regressions
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CoopClass
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CoopClass
+    ethics ~ Motivation + SelfEfficacy
+  '
+  
+  fit.sem_FAauthors <- bcfa(model.sem_FAauthors, data=df_FAauth, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan")
+}
 ```
 
 ```{r}
-summary(model.sem_FAauthors, standardized=TRUE, rsquare=TRUE)
+if(correr_SEM){
+  summary(fit.sem_FAauthors, standardized=TRUE, rsquare=TRUE)
+}
 ```
 
 ```{r}
-semPaths(model.sem_FAauthors,
-         what = "std",      
-         layout = "tree", 
-         edge.label.cex = 1.0,
-         sizeMan = 10,       
-         sizeLat = 8,       
-         nCharNodes = 6,    
-         residuals = TRUE,        
-         intercepts = FALSE,    
-         optimizeLatRes = TRUE,  
-         edge.color = "black",
-         color = list(lat = "darkgreen", man = "lightblue"),
-         mar = c(6, 6, 6, 6) 
-)
+if(correr_SEM){
+  semPaths(fit.sem_FAauthors,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 10,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "lightblue"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
 ```
 
 #### Construtos criados por nós
@@ -1137,84 +1305,229 @@ df_FAour
 ```
 
 
-##### CFA
-
-```{r}
-model.sem_CFAOUR <- '
-  # regressions
-  score_factor_Motivation ~ score_factor_Resilience + score_factor_KnowledgeArticulation + score_factor_TeamStrain + score_factor_CooperativeClassroomEnvironment
-  score_factor_SelfEfficacy ~ score_factor_Resilience + score_factor_KnowledgeArticulation + score_factor_TeamStrain + score_factor_CooperativeClassroomEnvironment
-  score_factor_Ethics ~ score_factor_Motivation + score_factor_SelfEfficacy
-'
-
-model.sem_CFAOUR <- bcfa(model.sem_CFAOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
-                 burnin=burn_in, sample=sample_estimate, target = "stan")
-```
-
-```{r}
-summary(model.sem_CFAOUR, standardized=TRUE, rsquare=TRUE)
-```
-
-```{r}
-semPaths(model.sem_CFAOUR,
-         what = "std",      
-         layout = "tree", 
-         edge.label.cex = 1.0,
-         sizeMan = 10,       
-         sizeLat = 8,       
-         nCharNodes = 6,    
-         residuals = TRUE,        
-         intercepts = FALSE,    
-         optimizeLatRes = TRUE,  
-         edge.color = "black",
-         color = list(lat = "darkgreen", man = "lightblue"),
-         mar = c(6, 6, 6, 6) 
-)
-```
-
 ##### Média variáveis
 
-Vai ser igual à análise de cima
+Vai ser igual à análise de cima, mas com as médias das variáveis desta vez criada por nós.
 
-```{r}
-model.sem_meanOUR <- '
-  # regressions
-  mean_factor_Motivation ~ mean_factor_Resilience + mean_factor_KnowledgeArticulation + mean_factor_TeamStrain + mean_factor_CooperativeClassroomEnvironment
-  mean_factor_SelfEfficacy ~ mean_factor_Resilience + mean_factor_KnowledgeArticulation + mean_factor_TeamStrain + mean_factor_CooperativeClassroomEnvironment
-  mean_factor_Ethics ~ mean_factor_Motivation + mean_factor_SelfEfficacy
-'
-
-model.sem_meanOUR <- bcfa(model.sem_meanOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
-                 burnin=burn_in, sample=sample_estimate, target = "stan")
+```{r SEM com nossas médias}
+if(correr_SEM){
+  model.sem_meanOUR <- '
+    # regressions
+    mean_factor_Motivation ~ mean_factor_Resilience + mean_factor_KnowledgeArticulation + mean_factor_TeamStrain + mean_factor_CooperativeClassroomEnvironment
+    mean_factor_SelfEfficacy ~ mean_factor_Resilience + mean_factor_KnowledgeArticulation + mean_factor_TeamStrain + mean_factor_CooperativeClassroomEnvironment
+    mean_factor_Ethics ~ mean_factor_Motivation + mean_factor_SelfEfficacy
+  '
+  
+  fit.sem_meanOUR <- bcfa(model.sem_meanOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan")
+}
 ```
 
 ```{r}
-summary(model.sem_meanOUR, standardized=TRUE, rsquare=TRUE)
+if(correr_SEM){
+  summary(fit.sem_meanOUR, standardized=TRUE, rsquare=TRUE)
+}
 ```
 
 ```{r}
-semPaths(model.sem_meanOUR,
-         what = "std",      
-         layout = "tree", 
-         edge.label.cex = 1.0,
-         sizeMan = 10,       
-         sizeLat = 8,       
-         nCharNodes = 6,    
-         residuals = TRUE,        
-         intercepts = FALSE,    
-         optimizeLatRes = TRUE,  
-         edge.color = "black",
-         color = list(lat = "darkgreen", man = "lightblue"),
-         mar = c(6, 6, 6, 6) 
-)
+if(correr_SEM){
+  semPaths(fit.sem_meanOUR,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 10,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "lightblue"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
 ```
 
+Conseguimos replicar na perfeição os valores do artigo.
+
+##### CFA
+
+```{r SEM com nosso CFA}
+if(correr_SEM){
+  model.sem_CFAOUR <- '
+    # regressions
+    score_factor_Motivation ~ score_factor_Resilience + score_factor_KnowledgeArticulation + score_factor_TeamStrain + score_factor_CooperativeClassroomEnvironment
+    score_factor_SelfEfficacy ~ score_factor_Resilience + score_factor_KnowledgeArticulation + score_factor_TeamStrain + score_factor_CooperativeClassroomEnvironment
+    score_factor_Ethics ~ score_factor_Motivation + score_factor_SelfEfficacy
+  '
+  
+  fit.sem_CFAOUR <- bcfa(model.sem_CFAOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan")
+}
+```
+
+```{r}
+if(correr_SEM){
+  summary(fit.sem_CFAOUR, standardized=TRUE, rsquare=TRUE)
+}
+```
+
+```{r}
+if(correr_SEM){
+  semPaths(fit.sem_CFAOUR,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 10,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "lightblue"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
+```
+
+#### Estimação seguida com FA criadas no próprio modelo
+
+Agora faremos uma abordagem full SEM que consiste em fazer a modelação de todos os construtos e depois fazer a modelação SEM. Vamos replicar na exatidão o que é proposto no artigo mas tudo seguido e não CFA seguido de SEM.
+
+
+```{r full SEM com sugestao autores}
+if(correr_SEM){
+  model.sem <- '
+    # measurement model
+    StudentEthics =~ ET12 + ET13
+    Motivation =~ Mot5 + Mot8 + Mot11
+    SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+    Resilience =~ R2 + R5 + R6
+    KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+    TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+    CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+    
+    # regressions
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    StudentEthics ~ Motivation + SelfEfficacy
+    
+  '
+  
+  fit.sem <- bcfa(model.sem, data=df, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan")
+}
+```
+
+
+```{r}
+if(correr_SEM){
+  summary(fit.sem, standardized=TRUE, rsquare=TRUE)
+}
+```
+
+```{r}
+if(correr_SEM){
+  inspect(fit.sem, what = "std")$lambda
+}
+```
+
+
+```{r, fig.width=12, fig.height=10}
+if(correr_SEM){
+  semPaths(fit.sem,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 0.4,
+           sizeMan = 3,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "white"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
+```
+
+#### Tentativa de melhoria com o SEM seguido
+
+```{r full SEM com nossa sugestão}
+if(correr_SEM){
+  model.sem_fullpurpose <- '
+    # measurement model
+    StudentEthics =~ ET12 + ET13
+    Motivation =~ Mot5 + Mot8 + Mot11
+    SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+    Resilience =~ R5 + R6
+    KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+    TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+    CooperativeClassroomEnvironment =~ CCE1 + CCE5 + CCE10 + CCE11 + CCE16 + CCE17 + CCE18 + CCE19
+    
+    # regressions
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    StudentEthics ~ Motivation + SelfEfficacy
+    
+  '
+  
+  fit.sem_fullpurpose <- bcfa(model.sem_fullpurpose, data=df, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan")
+}
+```
+
+
+```{r}
+if(correr_SEM){
+  summary(fit.sem_fullpurpose, standardized=TRUE, rsquare=TRUE)
+}
+```
+
+```{r}
+if(correr_SEM){
+  inspect(fit.sem_fullpurpose, what = "std")$lambda
+}
+```
+
+
+```{r, fig.width=12, fig.height=10}
+if(correr_SEM){
+  semPaths(fit.sem_fullpurpose,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 0.4,
+           sizeMan = 3,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "white"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
+```
+
+#### Comparação entre os dois SEM
+
+```{r compfullSEM}
+if(correr_SEM){
+  blavCompare(fit.sem_FAauthors, fit.sem_meanOUR)
+  blavCompare(fit.sem, fit.sem_FAauthors)
+  blavCompare(fit.sem_fullpurpose, fit.sem_FAauthors)
+  blavCompare(fit.sem, fit.sem_fullpurpose)
+}
+```
 
 ### 4- SEM com priors
 
 Estudo de algumas priors baseado nos valores de loadings obtidos e os do paper. Veremos algumas distribuições conhecidas e tentar adaptar o valor do lambda para uma normal porque a função `dpriors` tem limitações em quais priors pode replicar.
 
-```{r}
+```{r graficos priors}
 curve(dgamma(x, 25, 50), from=0, to=1.2, main="(Ñ) Prior para Lambda (loadings)", col = "green", ylab="Densidade")
 abline(v=c(0.3, 1), col="red", lty=2)
 
@@ -1249,37 +1562,63 @@ sample_estimate <- 1500 #1000
 ```
 
 
-```{r}
-dp <- dpriors(lambda = "normal(0.5, 0.1)", # semelhante "gamma(25, 50)"; nao conchigo utilizar gamma :(
-              beta   = "normal(0, 0.25)" # talvez aumentar um pouco mais sd (cauda mais longa)
-              )
-model.sem_priors <- '
-  # measurement model
-  StudentEthics =~ prior("normal(0.85, 0.05)")*ET12 + prior("normal(0.7, 0.05)")*ET13
-  Motivation =~ Mot5 + Mot8 + Mot11
-  SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
-  Resilience =~ R2 + R5 + R6
-  KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
-  TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
-  CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+```{r modeloSEM com priors}
+if(correr_SEM_cpriors){
+  dp <- dpriors(lambda = "normal(0.5, 0.1)", # semelhante "gamma(25, 50)"; nao conchigo utilizar gamma :(
+                beta   = "normal(0, 0.25)" # talvez aumentar um pouco mais sd (cauda mais longa)
+                )
+  model.sem_priors <- '
+    # measurement model
+    StudentEthics =~ prior("normal(0.85, 0.05)")*ET12 + prior("normal(0.7, 0.05)")*ET13
+    Motivation =~ Mot5 + Mot8 + Mot11
+    SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+    Resilience =~ R2 + R5 + R6
+    KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+    TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+    CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+    
+    # regressions
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    StudentEthics ~ Motivation + SelfEfficacy
+    
+  '
   
-  # regressions
-  Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
-  SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
-  StudentEthics ~ Motivation + SelfEfficacy
-  
-'
-
-fit.sem_priors <- bcfa(model.sem_priors, data=df, std.lv=TRUE, n.chains = n_chains,
-                 burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+  fit.sem_priors <- bcfa(model.sem_priors, data=df, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+}
 ```
 
-```{r}
-summary(fit.sem_priors, standardized=TRUE, rsquare=TRUE)
+```{r summarySEM com priors}
+if(correr_SEM_cpriors){
+  summary(fit.sem_priors, standardized=TRUE, rsquare=TRUE)
+}
 ```
 
 
-```{r}
-blavCompare(fit.sem_priors, model.sem)
+```{r SEMmodelgraphic com priors}
+if(correr_SEM_cpriors){
+  semPaths(fit.sem_priors,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 10,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "lightblue"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
+```
+
+
+```{r comparacaoSEM}
+if(correr_SEM_cpriors){
+  blavCompare(fit.sem_priors, fit.sem)
+}
 ```
 
