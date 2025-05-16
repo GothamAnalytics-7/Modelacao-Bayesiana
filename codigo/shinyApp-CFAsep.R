@@ -43,7 +43,8 @@ run_item_means <- function(df, construtos_lista) {
   for (nome_construto in names(construtos_lista)) {
     itens <- construtos_lista[[nome_construto]]
     media_itens <- rowMeans(df[, itens, drop = FALSE], na.rm = TRUE)
-    df_resultado[[paste0("mean_", nome_construto)]] <- media_itens
+    nome_col <- paste0("mean_", gsub(" ", "_", nome_construto))
+    df_resultado[[nome_col]] <- media_itens
   }
   return(df_resultado)
 }
@@ -60,10 +61,11 @@ run_CFA_extract_scores <- function(df, construtos_lista) {
     modelos[[nome_construto]] <- modelo
     
     scores <- lavPredict(modelo)
+    nome_col <- paste0("score_", gsub(" ", "", nome_construto)) 
     if (is.vector(scores)) {
-      df_resultado[[paste0("score_", nome_construto)]] <- scores
+      df_resultado[[nome_col]] <- scores
     } else if (is.matrix(scores)) {
-      df_resultado[[paste0("score_", nome_construto)]] <- scores[, 1]
+      df_resultado[[nome_col]] <- scores[, 1]
     }
   }
   
@@ -83,6 +85,23 @@ plot_sem_model <- function(model, title = "") {
            optimizeLatRes = TRUE,
            edge.color = "darkgreen",
            color = list(lat = "skyblue", man = "white"),
+           node.width = 2,
+           mar = c(8, 8, 8, 8))
+}
+
+plot_sem_model_regression <- function(model, title = "") {
+  semPaths(model,
+           what = "std",
+           layout = "spring",
+           edge.label.cex = 0.6,
+           sizeMan = 4,
+           sizeLat = 5,
+           nCharNodes = 6,
+           residuals = TRUE,
+           intercepts = FALSE,
+           optimizeLatRes = TRUE,
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "lightblue"),
            node.width = 2,
            mar = c(8, 8, 8, 8))
 }
@@ -193,6 +212,12 @@ ui <- navbarPage(
             verbatimTextOutput("semOURSummary"))
         )
       )
+    )
+  ),
+  navbarMenu("Extras", 
+             tabPanel(
+               "Visualização HTML",
+               uiOutput("htmlContent")
     )
   )
 )
@@ -438,7 +463,7 @@ server <- function(input, output, session) {
     resultado_rounded <- resultado %>%
       mutate(across(everything(), ~ round(.x, 8)))
     
-    df_sem_data(resultado_rounded)  # Guardar para o modelo SEM
+    df_sem_data(resultado_rounded)
     
     output$scoreTable <- DT::renderDataTable({
       DT::datatable(resultado_rounded, options = list(pageLength = 10, scrollX = TRUE))
@@ -455,37 +480,64 @@ server <- function(input, output, session) {
   observeEvent(input$runSemModel, {
     req(df_sem_data())
     dados <- df_sem_data()
+    prefix <- ifelse(input$method_choice == "media", "mean_", "score_")
     
-    if (input$method_choice == "media") {
-      model_txt <- '
-      mean_Motivation ~ mean_Resilience + mean_Knowledge Articulation + mean_Team Strain + mean_Cooperative Classroom Environment
-      mean_Self Efficacy ~ mean_Resilience + mean_Knowledge Articulation + mean_Team Strain + mean_Cooperative Classroom Environment
-      mean_Student Ethics ~ mean_Motivation + mean_Self Efficacy
-    '
-    } else {
-      model_txt <- '
-      score_Motivation ~ score_Resilience + score_Knowledge Articulation + score_Team Strain + score_Cooperative Classroom Environment
-      score_Self Efficacy ~ score_Resilience + score_Knowledge Articulation + score_Team Strain + score_Cooperative Classroom Environment
-      score_Student Ethics ~ score_Motivation + score_Self Efficacy
-    '
+    regressoes_base <- list(
+      Motivation = c("Resilience", "Knowledge_Articulation", "Team_Strain", "Cooperative_Classroom_Environment"),
+      Self_Efficacy = c("Motivation"),
+      Student_Ethics = c("Motivation", "Self_Efficacy")
+    )
+    
+    showModal(modalDialog(
+      title = "A executar o modelo SEM...",
+      "O modelo SEM está a ser executado. Isso pode levar alguns instantes.",
+      footer = NULL,
+      easyClose = FALSE
+    ))
+
+    sem_formula <- ""
+    for (latente in names(regressoes_base)) {
+      preditores <- regressoes_base[[latente]]
+      lhs <- paste0(prefix, gsub(" ", "_", latente))
+      rhs <- paste0(prefix, gsub(" ", "_", preditores), collapse = " + ")
+      sem_formula <- paste0(sem_formula, lhs, " ~ ", rhs, "\n")
     }
     
-    fit <- bcfa(model_txt, data = dados,
-                std.lv = input$sem_std_lv,
-                n.chains = input$sem_n_chains,
-                burnin = input$sem_burn_in,
-                sample = input$sem_sample_estimate,
-                target = ifelse(input$sem_use_stan, "stan", "jags"))
+    resultado_sem <- tryCatch({
+      fit <- bcfa(sem_formula, data = dados,
+                  std.lv = input$sem_std_lv,
+                  n.chains = input$sem_n_chains,
+                  burnin = input$sem_burn_in,
+                  sample = input$sem_sample_estimate,
+                  target = ifelse(input$sem_use_stan, "stan", "jags"))
+      removeModal()
+      fit
+    }, error = function(e) {
+      showModal(modalDialog(
+        title = "Erro ao rodar SEM",
+        paste("Mensagem de erro:", e$message),
+        easyClose = TRUE,
+        footer = modalButton("Fechar")
+      ))
+      NULL
+    })
     
     output$semOURPlot <- renderPlot({
-      plot_sem_model(fit)
+      req(resultado_sem)
+      plot_sem_model_regression(resultado_sem, title = "Modelo SEM com escores")
     })
     
     output$semOURSummary <- renderPrint({
-      summary(fit)
+      req(resultado_sem)
+      summary(resultado_sem)
     })
   })
-  
+  output$htmlContent <- renderUI({
+    tags$iframe(
+      src = "ProjetoMB.html",
+      style = "width:100%; height:600px; border:none;"
+    )
+  })
 }
 
 shinyApp(ui = ui, server = server)

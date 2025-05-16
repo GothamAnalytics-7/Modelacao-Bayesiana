@@ -403,6 +403,12 @@ descritivas %>%
 
 
 ```{r, fig.width=9, fig.height=6}
+df_percent <- df %>%
+  group_by(Gender, IPK) %>%
+  summarise(Count = n(), .groups = "drop") %>%
+  mutate(Percentage = round(Count / sum(Count) * 100, 1))
+
+
 ggplot(descritivas, aes(x = as.factor(Gender), y = IPK, color = Pengeluaran)) +
   geom_jitter(width = 0.4, height = 0.23, alpha = 0.67, size = 2.0) +
   geom_text(data = df_percent, aes(x = as.factor(Gender), y = as.numeric(IPK) + 0.2,
