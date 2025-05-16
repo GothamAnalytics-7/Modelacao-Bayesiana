@@ -34,7 +34,7 @@ O artigo de referência para este trabalho é o [Data on higher education studen
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(foreign, haven, tidyverse, rstan, blavaan, lavaan, 
                brms, psych, bayesplot, skimr, semPlot, gridExtra, gridGraphics, 
-               grid, corrplot, tictoc, fitdistrplus)
+               grid, corrplot, tictoc, fitdistrplus, knitr)
 
 options(blavaan.dir = "temp_bcfa")
 dir.create("temp_bcfa", showWarnings = FALSE)
@@ -45,10 +45,10 @@ options(mc.cores = 1)
 ```{r}
 # Escolher que modelos executar (sobretudo para a geração do ficheiro knited)
 
-correr_single_CFAs_all <- FALSE
-correr_single_CFAs_article <- FALSE
+correr_single_CFAs_all <- TRUE
+correr_single_CFAs_article <- TRUE
 correr_single_CFAs_purpose <- correr_single_CFAs_article
-correr_multiple_CFA <- FALSE
+correr_multiple_CFA <- TRUE
 correr_SEM <- TRUE
 correr_SEM_cpriors <- TRUE
 ```
@@ -108,7 +108,7 @@ No dataset só temos uma variável categórica, a `Fak`. Vamos fazer uma tabela 
 
 ```{r}
 # fazer uma tabela de frequências para as variáveis categóricas
-df %>% select(all_of(char_cols)) %>% map(table)
+df %>% dplyr::select(all_of(char_cols)) %>% map(table)
 # gráfico de barras
 df %>%
   group_by(Fak) %>%
@@ -116,7 +116,7 @@ df %>%
   mutate(Percentage = Count / sum(Count) * 100) %>%
   ggplot(aes(x = reorder(Fak, -Percentage), y = Percentage)) +
   geom_bar(stat = "identity", fill = "steelblue") +
-  geom_text(aes(label = paste0(round(Percentage, 1), "%")), vjust = -0.5) +
+  geom_text(aes(label = paste0(round(Percentage, 1), "% (", Count, ")")), vjust = -0.5) +
   labs(x = "Field", y = "Percentage", title = "Distribution of Fields") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -171,31 +171,31 @@ Vamos selecionar as variáveis que pertencem a cada grupo e guardá-las em objet
 ```{r}
 # select das variáveis numéricas mencionadas no artigo -> regex para ser + facil :)
 ethical_behaviour <- df_transform %>%
-  select(matches("^ET[1-9]$|^ET1[0-4]$"))
+  dplyr::select(matches("^ET[1-9]$|^ET1[0-4]$"))
 #ethical_behaviour
 
 motivation <- df_transform %>%
-  select(matches("^Mot[1-9]$|^Mot1[0-5]$"))
+  dplyr::select(matches("^Mot[1-9]$|^Mot1[0-5]$"))
 #motivation
 
 self_efficacy <- df_transform %>%
-  select(matches("^SE[1-6]$"))
+  dplyr::select(matches("^SE[1-6]$"))
 #self_efficacy
 
 resilience <- df_transform %>%
-  select(matches("^R[1-6]$"))
+  dplyr::select(matches("^R[1-6]$"))
 #resilience
 
 knowledge_articulation <- df_transform %>%
-  select(matches("^KA[1-5]$"))
+  dplyr::select(matches("^KA[1-5]$"))
 #knowledge_articulation
 
 team_strain <- df_transform %>%
-  select(matches("^TS[1-9]$|^TS1[0-7]$"))
+  dplyr::select(matches("^TS[1-9]$|^TS1[0-7]$"))
 #team_strain
 
 cooperative_classroom_environment <- df_transform %>%
-  select(matches("^CCE[1-9]$|^CCE1[0-9]$|^CCE20$"))
+  dplyr::select(matches("^CCE[1-9]$|^CCE1[0-9]$|^CCE20$"))
 #cooperative_classroom_environment
 
 ## falta 3xPOP; 6xPC; 6xOPT; 5xINO; 3xPDC
@@ -225,7 +225,7 @@ construct_patterns <- list(
 
 for (name in names(construct_patterns)) {
   pattern <- construct_patterns[[name]]
-  dataset <- df_transform %>% select(matches(pattern))
+  dataset <- df_transform %>% dplyr::select(matches(pattern))
   
   if (ncol(dataset) >= 2) {
     corr_matrix <- round(cor(dataset, use = "pairwise.complete.obs"), 2)
@@ -253,7 +253,7 @@ calculate_metrics_all <- function(df, construct_patterns) {
   
   for (name in names(construct_patterns)) {
     pattern <- construct_patterns[[name]]
-    dataset <- df %>% select(matches(pattern))
+    dataset <- df %>% dplyr::select(matches(pattern))
     
     if (ncol(dataset) >= 2) {
       alpha_result <- alpha(dataset)
@@ -344,7 +344,120 @@ Após alguma pesquisa fomos tentar verificar o que representavam estas variávei
 
 Verificamos o mínimo e o máximo de cada variável descritiva e percebemos alguns valores estranhos, dado o contexto pesquisado. Um deles é por exemplo o `Tlahir`. Talvez o valor mais alto $\rightarrow 31031999$ corresponde a $31/03/1999$. Para além disso o mês `BLhair` tem valores de 0 a 12, pelo que o 0 não faz muito sentido. 
 
-Estes valores não vão ser alterados, por enquanto, porque não serão importantes para a análise e replicação dos resultados.
+```{r}
+# ver todos os valores de Tlahir sorted descrescente
+descritivas %>%
+  dplyr::select(Tlahir) %>%
+  dplyr::arrange(desc(Tlahir)) %>%
+  dplyr::distinct() %>%
+  dplyr::filter(Tlahir > 0) # ver os valores
+```
+
+- 31031999 $\rightarrow$ 1999			
+- 16122000 $\rightarrow$ 2000					
+- 11042000 $\rightarrow$ 2000					
+- 302000 $\rightarrow$ 2000					
+- 261998 $\rightarrow$ 1998					
+- 241998 $\rightarrow$ 1998				
+- 231997 $\rightarrow$ 1997				
+- 221998 $\rightarrow$ 1998				
+- 202000 $\rightarrow$ 2000				
+- 200399 $\rightarrow$ 1999 (talvez é 20/03/99)
+- 81999 $\rightarrow$ 1999				
+- 71999 $\rightarrow$ 1999				
+- 20000 $\rightarrow$ 2000				
+- 3200 $\rightarrow$ 2000 (talvez é 3/2/00)
+
+```{r}
+descritivas <- descritivas %>%
+  mutate(Tlahir = case_when(
+    Tlahir == 31031999 ~ 1999,
+    Tlahir == 16122000 ~ 2000,
+    Tlahir == 11042000 ~ 2000,
+    Tlahir == 302000   ~ 2000,
+    Tlahir == 261998   ~ 1998,
+    Tlahir == 241998   ~ 1998,
+    Tlahir == 231997   ~ 1997,
+    Tlahir == 221998   ~ 1998,
+    Tlahir == 202000   ~ 2000,
+    Tlahir == 200399   ~ 1999,
+    Tlahir == 81999    ~ 1999,
+    Tlahir == 71999    ~ 1999,
+    Tlahir == 20000    ~ 2000,
+    Tlahir == 3200     ~ 2000,
+    TRUE ~ as.numeric(Tlahir)  # mantém outros valores como estão
+  ))
+```
+
+```{r}
+descritivas %>%
+  group_by(Tlahir) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = Count / sum(Count) * 100) %>%
+  ggplot(aes(x = factor(Tlahir), y = Percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = paste0(round(Percentage, 1), "% (", Count, ")")), vjust = -0.5) +
+  labs(x = "Ano de Nascimento (Tlahir)", y = "Porcentagem", title = "Distribuição por Ano de Nascimento dos 566 inquiridos") +
+  theme_minimal()
+```
+
+
+```{r, fig.width=9, fig.height=6}
+ggplot(descritivas, aes(x = as.factor(Gender), y = IPK, color = Pengeluaran)) +
+  geom_jitter(width = 0.4, height = 0.23, alpha = 0.67, size = 2.0) +
+  geom_text(data = df_percent, aes(x = as.factor(Gender), y = as.numeric(IPK) + 0.2,
+                                   label = paste0(Percentage, "%")),
+            color = "black", size = 3.2, vjust = -1.2, inherit.aes = FALSE) +
+  geom_vline(xintercept = 1.5, linetype = "dashed", color = "grey85", linewidth = 0.3) +
+  scale_color_gradientn(colors = c("#3CBA96", "#78C461", "#FFD666", "#DD8D4A" ,"#EC5353"), name = "Pengeluaran") +
+  scale_x_discrete(limits = c("1", "2"), labels = c("1" = "1", "2" = "2")) +
+  labs(
+    x = "Género do inquirido (sem informação da etiqueta M/F)",
+    y = "IPK (GPA)",
+    title = "Distribuição de IPK (GPA) por Género",
+    subtitle = "Cores representa as despesas (Pengeluaran: 1 a 5)"
+  ) +
+  theme_minimal() +
+  theme(
+  plot.title = element_text(hjust = 0.5, face = "bold", size = 16), 
+  plot.subtitle = element_text(hjust = 0.5),                        
+  legend.title = element_text(face = "bold"),
+  legend.title.align = 0.5,           
+  legend.text = element_text(face = "bold"),
+  legend.key.width = unit(1.5, "lines"),
+  legend.spacing.x = unit(0.3, "cm"),
+  axis.title.x = element_text(face = "bold"),
+  axis.title.y = element_text(face = "bold"),
+  axis.text.x = element_text(angle = 0, hjust = 0.5)
+)
+
+# ggsave("ipk_genero_plot.png", width = 9, height = 6, dpi = 300)
+```
+
+```{r}
+df_gender <- descritivas %>%
+  count(Gender) %>%
+  mutate(
+    Percentage = round(n / sum(n) * 100, 2),
+    Label = paste0(Percentage, "% (", n, ")")
+  )
+
+ggplot(df_gender, aes(x = "", y = n, fill = as.factor(Gender))) +
+  geom_bar(stat = "identity", width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = Label), position = position_stack(vjust = 0.5), color = "white", size = 4.5) +
+  scale_fill_manual(
+    values = c("1" = "blue",  # Roxo
+               "2" = "darkgreen"), # Amarelo
+    name = "Género",
+    labels = c("1" = "1", "2" = "2")
+  ) +
+  labs(title = "Distribuição de Género") +
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+```
+
+
 
 #### Variáveis não citadas no artigo
 
@@ -353,7 +466,7 @@ As colunas que não estão nos outros datasets.
 ```{r}
 # selecionar do dataset df_transform aquelas que não estao em descritivas, vars_artigo e construtos_autores
 vars_nao_citadas <- df_transform %>%
-  select(-all_of(c(colnames(descritivas), colnames(vars_artigo), colnames(construtos_autores))))
+  dplyr::select(-all_of(c(colnames(descritivas), colnames(vars_artigo), colnames(construtos_autores))))
 vars_nao_citadas
 ```
 
