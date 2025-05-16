@@ -34,7 +34,7 @@ O artigo de referência para este trabalho é o [Data on higher education studen
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
 pacman::p_load(foreign, haven, tidyverse, rstan, blavaan, lavaan, 
                brms, psych, bayesplot, skimr, semPlot, gridExtra, gridGraphics, 
-               grid, corrplot)
+               grid, corrplot, tictoc, fitdistrplus)
 
 options(blavaan.dir = "temp_bcfa")
 dir.create("temp_bcfa", showWarnings = FALSE)
@@ -238,7 +238,7 @@ for (name in names(construct_patterns)) {
              addCoef.col = "black",
              number.cex = 1.0,
              mar = c(1, 1, 2, 1),
-             title = paste("Matriz de Correlação -", name))
+             title = paste("Matriz de Correlacao ", name))
   }
 }
 ```
@@ -797,9 +797,6 @@ abline(v=5, col="darkred", lwd=2)
 ```{r}
 plot(seq(0,10,.1), dgamma(seq(0,10,.1),1,0.5), type="l", lty=1, lwd = 3, xlab="x value",
      ylab="Density", main="Prior Var: gamma distribution (1,0.5)")
-# vertical line
-abline(v=1, col="darkred", lwd=2)
-abline(v=5, col="darkred", lwd=2)
 ```
 
 #### CFA com as variáveis sugeridos pelo artigo
@@ -993,6 +990,7 @@ if(correr_single_CFAs_purpose){
   blavCompare(fit.resilience_article, fit.resilience_purpose)
 }
 ```
+
 O modelo sem R2 e só com 2 variáveis parece ser melhor.
 
 ##### Cooperative Classroom Environment
@@ -1199,6 +1197,8 @@ if(correr_multiple_CFA){
 
 #### (X) Com todas as variáveis
 
+Demora muito tempo a correr.
+
 ```{r}
 if(FALSE){
 modelcfa.global <- '
@@ -1241,7 +1241,7 @@ Vamos utilizar mais cadeias mas menos samples para correr mais rápido. Este nú
 
 ```{r}
 # individual params
-n_chains <- 5 # 5
+n_chains <- 3 # 5
 burn_in <- 500
 sample_estimate <- 1500
 ```
@@ -1260,6 +1260,7 @@ df_FAauth
 
 ```{r SEM com construtos autores}
 if(correr_SEM){
+  tic()
   model.sem_FAauthors <- '
     # regressions
     Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CoopClass
@@ -1269,6 +1270,7 @@ if(correr_SEM){
   
   fit.sem_FAauthors <- bcfa(model.sem_FAauthors, data=df_FAauth, std.lv=TRUE, n.chains = n_chains,
                    burnin=burn_in, sample=sample_estimate, target = "stan")
+  toc()
 }
 ```
 
@@ -1311,6 +1313,7 @@ Vai ser igual à análise de cima, mas com as médias das variáveis desta vez c
 
 ```{r SEM com nossas médias}
 if(correr_SEM){
+  tic()
   model.sem_meanOUR <- '
     # regressions
     mean_factor_Motivation ~ mean_factor_Resilience + mean_factor_KnowledgeArticulation + mean_factor_TeamStrain + mean_factor_CooperativeClassroomEnvironment
@@ -1320,6 +1323,7 @@ if(correr_SEM){
   
   fit.sem_meanOUR <- bcfa(model.sem_meanOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
                    burnin=burn_in, sample=sample_estimate, target = "stan")
+  toc()
 }
 ```
 
@@ -1354,6 +1358,7 @@ Conseguimos replicar na perfeição os valores do artigo.
 
 ```{r SEM com nosso CFA}
 if(correr_SEM){
+  tic()
   model.sem_CFAOUR <- '
     # regressions
     score_factor_Motivation ~ score_factor_Resilience + score_factor_KnowledgeArticulation + score_factor_TeamStrain + score_factor_CooperativeClassroomEnvironment
@@ -1363,6 +1368,7 @@ if(correr_SEM){
   
   fit.sem_CFAOUR <- bcfa(model.sem_CFAOUR, data=df_FAour, std.lv=TRUE, n.chains = n_chains,
                    burnin=burn_in, sample=sample_estimate, target = "stan")
+  toc()
 }
 ```
 
@@ -1398,6 +1404,7 @@ Agora faremos uma abordagem full SEM que consiste em fazer a modelação de todo
 
 ```{r full SEM com sugestao autores}
 if(correr_SEM){
+  tic()
   model.sem <- '
     # measurement model
     StudentEthics =~ ET12 + ET13
@@ -1417,6 +1424,7 @@ if(correr_SEM){
   
   fit.sem <- bcfa(model.sem, data=df, std.lv=TRUE, n.chains = n_chains,
                    burnin=burn_in, sample=sample_estimate, target = "stan")
+  toc()
 }
 ```
 
@@ -1453,10 +1461,97 @@ if(correr_SEM){
 }
 ```
 
+```{r, echo=TRUE, results='hide'}
+if (correr_SEM) {
+  mcs_SEM <- blavInspect(fit.sem, "mcmc")
+  mcs_SEM <- as.matrix(mcs_SEM)
+
+  analisar_coluna <- function(col_data, nome_coluna) {
+    col_data <- as.numeric(col_data)
+    col_data <- col_data[!is.na(col_data)]
+
+    if (length(unique(col_data)) < 2) {
+      return(NULL)
+    }
+
+    p <- quantile(col_data, probs = c(0.05, 0.25, 0.5, 0.75, 0.95), na.rm = TRUE)
+    media <- mean(col_data)
+    sd_val <- sd(col_data)
+    
+    fit_norm <- fitdist(col_data, "norm")
+    fit_lognorm <- tryCatch(fitdist(col_data, "lnorm"), error = function(e) NULL)
+    fit_gamma <- tryCatch(fitdist(col_data, "gamma"), error = function(e) NULL)
+    fit_exp <- tryCatch(fitdist(col_data, "exp"), error = function(e) NULL)
+
+    fits <- list(norm = fit_norm, lnorm = fit_lognorm, gamma = fit_gamma, exp = fit_exp)
+    aic_vals <- sapply(fits, function(f) if (!is.null(f)) f$aic else Inf)
+    best_dist <- names(which.min(aic_vals))
+
+    data.frame(
+      variavel = nome_coluna,
+      p5 = p[1],
+      p25 = p[2],
+      p50 = p[3],
+      p75 = p[4],
+      p95 = p[5],
+      media = media,
+      sd = sd_val,
+      melhor_distribuicao = best_dist,
+      stringsAsFactors = FALSE
+    )
+  }
+
+  resultados <- lapply(seq_len(ncol(mcs_SEM)), function(i) {
+    analisar_coluna(mcs_SEM[, i], colnames(mcs_SEM)[i])
+  })
+
+  resumo_mcs <- do.call(rbind, Filter(Negate(is.null), resultados))
+}
+```
+
+
+```{r}
+dim(mcs_SEM) 
+# colnames(mcs_SEM)
+
+# mean(mcs_SEM[,1])
+# sd(mcs_SEM[,1])
+
+hist(mcs_SEM[,1]) # dist normal
+hist(mcs_SEM[,4]) # tem dist gamma?
+
+sum(mcs_SEM[,1] > .74)/nrow(mcs_SEM) # [1] 0.9995556
+```
+
+
+```{r}
+resumo_mcs
+```
+
+
+```{r}
+ML_SEM_bs <- blavFitIndices(fit.sem)
+summary(ML_SEM_bs, prob=.95,central.tendency = c("mean","median"))
+```
+
+```{r}
+distML_SEM <- data.frame(ML_SEM_bs@indices)  
+sum(distML_SEM$BGammaHat > .88)/nrow(distML_SEM) # maior que .88
+hist(distML_SEM$BGammaHat)
+```
+
+
+```{r}
+mcmc_pairs(distML_SEM, pars = c("BRMSEA","BGammaHat","adjBGammaHat"), diag_fun = 
+"hist")
+```
+
+
 #### Tentativa de melhoria com o SEM seguido
 
 ```{r full SEM com nossa sugestão}
 if(correr_SEM){
+  tic()
   model.sem_fullpurpose <- '
     # measurement model
     StudentEthics =~ ET12 + ET13
@@ -1476,6 +1571,7 @@ if(correr_SEM){
   
   fit.sem_fullpurpose <- bcfa(model.sem_fullpurpose, data=df, std.lv=TRUE, n.chains = n_chains,
                    burnin=burn_in, sample=sample_estimate, target = "stan")
+  toc()
 }
 ```
 
@@ -1517,8 +1613,8 @@ if(correr_SEM){
 ```{r compfullSEM}
 if(correr_SEM){
   blavCompare(fit.sem_FAauthors, fit.sem_meanOUR)
-  blavCompare(fit.sem, fit.sem_FAauthors)
-  blavCompare(fit.sem_fullpurpose, fit.sem_FAauthors)
+  # blavCompare(fit.sem, fit.sem_FAauthors) # não comparável
+  # blavCompare(fit.sem_fullpurpose, fit.sem_FAauthors) # não comparável
   blavCompare(fit.sem, fit.sem_fullpurpose)
 }
 ```
@@ -1528,14 +1624,14 @@ if(correr_SEM){
 Estudo de algumas priors baseado nos valores de loadings obtidos e os do paper. Veremos algumas distribuições conhecidas e tentar adaptar o valor do lambda para uma normal porque a função `dpriors` tem limitações em quais priors pode replicar.
 
 ```{r graficos priors}
-curve(dgamma(x, 25, 50), from=0, to=1.2, main="(Ñ) Prior para Lambda (loadings)", col = "green", ylab="Densidade")
+curve(dgamma(x, 25, 50), from=0, to=1.2, main="(X) Prior para Lambda (loadings)", col = "green", ylab="Densidade")
 abline(v=c(0.3, 1), col="red", lty=2)
 
 curve(dlnorm(x, meanlog = -0.7, sdlog = 0.3),
       from = 0, to = 1.5, 
       col = "green", lwd = 2,
       ylab = "Densidade", xlab = "Valor do Loading",
-      main = "(Ñ) Distribuição Lognormal(-0.7, 0.3) para Lambda (loadings)")
+      main = "(X) Distribuicao Lognormal(-0.7, 0.3) para Lambda (loadings)")
 abline(v = c(0.3, 0.8), col = "red", lty = 2)
 
 curve(dnorm(x, 0.5, 0.1), from=0, to=1.2, main="Prior para Lambda (loadings)", col = "green", ylab="Densidade")
@@ -1549,14 +1645,24 @@ abline(v=c(0.6, 0.83), col="red", lty=2)
 
 
 
-curve(dnorm(x, 0, 0.25), from=-1, to=1,col = "blue", main="Prior para Beta (regressão)", ylab="Densidade")
+curve(dnorm(x, 0, 0.25), from=-1, to=1,col = "blue", main="Prior para Beta (regressao)", ylab="Densidade")
 abline(v=c(-0.5, 0.4), col="red", lty=2)
 ```
+
+A distribuição gamma(1,.5) parece adequada para as variâncias porque tem valores acima de 0 e não tem cauda longa. Tem uma grande distribuição de pontos próximos de 0, o que parece interessante.
+
+```{r}
+plot(seq(0,10,.1), dgamma(seq(0,10,.1),5, 10), type="l", lty=1, lwd = 3, xlab="x value",
+     ylab="Density", main="Prior Var: gamma distribution (5,10) & (1,0.5)", col = "darkgreen")
+abline(v=.8, col="orange", lwd=2)
+lines(seq(0,10,.1), dgamma(seq(0,10,.1),1,0.5), col = "darkblue", lwd = 3, lty = 2)
+```
+
 
 
 ```{r}
 # individual params
-n_chains <- 5 # 3
+n_chains <- 3 # 3
 burn_in <- 500 # 200
 sample_estimate <- 1500 #1000
 ```
@@ -1564,9 +1670,11 @@ sample_estimate <- 1500 #1000
 
 ```{r modeloSEM com priors}
 if(correr_SEM_cpriors){
+  tic()
   dp <- dpriors(lambda = "normal(0.5, 0.1)", # semelhante "gamma(25, 50)"; nao conchigo utilizar gamma :(
                 beta   = "normal(0, 0.25)" # talvez aumentar um pouco mais sd (cauda mais longa)
-                )
+                #, theta  = "gamma(5, 10)" # variances
+                ) 
   model.sem_priors <- '
     # measurement model
     StudentEthics =~ prior("normal(0.85, 0.05)")*ET12 + prior("normal(0.7, 0.05)")*ET13
@@ -1586,6 +1694,7 @@ if(correr_SEM_cpriors){
   
   fit.sem_priors <- bcfa(model.sem_priors, data=df, std.lv=TRUE, n.chains = n_chains,
                    burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+  toc()
 }
 ```
 
@@ -1619,6 +1728,7 @@ if(correr_SEM_cpriors){
 ```{r comparacaoSEM}
 if(correr_SEM_cpriors){
   blavCompare(fit.sem_priors, fit.sem)
+  (fits_SEModels <- cbind(fitMeasures(fit.sem_priors), fitMeasures(fit.sem)))
 }
 ```
 

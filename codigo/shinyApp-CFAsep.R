@@ -175,7 +175,22 @@ ui <- navbarPage(
         ),
         mainPanel(
           tags$h4("Resultados:"),
-          DT::dataTableOutput("scoreTable")
+          DT::dataTableOutput("scoreTable"),
+          uiOutput("colnames"),
+          conditionalPanel(
+            condition = "output.scoreTable !== null",
+            tags$hr(),
+            tags$h4("Parâmetros do Modelo SEM:"),
+            checkboxInput("sem_std_lv", "Padronizar variáveis latentes (std.lv)", TRUE),
+            checkboxInput("sem_use_stan", "Usar Stan backend", TRUE),
+            sliderInput("sem_n_chains", "Número de Cadeias (n.chains)", min = 3, max = 5, value = 3),
+            sliderInput("sem_burn_in", "Burn-in", min = 100, max = 5000, step = 100, value = 500),
+            sliderInput("sem_sample_estimate", "Nº Amostras", min = 500, max = 5000, step = 100, value = 1000),
+            actionButton("runSemModel", "Executar Modelo SEM", class = "btn-primary"),
+            tags$h4("Plot do Modelo SEM:"),
+            plotOutput("semOURPlot"),
+            tags$h4("Resumo do Modelo:"),
+            verbatimTextOutput("semOURSummary"))
         )
       )
     )
@@ -328,15 +343,35 @@ server <- function(input, output, session) {
     
     model_str <- paste0(input$construto, " =~ ", paste(input$selectedVars, collapse = " + "))
     
-    fit <- bcfa(model_str, data = df,
-                std.lv = input$std_lv,
-                n.chains = input$n_chains,
-                burnin = input$burn_in,
-                sample = input$sample_estimate,
-                target = ifelse(input$use_stan, "stan", "jags"))
+    showModal(modalDialog(
+      title = "A executar o modelo...",
+      "O modelo está a ser corrido. Isto pode levar alguns instantes.",
+      footer = NULL,
+      easyClose = FALSE
+    ))
     
-    removeModal()
-    return(fit)
+    resultado <- tryCatch({
+      fit <- bcfa(model_str, data = df,
+                  std.lv = input$std_lv,
+                  n.chains = input$n_chains,
+                  burnin = input$burn_in,
+                  sample = input$sample_estimate,
+                  target = ifelse(input$use_stan, "stan", "jags"))
+      
+      removeModal()
+      fit
+    }, error = function(e) {
+      removeModal()
+      showModal(modalDialog(
+        title = "Erro ao executar o modelo",
+        paste("Mensagem de erro:", e$message),
+        easyClose = TRUE,
+        footer = modalButton("Fechar")
+      ))
+      NULL
+    })
+    
+    return(resultado)
   })
   
   output$semPlot <- renderPlot({
@@ -386,6 +421,71 @@ server <- function(input, output, session) {
       DT::datatable(resultado_rounded, options = list(pageLength = 10, scrollX = TRUE))
     })
   })
+  df_sem_data <- reactiveVal()
+  
+  observeEvent(input$runScoreCalc, {
+    selected_vars <- lapply(names(construtos_vars), function(nome) {
+      input[[paste0("multi_", nome)]]
+    })
+    names(selected_vars) <- names(construtos_vars)
+    
+    if (input$method_choice == "media") {
+      resultado <- run_item_means(df, selected_vars)
+    } else {
+      resultado <- run_CFA_extract_scores(df, selected_vars)$scores_df
+    }
+    
+    resultado_rounded <- resultado %>%
+      mutate(across(everything(), ~ round(.x, 8)))
+    
+    df_sem_data(resultado_rounded)  # Guardar para o modelo SEM
+    
+    output$scoreTable <- DT::renderDataTable({
+      DT::datatable(resultado_rounded, options = list(pageLength = 10, scrollX = TRUE))
+    })
+    
+    output$colnames <- renderUI({
+      tags$div(
+        style = "font-size: 14px; font-weight: bold;",
+        paste("Colunas:", paste(names(resultado_rounded), collapse = ", "))
+      )
+    })
+  })
+  
+  observeEvent(input$runSemModel, {
+    req(df_sem_data())
+    dados <- df_sem_data()
+    
+    if (input$method_choice == "media") {
+      model_txt <- '
+      mean_Motivation ~ mean_Resilience + mean_Knowledge Articulation + mean_Team Strain + mean_Cooperative Classroom Environment
+      mean_Self Efficacy ~ mean_Resilience + mean_Knowledge Articulation + mean_Team Strain + mean_Cooperative Classroom Environment
+      mean_Student Ethics ~ mean_Motivation + mean_Self Efficacy
+    '
+    } else {
+      model_txt <- '
+      score_Motivation ~ score_Resilience + score_Knowledge Articulation + score_Team Strain + score_Cooperative Classroom Environment
+      score_Self Efficacy ~ score_Resilience + score_Knowledge Articulation + score_Team Strain + score_Cooperative Classroom Environment
+      score_Student Ethics ~ score_Motivation + score_Self Efficacy
+    '
+    }
+    
+    fit <- bcfa(model_txt, data = dados,
+                std.lv = input$sem_std_lv,
+                n.chains = input$sem_n_chains,
+                burnin = input$sem_burn_in,
+                sample = input$sem_sample_estimate,
+                target = ifelse(input$sem_use_stan, "stan", "jags"))
+    
+    output$semOURPlot <- renderPlot({
+      plot_sem_model(fit)
+    })
+    
+    output$semOURSummary <- renderPrint({
+      summary(fit)
+    })
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)
