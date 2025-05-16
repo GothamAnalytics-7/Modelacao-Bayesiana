@@ -45,10 +45,10 @@ options(mc.cores = 1)
 ```{r}
 # Escolher que modelos executar (sobretudo para a geração do ficheiro knited)
 
-correr_single_CFAs_all <- TRUE
+correr_single_CFAs_all <- FALSE
 correr_single_CFAs_article <- TRUE
 correr_single_CFAs_purpose <- correr_single_CFAs_article
-correr_multiple_CFA <- TRUE
+correr_multiple_CFA <- FALSE
 correr_SEM <- TRUE
 correr_SEM_cpriors <- TRUE
 ```
@@ -418,9 +418,9 @@ ggplot(descritivas, aes(x = as.factor(Gender), y = IPK, color = Pengeluaran)) +
   scale_color_gradientn(colors = c("#3CBA96", "#78C461", "#FFD666", "#DD8D4A" ,"#EC5353"), name = "Pengeluaran") +
   scale_x_discrete(limits = c("1", "2"), labels = c("1" = "1", "2" = "2")) +
   labs(
-    x = "Género do inquirido (sem informação da etiqueta M/F)",
+    x = "Sexo do inquirido (sem informação da etiqueta M/F)",
     y = "IPK (GPA)",
-    title = "Distribuição de IPK (GPA) por Género",
+    title = "Distribuição de IPK (GPA) por Sexo",
     subtitle = "Cores representa as despesas (Pengeluaran: 1 a 5)"
   ) +
   theme_minimal() +
@@ -458,7 +458,7 @@ ggplot(df_gender, aes(x = "", y = n, fill = as.factor(Gender))) +
     name = "Género",
     labels = c("1" = "1", "2" = "2")
   ) +
-  labs(title = "Distribuição de Género") +
+  labs(title = "Distribuição de Sexo") +
   theme_void() +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
@@ -1740,6 +1740,8 @@ if(correr_SEM){
 
 ### 4- SEM com priors
 
+#### Priors para lambda, beta e ET12 e ET13
+
 Estudo de algumas priors baseado nos valores de loadings obtidos e os do paper. Veremos algumas distribuições conhecidas e tentar adaptar o valor do lambda para uma normal porque a função `dpriors` tem limitações em quais priors pode replicar.
 
 ```{r graficos priors}
@@ -1850,4 +1852,73 @@ if(correr_SEM_cpriors){
   (fits_SEModels <- cbind(fitMeasures(fit.sem_priors), fitMeasures(fit.sem)))
 }
 ```
+
+#### Priors com regressão 0
+
+
+```{r modeloSEM com priors reg0}
+if(correr_SEM_cpriors){
+  tic()
+  dp <- dpriors(lambda = "normal(0.5, 0.1)", # semelhante "gamma(25, 50)"; nao conchigo utilizar gamma :(
+                beta   = "normal(0, 0.25)" # talvez aumentar um pouco mais sd (cauda mais longa)
+                #, theta  = "gamma(5, 10)" # variances
+                ) 
+  model.sem_priors_reg0 <- '
+    # measurement model
+    StudentEthics =~ prior("normal(0.85, 0.05)")*ET12 + prior("normal(0.7, 0.05)")*ET13
+    Motivation =~ Mot5 + Mot8 + Mot11
+    SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+    Resilience =~ R2 + R5 + R6
+    KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+    TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+    CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+    
+    # regressions
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + prior("normal(0, 0.0001)")*CooperativeClassroomEnvironment
+    StudentEthics ~ Motivation + SelfEfficacy
+    
+  '
+  
+  fit.sem_priors_reg0 <- bcfa(model.sem_priors_reg0, data=df, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+  toc()
+}
+```
+
+```{r summarySEM com priors reg0}
+if(correr_SEM_cpriors){
+  summary(fit.sem_priors_reg0, standardized=TRUE, rsquare=TRUE)
+}
+```
+
+
+```{r SEMmodelgraphic com priors reg0}
+if(correr_SEM_cpriors){
+  semPaths(fit.sem_priors_reg0,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 10,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "lightblue"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
+```
+
+
+```{r comparacaoSEM reg0}
+if(correr_SEM_cpriors){
+  blavCompare(fit.sem_priors, fit.sem_priors_reg0)
+  (fits_SEModels <- cbind(fitMeasures(fit.sem_priors), fitMeasures(fit.sem_priors_reg0)))
+}
+```
+
+
 
