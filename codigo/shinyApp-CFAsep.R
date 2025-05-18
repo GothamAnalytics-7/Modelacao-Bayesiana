@@ -14,6 +14,7 @@ library(DT)
 library(fitdistrplus)
 
 df <- read.csv("../data/4_conjuntos(dev)/vars_artigo.csv")
+descritivas <- read.csv("../data/4_conjuntos(dev)/descritivas.csv")
 
 options(blavaan.dir = "temp_bcfa")
 dir.create("temp_bcfa", showWarnings = FALSE)
@@ -116,15 +117,19 @@ ui <- navbarPage(
       "Dados",
       sidebarLayout(
         sidebarPanel(
-          tags$h4("Visualizar Distribuição de Variável"),
+          tags$h4("Visualizar Informações de uma Variável"),
           selectInput("selectedVarDist", "Selecionar Variável:",
                       choices = names(df),
-                      selected = names(df)[1])
+                      selected = names(df)[1]),
+          # checkboxInput("showGenderTable", "Mostrar tabela cruzada por Sexo", TRUE),
+          # checkboxInput("showFakTable", "Mostrar tabela cruzada por Área (Fak)", TRUE),
         ),
         mainPanel(
-          tags$h4("Distribuição da Variável Selecionada:"),
+          tags$h4("Barplot da Variável Selecionada:"),
           plotOutput("varDistPlot"),
-          verbatimTextOutput("bestFitDist"),
+          # verbatimTextOutput("bestFitDist"),
+          # conditionalPanel(condition = "input.showGenderTable == true", h4("Tabela cruzada por Sexo"),tableOutput("genderTable")),
+          # conditionalPanel(condition = "input.showFakTable == true",h4("Tabela cruzada por Área"),tableOutput("fakTable")),
           tags$h4("Tabela com os dados do artigo (questionário):"),
           DT::dataTableOutput("fullDataTable"),
         )
@@ -237,63 +242,68 @@ server <- function(input, output, session) {
     var_data <- as.numeric(as.character(var_data))
     var_data <- var_data[!is.na(var_data)]
     
-    fit_norm <- fitdistrplus::fitdist(var_data, "norm")
-    fit_lognorm <- tryCatch(fitdistrplus::fitdist(var_data, "lnorm"), error = function(e) NULL)
-    fit_gamma <- tryCatch(fitdistrplus::fitdist(var_data, "gamma"), error = function(e) NULL)
-    fit_exp <- tryCatch(fitdistrplus::fitdist(var_data, "exp"), error = function(e) NULL)
+    ################## SE AS VARS FOSSEM CONTÍNUAS - NÃO APAGAR O CODE, PARA USAR NO FUTURO ##################
     
-    fits <- list(norm = fit_norm, lnorm = fit_lognorm, gamma = fit_gamma, exp = fit_exp)
-    aic_vals <- sapply(fits, function(f) if (!is.null(f)) f$aic else Inf)
-    best_dist <- names(which.min(aic_vals))
-    best_fit <- fits[[best_dist]]
+    # fit_norm <- fitdistrplus::fitdist(var_data, "norm")
+    # fit_lognorm <- tryCatch(fitdistrplus::fitdist(var_data, "lnorm"), error = function(e) NULL)
+    # fit_gamma <- tryCatch(fitdistrplus::fitdist(var_data, "gamma"), error = function(e) NULL)
+    # fit_exp <- tryCatch(fitdistrplus::fitdist(var_data, "exp"), error = function(e) NULL)
+    
+    # fits <- list(norm = fit_norm, lnorm = fit_lognorm, gamma = fit_gamma, exp = fit_exp)
+    # aic_vals <- sapply(fits, function(f) if (!is.null(f)) f$aic else Inf)
+    # best_dist <- names(which.min(aic_vals))
+    # best_fit <- fits[[best_dist]]
     
     x_vals <- seq(min(var_data), max(var_data), length.out = 500)
     
-    dist_curve <- switch(best_dist,
-                         norm = dnorm(x_vals, mean = best_fit$estimate["mean"], sd = best_fit$estimate["sd"]),
-                         lnorm = dlnorm(x_vals, meanlog = best_fit$estimate["meanlog"], sdlog = best_fit$estimate["sdlog"]),
-                         gamma = dgamma(x_vals, shape = best_fit$estimate["shape"], rate = best_fit$estimate["rate"]),
-                         exp = dexp(x_vals, rate = best_fit$estimate["rate"]),
-                         rep(NA, length(x_vals)) # fallback!!!!
-    )
+    # dist_curve <- switch(best_dist,
+    #                      norm = dnorm(x_vals, mean = best_fit$estimate["mean"], sd = best_fit$estimate["sd"]),
+    #                      lnorm = dlnorm(x_vals, meanlog = best_fit$estimate["meanlog"], sdlog = best_fit$estimate["sdlog"]),
+    #                      gamma = dgamma(x_vals, shape = best_fit$estimate["shape"], rate = best_fit$estimate["rate"]),
+    #                      exp = dexp(x_vals, rate = best_fit$estimate["rate"]),
+    #                      rep(NA, length(x_vals)) # fallback!!!!
+    # )
 
-    dist_df <- data.frame(x = x_vals, y = dist_curve, type = "Melhor ajuste")
+    # dist_df <- data.frame(x = x_vals, y = dist_curve, type = "Melhor ajuste")
     
     p <- ggplot(data.frame(x = var_data), aes(x = x)) +
-      geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black", alpha = 0.7) +
-      geom_density(aes(y = ..density.., color = "Densidade empírica"), size = 1) +
-      geom_line(data = dist_df, aes(x = x, y = y, color = type), size = 1.2) +
+      geom_bar(fill = "skyblue", color = "black", alpha = 0.7) +
+      geom_text(stat = "count", aes(label = ..count..), vjust = -0.5, size = 5) +
+      # geom_histogram(aes(y = ..density..), bins = 30, fill = "skyblue", color = "black", alpha = 0.7) +
+      # geom_density(aes(y = ..density.., color = "Densidade empírica"), size = 1) +
+      # geom_line(data = dist_df, aes(x = x, y = y, color = type), size = 1.2) +
       scale_color_manual(name = "Curvas",
                          values = c("Densidade empírica" = "darkblue", "Melhor ajuste" = "red")) +
-      labs(title = paste("Distribuição de:", input$selectedVarDist),
+      labs(title = paste("Proporção de:", input$selectedVarDist),
            x = input$selectedVarDist,
-           y = "Densidade") +
+           y = "Frequência") + # y = "Densidade"
       theme_minimal() +
-      theme(legend.position ="top",legend.text =element_text(size = 14),legend.title =element_text(size = 16))
+      theme(legend.position ="top",legend.text =element_text(size = 18),legend.title =element_text(size = 20))
     
     p
   })
   
   
-  output$bestFitDist <- renderPrint({
-    req(input$selectedVarDist)
-    var_data <- df[[input$selectedVarDist]]
-    var_data <- as.numeric(as.character(var_data))
-    var_data <- var_data[!is.na(var_data)]
-    
-
-    fit_norm <- fitdistrplus::fitdist(var_data, "norm")
-    fit_lognorm <- tryCatch(fitdistrplus::fitdist(var_data, "lnorm"), error = function(e) NULL)
-    fit_gamma <- tryCatch(fitdistrplus::fitdist(var_data, "gamma"), error = function(e) NULL)
-    fit_exp <- tryCatch(fitdistrplus::fitdist(var_data, "exp"), error = function(e) NULL)
-    
-    fits <- list(norm = fit_norm, lnorm = fit_lognorm, gamma = fit_gamma, exp = fit_exp)
-    aic_vals <- sapply(fits, function(f) if (!is.null(f)) f$aic else Inf)
-    best_dist <- names(which.min(aic_vals))
-    
-    cat("Melhor distribuição (menor AIC):", best_dist, "\n")
-    print(fits[[best_dist]])
-  })
+  # output$bestFitDist <- renderPrint({
+  #   req(input$selectedVarDist)
+  #   var_data <- df[[input$selectedVarDist]]
+  #   var_data <- as.numeric(as.character(var_data))
+  #   var_data <- var_data[!is.na(var_data)]
+  #   
+  #
+  #   fit_norm <- fitdistrplus::fitdist(var_data, "norm")
+  #   fit_lognorm <- tryCatch(fitdistrplus::fitdist(var_data, "lnorm"), error = function(e) NULL)
+  #   fit_gamma <- tryCatch(fitdistrplus::fitdist(var_data, "gamma"), error = function(e) NULL)
+  #   fit_exp <- tryCatch(fitdistrplus::fitdist(var_data, "exp"), error = function(e) NULL)
+  #   
+  #   fits <- list(norm = fit_norm, lnorm = fit_lognorm, gamma = fit_gamma, exp = fit_exp)
+  #   aic_vals <- sapply(fits, function(f) if (!is.null(f)) f$aic else Inf)
+  #   best_dist <- names(which.min(aic_vals))
+  #   
+  #   cat("Melhor distribuição (menor AIC):", best_dist, "\n")
+  #   print(fits[[best_dist]])
+  # })
+  
   
   output$fullDataTable <- DT::renderDataTable({
     DT::datatable(df, options = list(pageLength = 10, scrollX = TRUE))
