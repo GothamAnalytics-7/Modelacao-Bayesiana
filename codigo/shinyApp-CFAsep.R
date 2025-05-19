@@ -11,10 +11,12 @@ library(shinythemes)
 library(ggplot2)
 library(corrplot)
 library(DT)
-library(fitdistrplus)
+library(readxl)
+
 
 df <- read.csv("../data/4_conjuntos(dev)/vars_artigo.csv")
 descritivas <- read.csv("../data/4_conjuntos(dev)/descritivas.csv")
+questions <- readxl::read_excel("../data/questions.xlsx")
 
 options(blavaan.dir = "temp_bcfa")
 dir.create("temp_bcfa", showWarnings = FALSE)
@@ -62,7 +64,7 @@ run_CFA_extract_scores <- function(df, construtos_lista) {
     modelos[[nome_construto]] <- modelo
     
     scores <- lavPredict(modelo)
-    nome_col <- paste0("score_", gsub(" ", "", nome_construto)) 
+    nome_col <- paste0("score_", gsub(" ", "_", nome_construto)) 
     if (is.vector(scores)) {
       df_resultado[[nome_col]] <- scores
     } else if (is.matrix(scores)) {
@@ -121,22 +123,32 @@ ui <- navbarPage(
           selectInput("selectedVarDist", "Selecionar Variável:",
                       choices = names(df),
                       selected = names(df)[1]),
-          # checkboxInput("showGenderTable", "Mostrar tabela cruzada por Sexo", TRUE),
-          # checkboxInput("showFakTable", "Mostrar tabela cruzada por Área (Fak)", TRUE),
+          checkboxInput("showGenderTable", "Mostrar tabela cruzada por Sexo", FALSE),
+          checkboxInput("showFakTable", "Mostrar tabela cruzada por Faculdade (Fak)", FALSE),
         ),
         mainPanel(
           tags$h4("Barplot da Variável Selecionada:"),
           plotOutput("varDistPlot"),
           # verbatimTextOutput("bestFitDist"),
-          # conditionalPanel(condition = "input.showGenderTable == true", h4("Tabela cruzada por Sexo"),tableOutput("genderTable")),
-          # conditionalPanel(condition = "input.showFakTable == true",h4("Tabela cruzada por Área"),tableOutput("fakTable")),
+          conditionalPanel(
+            condition = "input.showGenderTable == true",
+            uiOutput("genderTableTitle"),
+            verbatimTextOutput("genderTable")
+          ),
+          conditionalPanel(
+            condition = "input.showFakTable == true",
+            uiOutput("fakTableTitle"),
+            verbatimTextOutput("fakTable")
+          ),
+          tags$h4("Tabela com as questões do questionário:"),
+          DT::dataTableOutput("questionsDataTable"),
           tags$h4("Tabela com os dados do artigo (questionário):"),
           DT::dataTableOutput("fullDataTable"),
         )
       )
     ),
     tabPanel(
-      "Gráficos",
+      "Construtos",
       sidebarLayout(
         sidebarPanel(
           tags$h4("Escolha do construto"),
@@ -156,7 +168,7 @@ ui <- navbarPage(
   ),
   
   navbarMenu(
-    "Part 2: Modelos",
+    "Part 2: Modelos - Replicação do artigo",
     tabPanel(
       "CFA Bayesiana Separada",
       sidebarLayout(
@@ -214,16 +226,16 @@ ui <- navbarPage(
             tags$h4("Plot do Modelo SEM:"),
             plotOutput("semOURPlot"),
             tags$h4("Resumo do Modelo:"),
-            verbatimTextOutput("semOURSummary"))
+            verbatimTextOutput("semOURSummary")),
+            tags$h4("Fit Measures:"),
+            tags$div(style = "border: 1px solid #ccc; padding: 10px; border-radius: 8px; background-color: #f9f9f9;",
+                   verbatimTextOutput("semOURFitMeasures"))
         )
       )
     )
   ),
-  navbarMenu("Extras", 
-             tabPanel(
-               "Visualização HTML",
-               uiOutput("htmlContent")
-    )
+  navbarMenu("Parte 3: Full SEM + melhorias", 
+             tabPanel("Full SEM - código completo", div(class = "content-box", htmlOutput("fsem_fullcode")))
   )
 )
 
@@ -234,6 +246,8 @@ server <- function(input, output, session) {
   options(mc.cores = 1)
   
   df <- read.csv("../data/4_conjuntos(dev)/vars_artigo.csv")
+  
+  semResult <- reactiveVal(NULL)
   # ----- ABA DADOS -----
   
   output$varDistPlot <- renderPlot({
@@ -304,6 +318,37 @@ server <- function(input, output, session) {
   #   print(fits[[best_dist]])
   # })
   
+  df_full <- cbind(df, descritivas[, c("Gender", "Fak")])
+  names(df_full)[names(df_full) == "Gender"] <- "Sex"
+  names(df_full)[names(df_full) == "Fak"] <- "Faculty"
+  
+  output$genderTableTitle <- renderUI({
+    req(input$selectedVarDist)
+    tags$h4(paste("Tabela cruzada de Sexo por", input$selectedVarDist),":")
+  })
+  
+  output$fakTableTitle <- renderUI({
+    req(input$selectedVarDist)
+    tags$h4(paste("Tabela cruzada de Faculdade por", input$selectedVarDist),":")
+  })
+  
+  output$genderTable <- renderPrint({
+    req(input$selectedVarDist)
+    req(df_full[[input$selectedVarDist]])
+    tab1 <- table(df_full$Sex, df_full[[input$selectedVarDist]])
+    cat(capture.output(print(tab1)), sep = "\n")
+  })
+  
+  output$fakTable <- renderPrint({
+    req(input$selectedVarDist)
+    req(df_full[[input$selectedVarDist]])
+    tab2 <- table(df_full$Faculty, df_full[[input$selectedVarDist]])
+    cat(capture.output(print(tab2)), sep = "\n")
+  })
+  
+  output$questionsDataTable <- DT::renderDataTable({
+    DT::datatable(questions, options = list(pageLength = 10, scrollX = TRUE))
+  })
   
   output$fullDataTable <- DT::renderDataTable({
     DT::datatable(df, options = list(pageLength = 10, scrollX = TRUE))
@@ -521,6 +566,7 @@ server <- function(input, output, session) {
                   sample = input$sem_sample_estimate,
                   target = ifelse(input$sem_use_stan, "stan", "jags"))
       removeModal()
+      semResult(fit)
       fit
     }, error = function(e) {
       showModal(modalDialog(
@@ -541,13 +587,14 @@ server <- function(input, output, session) {
       req(resultado_sem)
       summary(resultado_sem)
     })
+    
+    output$semOURFitMeasures <- renderPrint({
+      req(semResult())
+      fitMeasures(semResult())
+    })
   })
-  output$htmlContent <- renderUI({
-    tags$iframe(
-      src = "ProjetoMB.html",
-      style = "width:100%; height:600px; border:none;"
-    )
-  })
+  addResourcePath("runs", getwd())
+  output$fsem_fullcode <- renderUI({ tags$iframe(src = "runs/ProjetoMB.html", width = "100%", height = "1000px") })
 }
 
 shinyApp(ui = ui, server = server)

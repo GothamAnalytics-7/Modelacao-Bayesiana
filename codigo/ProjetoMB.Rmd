@@ -5,11 +5,11 @@ author:
   - "João Francisco Botas"
   - "Miguel Gonçalves"
   - "Ricardo Galvão"
-date: "19-03-2025"
+date: "21-05-2025"
 output: 
   html_document:
     df_print: paged
-    code_folding: show
+    code_folding: hide
     self_contained: true
     keep_md: true
 ---
@@ -20,9 +20,44 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Modelação Bayesiana
 
-Este projeto foi desenvolvido no âmbito da unidade curricular de Modelação Bayesiana do Mestrado em Ciência de Dados no Iscte. O objetivo do trabalho tem como objetivo replicar 
+Este projeto foi desenvolvido no âmbito da unidade curricular de Modelação Bayesiana do Mestrado em Ciência de Dados no Iscte. O objetivo do trabalho tem como objetivo replicar um artigo científico do ponto de vista Bayesiana e discutir os resultados obtidos. Para além disso, vamos beneficiar das vantagens que a modelação Bayesiana nos traz, como por exemplo a possibilidade de fazer inferência causal e a utilização de priors informativas.
 
 ## Índice
+
+- [Artigo de referência](#artigo-de-referência)
+
+- [Fase 1 - EDA](#fase-1---eda)
+  - [Variáveis categóricas](#variáveis-categóricas)
+  - [Variáveis numéricas citadas no artigo](#variáveis-numéricas-citadas-no-artigo)
+    - [Correlação entre variáveis](#correlação-entre-variáveis)
+    - [Ver loadings e alpha de Cronbach](#ver-loadings-e-alpha-de-cronbach)
+  - [Análise das variáveis](#análise-das-variáveis)
+    - [Construtos criados no artigo](#construtos-criados-no-artigo)
+    - [Variáveis não citadas no artigo](#variáveis-não-citadas-no-artigo)
+    - [Variáveis descritivas](#variáveis-descritivas)
+    - [Criar próprios CFA como fazem no artigo (erradamente)](#criar-próprios-cfa-como-fazem-no-artigo-erradamente)
+  - [Criar ficheiros CSV na pasta data com os 4 conjuntos anteriores](#criar-ficheiros-csv-na-pasta-data-com-os-4-conjuntos-anteriores)
+
+- [Fase 2 - Replicação do artigo](#fase-2---replicação-do-artigo)
+  - [1 - CFA para cada conjunto de questões](#1---cfa-para-cada-conjunto-de-questões)
+    - [CFA com todas as variáveis](#cfa-com-todas-as-variáveis)
+    - [CFA com variáveis sugeridas pelo artigo](#cfa-com-variáveis-sugeridas-pelo-artigo)
+    - [CFA com variáveis a escolher](#cfa-com-variáveis-a-escolher)
+  - [2 - CFA Global](#2---cfa-global)
+    - [Com as variáveis que os autores escolheram](#com-as-variáveis-que-os-autores-escolheram)
+    - [Com as variáveis que escolhemos](#com-as-variáveis-que-escolhemos)
+  - [3 - SEM](#3---sem)
+    - [Estimação com construtos dos autores (dataset original)](#estimação-com-construtos-dos-autores-dataset-original)
+    - [Construtos criados por nós](#construtos-criados-por-nós)
+      - [Média variáveis](#média-variáveis)
+      - [CFA](#cfa)
+    - [Estimação com FA criadas no próprio modelo](#estimação-com-fa-criadas-no-próprio-modelo)
+    - [Tentativa de melhoria com o SEM seguido](#tentativa-de-melhoria-com-o-sem-seguido)
+    - [Comparação entre os dois SEM](#comparação-entre-os-dois-sem)
+
+  - [4 - SEM com priors](#4---sem-com-priors)
+    - [Priors para lambda, beta e ET12 e ET13](#priors-para-lambda-beta-e-et12-e-et13)
+    - [Priors com regressão 0](#priors-com-regressão-0)
 
 ## Artigo de referência
 
@@ -39,18 +74,18 @@ pacman::p_load(foreign, haven, tidyverse, rstan, blavaan, lavaan,
 options(blavaan.dir = "temp_bcfa")
 dir.create("temp_bcfa", showWarnings = FALSE)
 rstan_options(auto_write = TRUE)
-options(mc.cores = 1)
+options(mc.cores = parallel::detectCores())
 ```
 
 ```{r}
 # Escolher que modelos executar (sobretudo para a geração do ficheiro knited)
 
 correr_single_CFAs_all <- FALSE
-correr_single_CFAs_article <- TRUE
+correr_single_CFAs_article <- FALSE
 correr_single_CFAs_purpose <- correr_single_CFAs_article
 correr_multiple_CFA <- FALSE
-correr_SEM <- TRUE
-correr_SEM_cpriors <- TRUE
+correr_SEM <- FALSE # TRUE
+correr_SEM_cpriors <- FALSE # TRUE
 ```
 
 
@@ -464,7 +499,6 @@ ggplot(df_gender, aes(x = "", y = n, fill = as.factor(Gender))) +
 ```
 
 
-
 #### Variáveis não citadas no artigo
 
 As colunas que não estão nos outros datasets.
@@ -566,7 +600,7 @@ df_OUR_results
 ```
 
 
-#### Criar ficheiros csv na pasta data com os 4 conjuntos anteriores
+### Criar ficheiros csv na pasta data com os 4 conjuntos anteriores
 
 Guardar numa pasta específica para ajudar os dados mais facilmente com a separação realizada. Isto porque algumas variáveis serão utilizadas e outras não.
 
@@ -1630,39 +1664,49 @@ if (correr_SEM) {
 
 
 ```{r}
-dim(mcs_SEM) 
-# colnames(mcs_SEM)
-
-# mean(mcs_SEM[,1])
-# sd(mcs_SEM[,1])
-
-hist(mcs_SEM[,1]) # dist normal
-hist(mcs_SEM[,4]) # tem dist gamma?
-
-sum(mcs_SEM[,1] > .74)/nrow(mcs_SEM) # [1] 0.9995556
+if (correr_SEM) {
+  dim(mcs_SEM) 
+  # colnames(mcs_SEM)
+  
+  # mean(mcs_SEM[,1])
+  # sd(mcs_SEM[,1])
+  
+  hist(mcs_SEM[,1]) # dist normal
+  hist(mcs_SEM[,4]) # tem dist gamma?
+  
+  sum(mcs_SEM[,1] > .74)/nrow(mcs_SEM) # [1] 0.9995556
+}
 ```
 
 
 ```{r}
-resumo_mcs
+if (correr_SEM) {
+  resumo_mcs
+}
 ```
 
 
 ```{r}
-ML_SEM_bs <- blavFitIndices(fit.sem)
-summary(ML_SEM_bs, prob=.95,central.tendency = c("mean","median"))
+if (correr_SEM) {
+  ML_SEM_bs <- blavFitIndices(fit.sem)
+  summary(ML_SEM_bs, prob=.95,central.tendency = c("mean","median"))
+}
 ```
 
 ```{r}
-distML_SEM <- data.frame(ML_SEM_bs@indices)  
-sum(distML_SEM$BGammaHat > .88)/nrow(distML_SEM) # maior que .88
-hist(distML_SEM$BGammaHat)
+if (correr_SEM) {
+  distML_SEM <- data.frame(ML_SEM_bs@indices)  
+  sum(distML_SEM$BGammaHat > .88)/nrow(distML_SEM) # maior que .88
+  hist(distML_SEM$BGammaHat)
+}
 ```
 
 
 ```{r}
-mcmc_pairs(distML_SEM, pars = c("BRMSEA","BGammaHat","adjBGammaHat"), diag_fun = 
-"hist")
+if (correr_SEM) {
+  mcmc_pairs(distML_SEM, pars = c("BRMSEA","BGammaHat","adjBGammaHat"), diag_fun = 
+  "hist")
+}
 ```
 
 
