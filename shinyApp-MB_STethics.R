@@ -12,6 +12,9 @@ library(ggplot2)
 library(corrplot)
 library(DT)
 library(readxl)
+library(promises)
+library(future)
+plan(multisession)
 
 
 df <- read.csv("data/4_conjuntos(dev)/vars_artigo.csv")
@@ -109,7 +112,14 @@ plot_sem_model_regression <- function(model, title = "") {
            mar = c(8, 8, 8, 8))
 }
 
-ui <- navbarPage(
+ui <- fluidPage(
+  tags$head(
+    tags$script(HTML("
+      setInterval(function(){Shiny.onInputChange('keepAlive', new Date());}, 10000);
+    "))
+  ),
+  
+  navbarPage(
   title = "Data on higher education student ethics model",
   theme = shinythemes::shinytheme("flatly"),
   
@@ -235,9 +245,10 @@ ui <- navbarPage(
     )
   ),
   navbarMenu("Parte 3: Full SEM + melhorias", 
-             tabPanel("Full SEM - código completo", div(class = "content-box", htmlOutput("fsem_fullcode")))
+             tabPanel("Full SEM - com e sem priors", div(class = "content-box", htmlOutput("fsem"))),
+             tabPanel("Código completo", div(class = "content-box", htmlOutput("fsem_fullcode")))
   )
-)
+))
 
 server <- function(input, output, session) {
   options(blavaan.dir = "bcfa_tmp")
@@ -593,8 +604,9 @@ server <- function(input, output, session) {
       fitMeasures(semResult())
     })
   })
-  addResourcePath("runs", getwd())
-  output$fsem_fullcode <- renderUI({ tags$iframe(src = "runs/ProjetoMB.html", width = "100%", height = "1000px") })
+  addResourcePath("runs", "runs")
+  output$fsem <- renderUI({ tags$iframe(src = "runs/FinaleSEM.html", width = "100%", height = "1000px") })
+  output$fsem_fullcode <- renderUI({ tags$iframe(src = "runs/FinaleAll.html", width = "100%", height = "1000px") })
 }
 
 shinyApp(ui = ui, server = server)

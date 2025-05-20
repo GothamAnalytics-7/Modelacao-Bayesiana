@@ -7,10 +7,11 @@ author:
   - "Ricardo Galvão"
 date: "21-05-2025"
 output: 
-  prettydoc::html_pretty:
-    df_print: paged
-    theme: cayman
-    highlight: github
+    html_document:
+      df_print: paged
+      code_folding: show
+      self_contained: true
+      keep_md: true
 ---
 
 ```{r setup, include=FALSE}
@@ -93,10 +94,10 @@ options(mc.cores = parallel::detectCores())
 ```{r}
 # Escolher que modelos executar (sobretudo para a geração do ficheiro knited)
 
-correr_single_CFAs_all <- FALSE
-correr_single_CFAs_article <- FALSE
+correr_single_CFAs_all <- TRUE
+correr_single_CFAs_article <- TRUE
 correr_single_CFAs_purpose <- correr_single_CFAs_article
-correr_multiple_CFA <- FALSE
+correr_multiple_CFA <- TRUE
 correr_SEM <- TRUE # TRUE
 correr_SEM_cpriors <- TRUE # TRUE
 ```

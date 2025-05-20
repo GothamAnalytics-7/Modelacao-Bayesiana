@@ -7,12 +7,15 @@ author:
   - "Ricardo Galvão"
 date: "21-05-2025"
 output: 
-  html_document:
-    df_print: paged
-    code_folding: show
-    self_contained: true
-    keep_md: true
+    html_document:
+      df_print: paged
+      code_folding: show
+      self_contained: true
+      keep_md: true
 ---
+
+
+
 
 
 
@@ -69,12 +72,12 @@ O artigo de referência para este trabalho é o [Data on higher education studen
 ``` r
 # Escolher que modelos executar (sobretudo para a geração do ficheiro knited)
 
-correr_single_CFAs_all <- FALSE
-correr_single_CFAs_article <- FALSE
+correr_single_CFAs_all <- TRUE
+correr_single_CFAs_article <- TRUE
 correr_single_CFAs_purpose <- correr_single_CFAs_article
-correr_multiple_CFA <- FALSE
-correr_SEM <- FALSE # TRUE
-correr_SEM_cpriors <- FALSE # TRUE
+correr_multiple_CFA <- TRUE
+correr_SEM <- TRUE # TRUE
+correr_SEM_cpriors <- TRUE # TRUE
 ```
 
 
@@ -170,7 +173,7 @@ df %>%
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 Conseguimos perceber que há uma relação com os resultados mencionados no artigo.
 
@@ -313,7 +316,7 @@ for (name in names(construct_patterns)) {
 }
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-9-1.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-9-2.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-9-3.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-9-4.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-9-5.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-9-6.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-9-7.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-10-1.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-10-2.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-10-3.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-10-4.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-10-5.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-10-6.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-10-7.png)<!-- -->
 
 #### Ver loadings e alpha de Cronbach
 
@@ -625,7 +628,7 @@ descritivas %>%
   theme_minimal()
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 
 
 
@@ -674,7 +677,7 @@ ggplot(descritivas, aes(x = as.factor(Gender), y = IPK, color = Pengeluaran)) +
 ## generated.
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 # ggsave("ipk_genero_plot.png", width = 9, height = 6, dpi = 300)
@@ -696,7 +699,7 @@ ggplot(df_gender, aes(x = "", y = n, fill = as.factor(Gender))) +
   scale_fill_manual(
     values = c("1" = "blue",  # Roxo
                "2" = "darkgreen"), # Amarelo
-    name = "Género",
+    name = "Sexo",
     labels = c("1" = "1", "2" = "2")
   ) +
   labs(title = "Distribuição de Sexo") +
@@ -704,7 +707,7 @@ ggplot(df_gender, aes(x = "", y = n, fill = as.factor(Gender))) +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
 
 #### Variáveis não citadas no artigo
@@ -955,6 +958,120 @@ if(correr_single_CFAs_all){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        28
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -10180.841       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   StudentEthics =~                                                      
+##     ET1               0.184    0.043    0.100    0.268    0.184    0.205
+##     ET2               0.243    0.064    0.115    0.370    0.243    0.185
+##     ET3               0.259    0.047    0.167    0.353    0.259    0.262
+##     ET4               0.221    0.045    0.133    0.309    0.221    0.235
+##     ET5               0.276    0.050    0.179    0.375    0.276    0.270
+##     ET6               0.288    0.047    0.198    0.381    0.288    0.298
+##     ET7               0.199    0.042    0.118    0.284    0.199    0.247
+##     ET8               0.195    0.040    0.118    0.276    0.195    0.252
+##     ET9               0.190    0.038    0.117    0.266    0.190    0.268
+##     ET10              0.396    0.042    0.315    0.479    0.396    0.458
+##     ET11              0.412    0.038    0.339    0.488    0.412    0.503
+##     ET12              0.741    0.042    0.654    0.824    0.741    0.780
+##     ET13              0.748    0.041    0.664    0.825    0.748    0.795
+##     ET14              0.364    0.042    0.282    0.447    0.364    0.406
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.001    normal(0,10)
+##     1.001    normal(0,10)
+##     1.001    normal(0,10)
+##     1.000    normal(0,10)
+##     1.001    normal(0,10)
+##     1.001    normal(0,10)
+##     1.002    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET1               0.770    0.046    0.687    0.863    0.770    0.958
+##    .ET2               1.669    0.102    1.479    1.880    1.669    0.966
+##    .ET3               0.910    0.055    0.807    1.023    0.910    0.931
+##    .ET4               0.830    0.050    0.739    0.931    0.830    0.945
+##    .ET5               0.973    0.061    0.861    1.098    0.973    0.927
+##    .ET6               0.857    0.053    0.759    0.968    0.857    0.911
+##    .ET7               0.610    0.038    0.539    0.688    0.610    0.939
+##    .ET8               0.563    0.035    0.498    0.634    0.563    0.937
+##    .ET9               0.470    0.029    0.416    0.531    0.470    0.928
+##    .ET10              0.590    0.039    0.517    0.670    0.590    0.790
+##    .ET11              0.502    0.034    0.440    0.571    0.502    0.747
+##    .ET12              0.353    0.042    0.280    0.444    0.353    0.391
+##    .ET13              0.327    0.041    0.254    0.416    0.327    0.369
+##    .ET14              0.671    0.043    0.592    0.760    0.671    0.835
+##     StudentEthics     1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET1               0.042
+##     ET2               0.034
+##     ET3               0.069
+##     ET4               0.055
+##     ET5               0.073
+##     ET6               0.089
+##     ET7               0.061
+##     ET8               0.063
+##     ET9               0.072
+##     ET10              0.210
+##     ET11              0.253
+##     ET12              0.609
+##     ET13              0.631
+##     ET14              0.165
+```
+
+```
+## Warning: 
+## 31 (5.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     28.000 -10057.993      0.000  20293.417  20172.060     28.037  20200.425 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     57.124    246.595  20200.886     57.355    246.664 -10180.841
+```
+
 1500 burn-in + 3000 samples
 
 | Item  | Loadings  |
@@ -994,6 +1111,129 @@ if(correr_single_CFAs_all){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        30
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -9592.152       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation =~                                                         
+##     Mot1              0.363    0.034    0.298    0.429    0.363    0.497
+##     Mot2              0.386    0.029    0.329    0.444    0.386    0.573
+##     Mot3              0.243    0.042    0.160    0.327    0.243    0.279
+##     Mot4              0.367    0.033    0.301    0.432    0.367    0.496
+##     Mot5             -0.079    0.044   -0.165    0.010   -0.079   -0.089
+##     Mot6              0.409    0.031    0.350    0.470    0.409    0.594
+##     Mot7              0.258    0.035    0.190    0.329    0.258    0.344
+##     Mot8             -0.102    0.046   -0.191   -0.013   -0.102   -0.111
+##     Mot9              0.354    0.034    0.288    0.420    0.354    0.484
+##     Mot10             0.318    0.031    0.259    0.378    0.318    0.462
+##     Mot11            -0.059    0.047   -0.153    0.034   -0.059   -0.063
+##     Mot12             0.285    0.032    0.222    0.348    0.285    0.414
+##     Mot13             0.422    0.030    0.364    0.483    0.422    0.614
+##     Mot14             0.354    0.033    0.289    0.420    0.354    0.487
+##     Mot15            -0.166    0.056   -0.276   -0.058   -0.166   -0.150
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .Mot1              0.402    0.028    0.352    0.459    0.402    0.753
+##    .Mot2              0.305    0.021    0.266    0.349    0.305    0.672
+##    .Mot3              0.699    0.043    0.619    0.787    0.699    0.922
+##    .Mot4              0.411    0.027    0.362    0.466    0.411    0.754
+##    .Mot5              0.773    0.046    0.688    0.869    0.773    0.992
+##    .Mot6              0.307    0.022    0.265    0.352    0.307    0.647
+##    .Mot7              0.499    0.031    0.441    0.564    0.499    0.882
+##    .Mot8              0.828    0.049    0.738    0.927    0.828    0.988
+##    .Mot9              0.409    0.027    0.359    0.465    0.409    0.766
+##    .Mot10             0.372    0.024    0.326    0.422    0.372    0.786
+##    .Mot11             0.862    0.050    0.769    0.967    0.862    0.996
+##    .Mot12             0.393    0.025    0.346    0.445    0.393    0.829
+##    .Mot13             0.293    0.021    0.254    0.337    0.293    0.622
+##    .Mot14             0.403    0.026    0.355    0.457    0.403    0.763
+##    .Mot15             1.207    0.074    1.070    1.361    1.207    0.978
+##     Motivation        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     Mot1              0.247
+##     Mot2              0.328
+##     Mot3              0.078
+##     Mot4              0.246
+##     Mot5              0.008
+##     Mot6              0.353
+##     Mot7              0.118
+##     Mot8              0.012
+##     Mot9              0.234
+##     Mot10             0.214
+##     Mot11             0.004
+##     Mot12             0.171
+##     Mot13             0.378
+##     Mot14             0.237
+##     Mot15             0.022
+```
+
+```
+## Warning: 
+## 26 (4.6%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     30.000  -9454.841      0.000  19099.787  18969.425     29.871  18992.090 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     51.459    261.310  18992.394     51.611    261.374  -9592.152
+```
+
 1500 burn-in + 3000 samples
 
 | Item  | Loadings  |
@@ -1031,6 +1271,80 @@ if(correr_single_CFAs_all){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        12
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3092.319       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   SelfEfficacy =~                                                       
+##     SE1               0.414    0.031    0.354    0.478    0.414    0.578
+##     SE2               0.447    0.032    0.383    0.511    0.447    0.584
+##     SE3               0.514    0.027    0.463    0.568    0.514    0.762
+##     SE4               0.494    0.027    0.443    0.548    0.494    0.741
+##     SE5               0.441    0.029    0.387    0.497    0.441    0.638
+##     SE6               0.458    0.026    0.408    0.511    0.458    0.705
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .SE1               0.342    0.022    0.301    0.389    0.342    0.666
+##    .SE2               0.385    0.026    0.336    0.439    0.385    0.659
+##    .SE3               0.191    0.016    0.161    0.223    0.191    0.419
+##    .SE4               0.201    0.015    0.172    0.232    0.201    0.451
+##    .SE5               0.283    0.020    0.247    0.324    0.283    0.593
+##    .SE6               0.212    0.016    0.182    0.245    0.212    0.503
+##     SelfEfficacy      1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     SE1               0.334
+##     SE2               0.341
+##     SE3               0.581
+##     SE4               0.549
+##     SE5               0.407
+##     SE6               0.497
+```
+
+```
+## Warning: 
+## 12 (2.1%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     12.000  -3033.295      0.000   6142.631   6090.662     12.036   6099.166 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     20.258    161.999   6099.240     20.295    162.014  -3092.319
+```
+
 1500 burn-in + 3000 samples
 
 | Item  | Loadings  |
@@ -1057,6 +1371,80 @@ if(correr_single_CFAs_all){
   summary(fit.resilience, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fit.resilience)
 }
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        12
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3502.213       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Resilience =~                                                         
+##     R1                0.439    0.035    0.369    0.509    0.439    0.565
+##     R2                0.501    0.033    0.437    0.566    0.501    0.643
+##     R3                0.356    0.033    0.291    0.422    0.356    0.531
+##     R4                0.382    0.033    0.317    0.446    0.382    0.552
+##     R5                0.548    0.038    0.477    0.622    0.548    0.687
+##     R6                0.485    0.037    0.413    0.557    0.485    0.642
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .R1                0.410    0.029    0.356    0.471    0.410    0.681
+##    .R2                0.357    0.027    0.308    0.412    0.357    0.587
+##    .R3                0.323    0.025    0.278    0.374    0.323    0.718
+##    .R4                0.333    0.025    0.287    0.384    0.333    0.696
+##    .R5                0.337    0.033    0.273    0.405    0.337    0.529
+##    .R6                0.336    0.029    0.280    0.395    0.336    0.588
+##     Resilience        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     R1                0.319
+##     R2                0.413
+##     R3                0.282
+##     R4                0.304
+##     R5                0.471
+##     R6                0.412
+```
+
+```
+## Warning: 
+## 10 (1.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     12.000  -3445.918      0.000   6967.878   6915.766     11.965   6926.661 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     22.413    162.537   6926.734     22.450    162.550  -3502.213
 ```
 
 1500 burn-in + 3000 samples
@@ -1088,6 +1476,75 @@ if(correr_single_CFAs_all){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        10
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -2156.804       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   KnowledgeArticulation =~                                             
+##     KA1                       0.476    0.026    0.426    0.528    0.476
+##     KA2                       0.521    0.024    0.476    0.568    0.521
+##     KA3                       0.477    0.023    0.432    0.522    0.477
+##     KA4                       0.510    0.024    0.465    0.557    0.510
+##     KA5                       0.449    0.025    0.401    0.498    0.449
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.704    1.000    normal(0,10)
+##     0.807    1.000    normal(0,10)
+##     0.774    1.000    normal(0,10)
+##     0.801    1.000    normal(0,10)
+##     0.708    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .KA1               0.231    0.016    0.200    0.265    0.231    0.505
+##    .KA2               0.146    0.012    0.124    0.170    0.146    0.350
+##    .KA3               0.153    0.012    0.131    0.177    0.153    0.402
+##    .KA4               0.145    0.012    0.123    0.170    0.145    0.358
+##    .KA5               0.200    0.014    0.174    0.230    0.200    0.498
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     KA1               0.495
+##     KA2               0.650
+##     KA3               0.598
+##     KA4               0.642
+##     KA5               0.502
+```
+
+```
+## Warning: 
+## 15 (2.7%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     10.000  -2105.022      0.000   4273.411   4229.789      9.873   4252.247 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     31.339    195.550   4252.250     31.340    195.547  -2156.804
+```
+
 1500 burn-in + 3000 samples
 
 | Item  | Loadings  |
@@ -1117,6 +1574,139 @@ if(correr_single_CFAs_all){
   summary(fit.teamstrain, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fit.teamstrain)
 }
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        34
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -8488.329       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   TeamStrain =~                                                         
+##     TS1               0.295    0.033    0.232    0.360    0.295    0.386
+##     TS2               0.217    0.032    0.155    0.280    0.217    0.289
+##     TS3               0.266    0.030    0.208    0.325    0.266    0.377
+##     TS4               0.246    0.033    0.181    0.311    0.246    0.323
+##     TS5               0.284    0.031    0.224    0.344    0.284    0.401
+##     TS6               0.288    0.031    0.229    0.348    0.288    0.399
+##     TS7               0.350    0.031    0.290    0.412    0.350    0.473
+##     TS8               0.354    0.029    0.298    0.413    0.354    0.504
+##     TS9               0.415    0.027    0.362    0.469    0.415    0.609
+##     TS10              0.485    0.029    0.431    0.543    0.485    0.659
+##     TS11              0.491    0.028    0.437    0.547    0.491    0.660
+##     TS12              0.503    0.030    0.446    0.562    0.503    0.667
+##     TS13              0.501    0.024    0.455    0.548    0.501    0.774
+##     TS14              0.507    0.022    0.465    0.549    0.507    0.833
+##     TS15              0.549    0.022    0.507    0.592    0.549    0.868
+##     TS16              0.455    0.022    0.413    0.498    0.455    0.774
+##     TS17              0.450    0.021    0.409    0.492    0.450    0.779
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .TS1               0.496    0.029    0.441    0.557    0.496    0.851
+##    .TS2               0.515    0.030    0.458    0.578    0.515    0.916
+##    .TS3               0.428    0.026    0.380    0.481    0.428    0.858
+##    .TS4               0.520    0.032    0.461    0.586    0.520    0.896
+##    .TS5               0.422    0.026    0.375    0.474    0.422    0.839
+##    .TS6               0.439    0.026    0.390    0.493    0.439    0.841
+##    .TS7               0.426    0.026    0.378    0.481    0.426    0.776
+##    .TS8               0.367    0.023    0.325    0.415    0.367    0.745
+##    .TS9               0.292    0.019    0.258    0.331    0.292    0.629
+##    .TS10              0.306    0.020    0.269    0.346    0.306    0.566
+##    .TS11              0.313    0.020    0.275    0.355    0.313    0.565
+##    .TS12              0.315    0.020    0.277    0.357    0.315    0.555
+##    .TS13              0.168    0.011    0.147    0.191    0.168    0.401
+##    .TS14              0.113    0.008    0.098    0.130    0.113    0.305
+##    .TS15              0.098    0.008    0.084    0.114    0.098    0.246
+##    .TS16              0.138    0.009    0.121    0.157    0.138    0.401
+##    .TS17              0.131    0.009    0.115    0.150    0.131    0.394
+##     TeamStrain        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     TS1               0.149
+##     TS2               0.084
+##     TS3               0.142
+##     TS4               0.104
+##     TS5               0.161
+##     TS6               0.159
+##     TS7               0.224
+##     TS8               0.255
+##     TS9               0.371
+##     TS10              0.434
+##     TS11              0.435
+##     TS12              0.445
+##     TS13              0.599
+##     TS14              0.695
+##     TS15              0.754
+##     TS16              0.599
+##     TS17              0.606
+```
+
+```
+## Warning: 
+## 33 (5.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     34.000  -8319.281      0.000  16854.015  16706.227     33.832  16752.202 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     78.238    471.505  16752.185     78.229    471.561  -8488.329
 ```
 
 1500 burn-in + 3000 samples
@@ -1161,6 +1751,154 @@ if(correr_single_CFAs_all){
   summary(fit.cce, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fit.cce)
 }
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        40
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -10777.074       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.465    0.031    0.407    0.526
+##     CCE2                                0.145    0.039    0.070    0.220
+##     CCE3                                0.357    0.033    0.294    0.423
+##     CCE4                                0.320    0.031    0.260    0.381
+##     CCE5                                0.417    0.026    0.367    0.468
+##     CCE6                                0.324    0.033    0.259    0.389
+##     CCE7                                0.387    0.026    0.337    0.440
+##     CCE8                                0.389    0.031    0.330    0.450
+##     CCE9                                0.413    0.030    0.354    0.472
+##     CCE10                               0.418    0.027    0.366    0.471
+##     CCE11                               0.414    0.028    0.359    0.469
+##     CCE12                               0.329    0.040    0.251    0.410
+##     CCE13                               0.412    0.028    0.360    0.467
+##     CCE14                               0.411    0.029    0.356    0.468
+##     CCE15                               0.277    0.041    0.197    0.356
+##     CCE16                               0.471    0.023    0.426    0.518
+##     CCE17                               0.444    0.023    0.400    0.491
+##     CCE18                               0.465    0.025    0.418    0.514
+##     CCE19                               0.454    0.024    0.409    0.503
+##     CCE20                               0.396    0.028    0.340    0.452
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.465    0.620    1.000    normal(0,10)
+##     0.145    0.168    1.000    normal(0,10)
+##     0.357    0.465    1.000    normal(0,10)
+##     0.320    0.443    1.000    normal(0,10)
+##     0.417    0.643    1.000    normal(0,10)
+##     0.324    0.422    1.000    normal(0,10)
+##     0.387    0.588    1.000    normal(0,10)
+##     0.389    0.524    1.000    normal(0,10)
+##     0.413    0.572    1.000    normal(0,10)
+##     0.418    0.634    1.000    normal(0,10)
+##     0.414    0.602    1.000    normal(0,10)
+##     0.329    0.353    1.000    normal(0,10)
+##     0.412    0.594    1.000    normal(0,10)
+##     0.411    0.576    1.000    normal(0,10)
+##     0.277    0.298    1.000    normal(0,10)
+##     0.471    0.749    1.000    normal(0,10)
+##     0.444    0.733    1.000    normal(0,10)
+##     0.465    0.724    1.000    normal(0,10)
+##     0.454    0.733    1.000    normal(0,10)
+##     0.396    0.575    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .CCE1              0.347    0.022    0.306    0.393    0.347    0.616
+##    .CCE2              0.721    0.042    0.644    0.808    0.721    0.972
+##    .CCE3              0.462    0.029    0.409    0.521    0.462    0.784
+##    .CCE4              0.420    0.026    0.372    0.475    0.420    0.804
+##    .CCE5              0.246    0.016    0.216    0.280    0.246    0.586
+##    .CCE6              0.486    0.030    0.431    0.547    0.486    0.822
+##    .CCE7              0.283    0.018    0.251    0.320    0.283    0.654
+##    .CCE8              0.400    0.025    0.354    0.450    0.400    0.725
+##    .CCE9              0.350    0.023    0.308    0.397    0.350    0.673
+##    .CCE10             0.261    0.017    0.230    0.296    0.261    0.599
+##    .CCE11             0.301    0.019    0.267    0.341    0.301    0.637
+##    .CCE12             0.762    0.046    0.676    0.857    0.762    0.875
+##    .CCE13             0.312    0.020    0.275    0.353    0.312    0.647
+##    .CCE14             0.340    0.021    0.301    0.385    0.340    0.668
+##    .CCE15             0.788    0.047    0.701    0.884    0.788    0.911
+##    .CCE16             0.174    0.012    0.152    0.199    0.174    0.440
+##    .CCE17             0.170    0.012    0.148    0.194    0.170    0.462
+##    .CCE18             0.196    0.014    0.171    0.224    0.196    0.475
+##    .CCE19             0.177    0.012    0.155    0.202    0.177    0.462
+##    .CCE20             0.317    0.020    0.280    0.360    0.317    0.670
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     CCE1              0.384
+##     CCE2              0.028
+##     CCE3              0.216
+##     CCE4              0.196
+##     CCE5              0.414
+##     CCE6              0.178
+##     CCE7              0.346
+##     CCE8              0.275
+##     CCE9              0.327
+##     CCE10             0.401
+##     CCE11             0.363
+##     CCE12             0.125
+##     CCE13             0.353
+##     CCE14             0.332
+##     CCE15             0.089
+##     CCE16             0.560
+##     CCE17             0.538
+##     CCE18             0.525
+##     CCE19             0.538
+##     CCE20             0.330
+```
+
+```
+## Warning: 
+## 45 (8.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     40.000 -10582.751      0.000  21418.974  21245.366     39.932  21307.575 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     99.392    582.237  21306.509     98.859    581.942 -10777.074
 ```
 
 1500 burn-in + 3000 samples
@@ -1208,6 +1946,8 @@ if(correr_single_CFAs_all){
 }
 ```
 
+![](ProjetoMB_files/figure-html/graficos todas-1.png)<!-- -->![](ProjetoMB_files/figure-html/graficos todas-2.png)<!-- -->![](ProjetoMB_files/figure-html/graficos todas-3.png)<!-- -->![](ProjetoMB_files/figure-html/graficos todas-4.png)<!-- -->![](ProjetoMB_files/figure-html/graficos todas-5.png)<!-- -->![](ProjetoMB_files/figure-html/graficos todas-6.png)<!-- -->![](ProjetoMB_files/figure-html/graficos todas-7.png)<!-- -->
+
 Distribuição de N(0,10) para lambda e Gama(1,0.5) para a variância.
 
 
@@ -1219,7 +1959,7 @@ abline(v=1, col="darkred", lwd=2)
 abline(v=5, col="darkred", lwd=2)
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
 
 
 ``` r
@@ -1227,7 +1967,7 @@ plot(seq(0,10,.1), dgamma(seq(0,10,.1),1,0.5), type="l", lty=1, lwd = 3, xlab="x
      ylab="Density", main="Prior Var: gamma distribution (1,0.5)")
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
 
 #### CFA com as variáveis sugeridos pelo artigo
 
@@ -1256,6 +1996,82 @@ if(correr_single_CFAs_article){
 }
 ```
 
+```
+## Warning: There were 32 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Warning: The largest R-hat is 1.14, indicating chains have not mixed.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#r-hat
+```
+
+```
+## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#bulk-ess
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                         4
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1334.102       0.508
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   StudentEthics =~                                                      
+##     ET12              0.845    0.095    0.660    0.976    0.845    0.900
+##     ET13              0.770    0.095    0.638    0.956    0.770    0.827
+##      Rhat    Prior       
+##                          
+##     1.169    normal(0,10)
+##     1.165    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.168    0.149    0.000    0.429    0.168    0.190
+##    .ET13              0.273    0.143    0.002    0.440    0.273    0.315
+##     StudentEthics     1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.193 gamma(1,.5)[sd]
+##     1.180 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.810
+##     ET13              0.685
+```
+
+```
+## Warning: 
+## 1 (0.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##      4.000  -1317.387      0.508   2660.121   2638.698      1.962   2641.400 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##      4.615     64.436   2641.404      4.618     64.437  -1334.102
+```
+
 São apenas 2 variáveis e parecem adequadas para usarmos só estas.
 
 ##### Motivation
@@ -1271,6 +2087,65 @@ if(correr_single_CFAs_article){
   summary(fit.motivation_article, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fit.motivation_article)
 }
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                         6
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -2126.744       0.489
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation =~                                                         
+##     Mot5              0.555    0.043    0.471    0.641    0.555    0.628
+##     Mot8              0.613    0.046    0.522    0.703    0.613    0.670
+##     Mot11             0.620    0.047    0.527    0.714    0.620    0.666
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .Mot5              0.472    0.042    0.391    0.557    0.472    0.605
+##    .Mot8              0.462    0.047    0.371    0.556    0.462    0.552
+##    .Mot11             0.482    0.048    0.389    0.579    0.482    0.556
+##     Motivation        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     Mot5              0.395
+##     Mot8              0.448
+##     Mot11             0.444
+```
+
+```
+## Warning: 
+## 1 (0.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##      6.000  -2100.662      0.489   4239.345   4213.575      6.125   4214.799 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##      7.277     68.934   4214.812      7.283     68.936  -2126.744
 ```
 
 Eram as únicas que tinham os loadings negativos quando fizemos para todas as variáveis (também as únicas utilizadas pelos autores), mas parecem ser adequadas para usarmos só estas. Valores de loadings altos e 
@@ -1290,6 +2165,80 @@ if(correr_single_CFAs_article){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        12
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3092.327       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   SelfEfficacy =~                                                       
+##     SE1               0.414    0.030    0.355    0.475    0.414    0.577
+##     SE2               0.446    0.032    0.385    0.509    0.446    0.584
+##     SE3               0.513    0.026    0.463    0.565    0.513    0.762
+##     SE4               0.494    0.026    0.444    0.546    0.494    0.741
+##     SE5               0.441    0.029    0.386    0.498    0.441    0.638
+##     SE6               0.458    0.026    0.409    0.510    0.458    0.705
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .SE1               0.343    0.023    0.300    0.391    0.343    0.667
+##    .SE2               0.384    0.025    0.337    0.437    0.384    0.659
+##    .SE3               0.191    0.016    0.162    0.223    0.191    0.420
+##    .SE4               0.201    0.016    0.171    0.233    0.201    0.451
+##    .SE5               0.283    0.020    0.246    0.324    0.283    0.593
+##    .SE6               0.212    0.016    0.183    0.245    0.212    0.503
+##     SelfEfficacy      1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     SE1               0.333
+##     SE2               0.341
+##     SE3               0.580
+##     SE4               0.549
+##     SE5               0.407
+##     SE6               0.497
+```
+
+```
+## Warning: 
+## 13 (2.3%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     12.000  -3033.291      0.000   6142.624   6090.659     12.038   6099.313 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     20.332    162.066   6099.328     20.339    162.066  -3092.327
+```
+
 São utilizadas todos os itens para o construto, deixaremos assim mesmo.
 
 ##### Resilience
@@ -1307,6 +2256,65 @@ if(correr_single_CFAs_article){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                         6
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1788.899       0.481
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Resilience =~                                                         
+##     R2                0.394    0.035    0.325    0.464    0.394    0.506
+##     R5                0.693    0.040    0.616    0.773    0.693    0.869
+##     R6                0.557    0.037    0.485    0.628    0.557    0.737
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .R2                0.452    0.030    0.396    0.514    0.452    0.744
+##    .R5                0.156    0.042    0.066    0.234    0.156    0.245
+##    .R6                0.261    0.031    0.201    0.323    0.261    0.457
+##     Resilience        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     R2                0.256
+##     R5                0.755
+##     R6                0.543
+```
+
+```
+## Warning: 
+## 3 (0.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##      6.000  -1761.057      0.481   3560.135   3534.447      6.167   3539.956 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     11.399     97.972   3540.029     11.435     98.001  -1788.899
+```
+
 São utilizadas 3 variáveis para o construto, que são as que têm os loadings mais expressivos quando usadas todos os itens. O R2 parece que tem o loading mais baixo e, por isso, testaremos com R5 e R6 apenas para critério de comparação.
 
 ##### Knowledge Articulation
@@ -1322,6 +2330,75 @@ if(correr_single_CFAs_article){
   summary(fit.knowledge_article, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fit.knowledge_article)
 }
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        10
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -2156.752       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   KnowledgeArticulation =~                                             
+##     KA1                       0.476    0.026    0.426    0.528    0.476
+##     KA2                       0.521    0.024    0.476    0.568    0.521
+##     KA3                       0.477    0.023    0.431    0.523    0.477
+##     KA4                       0.511    0.024    0.464    0.557    0.511
+##     KA5                       0.450    0.025    0.401    0.500    0.450
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.704    1.000    normal(0,10)
+##     0.806    1.000    normal(0,10)
+##     0.773    1.000    normal(0,10)
+##     0.802    1.000    normal(0,10)
+##     0.709    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .KA1               0.231    0.016    0.201    0.264    0.231    0.505
+##    .KA2               0.146    0.012    0.124    0.170    0.146    0.350
+##    .KA3               0.153    0.012    0.131    0.177    0.153    0.402
+##    .KA4               0.145    0.012    0.122    0.170    0.145    0.357
+##    .KA5               0.200    0.014    0.174    0.230    0.200    0.498
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     KA1               0.495
+##     KA2               0.650
+##     KA3               0.598
+##     KA4               0.643
+##     KA5               0.502
+```
+
+```
+## Warning: 
+## 15 (2.7%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     10.000  -2105.023      0.000   4273.414   4230.003      9.979   4252.465 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     31.418    195.552   4252.534     31.452    195.562  -2156.752
 ```
 
 São utilizadas todos os itens para o construto, deixaremos assim mesmo.
@@ -1342,6 +2419,94 @@ if(correr_single_CFAs_article){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        16
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3250.116       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   TeamStrain =~                                                         
+##     TS10              0.480    0.029    0.424    0.539    0.480    0.655
+##     TS11              0.485    0.029    0.430    0.543    0.485    0.655
+##     TS12              0.503    0.029    0.447    0.562    0.503    0.671
+##     TS13              0.510    0.023    0.465    0.556    0.510    0.792
+##     TS14              0.519    0.021    0.479    0.561    0.519    0.860
+##     TS15              0.556    0.021    0.514    0.598    0.556    0.884
+##     TS16              0.445    0.022    0.404    0.488    0.445    0.762
+##     TS17              0.436    0.021    0.396    0.477    0.436    0.759
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .TS10              0.307    0.020    0.270    0.348    0.307    0.571
+##    .TS11              0.314    0.021    0.276    0.355    0.314    0.571
+##    .TS12              0.310    0.020    0.272    0.351    0.310    0.550
+##    .TS13              0.154    0.011    0.135    0.176    0.154    0.372
+##    .TS14              0.095    0.007    0.082    0.111    0.095    0.261
+##    .TS15              0.086    0.007    0.073    0.101    0.086    0.218
+##    .TS16              0.143    0.010    0.125    0.163    0.143    0.419
+##    .TS17              0.140    0.009    0.123    0.160    0.140    0.425
+##     TeamStrain        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     TS10              0.429
+##     TS11              0.429
+##     TS12              0.450
+##     TS13              0.628
+##     TS14              0.739
+##     TS15              0.782
+##     TS16              0.581
+##     TS17              0.575
+```
+
+```
+## Warning: 
+## 20 (3.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     16.000  -3166.242      0.000   6433.874   6364.678     16.097   6398.495 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     47.816    302.217   6397.168     47.153    301.511  -3250.116
+```
+
 São utilizados aqueles que têm os loadings mais expressivos e são os que os autores escolheram. Os valores continuam altos e por isso deixamos.
 
 ##### Cooperative Classroom Environment
@@ -1358,6 +2523,90 @@ if(correr_single_CFAs_article){
   summary(fit.cce_article, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fit.cce_article)
 }
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        16
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -4217.972       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.487    0.030    0.429    0.548
+##     CCE3                                0.421    0.032    0.358    0.484
+##     CCE4                                0.406    0.030    0.346    0.467
+##     CCE5                                0.434    0.026    0.384    0.486
+##     CCE8                                0.421    0.031    0.361    0.481
+##     CCE9                                0.505    0.029    0.449    0.562
+##     CCE10                               0.482    0.026    0.431    0.533
+##     CCE11                               0.498    0.027    0.446    0.551
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.487    0.652    1.000    normal(0,10)
+##     0.421    0.549    1.000    normal(0,10)
+##     0.406    0.562    1.000    normal(0,10)
+##     0.434    0.673    1.000    normal(0,10)
+##     0.421    0.569    1.000    normal(0,10)
+##     0.505    0.703    1.000    normal(0,10)
+##     0.482    0.733    1.000    normal(0,10)
+##     0.498    0.726    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .CCE1              0.322    0.023    0.280    0.368    0.322    0.575
+##    .CCE3              0.411    0.026    0.363    0.464    0.411    0.699
+##    .CCE4              0.356    0.023    0.313    0.403    0.356    0.684
+##    .CCE5              0.228    0.016    0.199    0.262    0.228    0.548
+##    .CCE8              0.370    0.023    0.327    0.418    0.370    0.676
+##    .CCE9              0.262    0.019    0.226    0.301    0.262    0.506
+##    .CCE10             0.200    0.015    0.171    0.232    0.200    0.463
+##    .CCE11             0.222    0.016    0.192    0.256    0.222    0.472
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     CCE1              0.425
+##     CCE3              0.301
+##     CCE4              0.316
+##     CCE5              0.452
+##     CCE8              0.324
+##     CCE9              0.494
+##     CCE10             0.537
+##     CCE11             0.528
+```
+
+```
+## Warning: 
+## 20 (3.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     16.000  -4139.708      0.000   8380.805   8311.019     15.802   8328.760 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     32.899    208.520   8328.762     32.900    208.522  -4217.972
 ```
 
 Este construto parece ter itens mais interessantes para serem testados, então vamos experimentar com os valores mais altos e ver mais detalhadamente para tentar melhorar a análise.
@@ -1387,6 +2636,8 @@ if(correr_single_CFAs_article){
   p7 <- plot_sem_model(fit.cce_article, "Cooperative Classroom Environment")
 }
 ```
+
+![](ProjetoMB_files/figure-html/graficos artigo-1.png)<!-- -->![](ProjetoMB_files/figure-html/graficos artigo-2.png)<!-- -->![](ProjetoMB_files/figure-html/graficos artigo-3.png)<!-- -->![](ProjetoMB_files/figure-html/graficos artigo-4.png)<!-- -->![](ProjetoMB_files/figure-html/graficos artigo-5.png)<!-- -->![](ProjetoMB_files/figure-html/graficos artigo-6.png)<!-- -->![](ProjetoMB_files/figure-html/graficos artigo-7.png)<!-- -->
 
 #### CFA com variáveis a escolher
 
@@ -1426,11 +2677,95 @@ if(correr_single_CFAs_purpose){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                         4
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1185.736       0.495
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Resilience =~                                                         
+##     R5                0.643    0.108    0.475    0.816    0.643    0.814
+##     R6                0.613    0.103    0.454    0.776    0.613    0.818
+##      Rhat    Prior       
+##                          
+##     1.003    normal(0,10)
+##     1.002    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .R5                0.211    0.137    0.001    0.400    0.211    0.338
+##    .R6                0.185    0.125    0.000    0.357    0.185    0.330
+##     Resilience        1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.003 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     R5                0.662
+##     R6                0.670
+```
+
+```
+## Warning: 
+## 2 (0.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##      4.000  -1168.844      0.495   2363.035   2338.942      0.627   2345.284 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##      6.804     81.839   2345.281      6.803     81.837  -1185.736
+```
+
 
 ``` r
 if(correr_single_CFAs_purpose){
   blavCompare(fit.resilience_article, fit.resilience_purpose)
 }
+```
+
+```
+## Warning: 
+## 3 (0.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: 
+## 2 (0.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  3539.956 
+##  object2:  2345.284 
+## 
+##  ELPD difference & SE: 
+##  -597.336   20.104 
+## 
+## LOO estimates: 
+##  object1:  3540.03 
+##  object2:  2345.281 
+## 
+##  ELPD difference & SE: 
+##  -597.374   20.108 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1): -603.163
 ```
 
 O modelo sem R2 e só com 2 variáveis parece ser melhor.
@@ -1451,11 +2786,133 @@ if(correr_single_CFAs_purpose){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## blavaan 0.5.8 ended normally after 3000 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        16
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -3674.729       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.405    0.031    0.345    0.467
+##     CCE5                                0.347    0.027    0.294    0.400
+##     CCE10                               0.346    0.027    0.293    0.400
+##     CCE11                               0.344    0.029    0.287    0.402
+##     CCE16                               0.488    0.023    0.443    0.535
+##     CCE17                               0.483    0.022    0.440    0.527
+##     CCE18                               0.512    0.024    0.466    0.560
+##     CCE19                               0.492    0.023    0.447    0.537
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.405    0.543    1.000    normal(0,10)
+##     0.347    0.538    1.000    normal(0,10)
+##     0.346    0.526    1.000    normal(0,10)
+##     0.344    0.502    1.000    normal(0,10)
+##     0.488    0.780    1.000    normal(0,10)
+##     0.483    0.801    1.000    normal(0,10)
+##     0.512    0.801    1.000    normal(0,10)
+##     0.492    0.798    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .CCE1              0.394    0.024    0.349    0.445    0.394    0.706
+##    .CCE5              0.296    0.019    0.261    0.334    0.296    0.711
+##    .CCE10             0.312    0.020    0.275    0.353    0.312    0.723
+##    .CCE11             0.351    0.022    0.310    0.397    0.351    0.748
+##    .CCE16             0.153    0.011    0.132    0.177    0.153    0.392
+##    .CCE17             0.130    0.010    0.112    0.151    0.130    0.358
+##    .CCE18             0.146    0.012    0.124    0.170    0.146    0.358
+##    .CCE19             0.138    0.011    0.118    0.160    0.138    0.363
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     CCE1              0.294
+##     CCE5              0.289
+##     CCE10             0.277
+##     CCE11             0.252
+##     CCE16             0.608
+##     CCE17             0.642
+##     CCE18             0.642
+##     CCE19             0.637
+```
+
+```
+## Warning: 
+## 26 (4.6%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     16.000  -3593.508      0.000   7288.406   7219.118     16.051   7266.295 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##     60.871    358.203   7265.939     60.693    357.988  -3674.729
+```
+
 
 ``` r
 if(correr_single_CFAs_purpose){
   blavCompare(fit.cce_article, fit.cce_purpose)
 }
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 20 (3.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: 
+## 26 (4.6%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  8328.76 
+##  object2:  7266.295 
+## 
+##  ELPD difference & SE: 
+##  -531.233  151.290 
+## 
+## LOO estimates: 
+##  object1:  8328.764 
+##  object2:  7266.138 
+## 
+##  ELPD difference & SE: 
+##  -531.313  151.190 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1): -543.243
 ```
 
 O modelo com as variáveis escolhidas parece ser melhor, mas não temos certeza se é mesmo assim e se os itens foram escolhidos pelo seu significado. Isto apenas porque não temos detalhes o que todos os itens indicam, só do CCE1 até ao CCE5.
@@ -1532,6 +2989,32 @@ if(correr_multiple_CFA){
 }
 ```
 
+```
+## Warning: There were 206 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#bulk-ess
+```
+
+```
+## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#tail-ess
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
 
 
 ``` r
@@ -1539,6 +3022,310 @@ if(correr_multiple_CFA){
   summary(fitcfa.authors, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fitcfa.authors)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        91
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -17779.257       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.912    0.048    0.800    0.989
+##     ET13                                0.713    0.043    0.636    0.803
+##   Motivation =~                                                         
+##     Mot5                                0.594    0.047    0.503    0.685
+##     Mot8                                0.606    0.045    0.520    0.693
+##     Mot11                               0.593    0.044    0.505    0.681
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.429    0.030    0.369    0.482
+##     SE2                                 0.442    0.032    0.382    0.506
+##     SE3                                 0.520    0.026    0.471    0.572
+##     SE4                                 0.486    0.025    0.437    0.535
+##     SE5                                 0.443    0.028    0.385    0.497
+##     SE6                                 0.465    0.025    0.415    0.515
+##   Resilience =~                                                         
+##     R2                                  0.407    0.036    0.337    0.477
+##     R5                                  0.680    0.036    0.606    0.749
+##     R6                                  0.573    0.035    0.507    0.644
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.475    0.026    0.425    0.526
+##     KA2                                 0.527    0.023    0.483    0.573
+##     KA3                                 0.479    0.023    0.434    0.526
+##     KA4                                 0.511    0.024    0.465    0.560
+##     KA5                                 0.445    0.025    0.400    0.495
+##   TeamStrain =~                                                         
+##     TS10                                0.480    0.027    0.428    0.534
+##     TS11                                0.489    0.031    0.432    0.557
+##     TS12                                0.501    0.029    0.445    0.561
+##     TS13                                0.507    0.024    0.462    0.554
+##     TS14                                0.519    0.022    0.473    0.561
+##     TS15                                0.556    0.022    0.511    0.597
+##     TS16                                0.450    0.022    0.409    0.495
+##     TS17                                0.442    0.022    0.395    0.485
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.495    0.031    0.433    0.554
+##     CCE3                                0.420    0.031    0.358    0.483
+##     CCE4                                0.406    0.030    0.347    0.463
+##     CCE5                                0.444    0.026    0.394    0.493
+##     CCE8                                0.425    0.031    0.367    0.485
+##     CCE9                                0.508    0.029    0.454    0.567
+##     CCE10                               0.484    0.028    0.432    0.545
+##     CCE11                               0.498    0.027    0.444    0.549
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.912    0.963    1.041    normal(0,10)
+##     0.713    0.761    1.013    normal(0,10)
+##                                            
+##     0.594    0.671    1.002    normal(0,10)
+##     0.606    0.660    1.008    normal(0,10)
+##     0.593    0.636    1.002    normal(0,10)
+##                                            
+##     0.429    0.595    1.006    normal(0,10)
+##     0.442    0.578    1.004    normal(0,10)
+##     0.520    0.768    1.002    normal(0,10)
+##     0.486    0.729    1.005    normal(0,10)
+##     0.443    0.639    1.003    normal(0,10)
+##     0.465    0.713    1.001    normal(0,10)
+##                                            
+##     0.407    0.523    1.005    normal(0,10)
+##     0.680    0.848    1.001    normal(0,10)
+##     0.573    0.755    1.002    normal(0,10)
+##                                            
+##     0.475    0.701    1.002    normal(0,10)
+##     0.527    0.814    1.002    normal(0,10)
+##     0.479    0.776    1.007    normal(0,10)
+##     0.511    0.801    1.007    normal(0,10)
+##     0.445    0.701    1.004    normal(0,10)
+##                                            
+##     0.480    0.655    1.001    normal(0,10)
+##     0.489    0.658    1.013    normal(0,10)
+##     0.501    0.667    1.003    normal(0,10)
+##     0.507    0.787    1.002    normal(0,10)
+##     0.519    0.858    1.007    normal(0,10)
+##     0.556    0.884    1.011    normal(0,10)
+##     0.450    0.769    1.011    normal(0,10)
+##     0.442    0.768    1.008    normal(0,10)
+##                                            
+##     0.495    0.658    1.008    normal(0,10)
+##     0.420    0.547    1.001    normal(0,10)
+##     0.406    0.562    1.008    normal(0,10)
+##     0.444    0.687    1.002    normal(0,10)
+##     0.425    0.574    1.005    normal(0,10)
+##     0.508    0.704    1.010    normal(0,10)
+##     0.484    0.733    1.014    normal(0,10)
+##     0.498    0.724    1.007    normal(0,10)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   StudentEthics ~~                                                     
+##     Motivation                0.195    0.054    0.087    0.296    0.195
+##     SelfEfficacy              0.078    0.046   -0.010    0.168    0.078
+##     Resilience                0.143    0.049    0.048    0.236    0.143
+##     KnowldgArtcltn            0.140    0.046    0.049    0.227    0.140
+##     TeamStrain                0.180    0.044    0.088    0.264    0.180
+##     CprtvClssrmEnv            0.074    0.049   -0.022    0.169    0.074
+##   Motivation ~~                                                        
+##     SelfEfficacy             -0.156    0.055   -0.258   -0.050   -0.156
+##     Resilience                0.167    0.052    0.065    0.267    0.167
+##     KnowldgArtcltn           -0.162    0.054   -0.259   -0.049   -0.162
+##     TeamStrain                0.020    0.052   -0.079    0.125    0.020
+##     CprtvClssrmEnv           -0.043    0.054   -0.146    0.060   -0.043
+##   SelfEfficacy ~~                                                      
+##     Resilience                0.289    0.047    0.196    0.381    0.289
+##     KnowldgArtcltn            0.415    0.040    0.339    0.494    0.415
+##     TeamStrain                0.397    0.040    0.319    0.475    0.397
+##     CprtvClssrmEnv            0.398    0.043    0.309    0.479    0.398
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.180    0.051    0.076    0.275    0.180
+##     TeamStrain                0.166    0.047    0.074    0.261    0.166
+##     CprtvClssrmEnv            0.153    0.048    0.059    0.248    0.153
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.468    0.038    0.395    0.540    0.468
+##     CprtvClssrmEnv            0.439    0.041    0.355    0.519    0.439
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.394    0.041    0.315    0.474    0.394
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.195    1.003     lkj_corr(1)
+##     0.078    1.004     lkj_corr(1)
+##     0.143    1.005     lkj_corr(1)
+##     0.140    1.009     lkj_corr(1)
+##     0.180    1.002     lkj_corr(1)
+##     0.074    1.004     lkj_corr(1)
+##                                   
+##    -0.156    1.009     lkj_corr(1)
+##     0.167    1.006     lkj_corr(1)
+##    -0.162    1.004     lkj_corr(1)
+##     0.020    1.004     lkj_corr(1)
+##    -0.043    1.005     lkj_corr(1)
+##                                   
+##     0.289    1.012     lkj_corr(1)
+##     0.415    1.003     lkj_corr(1)
+##     0.397    1.001     lkj_corr(1)
+##     0.398    1.005     lkj_corr(1)
+##                                   
+##     0.180    1.012     lkj_corr(1)
+##     0.166    1.004     lkj_corr(1)
+##     0.153    1.007     lkj_corr(1)
+##                                   
+##     0.468    1.005     lkj_corr(1)
+##     0.439    1.002     lkj_corr(1)
+##                                   
+##     0.394    1.003     lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.065    0.063    0.000    0.220    0.065    0.073
+##    .ET13              0.370    0.047    0.268    0.446    0.370    0.421
+##    .Mot5              0.432    0.043    0.347    0.521    0.432    0.550
+##    .Mot8              0.474    0.044    0.388    0.563    0.474    0.564
+##    .Mot11             0.519    0.045    0.433    0.614    0.519    0.596
+##    .SE1               0.336    0.023    0.294    0.380    0.336    0.646
+##    .SE2               0.390    0.025    0.344    0.442    0.390    0.666
+##    .SE3               0.188    0.014    0.161    0.217    0.188    0.410
+##    .SE4               0.208    0.015    0.181    0.239    0.208    0.469
+##    .SE5               0.284    0.019    0.249    0.324    0.284    0.592
+##    .SE6               0.209    0.015    0.181    0.240    0.209    0.492
+##    .R2                0.442    0.028    0.391    0.502    0.442    0.727
+##    .R5                0.181    0.033    0.117    0.247    0.181    0.281
+##    .R6                0.247    0.027    0.194    0.301    0.247    0.429
+##    .KA1               0.233    0.016    0.203    0.266    0.233    0.508
+##    .KA2               0.141    0.011    0.120    0.164    0.141    0.337
+##    .KA3               0.152    0.011    0.132    0.176    0.152    0.398
+##    .KA4               0.146    0.012    0.124    0.169    0.146    0.358
+##    .KA5               0.205    0.015    0.179    0.237    0.205    0.508
+##    .TS10              0.307    0.019    0.271    0.346    0.307    0.571
+##    .TS11              0.313    0.019    0.277    0.352    0.313    0.567
+##    .TS12              0.313    0.020    0.277    0.356    0.313    0.555
+##    .TS13              0.158    0.011    0.139    0.180    0.158    0.380
+##    .TS14              0.096    0.007    0.083    0.111    0.096    0.263
+##    .TS15              0.087    0.007    0.074    0.101    0.087    0.219
+##    .TS16              0.140    0.009    0.122    0.158    0.140    0.408
+##    .TS17              0.136    0.009    0.118    0.155    0.136    0.410
+##    .CCE1              0.320    0.022    0.279    0.364    0.320    0.567
+##    .CCE3              0.414    0.027    0.363    0.467    0.414    0.701
+##    .CCE4              0.358    0.023    0.314    0.407    0.358    0.685
+##    .CCE5              0.221    0.016    0.191    0.255    0.221    0.528
+##    .CCE8              0.368    0.023    0.329    0.416    0.368    0.670
+##    .CCE9              0.262    0.019    0.228    0.301    0.262    0.504
+##    .CCE10             0.201    0.015    0.174    0.231    0.201    0.462
+##    .CCE11             0.225    0.017    0.193    0.259    0.225    0.476
+##     StudentEthics     1.000                               1.000    1.000
+##     Motivation        1.000                               1.000    1.000
+##     SelfEfficacy      1.000                               1.000    1.000
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.035 gamma(1,.5)[sd]
+##     1.026 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.012 gamma(1,.5)[sd]
+##     1.008 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.014 gamma(1,.5)[sd]
+##     1.006 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.007 gamma(1,.5)[sd]
+##     1.014 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.006 gamma(1,.5)[sd]
+##     1.006 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.007 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.010 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.927
+##     ET13              0.579
+##     Mot5              0.450
+##     Mot8              0.436
+##     Mot11             0.404
+##     SE1               0.354
+##     SE2               0.334
+##     SE3               0.590
+##     SE4               0.531
+##     SE5               0.408
+##     SE6               0.508
+##     R2                0.273
+##     R5                0.719
+##     R6                0.571
+##     KA1               0.492
+##     KA2               0.663
+##     KA3               0.602
+##     KA4               0.642
+##     KA5               0.492
+##     TS10              0.429
+##     TS11              0.433
+##     TS12              0.445
+##     TS13              0.620
+##     TS14              0.737
+##     TS15              0.781
+##     TS16              0.592
+##     TS17              0.590
+##     CCE1              0.433
+##     CCE3              0.299
+##     CCE4              0.315
+##     CCE5              0.472
+##     CCE8              0.330
+##     CCE9              0.496
+##     CCE10             0.538
+##     CCE11             0.524
+```
+
+```
+## Warning: 
+## 91 (16.1%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     91.000 -17383.628      0.000  35343.907  34946.166     89.455  35066.657 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##    200.508    709.331  35060.177    197.268    707.128 -17779.257
 ```
 
 
@@ -1560,6 +3347,8 @@ if(correr_multiple_CFA){
   )
 }
 ```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-36-1.png)<!-- -->
 
 #### Com as variáveis que escolhemos
 
@@ -1618,12 +3407,331 @@ if(correr_multiple_CFA){
 }
 ```
 
+```
+## Warning: There were 63 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#tail-ess
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+```
+
 
 ``` r
 if(correr_multiple_CFA){
   summary(fitcfa.purpose, standardized = TRUE, rsquare = TRUE)
   fitMeasures(fitcfa.purpose)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        89
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -16593.292       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.911    0.048    0.794    0.990
+##     ET13                                0.713    0.043    0.635    0.804
+##   Motivation =~                                                         
+##     Mot5                                0.583    0.044    0.495    0.669
+##     Mot8                                0.609    0.045    0.521    0.695
+##     Mot11                               0.598    0.044    0.514    0.681
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.424    0.030    0.365    0.483
+##     SE2                                 0.441    0.031    0.380    0.504
+##     SE3                                 0.517    0.026    0.469    0.568
+##     SE4                                 0.488    0.026    0.438    0.540
+##     SE5                                 0.439    0.028    0.386    0.495
+##     SE6                                 0.465    0.026    0.416    0.518
+##   Resilience =~                                                         
+##     R5                                  0.663    0.052    0.567    0.780
+##     R6                                  0.587    0.048    0.489    0.681
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.478    0.027    0.426    0.532
+##     KA2                                 0.529    0.024    0.484    0.577
+##     KA3                                 0.476    0.023    0.431    0.522
+##     KA4                                 0.511    0.023    0.464    0.557
+##     KA5                                 0.448    0.025    0.398    0.499
+##   TeamStrain =~                                                         
+##     TS10                                0.482    0.028    0.427    0.537
+##     TS11                                0.488    0.029    0.432    0.544
+##     TS12                                0.504    0.029    0.448    0.561
+##     TS13                                0.508    0.023    0.465    0.556
+##     TS14                                0.518    0.020    0.479    0.559
+##     TS15                                0.556    0.021    0.516    0.598
+##     TS16                                0.449    0.021    0.410    0.493
+##     TS17                                0.439    0.021    0.401    0.483
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.412    0.031    0.352    0.474
+##     CCE5                                0.357    0.026    0.305    0.410
+##     CCE10                               0.351    0.028    0.295    0.406
+##     CCE11                               0.349    0.029    0.291    0.406
+##     CCE16                               0.494    0.024    0.450    0.543
+##     CCE17                               0.479    0.023    0.437    0.525
+##     CCE18                               0.506    0.024    0.460    0.552
+##     CCE19                               0.492    0.023    0.450    0.538
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.911    0.962    1.009    normal(0,10)
+##     0.713    0.761    1.004    normal(0,10)
+##                                            
+##     0.583    0.660    1.002    normal(0,10)
+##     0.609    0.664    1.002    normal(0,10)
+##     0.598    0.642    1.002    normal(0,10)
+##                                            
+##     0.424    0.590    1.000    normal(0,10)
+##     0.441    0.577    1.000    normal(0,10)
+##     0.517    0.765    1.000    normal(0,10)
+##     0.488    0.731    1.001    normal(0,10)
+##     0.439    0.634    1.001    normal(0,10)
+##     0.465    0.715    1.000    normal(0,10)
+##                                            
+##     0.663    0.830    1.006    normal(0,10)
+##     0.587    0.775    1.007    normal(0,10)
+##                                            
+##     0.478    0.704    1.000    normal(0,10)
+##     0.529    0.817    1.005    normal(0,10)
+##     0.476    0.771    1.003    normal(0,10)
+##     0.511    0.800    1.000    normal(0,10)
+##     0.448    0.705    1.001    normal(0,10)
+##                                            
+##     0.482    0.657    1.001    normal(0,10)
+##     0.488    0.659    1.005    normal(0,10)
+##     0.504    0.670    1.000    normal(0,10)
+##     0.508    0.789    1.000    normal(0,10)
+##     0.518    0.857    1.002    normal(0,10)
+##     0.556    0.884    1.003    normal(0,10)
+##     0.449    0.768    1.000    normal(0,10)
+##     0.439    0.765    1.002    normal(0,10)
+##                                            
+##     0.412    0.551    1.000    normal(0,10)
+##     0.357    0.553    1.001    normal(0,10)
+##     0.351    0.533    1.000    normal(0,10)
+##     0.349    0.509    1.000    normal(0,10)
+##     0.494    0.789    1.002    normal(0,10)
+##     0.479    0.793    1.000    normal(0,10)
+##     0.506    0.791    1.000    normal(0,10)
+##     0.492    0.798    1.001    normal(0,10)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   StudentEthics ~~                                                     
+##     Motivation                0.189    0.053    0.082    0.291    0.189
+##     SelfEfficacy              0.079    0.049   -0.015    0.177    0.079
+##     Resilience                0.159    0.050    0.064    0.258    0.159
+##     KnowldgArtcltn            0.140    0.046    0.049    0.229    0.140
+##     TeamStrain                0.178    0.044    0.090    0.264    0.178
+##     CprtvClssrmEnv            0.132    0.046    0.043    0.225    0.132
+##   Motivation ~~                                                        
+##     SelfEfficacy             -0.160    0.054   -0.263   -0.056   -0.160
+##     Resilience                0.149    0.055    0.040    0.257    0.149
+##     KnowldgArtcltn           -0.168    0.052   -0.267   -0.064   -0.168
+##     TeamStrain                0.021    0.052   -0.081    0.123    0.021
+##     CprtvClssrmEnv           -0.156    0.052   -0.256   -0.052   -0.156
+##   SelfEfficacy ~~                                                      
+##     Resilience                0.279    0.048    0.185    0.371    0.279
+##     KnowldgArtcltn            0.415    0.043    0.329    0.495    0.415
+##     TeamStrain                0.396    0.042    0.314    0.476    0.396
+##     CprtvClssrmEnv            0.321    0.044    0.235    0.405    0.321
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.163    0.049    0.063    0.256    0.163
+##     TeamStrain                0.153    0.046    0.061    0.242    0.153
+##     CprtvClssrmEnv            0.232    0.048    0.136    0.321    0.232
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.465    0.038    0.386    0.536    0.465
+##     CprtvClssrmEnv            0.564    0.035    0.490    0.627    0.564
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.455    0.040    0.375    0.531    0.455
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.189    1.002     lkj_corr(1)
+##     0.079    1.001     lkj_corr(1)
+##     0.159    1.002     lkj_corr(1)
+##     0.140    1.000     lkj_corr(1)
+##     0.178    1.006     lkj_corr(1)
+##     0.132    1.002     lkj_corr(1)
+##                                   
+##    -0.160    1.000     lkj_corr(1)
+##     0.149    1.001     lkj_corr(1)
+##    -0.168    1.000     lkj_corr(1)
+##     0.021    1.006     lkj_corr(1)
+##    -0.156    1.001     lkj_corr(1)
+##                                   
+##     0.279    1.000     lkj_corr(1)
+##     0.415    1.002     lkj_corr(1)
+##     0.396    1.000     lkj_corr(1)
+##     0.321    1.001     lkj_corr(1)
+##                                   
+##     0.163    1.002     lkj_corr(1)
+##     0.153    1.000     lkj_corr(1)
+##     0.232    1.001     lkj_corr(1)
+##                                   
+##     0.465    1.000     lkj_corr(1)
+##     0.564    1.001     lkj_corr(1)
+##                                   
+##     0.455    1.006     lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.067    0.062    0.000    0.208    0.067    0.075
+##    .ET13              0.369    0.047    0.268    0.447    0.369    0.421
+##    .Mot5              0.441    0.042    0.361    0.524    0.441    0.565
+##    .Mot8              0.470    0.045    0.384    0.562    0.470    0.559
+##    .Mot11             0.510    0.045    0.426    0.600    0.510    0.588
+##    .SE1               0.335    0.022    0.294    0.381    0.335    0.651
+##    .SE2               0.390    0.026    0.341    0.444    0.390    0.667
+##    .SE3               0.189    0.015    0.162    0.220    0.189    0.415
+##    .SE4               0.208    0.016    0.177    0.241    0.208    0.466
+##    .SE5               0.286    0.019    0.250    0.326    0.286    0.597
+##    .SE6               0.207    0.015    0.179    0.237    0.207    0.489
+##    .R5                0.198    0.062    0.038    0.307    0.198    0.311
+##    .R6                0.229    0.048    0.129    0.328    0.229    0.399
+##    .KA1               0.232    0.015    0.203    0.264    0.232    0.504
+##    .KA2               0.140    0.011    0.118    0.163    0.140    0.333
+##    .KA3               0.155    0.012    0.133    0.179    0.155    0.405
+##    .KA4               0.147    0.012    0.125    0.170    0.147    0.361
+##    .KA5               0.203    0.014    0.177    0.232    0.203    0.503
+##    .TS10              0.307    0.020    0.270    0.347    0.307    0.569
+##    .TS11              0.310    0.020    0.274    0.352    0.310    0.565
+##    .TS12              0.312    0.020    0.275    0.353    0.312    0.551
+##    .TS13              0.157    0.011    0.137    0.180    0.157    0.378
+##    .TS14              0.097    0.008    0.083    0.112    0.097    0.265
+##    .TS15              0.087    0.007    0.074    0.101    0.087    0.219
+##    .TS16              0.140    0.009    0.123    0.160    0.140    0.411
+##    .TS17              0.137    0.010    0.117    0.156    0.137    0.415
+##    .CCE1              0.390    0.024    0.343    0.441    0.390    0.696
+##    .CCE5              0.289    0.019    0.256    0.328    0.289    0.694
+##    .CCE10             0.309    0.019    0.274    0.349    0.309    0.715
+##    .CCE11             0.348    0.021    0.309    0.391    0.348    0.741
+##    .CCE16             0.148    0.011    0.127    0.171    0.148    0.378
+##    .CCE17             0.135    0.010    0.116    0.156    0.135    0.370
+##    .CCE18             0.153    0.012    0.131    0.179    0.153    0.375
+##    .CCE19             0.138    0.011    0.119    0.160    0.138    0.363
+##     StudentEthics     1.000                               1.000    1.000
+##     Motivation        1.000                               1.000    1.000
+##     SelfEfficacy      1.000                               1.000    1.000
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.007 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.012 gamma(1,.5)[sd]
+##     1.012 gamma(1,.5)[sd]
+##     0.999 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.006 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.012 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.008 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.007 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.925
+##     ET13              0.579
+##     Mot5              0.435
+##     Mot8              0.441
+##     Mot11             0.412
+##     SE1               0.349
+##     SE2               0.333
+##     SE3               0.585
+##     SE4               0.534
+##     SE5               0.403
+##     SE6               0.511
+##     R5                0.689
+##     R6                0.601
+##     KA1               0.496
+##     KA2               0.667
+##     KA3               0.595
+##     KA4               0.639
+##     KA5               0.497
+##     TS10              0.431
+##     TS11              0.435
+##     TS12              0.449
+##     TS13              0.622
+##     TS14              0.735
+##     TS15              0.781
+##     TS16              0.589
+##     TS17              0.585
+##     CCE1              0.304
+##     CCE5              0.306
+##     CCE10             0.285
+##     CCE11             0.259
+##     CCE16             0.622
+##     CCE17             0.630
+##     CCE18             0.625
+##     CCE19             0.637
+```
+
+```
+## Warning: 
+## 93 (16.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##       npar       logl        ppp        bic        dic      p_dic       waic 
+##     89.000 -16205.842      0.000  32975.662  32587.190     87.753  32739.799 
+##     p_waic    se_waic      looic      p_loo     se_loo margloglik 
+##    227.524    844.270  32722.979    219.114    837.724 -16593.292
 ```
 
 
@@ -1645,6 +3753,8 @@ if(correr_multiple_CFA){
   )
 }
 ```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-38-1.png)<!-- -->
 
 #### (X) Com todas as variáveis
 
@@ -1735,11 +3845,78 @@ if(correr_SEM){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 19.82 sec elapsed
+```
+
 
 ``` r
 if(correr_SEM){
   summary(fit.sem_FAauthors, standardized=TRUE, rsquare=TRUE)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        13
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1721.264       0.002
+## 
+## Parameter Estimates:
+## 
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.170    0.047    0.079    0.262    0.170    0.149
+##     KnowldgArtcltn   -0.249    0.064   -0.376   -0.125   -0.249   -0.180
+##     TeamStrain        0.110    0.065   -0.018    0.237    0.110    0.079
+##     CoopClass        -0.015    0.067   -0.145    0.117   -0.015   -0.010
+##   SelfEfficacy ~                                                        
+##     Resilience        0.133    0.031    0.071    0.195    0.133    0.165
+##     KnowldgArtcltn    0.192    0.042    0.110    0.271    0.192    0.197
+##     TeamStrain        0.157    0.040    0.078    0.237    0.157    0.160
+##     CoopClass         0.203    0.042    0.121    0.286    0.203    0.198
+##   ethics ~                                                              
+##     Motivation        0.165    0.051    0.065    0.264    0.165    0.136
+##     SelfEfficacy      0.195    0.071    0.057    0.334    0.195    0.113
+##      Rhat    Prior       
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+##                          
+##     1.000    normal(0,10)
+##     1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .Motivation        0.493    0.029    0.439    0.555    0.493    0.957
+##    .SelfEfficacy      0.197    0.012    0.176    0.221    0.197    0.765
+##    .ethics            0.744    0.044    0.659    0.836    0.744    0.969
+##      Rhat    Prior       
+##     0.999 gamma(1,.5)[sd]
+##     0.999 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+## 
+## R-Square:
+##                    Estimate
+##     Motivation        0.043
+##     SelfEfficacy      0.235
+##     ethics            0.031
 ```
 
 
@@ -1761,6 +3938,8 @@ if(correr_SEM){
   )
 }
 ```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-43-1.png)<!-- -->
 
 #### Construtos criados por nós
 
@@ -1798,11 +3977,78 @@ if(correr_SEM){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 19.69 sec elapsed
+```
+
 
 ``` r
 if(correr_SEM){
   summary(fit.sem_meanOUR, standardized=TRUE, rsquare=TRUE)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        13
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -1721.274       0.002
+## 
+## Parameter Estimates:
+## 
+## 
+## Regressions:
+##                              Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   mean_factor_Motivation ~                                               
+##     men_fctr_Rslnc              0.171    0.046    0.077    0.261    0.171
+##     mn_fctr_KnwldA             -0.249    0.064   -0.373   -0.123   -0.249
+##     mn_fctr_TmStrn              0.110    0.065   -0.019    0.238    0.110
+##     mn_fctr_CprtCE             -0.014    0.068   -0.150    0.118   -0.014
+##   mean_factor_SelfEfficacy ~                                             
+##     men_fctr_Rslnc              0.133    0.031    0.072    0.194    0.133
+##     mn_fctr_KnwldA              0.192    0.042    0.109    0.275    0.192
+##     mn_fctr_TmStrn              0.158    0.040    0.080    0.235    0.158
+##     mn_fctr_CprtCE              0.204    0.041    0.122    0.284    0.204
+##   mean_factor_Ethics ~                                                   
+##     men_fctr_Mtvtn              0.166    0.053    0.062    0.270    0.166
+##     mn_fctr_SlfEff              0.195    0.070    0.059    0.332    0.195
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.149    1.000    normal(0,10)
+##    -0.180    0.999    normal(0,10)
+##     0.079    0.999    normal(0,10)
+##    -0.010    1.000    normal(0,10)
+##                                   
+##     0.165    1.000    normal(0,10)
+##     0.196    1.000    normal(0,10)
+##     0.161    1.000    normal(0,10)
+##     0.198    1.000    normal(0,10)
+##                                   
+##     0.136    0.999    normal(0,10)
+##     0.113    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .men_fctr_Mtvtn    0.493    0.029    0.440    0.554    0.493    0.956
+##    .mn_fctr_SlfEff    0.197    0.012    0.175    0.222    0.197    0.765
+##    .men_fctr_Ethcs    0.745    0.044    0.665    0.835    0.745    0.969
+##      Rhat    Prior       
+##     1.001 gamma(1,.5)[sd]
+##     0.999 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+## 
+## R-Square:
+##                    Estimate
+##     men_fctr_Mtvtn    0.044
+##     mn_fctr_SlfEff    0.235
+##     men_fctr_Ethcs    0.031
 ```
 
 
@@ -1825,6 +4071,8 @@ if(correr_SEM){
 }
 ```
 
+![](ProjetoMB_files/figure-html/unnamed-chunk-46-1.png)<!-- -->
+
 Conseguimos replicar na perfeição os valores do artigo.
 
 ##### CFA
@@ -1846,11 +4094,78 @@ if(correr_SEM){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 22.04 sec elapsed
+```
+
 
 ``` r
 if(correr_SEM){
   summary(fit.sem_CFAOUR, standardized=TRUE, rsquare=TRUE)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        13
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                      -2183.708       0.006
+## 
+## Parameter Estimates:
+## 
+## 
+## Regressions:
+##                               Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   score_factor_Motivation ~                                               
+##     scr_fctr_Rslnc               0.128    0.038    0.053    0.205    0.128
+##     scr_fctr_KnwlA              -0.156    0.043   -0.238   -0.072   -0.156
+##     scr_fctr_TmStr               0.061    0.041   -0.019    0.142    0.061
+##     scr_fctr_CprCE              -0.015    0.042   -0.100    0.068   -0.015
+##   score_factor_SelfEfficacy ~                                             
+##     scr_fctr_Rslnc               0.168    0.038    0.095    0.244    0.168
+##     scr_fctr_KnwlA               0.181    0.042    0.099    0.266    0.181
+##     scr_fctr_TmStr               0.176    0.040    0.096    0.254    0.176
+##     scr_fctr_CprCE               0.182    0.040    0.103    0.261    0.182
+##   score_factor_Ethics ~                                                   
+##     scr_fctr_Mtvtn               0.131    0.048    0.038    0.223    0.131
+##     scr_fctr_SlfEf               0.126    0.043    0.041    0.210    0.126
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.138    0.999    normal(0,10)
+##    -0.175    0.999    normal(0,10)
+##     0.070    1.000    normal(0,10)
+##    -0.017    1.000    normal(0,10)
+##                                   
+##     0.165    0.999    normal(0,10)
+##     0.184    1.000    normal(0,10)
+##     0.184    1.000    normal(0,10)
+##     0.183    1.000    normal(0,10)
+##                                   
+##     0.118    0.999    normal(0,10)
+##     0.125    1.000    normal(0,10)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .scr_fctr_Mtvtn    0.673    0.040    0.599    0.756    0.673    0.960
+##    .scr_fctr_SlfEf    0.651    0.038    0.581    0.728    0.651    0.767
+##    .scr_fctr_Ethcs    0.843    0.051    0.751    0.948    0.843    0.971
+##      Rhat    Prior       
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+## 
+## R-Square:
+##                    Estimate
+##     scr_fctr_Mtvtn    0.040
+##     scr_fctr_SlfEf    0.233
+##     scr_fctr_Ethcs    0.029
 ```
 
 
@@ -1872,6 +4187,8 @@ if(correr_SEM){
   )
 }
 ```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-48-1.png)<!-- -->
 
 #### Estimação seguida com FA criadas no próprio modelo
 
@@ -1905,6 +4222,33 @@ if(correr_SEM){
 }
 ```
 
+```
+## Warning: There were 112 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#bulk-ess
+```
+
+```
+## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#tail-ess
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 256.26 sec elapsed
+```
+
 
 
 ``` r
@@ -1913,11 +4257,335 @@ if(correr_SEM){
 }
 ```
 
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        86
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -17811.424       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.885    0.043    0.792    0.959
+##     ET13                                0.689    0.041    0.614    0.772
+##   Motivation =~                                                         
+##     Mot5                                0.556    0.043    0.475    0.640
+##     Mot8                                0.585    0.044    0.503    0.672
+##     Mot11                               0.573    0.045    0.490    0.661
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.352    0.024    0.305    0.401
+##     SE2                                 0.368    0.026    0.317    0.420
+##     SE3                                 0.430    0.023    0.386    0.475
+##     SE4                                 0.405    0.022    0.361    0.450
+##     SE5                                 0.364    0.026    0.317    0.415
+##     SE6                                 0.385    0.023    0.341    0.429
+##   Resilience =~                                                         
+##     R2                                  0.405    0.034    0.339    0.473
+##     R5                                  0.683    0.037    0.613    0.756
+##     R6                                  0.567    0.033    0.498    0.633
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.477    0.026    0.428    0.527
+##     KA2                                 0.530    0.024    0.484    0.576
+##     KA3                                 0.482    0.025    0.437    0.532
+##     KA4                                 0.514    0.024    0.469    0.559
+##     KA5                                 0.449    0.025    0.400    0.498
+##   TeamStrain =~                                                         
+##     TS10                                0.482    0.029    0.426    0.536
+##     TS11                                0.489    0.029    0.434    0.546
+##     TS12                                0.504    0.030    0.448    0.564
+##     TS13                                0.510    0.024    0.464    0.555
+##     TS14                                0.521    0.022    0.479    0.566
+##     TS15                                0.559    0.022    0.516    0.602
+##     TS16                                0.451    0.023    0.408    0.497
+##     TS17                                0.442    0.021    0.401    0.484
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.494    0.030    0.432    0.552
+##     CCE3                                0.419    0.032    0.356    0.482
+##     CCE4                                0.404    0.030    0.347    0.466
+##     CCE5                                0.444    0.025    0.395    0.494
+##     CCE8                                0.424    0.031    0.364    0.487
+##     CCE9                                0.508    0.028    0.452    0.565
+##     CCE10                               0.482    0.026    0.431    0.533
+##     CCE11                               0.497    0.027    0.445    0.554
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.911    0.965    1.027    normal(0,10)
+##     0.709    0.757    1.019    normal(0,10)
+##                                            
+##     0.579    0.656    1.001    normal(0,10)
+##     0.609    0.665    0.999    normal(0,10)
+##     0.596    0.641    1.000    normal(0,10)
+##                                            
+##     0.424    0.592    1.001    normal(0,10)
+##     0.443    0.580    1.004    normal(0,10)
+##     0.518    0.764    1.005    normal(0,10)
+##     0.488    0.731    1.006    normal(0,10)
+##     0.438    0.633    1.000    normal(0,10)
+##     0.464    0.713    1.000    normal(0,10)
+##                                            
+##     0.405    0.520    1.000    normal(0,10)
+##     0.683    0.853    1.006    normal(0,10)
+##     0.567    0.748    1.013    normal(0,10)
+##                                            
+##     0.477    0.703    1.000    normal(0,10)
+##     0.530    0.816    1.000    normal(0,10)
+##     0.482    0.778    1.000    normal(0,10)
+##     0.514    0.803    1.000    normal(0,10)
+##     0.449    0.704    1.003    normal(0,10)
+##                                            
+##     0.482    0.655    1.000    normal(0,10)
+##     0.489    0.658    1.001    normal(0,10)
+##     0.504    0.670    1.003    normal(0,10)
+##     0.510    0.789    1.003    normal(0,10)
+##     0.521    0.859    1.001    normal(0,10)
+##     0.559    0.885    1.002    normal(0,10)
+##     0.451    0.770    1.001    normal(0,10)
+##     0.442    0.767    1.010    normal(0,10)
+##                                            
+##     0.494    0.659    1.002    normal(0,10)
+##     0.419    0.546    1.000    normal(0,10)
+##     0.404    0.559    1.005    normal(0,10)
+##     0.444    0.687    1.001    normal(0,10)
+##     0.424    0.572    1.000    normal(0,10)
+##     0.508    0.705    1.002    normal(0,10)
+##     0.482    0.731    1.000    normal(0,10)
+##     0.497    0.722    1.004    normal(0,10)
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.201    0.061    0.087    0.323    0.193    0.193
+##     KnowldgArtcltn   -0.255    0.072   -0.397   -0.118   -0.245   -0.245
+##     TeamStrain        0.123    0.068   -0.006    0.254    0.118    0.118
+##     CprtvClssrmEnv   -0.025    0.068   -0.160    0.114   -0.024   -0.024
+##   SelfEfficacy ~                                                        
+##     Resilience        0.232    0.057    0.119    0.344    0.193    0.193
+##     KnowldgArtcltn    0.261    0.071    0.127    0.403    0.217    0.217
+##     TeamStrain        0.224    0.064    0.077    0.341    0.186    0.186
+##     CprtvClssrmEnv    0.248    0.064    0.127    0.372    0.206    0.206
+##   StudentEthics ~                                                       
+##     Motivation        0.204    0.052    0.102    0.307    0.206    0.206
+##     SelfEfficacy      0.105    0.041    0.023    0.189    0.123    0.123
+##      Rhat    Prior       
+##                          
+##     1.001    normal(0,10)
+##     1.001    normal(0,10)
+##     0.999    normal(0,10)
+##     1.003    normal(0,10)
+##                          
+##     1.013    normal(0,10)
+##     1.000    normal(0,10)
+##     1.008    normal(0,10)
+##     1.005    normal(0,10)
+##                          
+##     1.003    normal(0,10)
+##     1.005    normal(0,10)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.188    0.050    0.089    0.280    0.188
+##     TeamStrain                0.169    0.047    0.075    0.260    0.169
+##     CprtvClssrmEnv            0.155    0.049    0.057    0.250    0.155
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.474    0.038    0.396    0.543    0.474
+##     CprtvClssrmEnv            0.443    0.042    0.360    0.527    0.443
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.402    0.038    0.325    0.474    0.402
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.188    1.008     lkj_corr(1)
+##     0.169    1.001     lkj_corr(1)
+##     0.155    1.001     lkj_corr(1)
+##                                   
+##     0.474    1.000     lkj_corr(1)
+##     0.443    1.003     lkj_corr(1)
+##                                   
+##     0.402    1.000     lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.061    0.060    0.000    0.200    0.061    0.068
+##    .ET13              0.374    0.042    0.278    0.446    0.374    0.427
+##    .Mot5              0.444    0.044    0.359    0.531    0.444    0.570
+##    .Mot8              0.467    0.049    0.369    0.567    0.467    0.558
+##    .Mot11             0.510    0.046    0.426    0.598    0.510    0.590
+##    .SE1               0.334    0.021    0.296    0.379    0.334    0.650
+##    .SE2               0.389    0.026    0.341    0.443    0.389    0.664
+##    .SE3               0.191    0.016    0.162    0.224    0.191    0.416
+##    .SE4               0.208    0.015    0.179    0.239    0.208    0.466
+##    .SE5               0.286    0.019    0.252    0.326    0.286    0.599
+##    .SE6               0.208    0.015    0.179    0.240    0.208    0.491
+##    .R2                0.443    0.029    0.391    0.503    0.443    0.730
+##    .R5                0.175    0.034    0.103    0.238    0.175    0.272
+##    .R6                0.253    0.027    0.203    0.309    0.253    0.440
+##    .KA1               0.233    0.016    0.204    0.265    0.233    0.506
+##    .KA2               0.141    0.011    0.120    0.165    0.141    0.335
+##    .KA3               0.152    0.011    0.130    0.175    0.152    0.395
+##    .KA4               0.146    0.011    0.125    0.169    0.146    0.356
+##    .KA5               0.205    0.014    0.179    0.234    0.205    0.504
+##    .TS10              0.309    0.020    0.272    0.349    0.309    0.571
+##    .TS11              0.313    0.020    0.275    0.354    0.313    0.567
+##    .TS12              0.312    0.020    0.276    0.353    0.312    0.551
+##    .TS13              0.157    0.011    0.137    0.180    0.157    0.377
+##    .TS14              0.096    0.007    0.082    0.112    0.096    0.262
+##    .TS15              0.086    0.007    0.074    0.101    0.086    0.216
+##    .TS16              0.140    0.009    0.123    0.159    0.140    0.407
+##    .TS17              0.136    0.009    0.120    0.155    0.136    0.411
+##    .CCE1              0.318    0.022    0.278    0.364    0.318    0.566
+##    .CCE3              0.412    0.027    0.363    0.467    0.412    0.702
+##    .CCE4              0.358    0.022    0.316    0.403    0.358    0.687
+##    .CCE5              0.221    0.015    0.192    0.253    0.221    0.529
+##    .CCE8              0.369    0.024    0.326    0.419    0.369    0.673
+##    .CCE9              0.261    0.019    0.227    0.300    0.261    0.504
+##    .CCE10             0.202    0.015    0.174    0.234    0.202    0.465
+##    .CCE11             0.226    0.016    0.196    0.261    0.226    0.478
+##    .StudentEthics     1.000                               0.943    0.943
+##    .Motivation        1.000                               0.924    0.924
+##    .SelfEfficacy      1.000                               0.690    0.690
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.037 gamma(1,.5)[sd]
+##     1.030 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.003 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.007 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.006 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.004 gamma(1,.5)[sd]
+##     1.005 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##     1.002 gamma(1,.5)[sd]
+##     1.008 gamma(1,.5)[sd]
+##     1.001 gamma(1,.5)[sd]
+##     1.000 gamma(1,.5)[sd]
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.932
+##     ET13              0.573
+##     Mot5              0.430
+##     Mot8              0.442
+##     Mot11             0.410
+##     SE1               0.350
+##     SE2               0.336
+##     SE3               0.584
+##     SE4               0.534
+##     SE5               0.401
+##     SE6               0.509
+##     R2                0.270
+##     R5                0.728
+##     R6                0.560
+##     KA1               0.494
+##     KA2               0.665
+##     KA3               0.605
+##     KA4               0.644
+##     KA5               0.496
+##     TS10              0.429
+##     TS11              0.433
+##     TS12              0.449
+##     TS13              0.623
+##     TS14              0.738
+##     TS15              0.784
+##     TS16              0.593
+##     TS17              0.589
+##     CCE1              0.434
+##     CCE3              0.298
+##     CCE4              0.313
+##     CCE5              0.471
+##     CCE8              0.327
+##     CCE9              0.496
+##     CCE10             0.535
+##     CCE11             0.522
+##     StudentEthics     0.057
+##     Motivation        0.076
+##     SelfEfficacy      0.310
+```
+
 
 ``` r
 if(correr_SEM){
   inspect(fit.sem, what = "std")$lambda
 }
+```
+
+```
+##       StdntE Motvtn SlfEff Reslnc KnwldA TmStrn CprtCE
+## ET12   0.965  0.000  0.000  0.000  0.000  0.000  0.000
+## ET13   0.757  0.000  0.000  0.000  0.000  0.000  0.000
+## Mot5   0.000  0.656  0.000  0.000  0.000  0.000  0.000
+## Mot8   0.000  0.665  0.000  0.000  0.000  0.000  0.000
+## Mot11  0.000  0.641  0.000  0.000  0.000  0.000  0.000
+## SE1    0.000  0.000  0.592  0.000  0.000  0.000  0.000
+## SE2    0.000  0.000  0.580  0.000  0.000  0.000  0.000
+## SE3    0.000  0.000  0.764  0.000  0.000  0.000  0.000
+## SE4    0.000  0.000  0.731  0.000  0.000  0.000  0.000
+## SE5    0.000  0.000  0.633  0.000  0.000  0.000  0.000
+## SE6    0.000  0.000  0.713  0.000  0.000  0.000  0.000
+## R2     0.000  0.000  0.000  0.520  0.000  0.000  0.000
+## R5     0.000  0.000  0.000  0.853  0.000  0.000  0.000
+## R6     0.000  0.000  0.000  0.748  0.000  0.000  0.000
+## KA1    0.000  0.000  0.000  0.000  0.703  0.000  0.000
+## KA2    0.000  0.000  0.000  0.000  0.816  0.000  0.000
+## KA3    0.000  0.000  0.000  0.000  0.778  0.000  0.000
+## KA4    0.000  0.000  0.000  0.000  0.803  0.000  0.000
+## KA5    0.000  0.000  0.000  0.000  0.704  0.000  0.000
+## TS10   0.000  0.000  0.000  0.000  0.000  0.655  0.000
+## TS11   0.000  0.000  0.000  0.000  0.000  0.658  0.000
+## TS12   0.000  0.000  0.000  0.000  0.000  0.670  0.000
+## TS13   0.000  0.000  0.000  0.000  0.000  0.789  0.000
+## TS14   0.000  0.000  0.000  0.000  0.000  0.859  0.000
+## TS15   0.000  0.000  0.000  0.000  0.000  0.885  0.000
+## TS16   0.000  0.000  0.000  0.000  0.000  0.770  0.000
+## TS17   0.000  0.000  0.000  0.000  0.000  0.767  0.000
+## CCE1   0.000  0.000  0.000  0.000  0.000  0.000  0.659
+## CCE3   0.000  0.000  0.000  0.000  0.000  0.000  0.546
+## CCE4   0.000  0.000  0.000  0.000  0.000  0.000  0.559
+## CCE5   0.000  0.000  0.000  0.000  0.000  0.000  0.687
+## CCE8   0.000  0.000  0.000  0.000  0.000  0.000  0.572
+## CCE9   0.000  0.000  0.000  0.000  0.000  0.000  0.705
+## CCE10  0.000  0.000  0.000  0.000  0.000  0.000  0.731
+## CCE11  0.000  0.000  0.000  0.000  0.000  0.000  0.722
 ```
 
 
@@ -1940,6 +4608,8 @@ if(correr_SEM){
   )
 }
 ```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-51-1.png)<!-- -->
 
 
 ``` r
@@ -2007,6 +4677,12 @@ if (correr_SEM) {
 }
 ```
 
+![](ProjetoMB_files/figure-html/unnamed-chunk-53-1.png)<!-- -->![](ProjetoMB_files/figure-html/unnamed-chunk-53-2.png)<!-- -->
+
+```
+## [1] 1
+```
+
 
 
 ``` r
@@ -2014,6 +4690,12 @@ if (correr_SEM) {
   resumo_mcs
 }
 ```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["variavel"],"name":[1],"type":["chr"],"align":["left"]},{"label":["p5"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p25"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["p50"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p75"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["p95"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["media"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["melhor_distribuicao"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"StudentEthics=~ET12","2":"0.8051492241","3":"0.857352764","4":"0.88980635","5":"0.91603698","6":"0.94826707","7":"0.88511218","8":"0.042840188","9":"norm","_rn_":"5%"},{"1":"StudentEthics=~ET13","2":"0.6254361117","3":"0.660044498","4":"0.68615293","5":"0.71511580","6":"0.76102995","7":"0.68854527","8":"0.040562688","9":"lnorm","_rn_":"5%1"},{"1":"Motivation=~Mot5","2":"0.4875458520","3":"0.526571559","4":"0.55564122","5":"0.58568913","6":"0.62572561","7":"0.55628529","8":"0.042758627","9":"norm","_rn_":"5%2"},{"1":"Motivation=~Mot8","2":"0.5148687030","3":"0.554176012","4":"0.58512404","5":"0.61264863","6":"0.65709992","7":"0.58508626","8":"0.043820804","9":"gamma","_rn_":"5%3"},{"1":"Motivation=~Mot11","2":"0.5019722017","3":"0.541395447","4":"0.57096590","5":"0.60208498","6":"0.64833695","7":"0.57262950","8":"0.044570383","9":"gamma","_rn_":"5%4"},{"1":"SelfEfficacy=~SE1","2":"0.3142032419","3":"0.336132749","4":"0.35191096","5":"0.36839044","6":"0.39317352","7":"0.35244675","8":"0.024138826","9":"gamma","_rn_":"5%5"},{"1":"SelfEfficacy=~SE2","2":"0.3247354818","3":"0.350395397","4":"0.36847262","5":"0.38593692","6":"0.41168245","7":"0.36831937","8":"0.026442870","9":"norm","_rn_":"5%6"},{"1":"SelfEfficacy=~SE3","2":"0.3933673780","3":"0.414280234","4":"0.42931151","5":"0.44600708","6":"0.46906269","7":"0.43001077","8":"0.023266832","9":"gamma","_rn_":"5%7"},{"1":"SelfEfficacy=~SE4","2":"0.3679034279","3":"0.390719365","4":"0.40498490","5":"0.41994505","6":"0.44170077","7":"0.40531543","8":"0.022466903","9":"norm","_rn_":"5%8"},{"1":"SelfEfficacy=~SE5","2":"0.3242500417","3":"0.345559585","4":"0.36287936","5":"0.38119822","6":"0.40614261","7":"0.36350072","8":"0.025693408","9":"gamma","_rn_":"5%9"},{"1":"SelfEfficacy=~SE6","2":"0.3488997802","3":"0.369583849","4":"0.38550368","5":"0.40108059","6":"0.42226258","7":"0.38542851","8":"0.022684443","9":"norm","_rn_":"5%10"},{"1":"Resilience=~R2","2":"0.3494204347","3":"0.382758441","4":"0.40408069","5":"0.42793307","6":"0.46308279","7":"0.40522686","8":"0.033790664","9":"norm","_rn_":"5%11"},{"1":"Resilience=~R5","2":"0.6231903071","3":"0.657949375","4":"0.68290258","5":"0.70874378","6":"0.74434628","7":"0.68348064","8":"0.037041203","9":"norm","_rn_":"5%12"},{"1":"Resilience=~R6","2":"0.5118247272","3":"0.545116991","4":"0.56724378","5":"0.58870346","6":"0.62011333","7":"0.56681887","8":"0.033303835","9":"norm","_rn_":"5%13"},{"1":"KnowledgeArticulation=~KA1","2":"0.4351065153","3":"0.459849269","4":"0.47703049","5":"0.49320818","6":"0.51950891","7":"0.47690820","8":"0.025599786","9":"norm","_rn_":"5%14"},{"1":"KnowledgeArticulation=~KA2","2":"0.4912999691","3":"0.513010258","4":"0.52917714","5":"0.54593272","6":"0.56853658","7":"0.52968430","8":"0.023878779","9":"gamma","_rn_":"5%15"},{"1":"KnowledgeArticulation=~KA3","2":"0.4443400285","3":"0.463923007","4":"0.48070402","5":"0.49809638","6":"0.52410464","7":"0.48180823","8":"0.024630414","9":"lnorm","_rn_":"5%16"},{"1":"KnowledgeArticulation=~KA4","2":"0.4761751994","3":"0.497050070","4":"0.51271511","5":"0.53005315","6":"0.55310401","7":"0.51357939","8":"0.023685104","9":"gamma","_rn_":"5%17"},{"1":"KnowledgeArticulation=~KA5","2":"0.4074920303","3":"0.431082556","4":"0.44859089","5":"0.46627672","6":"0.48980078","7":"0.44865471","8":"0.025308566","9":"norm","_rn_":"5%18"},{"1":"TeamStrain=~TS10","2":"0.4339839215","3":"0.462670134","4":"0.48189507","5":"0.50023579","6":"0.52819087","7":"0.48162519","8":"0.028503113","9":"norm","_rn_":"5%19"},{"1":"TeamStrain=~TS11","2":"0.4424524013","3":"0.469853757","4":"0.48884575","5":"0.50840982","6":"0.53490960","7":"0.48895538","8":"0.028716663","9":"norm","_rn_":"5%20"},{"1":"TeamStrain=~TS12","2":"0.4561178851","3":"0.483896285","4":"0.50449548","5":"0.52382378","6":"0.55465985","7":"0.50435369","8":"0.029866941","9":"gamma","_rn_":"5%21"},{"1":"TeamStrain=~TS13","2":"0.4709011549","3":"0.493666654","4":"0.51003025","5":"0.52611061","6":"0.54949699","7":"0.50993861","8":"0.023628966","9":"gamma","_rn_":"5%22"},{"1":"TeamStrain=~TS14","2":"0.4859916718","3":"0.505720451","4":"0.52065932","5":"0.53558794","6":"0.55802239","7":"0.52104442","8":"0.021855005","9":"lnorm","_rn_":"5%23"},{"1":"TeamStrain=~TS15","2":"0.5228392041","3":"0.543674491","4":"0.55858661","5":"0.57319336","6":"0.59639350","7":"0.55884879","8":"0.022128523","9":"lnorm","_rn_":"5%24"},{"1":"TeamStrain=~TS16","2":"0.4152060834","3":"0.435551066","4":"0.45040895","5":"0.46656831","6":"0.48943928","7":"0.45111580","8":"0.022791511","9":"gamma","_rn_":"5%25"},{"1":"TeamStrain=~TS17","2":"0.4074226125","3":"0.427473254","4":"0.44093487","5":"0.45536704","6":"0.47686741","7":"0.44153708","8":"0.021097364","9":"lnorm","_rn_":"5%26"},{"1":"CooperativeClassroomEnvironment=~CCE1","2":"0.4441907767","3":"0.473557003","4":"0.49491882","5":"0.51462079","6":"0.54179105","7":"0.49415274","8":"0.030162536","9":"norm","_rn_":"5%27"},{"1":"CooperativeClassroomEnvironment=~CCE3","2":"0.3674713889","3":"0.397381482","4":"0.41845725","5":"0.43893479","6":"0.47279558","7":"0.41869719","8":"0.031766091","9":"norm","_rn_":"5%28"},{"1":"CooperativeClassroomEnvironment=~CCE4","2":"0.3548417568","3":"0.382980500","4":"0.40357977","5":"0.42430070","6":"0.45513630","7":"0.40398420","8":"0.030403834","9":"gamma","_rn_":"5%29"},{"1":"CooperativeClassroomEnvironment=~CCE5","2":"0.4032495373","3":"0.427475899","4":"0.44436386","5":"0.46099599","6":"0.48688169","7":"0.44430612","8":"0.025404222","9":"norm","_rn_":"5%30"},{"1":"CooperativeClassroomEnvironment=~CCE8","2":"0.3743357936","3":"0.402971181","4":"0.42385366","5":"0.44469670","6":"0.47535649","7":"0.42413599","8":"0.031215135","9":"gamma","_rn_":"5%31"},{"1":"CooperativeClassroomEnvironment=~CCE9","2":"0.4610422297","3":"0.488908741","4":"0.50815145","5":"0.52636779","6":"0.55373507","7":"0.50755828","8":"0.028184081","9":"norm","_rn_":"5%32"},{"1":"CooperativeClassroomEnvironment=~CCE10","2":"0.4391910036","3":"0.464534539","4":"0.48272328","5":"0.50010443","6":"0.52455654","7":"0.48227807","8":"0.026157004","9":"norm","_rn_":"5%33"},{"1":"CooperativeClassroomEnvironment=~CCE11","2":"0.4538323613","3":"0.477609632","4":"0.49513337","5":"0.51402124","6":"0.54475467","7":"0.49660545","8":"0.027414313","9":"lnorm","_rn_":"5%34"},{"1":"Motivation~Resilience","2":"0.1010851189","3":"0.159173022","4":"0.20074602","5":"0.24142473","6":"0.30223941","7":"0.20081940","8":"0.061132176","9":"norm","_rn_":"5%35"},{"1":"Motivation~KnowledgeArticulation","2":"-0.3714000605","3":"-0.303854714","4":"-0.25604117","5":"-0.20659096","6":"-0.13911375","7":"-0.25510089","8":"0.072333370","9":"norm","_rn_":"5%36"},{"1":"Motivation~TeamStrain","2":"0.0131304934","3":"0.075813645","4":"0.12246496","5":"0.17081203","6":"0.23156356","7":"0.12305553","8":"0.067578787","9":"norm","_rn_":"5%37"},{"1":"Motivation~CooperativeClassroomEnvironment","2":"-0.1371484731","3":"-0.070735708","4":"-0.02568120","5":"0.01997445","6":"0.08825313","7":"-0.02543950","8":"0.068013335","9":"norm","_rn_":"5%38"},{"1":"SelfEfficacy~Resilience","2":"0.1386678628","3":"0.194081537","4":"0.22957785","5":"0.27119028","6":"0.32710624","7":"0.23203836","8":"0.057498715","9":"norm","_rn_":"5%39"},{"1":"SelfEfficacy~KnowledgeArticulation","2":"0.1466622537","3":"0.209884276","4":"0.26182927","5":"0.30994826","6":"0.38060703","7":"0.26105208","8":"0.071409427","9":"norm","_rn_":"5%40"},{"1":"SelfEfficacy~TeamStrain","2":"0.1128799410","3":"0.184222002","4":"0.22692367","5":"0.26565877","6":"0.32304770","7":"0.22360091","8":"0.064477816","9":"norm","_rn_":"5%41"},{"1":"SelfEfficacy~CooperativeClassroomEnvironment","2":"0.1449764850","3":"0.201428906","4":"0.25049838","5":"0.29142517","6":"0.35147402","7":"0.24775631","8":"0.063685759","9":"norm","_rn_":"5%42"},{"1":"StudentEthics~Motivation","2":"0.1184919751","3":"0.168612344","4":"0.20311607","5":"0.23845933","6":"0.29198462","7":"0.20393361","8":"0.051721142","9":"norm","_rn_":"5%43"},{"1":"StudentEthics~SelfEfficacy","2":"0.0388284623","3":"0.077020205","4":"0.10456787","5":"0.13253970","6":"0.17215049","7":"0.10485660","8":"0.041286009","9":"norm","_rn_":"5%44"},{"1":"ET12~~ET12","2":"0.0003342023","3":"0.009921251","4":"0.04161701","5":"0.09834307","6":"0.18280192","7":"0.06071866","8":"0.059684591","9":"gamma","_rn_":"5%45"},{"1":"ET13~~ET13","2":"0.2935509219","3":"0.347994315","4":"0.38050023","5":"0.40459063","6":"0.43546292","7":"0.37438640","8":"0.042436792","9":"norm","_rn_":"5%46"},{"1":"Mot5~~Mot5","2":"0.3718354021","3":"0.414251363","4":"0.44402947","5":"0.47219787","6":"0.51922225","7":"0.44402854","8":"0.044094923","9":"norm","_rn_":"5%47"},{"1":"Mot8~~Mot8","2":"0.3877781356","3":"0.435377296","4":"0.46654710","5":"0.49896543","6":"0.55094695","7":"0.46734337","8":"0.048890084","9":"norm","_rn_":"5%48"},{"1":"Mot11~~Mot11","2":"0.4385950592","3":"0.476816254","4":"0.50949925","5":"0.54005849","6":"0.58459014","7":"0.50966347","8":"0.045600676","9":"gamma","_rn_":"5%49"},{"1":"SE1~~SE1","2":"0.3007470606","3":"0.319274550","4":"0.33315028","5":"0.34715877","6":"0.37112871","7":"0.33392704","8":"0.021417153","9":"lnorm","_rn_":"5%50"},{"1":"SE2~~SE2","2":"0.3482762657","3":"0.370264923","4":"0.38710924","5":"0.40507318","6":"0.43323847","7":"0.38853280","8":"0.026316319","9":"lnorm","_rn_":"5%51"},{"1":"SE3~~SE3","2":"0.1652352192","3":"0.179282080","4":"0.19016034","5":"0.20035737","6":"0.21826882","7":"0.19052498","8":"0.015757839","9":"lnorm","_rn_":"5%52"},{"1":"SE4~~SE4","2":"0.1833552678","3":"0.197161323","4":"0.20718055","5":"0.21822616","6":"0.23399284","7":"0.20776762","8":"0.015371903","9":"lnorm","_rn_":"5%53"},{"1":"SE5~~SE5","2":"0.2565710888","3":"0.273757925","4":"0.28558144","5":"0.29813031","6":"0.31893278","7":"0.28635459","8":"0.018790307","9":"lnorm","_rn_":"5%54"},{"1":"SE6~~SE6","2":"0.1830517495","3":"0.197395561","4":"0.20730436","5":"0.21740846","6":"0.23484377","7":"0.20796124","8":"0.015468726","9":"lnorm","_rn_":"5%55"},{"1":"R2~~R2","2":"0.3970487391","3":"0.423103080","4":"0.44148620","5":"0.46187358","6":"0.49120482","7":"0.44288553","8":"0.028860866","9":"lnorm","_rn_":"5%56"},{"1":"R5~~R5","2":"0.1169158757","3":"0.154497166","4":"0.17604973","5":"0.19785031","6":"0.22733006","7":"0.17489922","8":"0.033800760","9":"norm","_rn_":"5%57"},{"1":"R6~~R6","2":"0.2106629344","3":"0.233814360","4":"0.25153360","5":"0.27047913","6":"0.29854302","7":"0.25270550","8":"0.026893441","9":"gamma","_rn_":"5%58"},{"1":"KA1~~KA1","2":"0.2077977470","3":"0.221865439","4":"0.23304613","5":"0.24316817","6":"0.25888856","7":"0.23296368","8":"0.015610688","9":"gamma","_rn_":"5%59"},{"1":"KA2~~KA2","2":"0.1232375864","3":"0.133704911","4":"0.14091799","5":"0.14858987","6":"0.16049064","7":"0.14127435","8":"0.011247902","9":"lnorm","_rn_":"5%60"},{"1":"KA3~~KA3","2":"0.1337936066","3":"0.143528276","4":"0.15089478","5":"0.15918827","6":"0.17157189","7":"0.15168054","8":"0.011422697","9":"lnorm","_rn_":"5%61"},{"1":"KA4~~KA4","2":"0.1281443827","3":"0.137986499","4":"0.14488775","5":"0.15323709","6":"0.16492980","7":"0.14573934","8":"0.011444476","9":"lnorm","_rn_":"5%62"},{"1":"KA5~~KA5","2":"0.1827624917","3":"0.194995679","4":"0.20380443","5":"0.21366475","6":"0.22899769","7":"0.20458728","8":"0.014070010","9":"lnorm","_rn_":"5%63"},{"1":"TS10~~TS10","2":"0.2772767459","3":"0.294821677","4":"0.30819090","5":"0.32206336","6":"0.34259435","7":"0.30881301","8":"0.019872415","9":"lnorm","_rn_":"5%64"},{"1":"TS11~~TS11","2":"0.2814277169","3":"0.299703583","4":"0.31238584","5":"0.32687532","6":"0.34892562","7":"0.31347801","8":"0.020133930","9":"lnorm","_rn_":"5%65"},{"1":"TS12~~TS12","2":"0.2812192428","3":"0.298582601","4":"0.31100082","5":"0.32511558","6":"0.34633692","7":"0.31210599","8":"0.019925814","9":"lnorm","_rn_":"5%66"},{"1":"TS13~~TS13","2":"0.1401840554","3":"0.149909721","4":"0.15680398","5":"0.16433620","6":"0.17645144","7":"0.15728959","8":"0.010938972","9":"lnorm","_rn_":"5%67"},{"1":"TS14~~TS14","2":"0.0844504366","3":"0.091060840","4":"0.09577788","5":"0.10065231","6":"0.10920769","7":"0.09613365","8":"0.007327348","9":"lnorm","_rn_":"5%68"},{"1":"TS15~~TS15","2":"0.0755109175","3":"0.081026717","4":"0.08579042","5":"0.09101317","6":"0.09870657","7":"0.08628390","8":"0.007137664","9":"lnorm","_rn_":"5%69"},{"1":"TS16~~TS16","2":"0.1255119624","3":"0.133766499","4":"0.13972823","5":"0.14581503","6":"0.15590381","7":"0.13995659","8":"0.009142586","9":"lnorm","_rn_":"5%70"},{"1":"TS17~~TS17","2":"0.1217317965","3":"0.129722057","4":"0.13580063","5":"0.14202250","6":"0.15156824","7":"0.13612325","8":"0.009133163","9":"lnorm","_rn_":"5%71"},{"1":"CCE1~~CCE1","2":"0.2848138525","3":"0.302358644","4":"0.31677554","5":"0.33233724","6":"0.35529326","7":"0.31794222","8":"0.021808674","9":"lnorm","_rn_":"5%72"},{"1":"CCE3~~CCE3","2":"0.3694552461","3":"0.394517058","4":"0.41117782","5":"0.42958787","6":"0.45823039","7":"0.41245604","8":"0.026619302","9":"lnorm","_rn_":"5%73"},{"1":"CCE4~~CCE4","2":"0.3229199681","3":"0.343311870","4":"0.35784876","5":"0.37313268","6":"0.39508275","7":"0.35835118","8":"0.022193668","9":"gamma","_rn_":"5%74"},{"1":"CCE5~~CCE5","2":"0.1970322567","3":"0.211603756","4":"0.22105594","5":"0.23127220","6":"0.24714531","7":"0.22146595","8":"0.015278525","9":"gamma","_rn_":"5%75"},{"1":"CCE8~~CCE8","2":"0.3330399687","3":"0.352490965","4":"0.36838229","5":"0.38465378","6":"0.40946334","7":"0.36946223","8":"0.023518308","9":"lnorm","_rn_":"5%76"},{"1":"CCE9~~CCE9","2":"0.2324941257","3":"0.248062982","4":"0.26055887","5":"0.27404207","6":"0.29417437","7":"0.26140158","8":"0.019034023","9":"lnorm","_rn_":"5%77"},{"1":"CCE10~~CCE10","2":"0.1784634060","3":"0.191886481","4":"0.20170725","5":"0.21184958","6":"0.22908583","7":"0.20227020","8":"0.015182831","9":"lnorm","_rn_":"5%78"},{"1":"CCE11~~CCE11","2":"0.1997939416","3":"0.214978514","4":"0.22563500","5":"0.23665102","6":"0.25400783","7":"0.22614407","8":"0.016308883","9":"lnorm","_rn_":"5%79"},{"1":"Resilience~~KnowledgeArticulation","2":"0.1051353719","3":"0.153739589","4":"0.18834333","5":"0.22180647","6":"0.26899728","7":"0.18799333","8":"0.050041333","9":"norm","_rn_":"5%80"},{"1":"Resilience~~TeamStrain","2":"0.0922977505","3":"0.137287643","4":"0.16901658","5":"0.20068219","6":"0.24529131","7":"0.16885394","8":"0.047095949","9":"norm","_rn_":"5%81"},{"1":"Resilience~~CooperativeClassroomEnvironment","2":"0.0724927643","3":"0.122138728","4":"0.15521937","5":"0.18766853","6":"0.23572702","7":"0.15459599","8":"0.049160617","9":"norm","_rn_":"5%82"},{"1":"KnowledgeArticulation~~TeamStrain","2":"0.4095669889","3":"0.448684578","4":"0.47509331","5":"0.50073680","6":"0.53436927","7":"0.47389242","8":"0.037742405","9":"norm","_rn_":"5%83"},{"1":"KnowledgeArticulation~~CooperativeClassroomEnvironment","2":"0.3745897336","3":"0.414991944","4":"0.44421583","5":"0.47148845","6":"0.51431930","7":"0.44329129","8":"0.041915448","9":"norm","_rn_":"5%84"},{"1":"TeamStrain~~CooperativeClassroomEnvironment","2":"0.3372473857","3":"0.376534798","4":"0.40418288","5":"0.42702308","6":"0.46288420","7":"0.40161892","8":"0.038112060","9":"norm","_rn_":"5%85"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 
 
@@ -2024,6 +4706,21 @@ if (correr_SEM) {
 }
 ```
 
+```
+## Warning: 
+## 87 (15.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["EAP"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Median"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["SD"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lower"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["upper"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.07231824","2":"0.07229856","3":"0.0003540135","4":"0.07164006","5":"0.07301094","_rn_":"BRMSEA"},{"1":"0.88377424","2":"0.88383145","3":"0.0010059691","4":"0.88180280","5":"0.88569719","_rn_":"BGammaHat"},{"1":"0.83360316","2":"0.83368506","3":"0.0014402150","4":"0.83078070","5":"0.83635618","_rn_":"adjBGammaHat"},{"1":"0.31642537","2":"0.31661218","3":"0.0035616931","4":"0.30948256","5":"0.32328438","_rn_":"BMc"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
 
 ``` r
 if (correr_SEM) {
@@ -2033,6 +4730,8 @@ if (correr_SEM) {
 }
 ```
 
+![](ProjetoMB_files/figure-html/unnamed-chunk-56-1.png)<!-- -->
+
 
 
 ``` r
@@ -2041,6 +4740,12 @@ if (correr_SEM) {
   "hist")
 }
 ```
+
+```
+## Warning: Only one chain in 'x'. This plot is more useful with multiple chains.
+```
+
+![](ProjetoMB_files/figure-html/unnamed-chunk-57-1.png)<!-- -->
 
 
 #### Tentativa de melhoria com o SEM seguido
@@ -2072,6 +4777,39 @@ if(correr_SEM){
 }
 ```
 
+```
+## Warning: There were 821 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Warning: The largest R-hat is NA, indicating chains have not mixed.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#r-hat
+```
+
+```
+## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#bulk-ess
+```
+
+```
+## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## https://mc-stan.org/misc/warnings.html#tail-ess
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 2406.21 sec elapsed
+```
+
 
 
 ``` r
@@ -2080,11 +4818,330 @@ if(correr_SEM){
 }
 ```
 
+```
+## blavaan 0.5.8 did NOT end normally after 1500 iterations
+## ** WARNING ** Estimates below are most likely unreliable
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        84
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -16639.494       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.831    0.077    0.703    0.953
+##     ET13                                0.744    0.078    0.622    0.885
+##   Motivation =~                                                         
+##     Mot5                                0.544    0.037    0.474    0.621
+##     Mot8                                0.578    0.042    0.507    0.661
+##     Mot11                               0.607    0.066    0.493    0.726
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.358    0.022    0.316    0.405
+##     SE2                                 0.380    0.025    0.325    0.427
+##     SE3                                 0.440    0.021    0.397    0.481
+##     SE4                                 0.416    0.022    0.375    0.459
+##     SE5                                 0.376    0.022    0.328    0.420
+##     SE6                                 0.402    0.022    0.354    0.438
+##   Resilience =~                                                         
+##     R5                                  0.688    0.050    0.585    0.785
+##     R6                                  0.573    0.044    0.485    0.663
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.476    0.024    0.432    0.530
+##     KA2                                 0.529    0.022    0.489    0.578
+##     KA3                                 0.486    0.025    0.435    0.533
+##     KA4                                 0.511    0.021    0.470    0.555
+##     KA5                                 0.458    0.026    0.405    0.498
+##   TeamStrain =~                                                         
+##     TS10                                0.489    0.026    0.433    0.537
+##     TS11                                0.495    0.027    0.439    0.542
+##     TS12                                0.500    0.027    0.453    0.557
+##     TS13                                0.516    0.022    0.468    0.556
+##     TS14                                0.532    0.025    0.483    0.570
+##     TS15                                0.562    0.021    0.519    0.603
+##     TS16                                0.456    0.021    0.412    0.492
+##     TS17                                0.446    0.020    0.405    0.484
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.417    0.028    0.358    0.471
+##     CCE5                                0.360    0.024    0.309    0.409
+##     CCE10                               0.350    0.025    0.302    0.401
+##     CCE11                               0.355    0.026    0.300    0.400
+##     CCE16                               0.491    0.021    0.455    0.539
+##     CCE17                               0.478    0.021    0.440    0.524
+##     CCE18                               0.506    0.021    0.463    0.550
+##     CCE19                               0.492    0.021    0.454    0.537
+##    Std.lv  Std.all     Rhat    Prior       
+##                                            
+##     0.850    0.906    1.594    normal(0,10)
+##     0.761    0.816    1.704    normal(0,10)
+##                                            
+##     0.574    0.647    1.049    normal(0,10)
+##     0.610    0.663    1.032    normal(0,10)
+##     0.641    0.679    1.619    normal(0,10)
+##                                            
+##     0.423    0.587    1.006    normal(0,10)
+##     0.448    0.582    1.044    normal(0,10)
+##     0.519    0.762    1.009    normal(0,10)
+##     0.491    0.737    1.083    normal(0,10)
+##     0.444    0.639    1.018    normal(0,10)
+##     0.475    0.730    1.130    normal(0,10)
+##                                            
+##     0.688    0.858    1.053    normal(0,10)
+##     0.573    0.754    1.059    normal(0,10)
+##                                            
+##     0.476    0.701    1.015    normal(0,10)
+##     0.529    0.814    1.063    normal(0,10)
+##     0.486    0.781    1.167    normal(0,10)
+##     0.511    0.800    1.002    normal(0,10)
+##     0.458    0.716    1.243    normal(0,10)
+##                                            
+##     0.489    0.662    1.065    normal(0,10)
+##     0.495    0.661    1.062    normal(0,10)
+##     0.500    0.666    1.097    normal(0,10)
+##     0.516    0.798    1.089    normal(0,10)
+##     0.532    0.869    1.338    normal(0,10)
+##     0.562    0.887    1.051    normal(0,10)
+##     0.456    0.774    1.115    normal(0,10)
+##     0.446    0.766    1.058    normal(0,10)
+##                                            
+##     0.417    0.552    1.041    normal(0,10)
+##     0.360    0.560    1.005    normal(0,10)
+##     0.350    0.535    1.005    normal(0,10)
+##     0.355    0.517    1.056    normal(0,10)
+##     0.491    0.788    1.060    normal(0,10)
+##     0.478    0.789    1.050    normal(0,10)
+##     0.506    0.789    1.012    normal(0,10)
+##     0.492    0.801    1.037    normal(0,10)
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.223    0.061    0.098    0.330    0.211    0.211
+##     KnowldgArtcltn   -0.177    0.068   -0.318   -0.046   -0.168   -0.168
+##     TeamStrain        0.185    0.073    0.041    0.322    0.176    0.176
+##     CprtvClssrmEnv   -0.225    0.100   -0.417   -0.047   -0.213   -0.213
+##   SelfEfficacy ~                                                        
+##     Resilience        0.235    0.053    0.126    0.336    0.199    0.199
+##     KnowldgArtcltn    0.320    0.070    0.196    0.462    0.271    0.271
+##     TeamStrain        0.289    0.062    0.160    0.395    0.245    0.245
+##     CprtvClssrmEnv    0.019    0.066   -0.098    0.154    0.016    0.016
+##   StudentEthics ~                                                       
+##     Motivation        0.157    0.077    0.026    0.294    0.162    0.162
+##     SelfEfficacy      0.118    0.043    0.034    0.194    0.136    0.136
+##      Rhat    Prior       
+##                          
+##     1.146    normal(0,10)
+##     1.009    normal(0,10)
+##     1.198    normal(0,10)
+##     1.422    normal(0,10)
+##                          
+##     1.088    normal(0,10)
+##     1.046    normal(0,10)
+##     1.084    normal(0,10)
+##     1.094    normal(0,10)
+##                          
+##     1.584    normal(0,10)
+##     1.114    normal(0,10)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.187    0.054    0.077    0.275    0.187
+##     TeamStrain                0.167    0.042    0.074    0.240    0.167
+##     CprtvClssrmEnv            0.261    0.059    0.149    0.361    0.261
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.472    0.036    0.396    0.539    0.472
+##     CprtvClssrmEnv            0.563    0.032    0.508    0.630    0.563
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.470    0.039    0.398    0.544    0.470
+##   Std.all     Rhat    Prior       
+##                                   
+##     0.187    1.243     lkj_corr(1)
+##     0.167    1.077     lkj_corr(1)
+##     0.261    1.443     lkj_corr(1)
+##                                   
+##     0.472    1.032     lkj_corr(1)
+##     0.563    1.114     lkj_corr(1)
+##                                   
+##     0.470    1.215     lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.158    0.129    0.000    0.360    0.158    0.179
+##    .ET13              0.290    0.112    0.109    0.440    0.290    0.334
+##    .Mot5              0.456    0.042    0.379    0.533    0.456    0.581
+##    .Mot8              0.475    0.042    0.380    0.547    0.475    0.561
+##    .Mot11             0.479    0.057    0.401    0.588    0.479    0.539
+##    .SE1               0.341    0.022    0.297    0.388    0.341    0.656
+##    .SE2               0.392    0.025    0.345    0.440    0.392    0.661
+##    .SE3               0.195    0.015    0.165    0.224    0.195    0.420
+##    .SE4               0.203    0.015    0.179    0.236    0.203    0.458
+##    .SE5               0.286    0.020    0.251    0.322    0.286    0.592
+##    .SE6               0.197    0.019    0.165    0.235    0.197    0.467
+##    .R5                0.170    0.062    0.038    0.290    0.170    0.264
+##    .R6                0.249    0.046    0.152    0.332    0.249    0.431
+##    .KA1               0.236    0.016    0.204    0.261    0.236    0.509
+##    .KA2               0.143    0.012    0.121    0.165    0.143    0.338
+##    .KA3               0.151    0.011    0.133    0.176    0.151    0.390
+##    .KA4               0.147    0.012    0.125    0.169    0.147    0.361
+##    .KA5               0.200    0.015    0.177    0.231    0.200    0.488
+##    .TS10              0.306    0.017    0.273    0.345    0.306    0.562
+##    .TS11              0.316    0.021    0.277    0.354    0.316    0.563
+##    .TS12              0.314    0.020    0.276    0.356    0.314    0.557
+##    .TS13              0.152    0.011    0.133    0.177    0.152    0.364
+##    .TS14              0.092    0.009    0.076    0.110    0.092    0.245
+##    .TS15              0.086    0.006    0.075    0.100    0.086    0.213
+##    .TS16              0.139    0.008    0.125    0.157    0.139    0.400
+##    .TS17              0.140    0.010    0.121    0.164    0.140    0.413
+##    .CCE1              0.397    0.024    0.350    0.440    0.397    0.695
+##    .CCE5              0.284    0.018    0.253    0.323    0.284    0.687
+##    .CCE10             0.305    0.018    0.275    0.344    0.305    0.713
+##    .CCE11             0.345    0.019    0.312    0.387    0.345    0.732
+##    .CCE16             0.148    0.009    0.130    0.168    0.148    0.380
+##    .CCE17             0.138    0.010    0.118    0.157    0.138    0.378
+##    .CCE18             0.155    0.010    0.134    0.175    0.155    0.377
+##    .CCE19             0.135    0.011    0.121    0.158    0.135    0.358
+##    .StudentEthics     1.000                               0.956    0.956
+##    .Motivation        1.000                               0.898    0.898
+##    .SelfEfficacy      1.000                               0.718    0.718
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior       
+##     1.759 gamma(1,.5)[sd]
+##     1.865 gamma(1,.5)[sd]
+##     1.136 gamma(1,.5)[sd]
+##     1.107 gamma(1,.5)[sd]
+##     1.491 gamma(1,.5)[sd]
+##     1.150 gamma(1,.5)[sd]
+##     1.083 gamma(1,.5)[sd]
+##     1.149 gamma(1,.5)[sd]
+##     1.099 gamma(1,.5)[sd]
+##     1.170 gamma(1,.5)[sd]
+##     1.442 gamma(1,.5)[sd]
+##     1.059 gamma(1,.5)[sd]
+##     1.040 gamma(1,.5)[sd]
+##     1.144 gamma(1,.5)[sd]
+##     1.126 gamma(1,.5)[sd]
+##     1.191 gamma(1,.5)[sd]
+##     1.162 gamma(1,.5)[sd]
+##     1.234 gamma(1,.5)[sd]
+##     1.015 gamma(1,.5)[sd]
+##     1.154 gamma(1,.5)[sd]
+##     1.066 gamma(1,.5)[sd]
+##     1.187 gamma(1,.5)[sd]
+##     1.480 gamma(1,.5)[sd]
+##     1.065 gamma(1,.5)[sd]
+##     1.034 gamma(1,.5)[sd]
+##     1.249 gamma(1,.5)[sd]
+##     1.143 gamma(1,.5)[sd]
+##     1.111 gamma(1,.5)[sd]
+##     1.070 gamma(1,.5)[sd]
+##     1.047 gamma(1,.5)[sd]
+##     1.034 gamma(1,.5)[sd]
+##     1.117 gamma(1,.5)[sd]
+##     1.028 gamma(1,.5)[sd]
+##     1.228 gamma(1,.5)[sd]
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+##                          
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.821
+##     ET13              0.666
+##     Mot5              0.419
+##     Mot8              0.439
+##     Mot11             0.461
+##     SE1               0.344
+##     SE2               0.339
+##     SE3               0.580
+##     SE4               0.542
+##     SE5               0.408
+##     SE6               0.533
+##     R5                0.736
+##     R6                0.569
+##     KA1               0.491
+##     KA2               0.662
+##     KA3               0.610
+##     KA4               0.639
+##     KA5               0.512
+##     TS10              0.438
+##     TS11              0.437
+##     TS12              0.443
+##     TS13              0.636
+##     TS14              0.755
+##     TS15              0.787
+##     TS16              0.600
+##     TS17              0.587
+##     CCE1              0.305
+##     CCE5              0.313
+##     CCE10             0.287
+##     CCE11             0.268
+##     CCE16             0.620
+##     CCE17             0.622
+##     CCE18             0.623
+##     CCE19             0.642
+##     StudentEthics     0.044
+##     Motivation        0.102
+##     SelfEfficacy      0.282
+```
+
 
 ``` r
 if(correr_SEM){
   inspect(fit.sem_fullpurpose, what = "std")$lambda
 }
+```
+
+```
+##       StdntE Motvtn SlfEff Reslnc KnwldA TmStrn CprtCE
+## ET12   0.906  0.000  0.000  0.000  0.000  0.000  0.000
+## ET13   0.816  0.000  0.000  0.000  0.000  0.000  0.000
+## Mot5   0.000  0.647  0.000  0.000  0.000  0.000  0.000
+## Mot8   0.000  0.663  0.000  0.000  0.000  0.000  0.000
+## Mot11  0.000  0.679  0.000  0.000  0.000  0.000  0.000
+## SE1    0.000  0.000  0.587  0.000  0.000  0.000  0.000
+## SE2    0.000  0.000  0.582  0.000  0.000  0.000  0.000
+## SE3    0.000  0.000  0.762  0.000  0.000  0.000  0.000
+## SE4    0.000  0.000  0.737  0.000  0.000  0.000  0.000
+## SE5    0.000  0.000  0.639  0.000  0.000  0.000  0.000
+## SE6    0.000  0.000  0.730  0.000  0.000  0.000  0.000
+## R5     0.000  0.000  0.000  0.858  0.000  0.000  0.000
+## R6     0.000  0.000  0.000  0.754  0.000  0.000  0.000
+## KA1    0.000  0.000  0.000  0.000  0.701  0.000  0.000
+## KA2    0.000  0.000  0.000  0.000  0.814  0.000  0.000
+## KA3    0.000  0.000  0.000  0.000  0.781  0.000  0.000
+## KA4    0.000  0.000  0.000  0.000  0.800  0.000  0.000
+## KA5    0.000  0.000  0.000  0.000  0.716  0.000  0.000
+## TS10   0.000  0.000  0.000  0.000  0.000  0.662  0.000
+## TS11   0.000  0.000  0.000  0.000  0.000  0.661  0.000
+## TS12   0.000  0.000  0.000  0.000  0.000  0.666  0.000
+## TS13   0.000  0.000  0.000  0.000  0.000  0.798  0.000
+## TS14   0.000  0.000  0.000  0.000  0.000  0.869  0.000
+## TS15   0.000  0.000  0.000  0.000  0.000  0.887  0.000
+## TS16   0.000  0.000  0.000  0.000  0.000  0.774  0.000
+## TS17   0.000  0.000  0.000  0.000  0.000  0.766  0.000
+## CCE1   0.000  0.000  0.000  0.000  0.000  0.000  0.552
+## CCE5   0.000  0.000  0.000  0.000  0.000  0.000  0.560
+## CCE10  0.000  0.000  0.000  0.000  0.000  0.000  0.535
+## CCE11  0.000  0.000  0.000  0.000  0.000  0.000  0.517
+## CCE16  0.000  0.000  0.000  0.000  0.000  0.000  0.788
+## CCE17  0.000  0.000  0.000  0.000  0.000  0.000  0.789
+## CCE18  0.000  0.000  0.000  0.000  0.000  0.000  0.789
+## CCE19  0.000  0.000  0.000  0.000  0.000  0.000  0.801
 ```
 
 
@@ -2108,6 +5165,8 @@ if(correr_SEM){
 }
 ```
 
+![](ProjetoMB_files/figure-html/unnamed-chunk-60-1.png)<!-- -->
+
 #### Comparação entre os dois SEM
 
 
@@ -2118,6 +5177,75 @@ if(correr_SEM){
   # blavCompare(fit.sem_fullpurpose, fit.sem_FAauthors) # não comparável
   blavCompare(fit.sem, fit.sem_fullpurpose)
 }
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 10 (1.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+## Warning: 
+## 10 (1.8%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  3351.091 
+##  object2:  3351.458 
+## 
+##  ELPD difference & SE: 
+##    -0.183    0.133 
+## 
+## LOO estimates: 
+##  object1:  3351.298 
+##  object2:  3351.983 
+## 
+##  ELPD difference & SE: 
+##    -0.342    0.383 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1):    0.009
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 87 (15.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: 
+## 85 (15.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  35080.812 
+##  object2:  32753.567 
+## 
+##  ELPD difference & SE: 
+##  -1163.623  144.132 
+## 
+## LOO estimates: 
+##  object1:  35074.293 
+##  object2:  32740.437 
+## 
+##  ELPD difference & SE: 
+##  -1166.928  143.302 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1): -1171.931
 ```
 
 ### 4- SEM com priors
@@ -2183,7 +5311,7 @@ abline(v=.8, col="orange", lwd=2)
 lines(seq(0,10,.1), dgamma(seq(0,10,.1),1,0.5), col = "darkblue", lwd = 3, lty = 2)
 ```
 
-![](ProjetoMB_files/figure-html/unnamed-chunk-60-1.png)<!-- -->
+![](ProjetoMB_files/figure-html/unnamed-chunk-61-1.png)<!-- -->
 
 
 
@@ -2227,11 +5355,311 @@ if(correr_SEM_cpriors){
 }
 ```
 
+```
+## Warning: There were 3 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.
+```
+
+```
+## Warning: Examine the pairs() plot to diagnose sampling problems
+```
+
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 261.36 sec elapsed
+```
+
 
 ``` r
 if(correr_SEM_cpriors){
   summary(fit.sem_priors, standardized=TRUE, rsquare=TRUE)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        86
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -17624.741       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.872    0.036    0.799    0.937
+##     ET13                                0.691    0.034    0.628    0.761
+##   Motivation =~                                                         
+##     Mot5                                0.548    0.039    0.472    0.626
+##     Mot8                                0.573    0.040    0.495    0.653
+##     Mot11                               0.561    0.040    0.482    0.640
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.370    0.025    0.322    0.419
+##     SE2                                 0.387    0.027    0.336    0.441
+##     SE3                                 0.445    0.023    0.401    0.490
+##     SE4                                 0.421    0.023    0.378    0.468
+##     SE5                                 0.381    0.024    0.335    0.429
+##     SE6                                 0.401    0.022    0.360    0.444
+##   Resilience =~                                                         
+##     R2                                  0.413    0.031    0.352    0.476
+##     R5                                  0.661    0.033    0.596    0.727
+##     R6                                  0.561    0.030    0.501    0.621
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.478    0.025    0.429    0.528
+##     KA2                                 0.528    0.023    0.484    0.573
+##     KA3                                 0.482    0.022    0.440    0.527
+##     KA4                                 0.513    0.023    0.470    0.559
+##     KA5                                 0.450    0.024    0.404    0.497
+##   TeamStrain =~                                                         
+##     TS10                                0.482    0.027    0.429    0.535
+##     TS11                                0.489    0.028    0.435    0.545
+##     TS12                                0.503    0.028    0.450    0.558
+##     TS13                                0.509    0.022    0.468    0.554
+##     TS14                                0.521    0.020    0.485    0.560
+##     TS15                                0.557    0.019    0.521    0.597
+##     TS16                                0.453    0.020    0.415    0.493
+##     TS17                                0.445    0.020    0.406    0.485
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.498    0.028    0.443    0.556
+##     CCE3                                0.430    0.030    0.370    0.490
+##     CCE4                                0.416    0.029    0.360    0.475
+##     CCE5                                0.450    0.025    0.402    0.500
+##     CCE8                                0.432    0.030    0.376    0.492
+##     CCE9                                0.511    0.027    0.458    0.565
+##     CCE10                               0.486    0.025    0.438    0.534
+##     CCE11                               0.500    0.026    0.451    0.553
+##    Std.lv  Std.all     Rhat    Prior         
+##                                              
+##     0.897    0.957    1.002 normal(0.85,0.05)
+##     0.711    0.762    1.000  normal(0.7,0.05)
+##                                              
+##     0.568    0.648    1.000  normal(0.5, 0.1)
+##     0.594    0.655    1.000  normal(0.5, 0.1)
+##     0.581    0.630    1.000  normal(0.5, 0.1)
+##                                              
+##     0.437    0.603    1.000  normal(0.5, 0.1)
+##     0.457    0.592    1.000  normal(0.5, 0.1)
+##     0.525    0.770    1.000  normal(0.5, 0.1)
+##     0.497    0.738    1.000  normal(0.5, 0.1)
+##     0.450    0.644    1.000  normal(0.5, 0.1)
+##     0.473    0.721    1.000  normal(0.5, 0.1)
+##                                              
+##     0.413    0.529    1.000  normal(0.5, 0.1)
+##     0.661    0.838    1.000  normal(0.5, 0.1)
+##     0.561    0.747    1.000  normal(0.5, 0.1)
+##                                              
+##     0.478    0.704    1.000  normal(0.5, 0.1)
+##     0.528    0.814    1.002  normal(0.5, 0.1)
+##     0.482    0.777    1.001  normal(0.5, 0.1)
+##     0.513    0.803    1.000  normal(0.5, 0.1)
+##     0.450    0.705    1.001  normal(0.5, 0.1)
+##                                              
+##     0.482    0.655    0.999  normal(0.5, 0.1)
+##     0.489    0.658    1.001  normal(0.5, 0.1)
+##     0.503    0.669    1.000  normal(0.5, 0.1)
+##     0.509    0.789    1.001  normal(0.5, 0.1)
+##     0.521    0.859    1.001  normal(0.5, 0.1)
+##     0.557    0.884    1.000  normal(0.5, 0.1)
+##     0.453    0.771    1.000  normal(0.5, 0.1)
+##     0.445    0.769    1.000  normal(0.5, 0.1)
+##                                              
+##     0.498    0.662    1.000  normal(0.5, 0.1)
+##     0.430    0.556    1.000  normal(0.5, 0.1)
+##     0.416    0.572    1.000  normal(0.5, 0.1)
+##     0.450    0.692    1.000  normal(0.5, 0.1)
+##     0.432    0.579    1.000  normal(0.5, 0.1)
+##     0.511    0.706    1.000  normal(0.5, 0.1)
+##     0.486    0.733    1.001  normal(0.5, 0.1)
+##     0.500    0.724    1.001  normal(0.5, 0.1)
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.194    0.059    0.082    0.311    0.187    0.187
+##     KnowldgArtcltn   -0.239    0.068   -0.373   -0.107   -0.231   -0.231
+##     TeamStrain        0.113    0.066   -0.013    0.246    0.109    0.109
+##     CprtvClssrmEnv   -0.027    0.066   -0.154    0.099   -0.026   -0.026
+##   SelfEfficacy ~                                                        
+##     Resilience        0.208    0.055    0.104    0.314    0.176    0.176
+##     KnowldgArtcltn    0.241    0.062    0.119    0.364    0.204    0.204
+##     TeamStrain        0.217    0.060    0.101    0.334    0.184    0.184
+##     CprtvClssrmEnv    0.234    0.063    0.108    0.359    0.198    0.198
+##   StudentEthics ~                                                       
+##     Motivation        0.198    0.051    0.101    0.297    0.200    0.200
+##     SelfEfficacy      0.108    0.044    0.023    0.193    0.123    0.123
+##      Rhat    Prior         
+##                            
+##     1.000   normal(0, 0.25)
+##     0.999   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##     0.999   normal(0, 0.25)
+##                            
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##                            
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.189    0.050    0.092    0.284    0.189
+##     TeamStrain                0.171    0.048    0.075    0.262    0.171
+##     CprtvClssrmEnv            0.158    0.051    0.060    0.255    0.158
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.474    0.036    0.401    0.542    0.474
+##     CprtvClssrmEnv            0.446    0.040    0.366    0.520    0.446
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.403    0.040    0.323    0.478    0.403
+##   Std.all     Rhat    Prior         
+##                                     
+##     0.189    1.000       lkj_corr(1)
+##     0.171    1.000       lkj_corr(1)
+##     0.158    1.001       lkj_corr(1)
+##                                     
+##     0.474    1.000       lkj_corr(1)
+##     0.446    1.000       lkj_corr(1)
+##                                     
+##     0.403    1.000       lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.074    0.057    0.000    0.195    0.074    0.084
+##    .ET13              0.366    0.042    0.278    0.439    0.366    0.420
+##    .Mot5              0.445    0.041    0.365    0.527    0.445    0.580
+##    .Mot8              0.469    0.043    0.390    0.556    0.469    0.571
+##    .Mot11             0.514    0.045    0.429    0.604    0.514    0.603
+##    .SE1               0.334    0.022    0.294    0.380    0.334    0.637
+##    .SE2               0.387    0.026    0.341    0.440    0.387    0.650
+##    .SE3               0.190    0.015    0.162    0.220    0.190    0.408
+##    .SE4               0.207    0.015    0.178    0.239    0.207    0.455
+##    .SE5               0.286    0.020    0.248    0.325    0.286    0.585
+##    .SE6               0.208    0.015    0.180    0.239    0.208    0.481
+##    .R2                0.440    0.030    0.385    0.500    0.440    0.720
+##    .R5                0.186    0.032    0.120    0.245    0.186    0.298
+##    .R6                0.249    0.026    0.202    0.301    0.249    0.442
+##    .KA1               0.233    0.016    0.203    0.267    0.233    0.505
+##    .KA2               0.142    0.012    0.121    0.166    0.142    0.338
+##    .KA3               0.152    0.011    0.131    0.175    0.152    0.396
+##    .KA4               0.145    0.012    0.124    0.170    0.145    0.356
+##    .KA5               0.204    0.014    0.179    0.233    0.204    0.503
+##    .TS10              0.309    0.020    0.273    0.349    0.309    0.571
+##    .TS11              0.313    0.020    0.276    0.354    0.313    0.566
+##    .TS12              0.313    0.020    0.275    0.356    0.313    0.553
+##    .TS13              0.157    0.011    0.137    0.179    0.157    0.377
+##    .TS14              0.096    0.007    0.083    0.112    0.096    0.262
+##    .TS15              0.087    0.007    0.074    0.102    0.087    0.219
+##    .TS16              0.140    0.009    0.122    0.159    0.140    0.405
+##    .TS17              0.136    0.009    0.119    0.155    0.136    0.408
+##    .CCE1              0.318    0.022    0.277    0.362    0.318    0.562
+##    .CCE3              0.413    0.026    0.364    0.466    0.413    0.691
+##    .CCE4              0.357    0.024    0.313    0.408    0.357    0.673
+##    .CCE5              0.220    0.016    0.191    0.254    0.220    0.521
+##    .CCE8              0.370    0.024    0.325    0.420    0.370    0.664
+##    .CCE9              0.262    0.019    0.226    0.302    0.262    0.501
+##    .CCE10             0.203    0.016    0.174    0.234    0.203    0.462
+##    .CCE11             0.227    0.016    0.197    0.260    0.227    0.475
+##    .StudentEthics     1.000                               0.945    0.945
+##    .Motivation        1.000                               0.931    0.931
+##    .SelfEfficacy      1.000                               0.717    0.717
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior         
+##     1.003   gamma(1,.5)[sd]
+##     1.003   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.001   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.001   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     0.999   gamma(1,.5)[sd]
+##     1.001   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.001   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##                            
+##                            
+##                            
+##                            
+##                            
+##                            
+##                            
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.916
+##     ET13              0.580
+##     Mot5              0.420
+##     Mot8              0.429
+##     Mot11             0.397
+##     SE1               0.363
+##     SE2               0.350
+##     SE3               0.592
+##     SE4               0.545
+##     SE5               0.415
+##     SE6               0.519
+##     R2                0.280
+##     R5                0.702
+##     R6                0.558
+##     KA1               0.495
+##     KA2               0.662
+##     KA3               0.604
+##     KA4               0.644
+##     KA5               0.497
+##     TS10              0.429
+##     TS11              0.434
+##     TS12              0.447
+##     TS13              0.623
+##     TS14              0.738
+##     TS15              0.781
+##     TS16              0.595
+##     TS17              0.592
+##     CCE1              0.438
+##     CCE3              0.309
+##     CCE4              0.327
+##     CCE5              0.479
+##     CCE8              0.336
+##     CCE9              0.499
+##     CCE10             0.538
+##     CCE11             0.525
+##     StudentEthics     0.055
+##     Motivation        0.069
+##     SelfEfficacy      0.283
 ```
 
 
@@ -2255,6 +5683,8 @@ if(correr_SEM_cpriors){
 }
 ```
 
+![](ProjetoMB_files/figure-html/SEMmodelgraphic com priors-1.png)<!-- -->
+
 
 ``` r
 if(correr_SEM_cpriors){
@@ -2266,6 +5696,21 @@ if(correr_SEM_cpriors){
 }
 ```
 
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: Only one chain in 'x'. This plot is more useful with multiple chains.
+```
+
+![](ProjetoMB_files/figure-html/dist SEM com priors-1.png)<!-- -->
+
 
 
 
@@ -2274,6 +5719,76 @@ if(correr_SEM_cpriors){
   blavCompare(fit.sem_priors, fit.sem)
   (fits_SEModels <- cbind(fitMeasures(fit.sem_priors), fitMeasures(fit.sem)))
 }
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: 
+## 87 (15.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  35072.063 
+##  object2:  35080.812 
+## 
+##  ELPD difference & SE: 
+##    -4.375    2.715 
+## 
+## LOO estimates: 
+##  object1:  35065.666 
+##  object2:  35074.293 
+## 
+##  ELPD difference & SE: 
+##    -4.313    2.627 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1):  186.684
+```
+
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 87 (15.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##                    [,1]         [,2]
+## npar           86.00000     86.00000
+## logl       -17399.00580 -17397.64169
+## ppp             0.00000      0.00000
+## bic         35342.97861  35340.25040
+## dic         34960.18302  34965.31870
+## p_dic          81.08571     85.01765
+## waic        35072.06283  35080.81209
+## p_waic        184.51524    192.97291
+## se_waic       710.62730    711.03071
+## looic       35065.62616  35074.77474
+## p_loo         181.29691    189.95423
+## se_loo        708.27043    709.00094
+## margloglik -17624.74083 -17811.42438
 ```
 
 #### Priors com regressão 0
@@ -2305,11 +5820,301 @@ if(correr_SEM_cpriors){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 5210.97 sec elapsed
+```
+
 
 ``` r
 if(correr_SEM_cpriors){
   summary(fit.sem_priors_reg0, standardized=TRUE, rsquare=TRUE)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        86
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -17812.479       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.860    0.067    0.693    0.957
+##     ET13                                0.712    0.067    0.616    0.887
+##   Motivation =~                                                         
+##     Mot5                                0.556    0.041    0.475    0.638
+##     Mot8                                0.585    0.044    0.501    0.673
+##     Mot11                               0.572    0.046    0.482    0.662
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.360    0.026    0.312    0.411
+##     SE2                                 0.375    0.028    0.320    0.429
+##     SE3                                 0.436    0.023    0.391    0.483
+##     SE4                                 0.414    0.023    0.367    0.461
+##     SE5                                 0.372    0.025    0.324    0.421
+##     SE6                                 0.394    0.022    0.352    0.439
+##   Resilience =~                                                         
+##     R2                                  0.407    0.034    0.343    0.475
+##     R5                                  0.680    0.036    0.611    0.750
+##     R6                                  0.567    0.034    0.503    0.633
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.477    0.027    0.425    0.530
+##     KA2                                 0.529    0.024    0.484    0.577
+##     KA3                                 0.480    0.024    0.435    0.527
+##     KA4                                 0.513    0.024    0.467    0.561
+##     KA5                                 0.447    0.025    0.399    0.496
+##   TeamStrain =~                                                         
+##     TS10                                0.480    0.029    0.424    0.536
+##     TS11                                0.488    0.030    0.430    0.547
+##     TS12                                0.503    0.030    0.445    0.559
+##     TS13                                0.509    0.023    0.465    0.556
+##     TS14                                0.521    0.021    0.481    0.564
+##     TS15                                0.557    0.022    0.516    0.602
+##     TS16                                0.452    0.022    0.410    0.497
+##     TS17                                0.443    0.021    0.403    0.486
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.493    0.031    0.433    0.552
+##     CCE3                                0.419    0.032    0.355    0.482
+##     CCE4                                0.404    0.032    0.344    0.468
+##     CCE5                                0.443    0.026    0.392    0.495
+##     CCE8                                0.422    0.030    0.364    0.483
+##     CCE9                                0.509    0.029    0.453    0.566
+##     CCE10                               0.483    0.027    0.431    0.536
+##     CCE11                               0.498    0.028    0.444    0.551
+##    Std.lv  Std.all     Rhat    Prior        
+##                                             
+##     0.886    0.940    1.004     normal(0,10)
+##     0.733    0.784    1.005     normal(0,10)
+##                                             
+##     0.579    0.656    1.001     normal(0,10)
+##     0.609    0.665    1.000     normal(0,10)
+##     0.595    0.640    1.000     normal(0,10)
+##                                             
+##     0.425    0.592    1.000     normal(0,10)
+##     0.443    0.578    1.000     normal(0,10)
+##     0.515    0.762    1.000     normal(0,10)
+##     0.489    0.732    1.000     normal(0,10)
+##     0.439    0.635    1.000     normal(0,10)
+##     0.466    0.716    1.000     normal(0,10)
+##                                             
+##     0.407    0.522    1.000     normal(0,10)
+##     0.680    0.850    1.000     normal(0,10)
+##     0.567    0.749    1.000     normal(0,10)
+##                                             
+##     0.477    0.703    1.000     normal(0,10)
+##     0.529    0.816    0.999     normal(0,10)
+##     0.480    0.776    1.000     normal(0,10)
+##     0.513    0.802    1.000     normal(0,10)
+##     0.447    0.702    1.000     normal(0,10)
+##                                             
+##     0.480    0.653    1.000     normal(0,10)
+##     0.488    0.658    1.001     normal(0,10)
+##     0.503    0.668    1.000     normal(0,10)
+##     0.509    0.789    1.001     normal(0,10)
+##     0.521    0.859    1.000     normal(0,10)
+##     0.557    0.884    1.000     normal(0,10)
+##     0.452    0.771    1.000     normal(0,10)
+##     0.443    0.768    1.000     normal(0,10)
+##                                             
+##     0.493    0.658    0.999     normal(0,10)
+##     0.419    0.545    1.000     normal(0,10)
+##     0.404    0.559    1.000     normal(0,10)
+##     0.443    0.685    1.000     normal(0,10)
+##     0.422    0.569    1.000     normal(0,10)
+##     0.509    0.706    1.000     normal(0,10)
+##     0.483    0.733    1.000     normal(0,10)
+##     0.498    0.724    1.000     normal(0,10)
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.199    0.062    0.079    0.322    0.192    0.192
+##     KnowldgArtcltn   -0.261    0.072   -0.405   -0.122   -0.251   -0.251
+##     TeamStrain        0.121    0.067   -0.008    0.254    0.117    0.117
+##     CprtvClssrmEnv   -0.014    0.067   -0.144    0.117   -0.013   -0.013
+##   SelfEfficacy ~                                                        
+##     Resilience        0.239    0.059    0.125    0.357    0.203    0.203
+##     KnowldgArtcltn    0.341    0.064    0.221    0.471    0.289    0.289
+##     TeamStrain        0.279    0.060    0.161    0.397    0.236    0.236
+##     CprtvClssrmEnv   -0.000    0.000             0.000   -0.000   -0.000
+##   StudentEthics ~                                                       
+##     Motivation        0.197    0.058    0.077    0.309    0.199    0.199
+##     SelfEfficacy      0.114    0.045    0.031    0.205    0.131    0.131
+##      Rhat    Prior        
+##                           
+##     1.000     normal(0,10)
+##     0.999     normal(0,10)
+##     1.000     normal(0,10)
+##     0.999     normal(0,10)
+##                           
+##     1.000     normal(0,10)
+##     1.000     normal(0,10)
+##     1.000     normal(0,10)
+##     1.000 normal(0,0.0001)
+##                           
+##     1.001     normal(0,10)
+##     1.001     normal(0,10)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.187    0.049    0.092    0.280    0.187
+##     TeamStrain                0.171    0.048    0.073    0.266    0.171
+##     CprtvClssrmEnv            0.162    0.051    0.062    0.261    0.162
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.473    0.038    0.397    0.546    0.473
+##     CprtvClssrmEnv            0.450    0.040    0.371    0.525    0.450
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.403    0.041    0.321    0.482    0.403
+##   Std.all     Rhat    Prior        
+##                                    
+##     0.187    0.999      lkj_corr(1)
+##     0.171    1.000      lkj_corr(1)
+##     0.162    1.000      lkj_corr(1)
+##                                    
+##     0.473    1.000      lkj_corr(1)
+##     0.450    1.000      lkj_corr(1)
+##                                    
+##     0.403    1.000      lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.103    0.107    0.000    0.382    0.103    0.116
+##    .ET13              0.336    0.093    0.059    0.444    0.336    0.385
+##    .Mot5              0.444    0.042    0.363    0.529    0.444    0.570
+##    .Mot8              0.466    0.045    0.380    0.560    0.466    0.557
+##    .Mot11             0.512    0.046    0.424    0.606    0.512    0.591
+##    .SE1               0.335    0.023    0.293    0.381    0.335    0.650
+##    .SE2               0.389    0.026    0.342    0.441    0.389    0.665
+##    .SE3               0.191    0.015    0.162    0.223    0.191    0.419
+##    .SE4               0.207    0.016    0.177    0.240    0.207    0.465
+##    .SE5               0.286    0.019    0.252    0.325    0.286    0.597
+##    .SE6               0.206    0.015    0.178    0.238    0.206    0.487
+##    .R2                0.442    0.029    0.389    0.504    0.442    0.727
+##    .R5                0.178    0.033    0.114    0.241    0.178    0.278
+##    .R6                0.252    0.026    0.202    0.305    0.252    0.439
+##    .KA1               0.233    0.016    0.205    0.266    0.233    0.506
+##    .KA2               0.141    0.011    0.120    0.164    0.141    0.335
+##    .KA3               0.152    0.012    0.130    0.177    0.152    0.398
+##    .KA4               0.146    0.012    0.124    0.171    0.146    0.358
+##    .KA5               0.205    0.014    0.180    0.235    0.205    0.507
+##    .TS10              0.309    0.020    0.273    0.350    0.309    0.573
+##    .TS11              0.313    0.020    0.276    0.354    0.313    0.568
+##    .TS12              0.313    0.020    0.276    0.356    0.313    0.554
+##    .TS13              0.157    0.011    0.137    0.179    0.157    0.377
+##    .TS14              0.096    0.007    0.083    0.112    0.096    0.262
+##    .TS15              0.087    0.007    0.074    0.102    0.087    0.218
+##    .TS16              0.139    0.009    0.122    0.159    0.139    0.405
+##    .TS17              0.136    0.009    0.119    0.155    0.136    0.409
+##    .CCE1              0.319    0.022    0.278    0.364    0.319    0.568
+##    .CCE3              0.414    0.026    0.365    0.471    0.414    0.703
+##    .CCE4              0.359    0.023    0.315    0.409    0.359    0.687
+##    .CCE5              0.222    0.016    0.193    0.255    0.222    0.530
+##    .CCE8              0.372    0.023    0.330    0.421    0.372    0.677
+##    .CCE9              0.261    0.019    0.226    0.300    0.261    0.502
+##    .CCE10             0.201    0.015    0.173    0.231    0.201    0.463
+##    .CCE11             0.225    0.017    0.194    0.260    0.225    0.476
+##    .StudentEthics     1.000                               0.944    0.944
+##    .Motivation        1.000                               0.924    0.924
+##    .SelfEfficacy      1.000                               0.717    0.717
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior        
+##     1.005  gamma(1,.5)[sd]
+##     1.007  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     0.999  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.001  gamma(1,.5)[sd]
+##     1.001  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     0.999  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     0.999  gamma(1,.5)[sd]
+##     0.999  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     0.999  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     0.999  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##     1.000  gamma(1,.5)[sd]
+##                           
+##                           
+##                           
+##                           
+##                           
+##                           
+##                           
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.884
+##     ET13              0.615
+##     Mot5              0.430
+##     Mot8              0.443
+##     Mot11             0.409
+##     SE1               0.350
+##     SE2               0.335
+##     SE3               0.581
+##     SE4               0.535
+##     SE5               0.403
+##     SE6               0.513
+##     R2                0.273
+##     R5                0.722
+##     R6                0.561
+##     KA1               0.494
+##     KA2               0.665
+##     KA3               0.602
+##     KA4               0.642
+##     KA5               0.493
+##     TS10              0.427
+##     TS11              0.432
+##     TS12              0.446
+##     TS13              0.623
+##     TS14              0.738
+##     TS15              0.782
+##     TS16              0.595
+##     TS17              0.591
+##     CCE1              0.432
+##     CCE3              0.297
+##     CCE4              0.313
+##     CCE5              0.470
+##     CCE8              0.323
+##     CCE9              0.498
+##     CCE10             0.537
+##     CCE11             0.524
+##     StudentEthics     0.056
+##     Motivation        0.076
+##     SelfEfficacy      0.283
 ```
 
 
@@ -2333,6 +6138,8 @@ if(correr_SEM_cpriors){
 }
 ```
 
+![](ProjetoMB_files/figure-html/SEMmodelgraphic com priors reg0-1.png)<!-- -->
+
 
 
 ``` r
@@ -2345,6 +6152,21 @@ if(correr_SEM_cpriors){
 }
 ```
 
+```
+## Warning: 
+## 88 (15.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: Only one chain in 'x'. This plot is more useful with multiple chains.
+```
+
+![](ProjetoMB_files/figure-html/dist SEM com priors reg0-1.png)<!-- -->
+
 
 
 ``` r
@@ -2352,6 +6174,76 @@ if(correr_SEM_cpriors){
   blavCompare(fit.sem_priors, fit.sem_priors_reg0)
   (fits_SEModels <- cbind(fitMeasures(fit.sem_priors), fitMeasures(fit.sem_priors_reg0)))
 }
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: 
+## 88 (15.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  35072.063 
+##  object2:  35096.408 
+## 
+##  ELPD difference & SE: 
+##   -12.173    6.977 
+## 
+## LOO estimates: 
+##  object1:  35065.666 
+##  object2:  35089.294 
+## 
+##  ELPD difference & SE: 
+##   -11.814    6.758 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1):  187.738
+```
+
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 88 (15.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##                    [,1]         [,2]
+## npar           86.00000     86.00000
+## logl       -17399.00580 -17405.77381
+## ppp             0.00000      0.00000
+## bic         35342.97861  35356.51463
+## dic         34960.18302  34980.25593
+## p_dic          81.08571     84.35415
+## waic        35072.06283  35096.40812
+## p_waic        184.51524    192.73075
+## se_waic       710.62730    714.72846
+## looic       35065.62616  35089.27961
+## p_loo         181.29691    189.16650
+## se_loo        708.27043    712.01177
+## margloglik -17624.74083 -17812.47928
 ```
 
 #### Priors com todas priors
@@ -2387,11 +6279,301 @@ if(correr_SEM_cpriors){
 }
 ```
 
+```
+## Computing post-estimation metrics (including lvs if requested)...
+## 6198.18 sec elapsed
+```
+
 
 ``` r
 if(correr_SEM_cpriors){
   summary(fit.sem_priors_all, standardized=TRUE, rsquare=TRUE)
 }
+```
+
+```
+## blavaan 0.5.8 ended normally after 1500 iterations
+## 
+##   Estimator                                      BAYES
+##   Optimization method                             MCMC
+##   Number of model parameters                        86
+## 
+##   Number of observations                           566
+## 
+##   Statistic                                 MargLogLik         PPP
+##   Value                                     -17630.111       0.000
+## 
+## Parameter Estimates:
+## 
+## 
+## Latent Variables:
+##                                      Estimate  Post.SD pi.lower pi.upper
+##   StudentEthics =~                                                      
+##     ET12                                0.870    0.038    0.789    0.936
+##     ET13                                0.694    0.036    0.628    0.768
+##   Motivation =~                                                         
+##     Mot5                                0.548    0.039    0.474    0.627
+##     Mot8                                0.574    0.039    0.499    0.652
+##     Mot11                               0.562    0.041    0.483    0.643
+##   SelfEfficacy =~                                                       
+##     SE1                                 0.376    0.025    0.327    0.428
+##     SE2                                 0.393    0.027    0.340    0.448
+##     SE3                                 0.450    0.023    0.405    0.497
+##     SE4                                 0.429    0.023    0.386    0.476
+##     SE5                                 0.388    0.025    0.338    0.437
+##     SE6                                 0.409    0.023    0.365    0.454
+##   Resilience =~                                                         
+##     R2                                  0.413    0.033    0.352    0.477
+##     R5                                  0.661    0.033    0.598    0.725
+##     R6                                  0.562    0.031    0.503    0.623
+##   KnowledgeArticulation =~                                              
+##     KA1                                 0.478    0.026    0.429    0.529
+##     KA2                                 0.529    0.023    0.483    0.574
+##     KA3                                 0.481    0.023    0.438    0.526
+##     KA4                                 0.512    0.024    0.467    0.559
+##     KA5                                 0.449    0.024    0.403    0.497
+##   TeamStrain =~                                                         
+##     TS10                                0.481    0.028    0.426    0.536
+##     TS11                                0.489    0.027    0.437    0.543
+##     TS12                                0.503    0.028    0.449    0.557
+##     TS13                                0.509    0.023    0.465    0.554
+##     TS14                                0.521    0.020    0.483    0.559
+##     TS15                                0.556    0.020    0.518    0.596
+##     TS16                                0.453    0.021    0.413    0.494
+##     TS17                                0.444    0.020    0.406    0.484
+##   CooperativeClassroomEnvironment =~                                    
+##     CCE1                                0.498    0.029    0.440    0.556
+##     CCE3                                0.429    0.031    0.369    0.489
+##     CCE4                                0.415    0.030    0.356    0.472
+##     CCE5                                0.449    0.025    0.401    0.498
+##     CCE8                                0.431    0.030    0.373    0.489
+##     CCE9                                0.512    0.028    0.459    0.566
+##     CCE10                               0.487    0.025    0.438    0.535
+##     CCE11                               0.502    0.026    0.451    0.553
+##    Std.lv  Std.all     Rhat    Prior         
+##                                              
+##     0.895    0.954    1.001 normal(0.85,0.05)
+##     0.713    0.764    1.001  normal(0.7,0.05)
+##                                              
+##     0.568    0.649    1.000  normal(0.5, 0.1)
+##     0.595    0.656    1.000  normal(0.5, 0.1)
+##     0.583    0.631    1.001  normal(0.5, 0.1)
+##                                              
+##     0.435    0.601    1.000  normal(0.5, 0.1)
+##     0.455    0.590    1.000  normal(0.5, 0.1)
+##     0.522    0.767    1.001  normal(0.5, 0.1)
+##     0.497    0.738    1.000  normal(0.5, 0.1)
+##     0.450    0.644    1.000  normal(0.5, 0.1)
+##     0.474    0.722    1.000  normal(0.5, 0.1)
+##                                              
+##     0.413    0.529    1.000  normal(0.5, 0.1)
+##     0.661    0.837    1.000  normal(0.5, 0.1)
+##     0.562    0.748    1.000  normal(0.5, 0.1)
+##                                              
+##     0.478    0.704    1.000  normal(0.5, 0.1)
+##     0.529    0.815    1.000  normal(0.5, 0.1)
+##     0.481    0.777    1.000  normal(0.5, 0.1)
+##     0.512    0.802    1.000  normal(0.5, 0.1)
+##     0.449    0.704    1.000  normal(0.5, 0.1)
+##                                              
+##     0.481    0.654    1.000  normal(0.5, 0.1)
+##     0.489    0.658    1.000  normal(0.5, 0.1)
+##     0.503    0.668    1.000  normal(0.5, 0.1)
+##     0.509    0.789    1.000  normal(0.5, 0.1)
+##     0.521    0.859    1.000  normal(0.5, 0.1)
+##     0.556    0.883    1.000  normal(0.5, 0.1)
+##     0.453    0.772    1.000  normal(0.5, 0.1)
+##     0.444    0.770    1.000  normal(0.5, 0.1)
+##                                              
+##     0.498    0.661    1.001  normal(0.5, 0.1)
+##     0.429    0.555    1.000  normal(0.5, 0.1)
+##     0.415    0.570    1.001  normal(0.5, 0.1)
+##     0.449    0.690    1.000  normal(0.5, 0.1)
+##     0.431    0.578    0.999  normal(0.5, 0.1)
+##     0.512    0.707    1.000  normal(0.5, 0.1)
+##     0.487    0.735    1.000  normal(0.5, 0.1)
+##     0.502    0.726    1.001  normal(0.5, 0.1)
+## 
+## Regressions:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##   Motivation ~                                                          
+##     Resilience        0.193    0.060    0.079    0.310    0.186    0.186
+##     KnowldgArtcltn   -0.243    0.067   -0.375   -0.114   -0.235   -0.235
+##     TeamStrain        0.111    0.064   -0.013    0.235    0.107    0.107
+##     CprtvClssrmEnv   -0.018    0.065   -0.149    0.106   -0.018   -0.018
+##   SelfEfficacy ~                                                        
+##     Resilience        0.219    0.054    0.115    0.327    0.189    0.189
+##     KnowldgArtcltn    0.314    0.061    0.196    0.435    0.271    0.271
+##     TeamStrain        0.266    0.056    0.158    0.378    0.230    0.230
+##     CprtvClssrmEnv    0.000    0.000   -0.000             0.000    0.000
+##   StudentEthics ~                                                       
+##     Motivation        0.196    0.052    0.094    0.299    0.198    0.198
+##     SelfEfficacy      0.109    0.044    0.024    0.194    0.123    0.123
+##      Rhat    Prior         
+##                            
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##                            
+##     1.000   normal(0, 0.25)
+##     1.001   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+##     1.000  normal(0,0.0001)
+##                            
+##     1.000   normal(0, 0.25)
+##     1.000   normal(0, 0.25)
+## 
+## Covariances:
+##                            Estimate  Post.SD pi.lower pi.upper   Std.lv
+##   Resilience ~~                                                        
+##     KnowldgArtcltn            0.190    0.049    0.090    0.281    0.190
+##     TeamStrain                0.172    0.048    0.077    0.263    0.172
+##     CprtvClssrmEnv            0.165    0.050    0.064    0.262    0.165
+##   KnowledgeArticulation ~~                                             
+##     TeamStrain                0.474    0.037    0.402    0.545    0.474
+##     CprtvClssrmEnv            0.451    0.042    0.365    0.531    0.451
+##   TeamStrain ~~                                                        
+##     CprtvClssrmEnv            0.406    0.041    0.324    0.482    0.406
+##   Std.all     Rhat    Prior         
+##                                     
+##     0.190    1.000       lkj_corr(1)
+##     0.172    1.000       lkj_corr(1)
+##     0.165    1.000       lkj_corr(1)
+##                                     
+##     0.474    1.000       lkj_corr(1)
+##     0.451    1.000       lkj_corr(1)
+##                                     
+##     0.406    0.999       lkj_corr(1)
+## 
+## Variances:
+##                    Estimate  Post.SD pi.lower pi.upper   Std.lv  Std.all
+##    .ET12              0.078    0.063    0.000    0.219    0.078    0.089
+##    .ET13              0.362    0.047    0.255    0.441    0.362    0.416
+##    .Mot5              0.445    0.042    0.363    0.530    0.445    0.579
+##    .Mot8              0.469    0.044    0.388    0.561    0.469    0.570
+##    .Mot11             0.513    0.044    0.432    0.603    0.513    0.601
+##    .SE1               0.335    0.022    0.293    0.382    0.335    0.638
+##    .SE2               0.387    0.025    0.340    0.440    0.387    0.652
+##    .SE3               0.191    0.015    0.162    0.222    0.191    0.412
+##    .SE4               0.206    0.016    0.177    0.238    0.206    0.455
+##    .SE5               0.286    0.020    0.249    0.327    0.286    0.586
+##    .SE6               0.206    0.015    0.179    0.239    0.206    0.479
+##    .R2                0.439    0.029    0.385    0.500    0.439    0.720
+##    .R5                0.187    0.031    0.125    0.248    0.187    0.299
+##    .R6                0.249    0.025    0.201    0.299    0.249    0.441
+##    .KA1               0.233    0.016    0.203    0.266    0.233    0.504
+##    .KA2               0.142    0.012    0.120    0.167    0.142    0.336
+##    .KA3               0.152    0.011    0.132    0.175    0.152    0.396
+##    .KA4               0.146    0.012    0.124    0.171    0.146    0.357
+##    .KA5               0.205    0.014    0.179    0.235    0.205    0.504
+##    .TS10              0.309    0.020    0.273    0.350    0.309    0.572
+##    .TS11              0.313    0.021    0.274    0.355    0.313    0.566
+##    .TS12              0.313    0.021    0.276    0.356    0.313    0.553
+##    .TS13              0.157    0.011    0.137    0.180    0.157    0.378
+##    .TS14              0.096    0.007    0.083    0.111    0.096    0.262
+##    .TS15              0.087    0.007    0.074    0.102    0.087    0.219
+##    .TS16              0.139    0.009    0.122    0.159    0.139    0.404
+##    .TS17              0.136    0.009    0.119    0.154    0.136    0.408
+##    .CCE1              0.318    0.023    0.276    0.366    0.318    0.562
+##    .CCE3              0.413    0.026    0.363    0.468    0.413    0.692
+##    .CCE4              0.357    0.023    0.315    0.405    0.357    0.675
+##    .CCE5              0.222    0.016    0.192    0.255    0.222    0.523
+##    .CCE8              0.371    0.024    0.326    0.422    0.371    0.666
+##    .CCE9              0.261    0.019    0.226    0.301    0.261    0.500
+##    .CCE10             0.202    0.015    0.173    0.232    0.202    0.459
+##    .CCE11             0.226    0.016    0.195    0.260    0.226    0.473
+##    .StudentEthics     1.000                               0.946    0.946
+##    .Motivation        1.000                               0.931    0.931
+##    .SelfEfficacy      1.000                               0.744    0.744
+##     Resilience        1.000                               1.000    1.000
+##     KnowldgArtcltn    1.000                               1.000    1.000
+##     TeamStrain        1.000                               1.000    1.000
+##     CprtvClssrmEnv    1.000                               1.000    1.000
+##      Rhat    Prior         
+##     1.002   gamma(1,.5)[sd]
+##     1.001   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.001   gamma(1,.5)[sd]
+##     1.001   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     0.999   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     0.999   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     0.999   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     0.999   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     0.999   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##     0.999   gamma(1,.5)[sd]
+##     1.000   gamma(1,.5)[sd]
+##                            
+##                            
+##                            
+##                            
+##                            
+##                            
+##                            
+## 
+## R-Square:
+##                    Estimate
+##     ET12              0.911
+##     ET13              0.584
+##     Mot5              0.421
+##     Mot8              0.430
+##     Mot11             0.399
+##     SE1               0.362
+##     SE2               0.348
+##     SE3               0.588
+##     SE4               0.545
+##     SE5               0.414
+##     SE6               0.521
+##     R2                0.280
+##     R5                0.701
+##     R6                0.559
+##     KA1               0.496
+##     KA2               0.664
+##     KA3               0.604
+##     KA4               0.643
+##     KA5               0.496
+##     TS10              0.428
+##     TS11              0.434
+##     TS12              0.447
+##     TS13              0.622
+##     TS14              0.738
+##     TS15              0.781
+##     TS16              0.596
+##     TS17              0.592
+##     CCE1              0.438
+##     CCE3              0.308
+##     CCE4              0.325
+##     CCE5              0.477
+##     CCE8              0.334
+##     CCE9              0.500
+##     CCE10             0.541
+##     CCE11             0.527
+##     StudentEthics     0.054
+##     Motivation        0.069
+##     SelfEfficacy      0.256
 ```
 
 
@@ -2415,6 +6597,8 @@ if(correr_SEM_cpriors){
 }
 ```
 
+![](ProjetoMB_files/figure-html/SEMmodelgraphic com priors all-1.png)<!-- -->
+
 
 ``` r
 if(correr_SEM_cpriors){
@@ -2426,6 +6610,21 @@ if(correr_SEM_cpriors){
 }
 ```
 
+```
+## Warning: 
+## 85 (15.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: Only one chain in 'x'. This plot is more useful with multiple chains.
+```
+
+![](ProjetoMB_files/figure-html/dist SEM com priors all-1.png)<!-- -->
+
 
 
 
@@ -2435,6 +6634,132 @@ if(correr_SEM_cpriors){
   blavCompare(fit.sem_priors, fit.sem_priors_all)
   (fits_SEModels <- cbind(fitMeasures(fit.sem), fitMeasures(fit.sem_priors), fitMeasures(fit.sem_priors_reg0), fitMeasures(fit.sem_priors_all)))
 }
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: 
+## 88 (15.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  35072.063 
+##  object2:  35096.408 
+## 
+##  ELPD difference & SE: 
+##   -12.173    6.977 
+## 
+## LOO estimates: 
+##  object1:  35065.666 
+##  object2:  35089.294 
+## 
+##  ELPD difference & SE: 
+##   -11.814    6.758 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1):  187.738
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: 
+## 85 (15.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## 
+## WAIC estimates: 
+##  object1:  35072.063 
+##  object2:  35088.179 
+## 
+##  ELPD difference & SE: 
+##    -8.058    6.136 
+## 
+## LOO estimates: 
+##  object1:  35065.666 
+##  object2:  35081.933 
+## 
+##  ELPD difference & SE: 
+##    -8.133    6.367 
+## 
+## Laplace approximation to the log-Bayes factor
+## (experimental; positive values favor object1):    5.370
+```
+
+```
+## Warning: 
+## 87 (15.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 82 (14.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 88 (15.5%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+## Warning: 
+## 85 (15.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+```
+
+```
+## Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
+```
+
+```
+##                    [,1]         [,2]         [,3]         [,4]
+## npar           86.00000     86.00000     86.00000     86.00000
+## logl       -17397.64169 -17399.00580 -17405.77381 -17406.87723
+## ppp             0.00000      0.00000      0.00000      0.00000
+## bic         35340.25040  35342.97861  35356.51463  35358.72147
+## dic         34965.31870  34960.18302  34980.25593  34976.11803
+## p_dic          85.01765     81.08571     84.35415     81.18179
+## waic        35080.81209  35072.06283  35096.40812  35088.17865
+## p_waic        192.97291    184.51524    192.73075    185.98617
+## se_waic       711.03071    710.62730    714.72846    712.78064
+## looic       35074.77474  35065.62616  35089.27961  35081.80942
+## p_loo         189.95423    181.29691    189.16650    182.80156
+## se_loo        709.00094    708.27043    712.01177    710.59093
+## margloglik -17811.42438 -17624.74083 -17812.47928 -17630.11059
 ```
 
 
