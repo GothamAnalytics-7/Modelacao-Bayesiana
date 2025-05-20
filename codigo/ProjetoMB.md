@@ -9,7 +9,7 @@ date: "21-05-2025"
 output: 
   html_document:
     df_print: paged
-    code_folding: hide
+    code_folding: show
     self_contained: true
     keep_md: true
 ---
@@ -56,6 +56,7 @@ Este projeto foi desenvolvido no âmbito da unidade curricular de Modelação Ba
   - [4 - SEM com priors](#4---sem-com-priors)
     - [Priors para lambda, beta e ET12 e ET13](#priors-para-lambda-beta-e-et12-e-et13)
     - [Priors com regressão 0](#priors-com-regressão-0)
+    - [Priors com todas priors](#priors-com-todas-priors)
 
 ## Artigo de referência
 
@@ -2255,6 +2256,18 @@ if(correr_SEM_cpriors){
 ```
 
 
+``` r
+if(correr_SEM_cpriors){
+  ML_SEMpriors_bs <- blavFitIndices(fit.sem_priors)
+  summary(ML_SEMpriors_bs, prob=.95,central.tendency = c("mean","median"))
+  distML_SEMpriors <- data.frame(ML_SEMpriors_bs@indices)
+  mcmc_pairs(distML_SEMpriors, pars = c("BRMSEA","BGammaHat","adjBGammaHat"), diag_fun = 
+    "hist")
+}
+```
+
+
+
 
 ``` r
 if(correr_SEM_cpriors){
@@ -2266,17 +2279,12 @@ if(correr_SEM_cpriors){
 #### Priors com regressão 0
 
 
-
 ``` r
 if(correr_SEM_cpriors){
-  tic()
-  dp <- dpriors(lambda = "normal(0.5, 0.1)", # semelhante "gamma(25, 50)"; nao conchigo utilizar gamma :(
-                beta   = "normal(0, 0.25)" # talvez aumentar um pouco mais sd (cauda mais longa)
-                #, theta  = "gamma(5, 10)" # variances
-                ) 
+  tic() 
   model.sem_priors_reg0 <- '
     # measurement model
-    StudentEthics =~ prior("normal(0.85, 0.05)")*ET12 + prior("normal(0.7, 0.05)")*ET13
+    StudentEthics =~ ET12 + ET13
     Motivation =~ Mot5 + Mot8 + Mot11
     SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
     Resilience =~ R2 + R5 + R6
@@ -2292,7 +2300,7 @@ if(correr_SEM_cpriors){
   '
   
   fit.sem_priors_reg0 <- bcfa(model.sem_priors_reg0, data=df, std.lv=TRUE, n.chains = n_chains,
-                   burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+                   burnin=burn_in, sample=sample_estimate, target = "stan")
   toc()
 }
 ```
@@ -2329,8 +2337,103 @@ if(correr_SEM_cpriors){
 
 ``` r
 if(correr_SEM_cpriors){
+  ML_SEMpriors0_bs <- blavFitIndices(fit.sem_priors_reg0)
+  summary(ML_SEMpriors0_bs, prob=.95,central.tendency = c("mean","median"))
+  distML_SEMpriors0 <- data.frame(ML_SEMpriors0_bs@indices)
+  mcmc_pairs(distML_SEMpriors0, pars = c("BRMSEA","BGammaHat","adjBGammaHat"), diag_fun = 
+    "hist")
+}
+```
+
+
+
+``` r
+if(correr_SEM_cpriors){
   blavCompare(fit.sem_priors, fit.sem_priors_reg0)
   (fits_SEModels <- cbind(fitMeasures(fit.sem_priors), fitMeasures(fit.sem_priors_reg0)))
+}
+```
+
+#### Priors com todas priors
+
+
+``` r
+if(correr_SEM_cpriors){
+  tic()
+  dp <- dpriors(lambda = "normal(0.5, 0.1)", # semelhante "gamma(25, 50)"; nao conchigo utilizar gamma :(
+                beta   = "normal(0, 0.25)" # talvez aumentar um pouco mais sd (cauda mais longa)
+                #, theta  = "gamma(5, 10)" # variances
+                ) 
+  model.sem_priors_all <- '
+    # measurement model
+    StudentEthics =~ prior("normal(0.85, 0.05)")*ET12 + prior("normal(0.7, 0.05)")*ET13
+    Motivation =~ Mot5 + Mot8 + Mot11
+    SelfEfficacy =~ SE1 + SE2 + SE3 + SE4 + SE5 + SE6
+    Resilience =~ R2 + R5 + R6
+    KnowledgeArticulation =~ KA1 + KA2 + KA3 + KA4 + KA5
+    TeamStrain =~ TS10 + TS11 + TS12 + TS13 + TS14 + TS15 + TS16 + TS17
+    CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
+    
+    # regressions
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + prior("normal(0, 0.0001)")*CooperativeClassroomEnvironment
+    StudentEthics ~ Motivation + SelfEfficacy
+    
+  '
+  
+  fit.sem_priors_all <- bcfa(model.sem_priors_all, data=df, std.lv=TRUE, n.chains = n_chains,
+                   burnin=burn_in, sample=sample_estimate, target = "stan", dp = dp)
+  toc()
+}
+```
+
+
+``` r
+if(correr_SEM_cpriors){
+  summary(fit.sem_priors_all, standardized=TRUE, rsquare=TRUE)
+}
+```
+
+
+
+``` r
+if(correr_SEM_cpriors){
+  semPaths(fit.sem_priors_all,
+           what = "std",      
+           layout = "tree", 
+           edge.label.cex = 1.0,
+           sizeMan = 10,       
+           sizeLat = 8,       
+           nCharNodes = 6,    
+           residuals = TRUE,        
+           intercepts = FALSE,    
+           optimizeLatRes = TRUE,  
+           edge.color = "black",
+           color = list(lat = "darkgreen", man = "lightblue"),
+           mar = c(6, 6, 6, 6) 
+  )
+}
+```
+
+
+``` r
+if(correr_SEM_cpriors){
+  ML_SEMpriorsall_bs <- blavFitIndices(fit.sem_priors_all)
+  summary(ML_SEMpriorsall_bs, prob=.95,central.tendency = c("mean","median"))
+  distML_SEMpriorsall <- data.frame(ML_SEMpriorsall_bs@indices)
+  mcmc_pairs(distML_SEMpriorsall, pars = c("BRMSEA","BGammaHat","adjBGammaHat"), diag_fun = 
+    "hist")
+}
+```
+
+
+
+
+``` r
+if(correr_SEM_cpriors){
+  blavCompare(fit.sem_priors, fit.sem_priors_reg0)
+  blavCompare(fit.sem_priors, fit.sem_priors_all)
+  (fits_SEModels <- cbind(fitMeasures(fit.sem), fitMeasures(fit.sem_priors), fitMeasures(fit.sem_priors_reg0), fitMeasures(fit.sem_priors_all)))
 }
 ```
 
