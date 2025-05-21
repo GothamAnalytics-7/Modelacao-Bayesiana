@@ -5,7 +5,7 @@ account: jonifub03
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 14790838
-bundleId: 10312993
+bundleId: 10318424
 url: https://jonifub03.shinyapps.io/Modelacao-Bayesiana/
 version: 1
 asMultiple: FALSE

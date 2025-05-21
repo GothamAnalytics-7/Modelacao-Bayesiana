@@ -7,11 +7,9 @@ author:
   - "Ricardo Galvão"
 date: "21-05-2025"
 output: 
-    html_document:
-      df_print: paged
-      code_folding: show
-      self_contained: true
-      keep_md: true
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 ```{r setup, include=FALSE}
@@ -94,10 +92,10 @@ options(mc.cores = parallel::detectCores())
 ```{r}
 # Escolher que modelos executar (sobretudo para a geração do ficheiro knited)
 
-correr_single_CFAs_all <- TRUE
-correr_single_CFAs_article <- TRUE
+correr_single_CFAs_all <- FALSE
+correr_single_CFAs_article <- FALSE
 correr_single_CFAs_purpose <- correr_single_CFAs_article
-correr_multiple_CFA <- TRUE
+correr_multiple_CFA <- FALSE
 correr_SEM <- TRUE # TRUE
 correr_SEM_cpriors <- TRUE # TRUE
 ```
@@ -1938,8 +1936,8 @@ if(correr_SEM_cpriors){
     CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
     
     # regressions
-    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
-    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + prior("normal(0, 0.0001)")*CooperativeClassroomEnvironment
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + prior("normal(0, 0.001)")*CooperativeClassroomEnvironment
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
     StudentEthics ~ Motivation + SelfEfficacy
     
   '
@@ -2015,8 +2013,8 @@ if(correr_SEM_cpriors){
     CooperativeClassroomEnvironment =~ CCE1 + CCE3 + CCE4 + CCE5 + CCE8 + CCE9 + CCE10 + CCE11
     
     # regressions
-    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
-    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + prior("normal(0, 0.0001)")*CooperativeClassroomEnvironment
+    Motivation ~ Resilience + KnowledgeArticulation + TeamStrain + prior("normal(0, 0.0001)")*CooperativeClassroomEnvironment
+    SelfEfficacy ~ Resilience + KnowledgeArticulation + TeamStrain + CooperativeClassroomEnvironment
     StudentEthics ~ Motivation + SelfEfficacy
     
   '
